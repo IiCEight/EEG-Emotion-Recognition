@@ -20,7 +20,7 @@ def load_deap(dataset_path: str):
     output shape : (session(1), subject, trail, electrode, raw_data),
                    (session(1), subject, trail, label)
 
-    return: data, label, sampling_rate, num_electrodes
+    return: data, label, sampling_rate, num_subjects, num_electrodes
     
     under dataset_path dir, it has 32.dat file, each represent one subject
     """
@@ -143,4 +143,4 @@ def load_deap(dataset_path: str):
         np.array(label).shape,
     )
 
-    return data, label, 128, 32
+    return data, label, 128, 32, 32

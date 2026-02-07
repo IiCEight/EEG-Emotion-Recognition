@@ -6,6 +6,7 @@ from enum import Enum
 class ModelName(str, Enum):
     DGCNN = "DGCNN"
     DANN = "DANN"
+    EEGNET = "EEGNet"
 
 class DatasetName(str, Enum):
     DEAP = "DEAP"
@@ -16,3 +17,14 @@ class LevelName(str, Enum):
     DEBUG = "DEBUG"
     INFO = "INFO"
     ERROR = "ERROR"
+
+# Experimental task types
+class TaskTypeName(str, Enum):
+    SUBJECT_DEPENDENT = "dep"
+    SUBJECT_INDEPENDENT = "indep"
+
+# Experimental task types
+class SplitTypeName(str, Enum):
+    KFOLD = "kfold"
+    LEAVE_ONE_SUBJECT_OUT = "loso"
+    TRAIN_TEST_VALIDATION = "ttv"

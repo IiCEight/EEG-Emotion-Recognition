@@ -1,6 +1,7 @@
 from loguru import logger
 import numpy as np
 
+from data.merge_and_split import merge_and_split
 from data.preprocess.utils import label_process, segment_data
 
 
@@ -27,6 +28,7 @@ def preprocess_deap(
     data, labels, num_classes = label_process(
         data, labels, bounds=[5, 5], onehot=True, label_used=[label_type]
     )
+
 
     logger.debug(
         "Finished preprocessing DEAP dataset. shape of data: {}, shape of "
