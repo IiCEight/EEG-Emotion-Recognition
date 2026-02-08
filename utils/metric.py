@@ -12,6 +12,7 @@ class Metric:
     """
     def __init__(self, metrics):
         # record the output values and target values of the model for each batch
+        self.values = {}
         self.outputs = []
         self.targets = []
         self.losses = []

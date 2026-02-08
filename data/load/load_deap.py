@@ -79,7 +79,7 @@ def load_deap(dataset_path: str):
     eeg_files = [f"s{str(i).zfill(2)}.dat" for i in range(1, 33)]
     for s_i, subject_file in enumerate(eeg_files):
         with open(f"{dataset_path}/" + subject_file, "rb") as f:
-            sub_data = pickle.load(f, encoding="latin")
+            sub_data = pickle.load(f, encoding="latin1")
 
         # sub_data is a dictionary with keys 'data' and 'labels'
         # 'data' shape -> (trails(40), electrodes(32eeg, 8others, 40sum), raw_data(8064))

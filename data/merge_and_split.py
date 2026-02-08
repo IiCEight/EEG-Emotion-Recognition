@@ -1,7 +1,6 @@
 from loguru import logger
 import numpy as np
 from sklearn.model_selection import GroupKFold, LeaveOneGroupOut, GroupShuffleSplit
-from SEED_cross_subject import train
 from constant import CLI_arguments_enum
 
 
@@ -24,8 +23,9 @@ def merge_and_split(data: list, labels: list, num_classes: int, task_type: str):
 
     # Transpose (session, subject, trial, sample, electrode, feature) into
     #     (subject, session, trial, sample, electrode, feature)
+    # And transpose labels into (subject, session, trial, sample, class)
     data = data.transpose(1, 0, 2, 3, 4, 5)     # put subject to first dimension
-    labels = labels.transpose(1, 0, 2)          # put subject to first dimension
+    labels = labels.transpose(1, 0, 2, 3, 4)          # put subject to first dimension
 
     if task_type == CLI_arguments_enum.TaskTypeName.SUBJECT_INDEPENDENT:
         return get_subject_independent_splits(data, labels)
@@ -88,7 +88,7 @@ def get_subject_independent_splits(data, labels, test_fraction=0.15, val_fractio
 
 
 def get_subject_dependent_splits(
-    data, labels, groups_trial, test_fraction=0.15, val_fraction=0.1
+    data, labels, test_fraction=0.15, val_fraction=0.1
 ):
     """
     data shape: (subject, session, trial, sample, electrode, feature)

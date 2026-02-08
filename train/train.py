@@ -34,18 +34,18 @@ def train(
             optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
             # NOTE: we need initialize a new model for each subject
 
-            # 2. Create DataLoaders (FIXED: Added .float() and .long())
+            # 2. Create DataLoaders (FIXED: Added .float() and .float())
             train_loader = DataLoader(
                 dataset=TensorDataset(
                     torch.tensor(split_dataset[0][s_i]).float(), 
-                    torch.tensor(split_dataset[1][s_i]).long()
+                    torch.tensor(split_dataset[1][s_i]).float()
                 ),
                 batch_size=batch_size, shuffle=True, num_workers=4
             )
             val_loader = DataLoader(
                 dataset=TensorDataset(
                     torch.tensor(split_dataset[2][s_i]).float(), 
-                    torch.tensor(split_dataset[3][s_i]).long()
+                    torch.tensor(split_dataset[3][s_i]).float()
                 ),
                 batch_size=batch_size, shuffle=False, num_workers=4
             )
@@ -53,7 +53,7 @@ def train(
             # 3. Training Loop
             for epoch in range(epochs):
                 # train the model on the training data for one epoch
-                if (epoch + 1) % 10 == 0:
+                if (epoch + 1) % 5 == 0:
                     logger.info(f"Epoch {epoch + 1}/{epochs} for subject {s_i}")
                 model.train()
                 epoch_loss = 0.0
@@ -70,13 +70,14 @@ def train(
                     epoch_loss += loss.item()
 
                 # Log progress periodically
-                if (epoch + 1) % 10 == 0:
-                    avg_loss = epoch_loss / len(train_loader)
-                    logger.info(f"Sub {s_i} | Epoch {epoch+1}/{epochs} | Train Loss: {avg_loss:.4f}")
+                # if (epoch + 1) % 5 == 0:
+                evaluate(model, val_loader, device, metrics, criterion)
+                avg_loss = epoch_loss / len(train_loader)
+                logger.info(f"Sub {s_i} | Epoch {epoch+1}/{epochs} | Train Loss: {avg_loss:.4f}")
 
             # 4. Final Evaluation for this subject
             # (You might want to return these results to calculate an average later)
-            evaluate(model, val_loader, device, metrics, criterion)
+            # evaluate(model, val_loader, device, metrics, criterion)
 
     # ==================================================
     # CASE 2: Subject-Independent (1 Global Model)
@@ -92,14 +93,14 @@ def train(
         train_loader = DataLoader(
             dataset=TensorDataset(
                 torch.tensor(split_dataset[0]).float(), 
-                torch.tensor(split_dataset[1]).long()
+                torch.tensor(split_dataset[1]).float()
             ),
             batch_size=batch_size, shuffle=True, num_workers=4
         )
         val_loader = DataLoader(
             dataset=TensorDataset(
                 torch.tensor(split_dataset[2]).float(), 
-                torch.tensor(split_dataset[3]).long()
+                torch.tensor(split_dataset[3]).float()
             ),
             batch_size=batch_size, shuffle=False, num_workers=4
         )
@@ -119,11 +120,11 @@ def train(
                 optimizer.step()
                 epoch_loss += loss.item()
 
-            if (epoch + 1) % 10 == 0:
-                # Run validation inside the loop to monitor overfitting
-                val_result = evaluate(model, val_loader, device, metrics, criterion)
-                avg_loss = epoch_loss / len(train_loader)
-                logger.info(f"Epoch {epoch+1}/{epochs} | Train Loss: {avg_loss:.4f} | Val Acc: {val_result}")
+            # if (epoch + 1) % 5 == 0:
+            # Run validation inside the loop to monitor overfitting
+            evaluate(model, val_loader, device, metrics, criterion)
+            avg_loss = epoch_loss / len(train_loader)
+            logger.info(f"Epoch {epoch+1}/{epochs} | Train Loss: {avg_loss:.4f}")
 
 
 @torch.no_grad()
@@ -132,19 +133,18 @@ def evaluate(model, data_loader, device, metrics, criterion):
     metric = Metric(metrics)
     
     # FIXED: Use enumerate or remove idx
-    for idx, (samples, targets) in enumerate(data_loader):
+    for idx, (samples, labels) in enumerate(data_loader):
         samples = samples.to(device)
-        targets = targets.to(device)
+        labels = labels.to(device)
 
         outputs = model(samples)
         
         # You might not need loss in eval, but if you do:
-        loss = criterion(outputs, targets)
+        loss = criterion(outputs, labels)
         
         # Update metric (Ensure your Metric class handles raw logits or add softmax here)
-        metric.update(torch.argmax(outputs, dim=1), targets, loss.item())
+        metric.update(torch.argmax(outputs, dim=1), labels, loss.item())
 
     # Assuming metric.value() returns a string for logging
     logger.info(f"Eval State: {metric.value()}")
     
-    return metric.values # Or return metric.value() depending on what you need

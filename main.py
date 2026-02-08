@@ -9,7 +9,13 @@ from constant.model_map import MODEL
 from data.dataloder import load_data
 from train.train import train
 
+# use typer to parse command line arguments and parse Traceback stack
+app = typer.Typer(
+    pretty_exceptions_show_locals=False,  # This hides the long list of variables
+    # pretty_exceptions_short=True         # This makes the traceback even more concise
+)
 
+@app.command()
 def main(
     model: Annotated[
         cli_enum.ModelName, typer.Argument(help="model name")
@@ -19,8 +25,8 @@ def main(
     ] = cli_enum.DatasetName.DEAP,
     dataset_path: Annotated[
         str, typer.Option(help="path to the dataset")
-    ] = "../LibEER/data/DEAP",
-    device: Annotated[str, typer.Option(help="device to run the model on")] = "cpu",
+    ] = "../DEAP",
+    device: Annotated[str, typer.Option(help="device to run the model on")] = "cuda",
     level: Annotated[
         cli_enum.LevelName, typer.Option(help="level of severity for logging")
     ] = cli_enum.LevelName.DEBUG,
@@ -36,15 +42,15 @@ def main(
         typer.Option(
             help="type of experimental task (subject-dependent, subject-independent)"
         ),
-    ] = cli_enum.TaskTypeName.SUBJECT_DEPENDENT,
+    ] = cli_enum.TaskTypeName.SUBJECT_INDEPENDENT,
     split_type: Annotated[
         cli_enum.SplitTypeName,
         typer.Option(
             help="type of data split (kfold, leave-one-subject-out, train-test-validation)"
         ),
     ] = cli_enum.SplitTypeName.TRAIN_TEST_VALIDATION,
-    batch_size: Annotated[int, typer.Option(help="batch size for training")] = 32,
-    epochs: Annotated[int, typer.Option(help="number of epochs for training")] = 100,
+    batch_size: Annotated[int, typer.Option(help="batch size for training")] = 256,
+    epochs: Annotated[int, typer.Option(help="number of epochs for training")] = 20,
 ):
     """
     Welcome!
@@ -80,4 +86,4 @@ def main(
 
 
 if __name__ == "__main__":
-    typer.run(main)
+    app()
