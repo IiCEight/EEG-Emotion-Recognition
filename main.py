@@ -22,10 +22,10 @@ def main(
     ] = cli_enum.ModelName.EEGNET,
     dataset: Annotated[
         cli_enum.DatasetName, typer.Argument(help="dataset name")
-    ] = cli_enum.DatasetName.DEAP,
+    ] = cli_enum.DatasetName.SEED,
     dataset_path: Annotated[
         str, typer.Option(help="path to the dataset")
-    ] = "../DEAP",
+    ] = "../autodl-tmp/SEED",
     device: Annotated[str, typer.Option(help="device to run the model on")] = "cuda",
     level: Annotated[
         cli_enum.LevelName, typer.Option(help="level of severity for logging")

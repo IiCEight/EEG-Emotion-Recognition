@@ -1,6 +1,7 @@
 from loguru import logger
 
 from data.load.load_deap import load_deap
+from data.load.load_seed import load_seed
 from data.merge_and_split import merge_and_split
 from data.preprocess.preprocess_deap import preprocess_deap
 
@@ -18,6 +19,7 @@ def load_data(
 
     function_map = {
         "DEAP": [load_deap, preprocess_deap],
+        "SEED": [load_seed, None],
     }
 
     # Load the data and labels
