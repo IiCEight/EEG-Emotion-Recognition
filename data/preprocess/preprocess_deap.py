@@ -1,7 +1,6 @@
 from loguru import logger
 import numpy as np
 
-from data.merge_and_split import merge_and_split
 from data.preprocess.utils import label_process, segment_data
 
 

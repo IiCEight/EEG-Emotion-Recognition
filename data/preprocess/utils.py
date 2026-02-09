@@ -16,7 +16,9 @@ def segment_data(data, sample_length, stride):
     output:
     input shape -> data:  (session, subject, trail, time window, electrode, band)
     output shape -> data:  (session, subject, trail, sample, time window, electrode, band)
-    
+    if sample_length == 1, then the output shape -> data: 
+        (session, subject, trail, sample(time window), electrode, band)
+
     raw_data:
     input: original data of EEG signal
     input shape -> data: (session, subject, trail, electrode, data_points)
@@ -24,6 +26,11 @@ def segment_data(data, sample_length, stride):
     """
 
     logger.debug("Segmenting data ...")
+
+    if sample_length  == 1:
+        logger.info("Sample length is 1, so use the original time window as sample")
+
+        return data, len(data[0][0][0][0][0])
 
     seg_data = []
     for ses_i, session in enumerate(data):
@@ -142,6 +149,8 @@ def label_process(
         new_label.append(new_ses_label)
         new_data.append(new_ses_data)
 
-    logger.debug("Processed label shape: {}", np.array(new_label).shape)
+    logger.debug("Processed len of label(session) {}, lable[0](subject){},"
+                 " lable[0][0](trial){}, shape of lable[0][0][0](sample) {}",
+                 len(new_label), len(new_label[0]), len(new_label[0][0]), new_label[0][0][0].shape)
 
     return new_data, new_label, num_classes

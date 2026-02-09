@@ -2,7 +2,7 @@ from loguru import logger
 
 from data.load.load_deap import load_deap
 from data.load.load_seed import load_seed
-from data.merge_and_split import merge_and_split, merge_and_split_deap, merge_and_split_seed
+from data.merge_and_split import merge_and_split_deap, merge_and_split_seed
 from data.preprocess.preprocess_deap import preprocess_deap
 from data.preprocess.preprocess_seed import preprocess_seed
 

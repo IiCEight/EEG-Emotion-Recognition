@@ -35,25 +35,31 @@ def merge_and_split_deap(data: list, labels: list, num_classes: int, task_type: 
 
 def merge_and_split_seed(data: list, labels: np.ndarray, num_classes: int, task_type: str):
     """
-    data shape (session, subject, trail, sample(different), time window, electrode, band)
+    input data shape (session, subject, trail, sample(different), electrode, band)
+
+    return train_data, train_labels, val_data, val_labels, test_data, test_labels
+    For subject-independent (sample_new, electrode, feature) and (sample_new, class)
+    For subject-dependent (subject, sample_new, electrode, feature) and (subject, sample_new, class) 
     """
-    dataset = [[], [], [], [], [], []]
+
+    logger.info("Start merging and splitting SEED dataset...")
 
     if task_type == CLI_arguments_enum.TaskTypeName.SUBJECT_INDEPENDENT:
         return subject_independent_splits(data, labels)
     else:
-        pass
+        return subject_dependent_splits(data, labels)
         
 def subject_independent_splits(data, labels, test_fraction=0.15, val_fraction=0.1):
     """
-    input data shape (session, subject, trail, sample(different), time window, electrode, band)
+    input data shape (session, subject, trail, sample(different), electrode, band)
+
+    return (sample_new, electrode, feature) and (sample_new, class)
     """
     split_data= [[], [], [], [], [], []]
 
     num_session = len(data)
     num_subject = len(data[0])
 
-    num_subject = data.shape[0]
     # shuffle the subject order, and the last subject will be used as test set,
     # and the last second subject will be used as validation set
     subject_split = np.arange(num_subject)
@@ -73,12 +79,66 @@ def subject_independent_splits(data, labels, test_fraction=0.15, val_fraction=0.
         for subject_id in range(num_subject):
             for trail, label in zip(data[session_id][subject_id], labels[session_id][subject_id]):
                 split_id = split_map[subject_id][1]
-                split_data[split_id * 2].append(trail)
-                split_data[split_id * 2 + 1].append(label)
+                split_data[split_id * 2].extend(trail)
+                split_data[split_id * 2 + 1].extend(label)
+
 
     train_data, train_labels, val_data, val_labels, test_data, test_labels = split_data
-    return train_data, train_labels, val_data, val_labels, test_data, test_labels
+    logger.debug("Finished merging and splitting data. The shape of train data {}, "
+                 "The shape of train labels {}", np.array(train_data).shape,
+                 np.array(train_labels).shape)
+    return np.array(train_data), np.array(train_labels), np.array(val_data), np.array(val_labels), np.array(test_data), np.array(test_labels)
 
+def subject_dependent_splits(
+    data, labels, test_fraction=0.15, val_fraction=0.1
+):
+    """
+        input data shape (session, subject, trail, sample(different), electrode, band)
+
+        For each subject, we need to split the data into training, testing, 
+        validation sets.
+        
+        We use Mixed-Session Validation, which means that the session can be mixed 
+        in the training, validation, and testing sets. 
+        
+        But the trial cannot be mixed in the training, validation, and testing sets
+        to prevent data leakage.
+            
+    """
+
+    num_session = len(data)
+    num_subject = len(data[0])
+    num_trial = len(data[0][0])
+    split_data= [[[] for _ in range(num_subject)] for _ in range(6)]
+
+    num_trial_each_subject = num_trial * num_session
+
+    trial_split = np.arange(num_trial_each_subject)
+    np.random.shuffle(trial_split)
+    
+    num_trial_test = int(num_trial_each_subject * test_fraction)
+    num_trial_val = int(num_trial_each_subject * val_fraction)
+    num_trial_train = num_trial_each_subject - num_trial_test - num_trial_val
+
+    # construct the map from subject id to split id (train, val, test)
+    split_index = [0] * num_trial_train + [1] * num_trial_val + [2] * num_trial_test
+    split_map = zip(trial_split, split_index)
+    split_map = sorted(split_map, key=lambda x: x[0])
+
+
+    for subject_id in range(num_subject):
+        for session_id in range(num_session):
+            for trial_id, (trail, label) in enumerate(zip(data[session_id][subject_id], labels[session_id][subject_id])):
+                split_id = split_map[session_id * num_trial +trial_id][1]
+                split_data[split_id * 2][subject_id].append(trail)
+                split_data[split_id * 2 + 1][subject_id].append(label)
+
+
+    train_data, train_labels, val_data, val_labels, test_data, test_labels = split_data
+    logger.debug("Finished merging and splitting data. The shape of train data {}, " \
+                 "The shape of train labels {}",
+                 np.array(train_data).shape, np.array(train_labels).shape)
+    return train_data, train_labels, val_data, val_labels, test_data, test_labels
 
 
 def get_subject_independent_splits(data, labels, test_fraction=0.15, val_fraction=0.1):

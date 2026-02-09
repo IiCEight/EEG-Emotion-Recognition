@@ -19,7 +19,7 @@ app = typer.Typer(
 def main(
     model: Annotated[
         cli_enum.ModelName, typer.Argument(help="model name")
-    ] = cli_enum.ModelName.EEGNET,
+    ] = cli_enum.ModelName.RGNN,
     dataset: Annotated[
         cli_enum.DatasetName, typer.Argument(help="dataset name")
     ] = cli_enum.DatasetName.SEED,
@@ -32,7 +32,7 @@ def main(
     ] = cli_enum.LevelName.DEBUG,
     sample_length: Annotated[
         int, typer.Option(help="length of data points in each sample")
-    ] = 128,
+    ] = 1,
     stride: Annotated[int, typer.Option(help="stride for segmenting data")] = 128,
     label_type: Annotated[
         str, typer.Option(help="type of label to use (valence, arousal)")
@@ -49,7 +49,7 @@ def main(
             help="type of data split (kfold, leave-one-subject-out, train-test-validation)"
         ),
     ] = cli_enum.SplitTypeName.TRAIN_TEST_VALIDATION,
-    batch_size: Annotated[int, typer.Option(help="batch size for training")] = 256,
+    batch_size: Annotated[int, typer.Option(help="batch size for training")] = 32,
     epochs: Annotated[int, typer.Option(help="number of epochs for training")] = 20,
 ):
     """

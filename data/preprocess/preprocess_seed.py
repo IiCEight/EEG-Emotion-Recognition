@@ -31,11 +31,14 @@ def preprocess_seed(
 
 
     logger.debug(
-        "Finished preprocessing SEED dataset. data(session): {}, data[0](subject): {}  "
-        "data[0][0](trial): {}, data[0][0][0](sample): {}, data[0][0][0][0](time window): {}, "
-        "data[0][0][0][0][0](electrode): {}, data[0][0][0][0][0][0](band): {}"
+        "Finished preprocessing SEED dataset. Len of data(session): {}, "
+        "data[0](subject): {}, data[0][0](trial): {}, data[0][0][0](sample): {}, "
         "shape of labels: {},num_electrodes: {}, num_feature: {}, num_classes: {}",
-        np.array(labels).shape,
+        len(data),
+        len(data[0]),
+        len(data[0][0]),
+        len(data[0][0][0]),
+        data[0][0][0][0].shape,
         num_electrodes,
         num_feature,
         num_classes,
