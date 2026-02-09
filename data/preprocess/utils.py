@@ -12,18 +12,15 @@ def segment_data(data, sample_length, stride):
     i.e., the feature dimension.
 
     feature:
-    input: original band features of EEG signal provided by SEED dataset
+    input: original band features of EEG signal
     output:
-    input shape -> data:  (session, subject, trail, sample1, electrode, band)
-                    label: (session, subject, trail, sample1, label)
-    output shape -> data:  (session, subject, trail, sample2, sample2_length, electrode, band)
-                    label: (session, subject, trail, sample2, label)
+    input shape -> data:  (session, subject, trail, time window, electrode, band)
+    output shape -> data:  (session, subject, trail, sample, time window, electrode, band)
+    
     raw_data:
     input: original data of EEG signal
     input shape -> data: (session, subject, trail, electrode, data_points)
-                   label: (session, subject, trail)
     output shape -> data: (session, subject, trail, sample, electrode, seg_data_points)
-                    label: (session, subject, trail)
     """
 
     logger.debug("Segmenting data ...")
@@ -38,7 +35,7 @@ def segment_data(data, sample_length, stride):
                 seg_trail = None
                 trail = np.array(trail)
                 if len(trail.shape) == 3:
-                    # trail shape -> (sample, channel, band)
+                    # trail shape -> (time window, channel, band)
                     trail = np.asarray(trail)
                     num_sample = (len(trail) - sample_length) // stride + 1
                     seg_trail = np.zeros(
@@ -76,10 +73,8 @@ def label_process(
     data: list, label: list, bounds: list = None, onehot=True, label_used: list = None
 ) -> tuple[list, list, int]:
     """
-    input shape -> data: (session, subject, trail, sample)
-                   label: (session, subject, trail)
-    output shape -> data: (session, subject, trail, sample)
-                    label: (session, subject, trail, sample)
+    input shape -> label: (session, subject, trail)
+    output shape -> label: (session, subject, trail, sample)
 
     bounds are used to process the label into binary classification,
     if bounds is not None, then the label will be processed into binary classification
@@ -89,8 +84,9 @@ def label_process(
     if dataset is hci, deap, dreamer, then label will be ordered by valence, arousal,
     dominance, liking
 
-    return processed data, processed label, num_classes(e.g., 2 for
-    binary classification)
+    return 
+        processed data, processed label, num_classes(e.g.,
+        2 forbinary classification).
     """
 
     logger.debug("Processing labels ...")

@@ -2,8 +2,9 @@ from loguru import logger
 
 from data.load.load_deap import load_deap
 from data.load.load_seed import load_seed
-from data.merge_and_split import merge_and_split
+from data.merge_and_split import merge_and_split, merge_and_split_deap, merge_and_split_seed
 from data.preprocess.preprocess_deap import preprocess_deap
+from data.preprocess.preprocess_seed import preprocess_seed
 
 
 def load_data(
@@ -18,8 +19,8 @@ def load_data(
     logger.info(f"Loading dataset {dataset_name} from path {dataset_path}")
 
     function_map = {
-        "DEAP": [load_deap, preprocess_deap],
-        "SEED": [load_seed, None],
+        "DEAP": [load_deap, preprocess_deap, merge_and_split_deap],
+        "SEED": [load_seed, preprocess_seed, merge_and_split_seed],
     }
 
     # Load the data and labels
@@ -33,7 +34,7 @@ def load_data(
 
     # split the data into training, testing, validation sets according to the task type
     split_dataset = (
-        merge_and_split(data, labels, num_classes, task_type)
+        function_map[dataset_name][2](data, labels, num_classes, task_type)
     )
 
     return (

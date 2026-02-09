@@ -32,7 +32,7 @@ def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[list, np.
     feature_type: "raw", "de_lds"...
 
     return:
-        data shape: (session(3), subject(15), trial(15), sample(different), electrode, frequency band)
+        data shape: (session(3), subject(15), trial(15), time window(different), electrode, frequency band)
         label shape: (session(3), subject(15), trial(15)) NOT ONE-HOT ENCODED, 
             value is 0, 1, 2 represent the emotion label.
 
@@ -55,8 +55,8 @@ def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[list, np.
             1 = Clip Number (1-15) i.e., the trial number.
         NOTE: The shape each trial is different!
         In one value for key 'de_LDS1', 
-            it is a (electrode, sample(time window), frequency band) array,
-            but the sample dimension is different for different trial.
+            it is a (electrode, time window, frequency band) array,
+            but the time window dimension is different for different trial.
     
     """
     logger.info(f"Loading SEED dataset from path {dataset_path} ...")

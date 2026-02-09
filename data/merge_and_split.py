@@ -1,10 +1,11 @@
+from re import split
 from loguru import logger
 import numpy as np
 from sklearn.model_selection import GroupKFold, LeaveOneGroupOut, GroupShuffleSplit
 from constant import CLI_arguments_enum
 
 
-def merge_and_split(data: list, labels: list, num_classes: int, task_type: str):
+def merge_and_split_deap(data: list, labels: list, num_classes: int, task_type: str):
     """
     Split the data into training, testing, validation sets according
     to the task type (subject-dependent or subject-independent)
@@ -31,6 +32,53 @@ def merge_and_split(data: list, labels: list, num_classes: int, task_type: str):
         return get_subject_independent_splits(data, labels)
     else:
         return get_subject_dependent_splits(data,labels)
+
+def merge_and_split_seed(data: list, labels: np.ndarray, num_classes: int, task_type: str):
+    """
+    data shape (session, subject, trail, sample(different), time window, electrode, band)
+    """
+    dataset = [[], [], [], [], [], []]
+
+    if task_type == CLI_arguments_enum.TaskTypeName.SUBJECT_INDEPENDENT:
+        return subject_independent_splits(data, labels)
+    else:
+        pass
+        
+def subject_independent_splits(data, labels, test_fraction=0.15, val_fraction=0.1):
+    """
+    input data shape (session, subject, trail, sample(different), time window, electrode, band)
+    """
+    split_data= [[], [], [], [], [], []]
+
+    num_session = len(data)
+    num_subject = len(data[0])
+
+    num_subject = data.shape[0]
+    # shuffle the subject order, and the last subject will be used as test set,
+    # and the last second subject will be used as validation set
+    subject_split = np.arange(num_subject)
+    np.random.shuffle(subject_split)
+
+    # split data into 3 parts (num_subject_test, num_subject_val, num_subject_train)
+    num_subject_test = int(num_subject * test_fraction)
+    num_subject_val = int(num_subject * val_fraction)
+    num_subject_train = num_subject - num_subject_test - num_subject_val
+    
+    # construct the map from subject id to split id (train, val, test)
+    split_indx = [0] * num_subject_train + [1] * num_subject_val + [2] * num_subject_test
+    split_map = zip(subject_split, split_indx)
+    split_map = sorted(split_map, key=lambda x: x[0])
+
+    for session_id in range(num_session):
+        for subject_id in range(num_subject):
+            for trail, label in zip(data[session_id][subject_id], labels[session_id][subject_id]):
+                split_id = split_map[subject_id][1]
+                split_data[split_id * 2].append(trail)
+                split_data[split_id * 2 + 1].append(label)
+
+    train_data, train_labels, val_data, val_labels, test_data, test_labels = split_data
+    return train_data, train_labels, val_data, val_labels, test_data, test_labels
+
 
 
 def get_subject_independent_splits(data, labels, test_fraction=0.15, val_fraction=0.1):
@@ -153,39 +201,3 @@ def get_subject_dependent_splits(
             + f"shape: {train_labels[-1].shape}, ")
 
     return train_data, train_labels, val_data, val_labels, test_data, test_labels
-
-
-def merge(data, labels, num_classes, task_type) -> tuple[np.ndarray, np.ndarray]:
-    """
-    Transpose (session, subject, trial, sample, electrode, feature) into
-        (subject, session, trial, sample, electrode, feature)
-
-    Then fatten it into shape data.reshape(subject, -1, electrode, feature)
-
-    TODO: which sessions we choose to use, index start from 1, default is all
-    """
-    logger.info("Merging data according to task type ...")
-
-    data = np.array(data)
-    labels = np.array(labels)
-
-    num_session = data.shape[0]
-    num_subject = data.shape[1]
-    num_trial = data.shape[2]
-    num_sample_old = data.shape[3]
-    num_electrode = data.shape[4]
-    num_feature = data.shape[5]
-
-    data = data.transpose(1, 0, 2, 3, 4, 5)  # put subject to first dimension
-    labels = labels.transpose(1, 0, 2)  # put subject to first dimension
-    # now data shape is (subject, session, trial, sample, electrode, feature)
-    # and labels shape is (subject, session, trial, class)
-    standard_data = data.reshape(num_subject, -1, num_electrode, num_feature)
-    standard_labels = labels.reshape(num_subject, -1, num_classes)
-
-    logger.debug(
-        f"Finished merging data. shape of standard_data: {standard_data.shape}"
-        + f", shape of standard_labels: {standard_labels.shape}"
-    )
-
-    return standard_data, standard_labels
