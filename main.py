@@ -1,5 +1,8 @@
+from random import shuffle
 from typing import Annotated
+from torch.utils.data import DataLoader, TensorDataset
 
+import numpy as np
 import torch
 from config.logging import setUpLogger
 
@@ -9,8 +12,8 @@ from loguru import logger
 
 from constant.model_map import MODEL
 from data.dataloder import load_data
-from data.merge import merge
-from train.train import train
+from data.utils import merge_for_one_subject, split_data
+from train.training import train
 
 # use typer to parse command line arguments and parse Traceback stack
 app = typer.Typer(
@@ -42,18 +45,22 @@ def main(
         typer.Option(
             help="type of experimental task (subject-dependent, subject-independent)"
         ),
-    ] = cli_enum.TaskTypeName.SUBJECT_INDEPENDENT,
+    ] = cli_enum.TaskTypeName.SUBJECT_DEPENDENT,
     split_type: Annotated[
         cli_enum.SplitTypeName,
         typer.Option(
-            help="type of data split (kfold, leave-one-subject-out, train-test-validation)"
+            help="type of data split (kfold, leave-one-subject-out)"
         ),
-    ] = cli_enum.SplitTypeName.TRAIN_TEST_VALIDATION,
+    ] = cli_enum.SplitTypeName.LEAVE_ONE_SUBJECT_OUT,
+    split_ratio: Annotated[
+        float, typer.Option(help="ratio for train data size")
+    ] = 0.6,
     batch_size: Annotated[int, typer.Option(help="batch size for training")] = 32,
     epochs: Annotated[int, typer.Option(help="number of epochs for training")] = 20,
+    data_random: Annotated[bool, typer.Option(help="whether to shuffle the data")] = True,
     level: Annotated[
         cli_enum.LevelName, typer.Option("-l", help="level of severity for logging")
-    ] = cli_enum.LevelName.INFO,
+    ] = cli_enum.LevelName.INFO
 ):
     """
     Welcome!
@@ -80,24 +87,42 @@ def main(
         dataset, dataset_path
     )
 
-    merge(data, labels)
+    subject_ids = list(range(num_subjects))
+    if data_random:
+        shuffle(subject_ids)
 
+    for subject_id in subject_ids:
+        if task_type == cli_enum.TaskTypeName.SUBJECT_DEPENDENT:
+            train_data, train_labels, test_data, test_labels = (
+                split_data(data[subject_id], labels[subject_id], split_ratio, data_random)
+            )
+            # merge train data and labels
+            train_data, train_labels = merge_for_one_subject(train_data, train_labels)
+            # We keep session dimension for test data, 
+            # since we want to test on all session separately.
+            test_data, test_labels = merge_for_one_subject(test_data, test_labels, keep_session_dim=True)
 
-    exit(0)
+            train_loader = DataLoader(
+                dataset=TensorDataset(
+                    torch.tensor(train_data).float(),
+                    torch.tensor(train_labels).float(),
+                ),
+                batch_size=batch_size,
+                shuffle=True,
+                num_workers=4,
+            )
+            adj_matrix = None
 
+            model = MODEL[model](num_electrodes, num_features, num_classes, adj_matrix).to(device)
 
-    train(
-        model,
-        split_dataset,
-        num_subjects,
-        num_electrodes,
-        num_features,
-        num_classes,
-        device,
-        task_type,
-        batch_size,
-        epochs,
-    )
+            test_data = torch.tensor(test_data).float()
+            test_labels = torch.tensor(test_labels).float()
+
+            train(model, train_loader, test_data, test_labels, device, epochs)
+
+        else:
+            pass
+
 
 
 if __name__ == "__main__":

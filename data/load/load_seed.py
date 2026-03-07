@@ -29,7 +29,7 @@ feature_index = {
     "rasm": 6, "rasm_lds": 7, "asm": 8, "asm_lds": 9, "dcau": 10, "dcau_lds": 11
 }
 
-def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[ak.Array, ak.Array, None, int, int]:
+def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[ak.Array, ak.Array, int, int, int, int]:
     """
     feature_type: "raw", "de_lds"...
 
