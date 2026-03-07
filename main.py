@@ -1,4 +1,6 @@
 from typing import Annotated
+
+import torch
 from config.logging import setUpLogger
 
 import typer
@@ -7,6 +9,7 @@ from loguru import logger
 
 from constant.model_map import MODEL
 from data.dataloder import load_data
+from data.merge import merge
 from train.train import train
 
 # use typer to parse command line arguments and parse Traceback stack
@@ -19,17 +22,14 @@ app = typer.Typer(
 def main(
     model: Annotated[
         cli_enum.ModelName, typer.Argument(help="model name")
-    ] = cli_enum.ModelName.RGNN,
+    ] = cli_enum.ModelName.TAHAG,
     dataset: Annotated[
         cli_enum.DatasetName, typer.Argument(help="dataset name")
     ] = cli_enum.DatasetName.SEED,
     dataset_path: Annotated[
         str, typer.Option(help="path to the dataset")
-    ] = "../autodl-tmp/SEED",
+    ] = "../data/SEED",
     device: Annotated[str, typer.Option(help="device to run the model on")] = "cuda",
-    level: Annotated[
-        cli_enum.LevelName, typer.Option(help="level of severity for logging")
-    ] = cli_enum.LevelName.DEBUG,
     sample_length: Annotated[
         int, typer.Option(help="length of data points in each sample")
     ] = 1,
@@ -51,6 +51,9 @@ def main(
     ] = cli_enum.SplitTypeName.TRAIN_TEST_VALIDATION,
     batch_size: Annotated[int, typer.Option(help="batch size for training")] = 32,
     epochs: Annotated[int, typer.Option(help="number of epochs for training")] = 20,
+    level: Annotated[
+        cli_enum.LevelName, typer.Option("-l", help="level of severity for logging")
+    ] = cli_enum.LevelName.INFO,
 ):
     """
     Welcome!
@@ -61,15 +64,27 @@ def main(
     # ------------------ set up logger ------------------
     setUpLogger(level=level)
 
+    logger.info("CUDA Available: {}", torch.cuda.is_available())
+    logger.info("Device Count: {}", torch.cuda.device_count())
+
+    if torch.cuda.is_available():
+        logger.info("GPU Name: {}", torch.cuda.get_device_name(0))
+
     logger.info(
         f"Launching....\nmodel: {model} dataset: {dataset} dataset_path: {dataset_path}"
         + f"device: {device} logging level: {level} task type: {task_type}"
         + f"split type: {split_type}"
     )
 
-    split_dataset, num_subjects, num_electrodes, num_features, num_classes = load_data(
-        dataset, dataset_path, sample_length, stride, task_type, split_type, label_type
+    data, labels, num_subjects, num_electrodes, num_features, num_classes = load_data(
+        dataset, dataset_path
     )
+
+    merge(data, labels)
+
+
+    exit(0)
+
 
     train(
         model,

@@ -3,6 +3,8 @@ from functools import partial
 from scipy.io import loadmat
 from loguru import logger
 import numpy as np
+import awkward as ak
+from einops import rearrange, repeat
 
 eeg_files = [
                 ['1_20131027.mat', '2_20140404.mat', '3_20140603.mat',
@@ -27,13 +29,13 @@ feature_index = {
     "rasm": 6, "rasm_lds": 7, "asm": 8, "asm_lds": 9, "dcau": 10, "dcau_lds": 11
 }
 
-def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[list, np.ndarray, None, int, int]:
+def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[ak.Array, ak.Array, None, int, int]:
     """
     feature_type: "raw", "de_lds"...
 
     return:
-        data shape: (session(3), subject(15), trial(15), time window(different), electrode, frequency band)
-        label shape: (session(3), subject(15), trial(15)) NOT ONE-HOT ENCODED, 
+        data shape: (subject(15), session(3), trial(15), sample(different), electrode, frequency band)
+        label shape: (subject(15), session(3), trial(15), sample(different)) NOT ONE-HOT ENCODED, 
             value is 0, 1, 2 represent the emotion label.
 
     SEED dataset has two folders
@@ -78,17 +80,23 @@ def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[list, np.
     # since the label value is -1, 0, 1, we add 1 to make it 0, 1, 2 
     # for easier processing later. 
     # And reshape the label to (3, 15, 1) to match the shape of data
-    label = np.tile(label[0] + 1, (3, 15, 1))
+    label = repeat(label, '1 label -> subject session label',subject = 15, session = 3) + 1
+    
+    num_classes = len(np.unique(label))
 
-    logger.debug(f"Shaple tiled label: {label.shape}\n")
+    label = label.tolist()
 
     # Set index based on selected characteristics
-    fi = feature_index[feature_type]
+    feature_id = feature_index[feature_type]
 
-    eeg_data = [[],[],[]]
+    # shape (subject, session) each element is a list of trial data, 
+    # and each trial data is a (electrode, time window, frequency band) array.
+    eeg_data = [[] for _ in range(15)]
+    for subject_id in range(15):
+            eeg_data[subject_id] = [[] for _ in range(3)]
     # Define a function to read a single MAT file
-    for session_id, session_files in enumerate(eeg_files):
-        logger.debug(f"Reading session {session_id+1} files: {session_files}")
+    for session_id, subject_file_of_one_session in enumerate(eeg_files):
+        logger.debug(f"Reading session {session_id+1} files: {subject_file_of_one_session}")
 
         # Create a pool of worker processes
         with mp.Pool(processes=5) as pool:
@@ -96,23 +104,46 @@ def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[list, np.
             # note pool.map only supports functions with a single argument, 
             # so we use partial to fix the other arguments
             result_session = pool.map(
-                partial(parallel_read_seed_feature, fi, dir_path +f"/{session_id+1}", label), session_files)
-        for i in range(15):
-            eeg_data[session_id].append(result_session[i])
+                partial(
+                    parallel_read_seed_feature, 
+                    feature_id, 
+                    dir_path +f"/{session_id+1}", 
+                    label
+                ), 
+                subject_file_of_one_session
+            )
+        
+        for subject_id in range(15):
+            eeg_data[subject_id][session_id] = result_session[subject_id]
     
-    logger.debug(f"Len of eeg_data(session): {len(eeg_data)} len of eeg_data[0](subject): {len(eeg_data[0])} "
-                 f", len of eeg_data[0][0](trial): {len(eeg_data[0][0])}, shape of label: {label.shape}")
+    # extend the label shape to (15, 3, 15) to match the shape of data
+    for subject_id in range(15):
+        for session_id in range(3):
+            for trial_id in range(15):
+                current_lable = label[subject_id][session_id][trial_id]
+                label[subject_id][session_id][trial_id] = (
+                    [current_lable] * len(eeg_data[subject_id][session_id][trial_id])
+                )
+
+    # Turn it to the awkward array for easier processing later, 
+    # since the shape of each trial is different
+
+    eeg_data = ak.Array(eeg_data)
+    label = ak.Array(label)
+
+    logger.debug(f"Final label shape: {label.type}")
+    logger.debug(f"Final data shape: {eeg_data.type}")
 
     # No sampling rate for the extracted features, since SEED did it already.
-    return eeg_data, label, None, 15, 62
+    return eeg_data, label, 15, 62, 5, num_classes
 
-def parallel_read_seed_feature(fi, dir_path, label, file):
-    subject_data = loadmat("{}/{}".format(dir_path, file))
+def parallel_read_seed_feature(feature_id, dir_path, label, file):
+    subject_data = loadmat(f"{dir_path}/{file}")
     logger.debug(f"dir_path: {dir_path}, file: {file}")
     keys = list(subject_data.keys())[3:]
     trail_datas = []
     for i in range(15):
-        trail_data = list(np.array(subject_data[keys[i * 12+fi]]).transpose((1, 0, 2)))
+        trail_data = list(np.array(subject_data[keys[i * 12+feature_id]]).transpose((1, 0, 2)))
         logger.debug(f"Subject {file} session {dir_path[-1]} trail {i} data shape: {np.array(trail_data).shape}")
         trail_datas.append(trail_data)
     

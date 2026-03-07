@@ -15,6 +15,7 @@ def segment_data(data, sample_length, stride):
     input: original band features of EEG signal
     output:
     input shape -> data:  (session, subject, trail, time window, electrode, band)
+    (sampling twice, first by time window, then by sample)
     output shape -> data:  (session, subject, trail, sample, time window, electrode, band)
     if sample_length == 1, then the output shape -> data: 
         (session, subject, trail, sample(time window), electrode, band)

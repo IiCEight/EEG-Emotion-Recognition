@@ -33,7 +33,7 @@ def merge_and_split_deap(data: list, labels: list, num_classes: int, task_type: 
     else:
         return get_subject_dependent_splits(data,labels)
 
-def merge_and_split_seed(data: list, labels: np.ndarray, num_classes: int, task_type: str):
+def merge_and_split_seed(data: list, labels: np.ndarray, num_classes: int, task_type: str, split_type: str):
     """
     input data shape (session, subject, trail, sample(different), electrode, band)
 
@@ -45,9 +45,9 @@ def merge_and_split_seed(data: list, labels: np.ndarray, num_classes: int, task_
     logger.info("Start merging and splitting SEED dataset...")
 
     if task_type == CLI_arguments_enum.TaskTypeName.SUBJECT_INDEPENDENT:
-        return subject_independent_splits(data, labels)
+        return subject_independent_splits(data, labels, split_type)
     else:
-        return subject_dependent_splits(data, labels)
+        return subject_dependent_splits(data, labels, split_type)
         
 def subject_independent_splits(data, labels, test_fraction=0.15, val_fraction=0.1):
     """

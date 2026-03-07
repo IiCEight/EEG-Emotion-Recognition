@@ -4,6 +4,7 @@ from torch.utils.data import DataLoader, TensorDataset
 from constant import CLI_arguments_enum
 from constant.model_map import IS_GRAPH_MODEL, MODEL
 from data.seed import SEED_RGNN_ADJACENCY_MATRIX
+from model.RGNN_official import SEED_ADJACENCY_MATRIX
 from train.graph_train import graph_train
 from utils.metric import Metric
 
@@ -24,7 +25,10 @@ def train(
     edge_adj = None
     if IS_GRAPH_MODEL[model_name]:
         # construct the initial edge adjacency matrix
-        edge_adj = torch.Tensor(SEED_RGNN_ADJACENCY_MATRIX)
+        edge_adj = torch.Tensor(SEED_ADJACENCY_MATRIX)
+        # edge_adj = torch.Tensor(SEED_RGNN_ADJACENCY_MATRIX)
+        
+
 
     if task_type == CLI_arguments_enum.TaskTypeName.SUBJECT_DEPENDENT:
         # train a separate model for each subject
