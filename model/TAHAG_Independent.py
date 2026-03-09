@@ -198,10 +198,10 @@ class TAHAG(nn.Module):
 
         return cls_out, domain_out, mmd_loss
 
-if __name__ == '__main__':
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    x = torch.randn([10, 62, 5]).to(device)
-    adj = np.eye(62)
-    model = Model(5, 3, adj, 0.5, True, True).to(device)
-    out = model(x)
-    print(out.shape)
+# if __name__ == '__main__':
+#     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+#     x = torch.randn([10, 62, 5]).to(device)
+#     adj = np.eye(62)
+#     model = Model(5, 3, adj, 0.5, True, True).to(device)
+#     out = model(x)
+#     print(out.shape)

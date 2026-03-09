@@ -76,7 +76,7 @@ def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[ak.Array,
 
     label = label['label']
     
-    logger.debug(f"Type of label: {type(label)}\n label: {label}")
+    logger.debug(f"Type of label: {type(label)}")
     # since the label value is -1, 0, 1, we add 1 to make it 0, 1, 2 
     # for easier processing later. 
     # And reshape the label to (3, 15, 1) to match the shape of data
@@ -144,7 +144,7 @@ def parallel_read_seed_feature(feature_id, dir_path, label, file):
     trail_datas = []
     for i in range(15):
         trail_data = list(np.array(subject_data[keys[i * 12+feature_id]]).transpose((1, 0, 2)))
-        logger.debug(f"Subject {file} session {dir_path[-1]} trail {i} data shape: {np.array(trail_data).shape}")
+        # logger.debug(f"Subject {file} session {dir_path[-1]} trail {i} data shape: {np.array(trail_data).shape}")
         trail_datas.append(trail_data)
     
     return trail_datas

@@ -9,7 +9,8 @@ import numpy as np
 def merge_for_all_subjects(
     data: ak.Array,
     labels: ak.Array,
-    keep_session_dim = False
+    keep_session_dim = False,
+    merge_subject_dim = True
 )-> tuple[np.ndarray, np.ndarray]:
     """
     input:
@@ -23,6 +24,10 @@ def merge_for_all_subjects(
         else:
             data: ak.Array, shape (subject, new_sample (session * trial * sample), electrode, feature)
             label: ak.Array, shape (subject, new_sample (session * trial * sample))
+
+        if merge_subject_dim and not keep_session_dim:
+            data: ak.Array, shape (new_sample (subject * session * trial * sample), electrode, feature)
+            label: ak.Array, shape (new_sample (subject * session * trial * sample))
     """
     logger.info(f"Merging data and labels....")
 
@@ -43,6 +48,10 @@ def merge_for_all_subjects(
     data = rearrange(data, "subject session samples electrode feature ->  subject (session samples) electrode feature")
     
     labels = rearrange(labels, 'subject session samples -> subject (session samples)')
+
+    if merge_subject_dim:
+        data = rearrange(data, "subject samples electrode feature -> (subject samples) electrode feature")
+        labels = rearrange(labels, "subject samples -> (subject samples)")
 
 
     logger.info("Finish merging! data shape: {}, label shape: {}", data.shape, labels.shape)
@@ -93,6 +102,9 @@ def merge_for_one_subject(
     
 def split_data(data, labels, split_ratio, random = False):
     """
+    For one subject, we split 60% of the trials as train data 
+        and the rest 40% as test data.
+        
     input:
         data: ak.Array, shape (session, trial, sample, electrode, feature)
         label: ak.Array, shape (session, trial, sample)

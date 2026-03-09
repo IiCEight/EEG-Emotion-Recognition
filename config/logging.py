@@ -9,7 +9,7 @@ def setUpLogger(level= str):
             # colorize=True,
             level=   level,
             format=     "<green>{time:HH:mm:ss}</green> | " \
-                        "<level>{level: <10}</level> " \
+                        "<level>{level: <8}</level> " \
                         "{name: <8} " \
                         "{function: <8} " \
                         "{line: <3} "
