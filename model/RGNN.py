@@ -111,7 +111,6 @@ class RGNN(nn.Module):
         return noised_label
 
 
-
 class SparseL1Regularization(nn.Module):
     def __init__(self, l1_lambda):
         super(SparseL1Regularization, self).__init__()
@@ -145,36 +144,6 @@ def global_add_pool(x):
     :return: the result returned after the global and pool operation, shape of (batch, num_hidden)
     """
     return torch.sum(x, 1)
-
-
-def add_remaining_self_loops(edge_weight=None,
-                             fill_value=1,
-                             num_nodes=None):
-    edge_index = [[], []]
-    for i in range(num_nodes):
-        for j in range(num_nodes):
-            edge_index[i][j] = 1
-    row, col = edge_index
-    mask = row != col
-    inv_mask = 1 - mask
-    loop_weight = torch.full(
-        (num_nodes,),
-        fill_value,
-        dtype=None if edge_weight is None else edge_weight.dtype,
-        device=edge_index.device)
-
-    if edge_weight is not None:
-        assert edge_weight.numel() == edge_index.size(1)
-        remaining_edge_weight = edge_weight[inv_mask]
-        if remaining_edge_weight.numel() > 0:
-            loop_weight[row[inv_mask]] = remaining_edge_weight
-        edge_weight = torch.cat([edge_weight[mask], loop_weight], dim=0)
-
-    loop_index = torch.arange(0, num_nodes, dtype=row.dtype, device=row.device)
-    loop_index = loop_index.unsqueeze(0).repeat(2, 1)
-    edge_index = torch.cat([edge_index[:, mask], loop_index], dim=1)
-
-    return edge_index, edge_weight
 
 
 def normalize(w):

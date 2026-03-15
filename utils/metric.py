@@ -2,6 +2,7 @@ import statistics
 
 from loguru import logger
 import numpy as np
+from requests import session
 import torch
 from sklearn.metrics import accuracy_score, f1_score, cohen_kappa_score
 from collections import defaultdict
@@ -16,38 +17,38 @@ class Metric:
         session for each subject
     subject_all_sessions_acc: the list of accuracy for each session of each subject
     """
-    def __init__(self,num_subjects:int ):
-        
-        self.best_subject_avg_acc = [0.0] * num_subjects
-        self.best_one_session_subject_avg_acc = [0.0] * num_subjects
-        self.best_two_sessions_subject_avg_acc = [0.0] * num_subjects
-        self.subject_all_sessions_acc = [[] for _ in range(num_subjects)]
+    def __init__(self,num_subjects:int, num_session:int):
+        self.accuracy  = np.zeros((num_subjects, num_session))
 
-    def update(self, subject_id:int, accs:list[float]):
-        """
-        Args:
-            subject_id: the ID of the current subject
-            acc: a list of accuracy for each session of the current subject
-        """
-        self.subject_all_sessions_acc[subject_id] = accs
-        best_session = max(accs)
-        best_two_sessions_avg = sum(sorted(accs, reverse=True)[:2]) / 2
-        all_sessions_avg = sum(accs) / len(accs)
-        if best_session > self.best_one_session_subject_avg_acc[subject_id]:
-            logger.info(f"---> New best one session for current subject avg acc: {best_session:.4f}")
-            self.best_one_session_subject_avg_acc[subject_id] = best_session
-        if best_two_sessions_avg > self.best_two_sessions_subject_avg_acc[subject_id]:
-            logger.info(f"---> New best two sessions for current subject avg acc: {best_two_sessions_avg:.4f}")
-            self.best_two_sessions_subject_avg_acc[subject_id] = best_two_sessions_avg
-        if all_sessions_avg > self.best_subject_avg_acc[subject_id]:
-            logger.info(f"---> New all sessions for current subject avg acc: {all_sessions_avg:.4f}")
-            self.best_subject_avg_acc[subject_id] = all_sessions_avg
+    def update(self, subject_id:int,session_id:int, acc:float):
+        if acc > self.accuracy[subject_id, session_id]:
+            logger.info("--> A new better acc {:<.4f} on subject {} session {}", acc, subject_id, session_id)
+            self.accuracy[subject_id, session_id] = acc
 
-    def best_all_subjects_avg_acc(self):
-        best_all_subjects_avg_acc = sum(self.best_subject_avg_acc) / len(self.best_subject_avg_acc)
-        best_two_sessions = sum(self.best_two_sessions_subject_avg_acc) / len(self.best_two_sessions_subject_avg_acc)
-        best_one_session = sum(self.best_one_session_subject_avg_acc) / len(self.best_one_session_subject_avg_acc)
-        return best_all_subjects_avg_acc, best_two_sessions, best_one_session
+    def all_sessions_mean_acc(self)->tuple[float, float]:
+        """
+        return
+            The mean of acc on all subjects and all sessions
+            The std of acc on all subjects and all sessions
+        """
+        return self.accuracy.mean(), self.accuracy.std()
+    
+    def two_best_sessions_mean_acc(self)->tuple[float, float]:
+        """
+        return
+            The mean of acc on all subjects and two best sessions
+            The std of acc on all subjects and two best sessions
+        """
+        np.sort(self.accuracy, axis=1)
+        return self.accuracy[:, :2].mean(), self.accuracy[:, :2].std()
+    
+    def one_best_session_mean_acc(self)->tuple[float, float]:
+        """
+        return
+            The mean of acc on all subjects and one best session
+            The std of acc on all subjects and one best session
+        """
+        return self.accuracy.max(axis=1).mean(), self.accuracy.max(axis=1).std()
 
 
 class Metric_:

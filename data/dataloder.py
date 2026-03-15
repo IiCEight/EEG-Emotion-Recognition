@@ -14,8 +14,8 @@ def load_data(
 ) -> tuple[ak.Array, ak.Array, int, int, int, int]:
     """
     return:
-        data: list, shape (subject,session, trail, sample, electrode, feature)
-        label: list, shape (subject, session, trail, sample)
+        data:  list, shape (session, subject, trail, sample, electrode, feature)
+        label: list, shape (session, subject, trail, sample)
         num_subjects
         num_electrodes
         num_features
@@ -24,7 +24,7 @@ def load_data(
     logger.info(f"Loading dataset {dataset_name} from path {dataset_path}")
 
     function_map = {
-        "DEAP": load_deap,
+        # "DEAP": load_deap, TODO.
         "SEED": load_seed,
     }
 

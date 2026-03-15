@@ -1,10 +1,11 @@
 import math
+from loguru import logger
 import numpy as np
 
 import torch
 import torch.nn as nn
 from torch.autograd import Variable, Function
-from utils.utils import mmd
+from utils.utils import get_adj_from_standard, mmd
 
 class ReverseLayerF(Function):
     @staticmethod
@@ -112,7 +113,10 @@ class unit_gcn(nn.Module):
             A1 = self.conv_a(x).permute(0, 2, 1)
             A2 = self.conv_b(x)
             A1 = self.tan(torch.matmul(A1, A2) / A1.size(-1))
+            # logger.info("The shape of A1 is {}", A1.shape)
+            # logger.info("The shape of A is {}", A.shape)
             A3 = A + A1 * self.alpha
+            # logger.info("The shape of A3 is {}", A3.shape)
             A2 = x
             y = self.conv_d(torch.matmul(A2, A3))
         else:
@@ -161,10 +165,11 @@ class sharedNet(nn.Module):
         return x, hid_feats1, hid_feats2
 
 class TAHAG(nn.Module):
-    def __init__(self, in_feats, num_class = 3, adj = None, drop_out = 0, adaptive = True, attention = True):
+    def __init__(self,num_electrodes, in_feats, num_class = 3, adj = None, drop_out = 0, domain_adaptation = True, attention = True):
         super(TAHAG, self).__init__()
-        A = adj
+        A = adj if adj is not None else get_adj_from_standard()
         self.num_class = num_class
+        adaptive = domain_adaptation
         self.sharedNet = sharedNet(in_feats, A, adaptive, attention)
         self.domain_classifier = nn.Linear(128, 2)
         self.fc = nn.Linear(128, num_class)
@@ -175,28 +180,33 @@ class TAHAG(nn.Module):
         else:
             self.drop_out = lambda x: x
 
-    def forward(self, x_src, x_tgt, alpha = 0.01):
+    def forward(self, x_src, x_tgt=None, alpha = 0.01):
         mmd_loss = 0.
         domain_out = None
+        domain_src_out = None
+        domain_tgt_out = None
         src_feats, src_hid_feat1, src_hid_feat2 = self.sharedNet(x_src)
 
-        if self.training == True:
+        if self.training and x_tgt is not None:
             tgt_feats, tgt_hid_feat1, tgt_hid_feat2 = self.sharedNet(x_tgt)
-            mmd_loss1 = mmd(src_hid_feat1, tgt_hid_feat1)
-            mmd_loss2 = mmd(src_hid_feat2, tgt_hid_feat2)
+
+            # MMD implementation here assumes equal batch sizes.
+            mmd_batch = min(src_hid_feat1.size(0), tgt_hid_feat1.size(0))
+            mmd_loss1 = mmd(src_hid_feat1[:mmd_batch], tgt_hid_feat1[:mmd_batch])
+            mmd_loss2 = mmd(src_hid_feat2[:mmd_batch], tgt_hid_feat2[:mmd_batch])
             mmd_loss = mmd_loss + mmd_loss1 + mmd_loss2
 
             reverse_src = ReverseLayerF.apply(src_feats, alpha)
             domain_src_out = self.domain_classifier(reverse_src)
             reverse_tgt = ReverseLayerF.apply(tgt_feats, alpha)
             domain_tgt_out = self.domain_classifier(reverse_tgt)
-            domain_out = torch.cat([domain_src_out, domain_tgt_out])
+            # domain_out = torch.cat([domain_src_out, domain_tgt_out])
 
         # classifier.
         src_feats2 = self.drop_out(src_feats)
         cls_out = self.fc(src_feats2)
 
-        return cls_out, domain_out, mmd_loss
+        return cls_out, domain_src_out, domain_tgt_out, mmd_loss
 
 # if __name__ == '__main__':
 #     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

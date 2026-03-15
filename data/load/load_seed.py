@@ -29,13 +29,13 @@ feature_index = {
     "rasm": 6, "rasm_lds": 7, "asm": 8, "asm_lds": 9, "dcau": 10, "dcau_lds": 11
 }
 
-def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[ak.Array, ak.Array, int, int, int, int]:
+def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[list, list, int, int, int, int]:
     """
     feature_type: "raw", "de_lds"...
 
     return:
-        data shape: (subject(15), session(3), trial(15), sample(different), electrode, frequency band)
-        label shape: (subject(15), session(3), trial(15), sample(different)) NOT ONE-HOT ENCODED, 
+        data  shape: (session(3), subject(15), trial(15), sample(different), electrode, frequency band)
+        label shape: (session(3), subject(15), trial(15), sample(different)) NOT ONE-HOT ENCODED, 
             value is 0, 1, 2 represent the emotion label.
 
     SEED dataset has two folders
@@ -80,7 +80,7 @@ def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[ak.Array,
     # since the label value is -1, 0, 1, we add 1 to make it 0, 1, 2 
     # for easier processing later. 
     # And reshape the label to (3, 15, 1) to match the shape of data
-    label = repeat(label, '1 label -> subject session label',subject = 15, session = 3) + 1
+    label = repeat(label, '1 label -> session subject label',subject=15, session=3) + 1
     
     num_classes = len(np.unique(label))
 
@@ -89,11 +89,11 @@ def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[ak.Array,
     # Set index based on selected characteristics
     feature_id = feature_index[feature_type]
 
-    # shape (subject, session) each element is a list of trial data, 
+    # shape (session, subject) each element is a list of trial data, 
     # and each trial data is a (electrode, time window, frequency band) array.
-    eeg_data = [[] for _ in range(15)]
-    for subject_id in range(15):
-            eeg_data[subject_id] = [[] for _ in range(3)]
+    eeg_data = [[] for _ in range(3)]
+    for session_id in range(3):
+            eeg_data[session_id] = [[] for _ in range(15)]
     # Define a function to read a single MAT file
     for session_id, subject_file_of_one_session in enumerate(eeg_files):
         logger.debug(f"Reading session {session_id+1} files: {subject_file_of_one_session}")
@@ -114,25 +114,25 @@ def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[ak.Array,
             )
         
         for subject_id in range(15):
-            eeg_data[subject_id][session_id] = result_session[subject_id]
+            eeg_data[session_id][subject_id] = result_session[subject_id]
     
     # extend the label shape to (15, 3, 15) to match the shape of data
-    for subject_id in range(15):
-        for session_id in range(3):
+    for session_id in range(3):
+        for subject_id in range(15):
             for trial_id in range(15):
-                current_lable = label[subject_id][session_id][trial_id]
-                label[subject_id][session_id][trial_id] = (
-                    [current_lable] * len(eeg_data[subject_id][session_id][trial_id])
+                current_lable = label[session_id][subject_id][trial_id]
+                label[session_id][subject_id][trial_id] = (
+                    [current_lable] * len(eeg_data[session_id][subject_id][trial_id])
                 )
 
     # Turn it to the awkward array for easier processing later, 
     # since the shape of each trial is different
 
-    eeg_data = ak.Array(eeg_data)
-    label = ak.Array(label)
+    # eeg_data = ak.Array(eeg_data)
+    # label = ak.Array(label)
 
-    logger.debug(f"Final label shape: {label.type}")
-    logger.debug(f"Final data shape: {eeg_data.type}")
+    # logger.debug(f"Final label shape: {label.type}")
+    # logger.debug(f"Final data shape: {eeg_data.type}")
 
     # No sampling rate for the extracted features, since SEED did it already.
     return eeg_data, label, 15, 62, 5, num_classes

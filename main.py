@@ -12,8 +12,10 @@ from loguru import logger
 
 from constant.model_map import MODEL
 from data.dataloder import load_data
-from data.utils import merge_for_all_subjects, merge_for_one_subject, split_data
+from data.utils import merge_for_all_subjects, merge_for_one_subject, split_data_wrt_subjects, split_data_wrt_trials
+# from train.training_TAHAG import train
 from train.training import train
+
 from utils.graphConstructionFromStandard import get_adj_from_standard
 from utils.metric import Metric
 
@@ -26,10 +28,10 @@ app = typer.Typer(
 @app.command()
 def main(
     model_name: Annotated[
-        cli_enum.ModelName, typer.Argument(help="model name")
-    ] = cli_enum.ModelName.RGNN,
+        cli_enum.ModelName, typer.Option("-m", help="model name")
+    ] = cli_enum.ModelName.SABER,
     dataset: Annotated[
-        cli_enum.DatasetName, typer.Argument(help="dataset name")
+        cli_enum.DatasetName, typer.Option(help="dataset name")
     ] = cli_enum.DatasetName.SEED,
     dataset_path: Annotated[
         str, typer.Option(help="path to the dataset")
@@ -47,7 +49,7 @@ def main(
         typer.Option(
             help="type of experimental task (subject-dependent, subject-independent)"
         ),
-    ] = cli_enum.TaskTypeName.SUBJECT_INDEPENDENT,
+    ] = cli_enum.TaskTypeName.SUBJECT_DEPENDENT,
     split_type: Annotated[
         cli_enum.SplitTypeName,
         typer.Option(
@@ -57,9 +59,10 @@ def main(
     split_ratio: Annotated[
         float, typer.Option(help="ratio for train data size")
     ] = 0.6,
-    batch_size: Annotated[int, typer.Option(help="batch size for training")] = 128,
-    epochs: Annotated[int, typer.Option(help="number of epochs for training")] = 200,
-    data_random: Annotated[bool, typer.Option(help="whether to shuffle the data")] = True,
+    batch_size: Annotated[int, typer.Option(help="batch size for training")] = 64,
+    epochs: Annotated[int, typer.Option(help="number of epochs for training")] = 100,
+    data_random: Annotated[bool, typer.Option(help="whether to shuffle the data")] = False,
+    only_one_experiment: Annotated[bool, typer.Option(help="whether to run only one experiment for debugging")] = True,
     level: Annotated[
         cli_enum.LevelName, typer.Option("-l", help="level of severity for logging")
     ] = cli_enum.LevelName.INFO
@@ -90,92 +93,93 @@ def main(
         dataset, dataset_path
     )
 
+
+    num_sessions = len(labels)
     subject_ids = list(range(num_subjects))
     if data_random:
         shuffle(subject_ids)
 
-    metric = Metric(num_subjects)
+    metric = Metric(num_subjects, num_sessions)
 
-    for subject_id in subject_ids:
-        if task_type == cli_enum.TaskTypeName.SUBJECT_DEPENDENT:
-            train_data, train_labels, test_data, test_labels = (
-                split_data(data[subject_id], labels[subject_id], split_ratio, data_random)
-            )
-            # merge train data and labels
-            train_data, train_labels = merge_for_one_subject(train_data, train_labels)
-            # We keep session dimension for test data, 
-            # since we want to test on all sessions separately.
-            test_data, test_labels = merge_for_one_subject(test_data, test_labels, keep_session_dim=True)
+    logger.debug("num_sessions {} num_subjects {}", num_sessions, num_subjects)
 
-            train_loader = DataLoader(
-                dataset=TensorDataset(
-                    torch.tensor(train_data).float(),
-                    torch.tensor(train_labels).float(),
-                ),
-                batch_size=batch_size,
-                shuffle=True,
-                num_workers=4,
-            )
-            adj_matrix = get_adj_from_standard()
-
-            model = MODEL[model_name](num_electrodes, num_features, num_classes).to(device)
-
-            train(model, metric, train_loader, test_data, test_labels, batch_size, device, epochs, task_type, subject_id)
-
-            logger.info(f"\n--------------> Finished training for subject {subject_id}")
-            logger.info("Best all sessions : {:<.4f}, "
-                        "two sessions: {:<.4f}, one session : {:<.4f}",
-                        metric.best_subject_avg_acc[subject_id], 
-                        metric.best_two_sessions_subject_avg_acc[subject_id], 
-                        metric.best_one_session_subject_avg_acc[subject_id]
-                        )
-
-        else:
-            # For subject-independent setting, we leave current subject out as test data
-            # and merge the rest subjects' data as train data.
-            mask = np.ones(num_subjects, dtype=bool)
-            mask[subject_id] = False
-            train_data = data[mask]
-            train_labels = labels[mask]
-            test_data = data[subject_id]
-            test_labels = labels[subject_id]
-
-            train_data, train_labels = merge_for_all_subjects(train_data, train_labels)
-            # We keep session dimension for test data, 
-            # since we want to test on all sessions separately.
-            test_data, test_labels = merge_for_one_subject(test_data, test_labels, keep_session_dim=True)
-
-            train_loader = DataLoader(
-                dataset=TensorDataset(
-                    torch.tensor(train_data).float(),
-                    torch.tensor(train_labels).float(),
-                ),
-                batch_size=batch_size,
-                shuffle=True,
-                num_workers=4
-            )
-            adj_matrix = get_adj_from_standard()
-
-            model = MODEL[model_name](num_electrodes, num_features, num_classes, domain_adaptation=True).to(device)
-
-
-            train(model, metric, train_loader, test_data, test_labels, batch_size, device, epochs, task_type, subject_id)
-
-            logger.info(f"\n--------------> Finished training for subject {subject_id}")
-            logger.info("Best all sessions : {:<.4f}, "
-                        "two sessions: {:<.4f}, one session : {:<.4f}",
-                        metric.best_subject_avg_acc[subject_id], 
-                        metric.best_two_sessions_subject_avg_acc[subject_id], 
-                        metric.best_one_session_subject_avg_acc[subject_id]
-                        )
-
-
-    logger.info(f"\n-----------> Finished training for all subjects!!!!")
-    all_sessions, two, one = metric.best_all_subjects_avg_acc() 
-    logger.info("Best all subjects avg acc: {:<.4f}, "
-                "two sessions: {:<.4f}, one session : {:<.4f}",
-                all_sessions, two, one
+    for session_id in range(num_sessions):
+        for subject_id in subject_ids:
+            if task_type == cli_enum.TaskTypeName.SUBJECT_DEPENDENT:
+                train_data, train_labels, test_data, test_labels = (
+                    split_data_wrt_trials(
+                        data[session_id][subject_id], 
+                        labels[session_id][subject_id], split_ratio, data_random)
                 )
+                # merge train data and labels
+                train_data, train_labels = merge_for_one_subject(train_data, train_labels)
+                # We keep session dimension for test data, 
+                # since we want to test on all sessions separately.
+                test_data, test_labels = merge_for_one_subject(test_data, test_labels)
+
+                train_loader = DataLoader(
+                    dataset=TensorDataset(
+                        torch.tensor(train_data).float(),
+                        torch.tensor(train_labels).float(),
+                    ),
+                    batch_size=batch_size,
+                    shuffle=True,
+                    drop_last=True,
+                    num_workers=4,
+                )
+                adj_matrix = get_adj_from_standard()
+
+                model = MODEL[model_name](num_electrodes, num_features, num_classes).to(device)
+
+                train(model, metric, train_loader, test_data, test_labels, batch_size, device, epochs, task_type, subject_id, session_id)
+
+                logger.info("\n--------------> Finished training for subject {} session {} acc {}",
+                            subject_id, session_id, metric.accuracy[subject_id, session_id]
+                            )
+
+            else:
+                # For subject-independent setting, we leave current subject out as test data
+                # and merge the rest subjects' data as train data.
+                train_data, train_labels, test_data, test_labels = (
+                    split_data_wrt_subjects(
+                        data[session_id], labels[session_id], subject_id)
+                )
+
+                train_data, train_labels = merge_for_all_subjects(train_data, train_labels)
+
+                test_data, test_labels = merge_for_one_subject(test_data, test_labels)
+
+                train_loader = DataLoader(
+                    dataset=TensorDataset(
+                        torch.tensor(train_data).float(),
+                        torch.tensor(train_labels).float(),
+                    ),
+                    batch_size=batch_size,
+                    shuffle=True,
+                    num_workers=4
+                )
+                adj_matrix = get_adj_from_standard()
+
+                model = MODEL[model_name](num_electrodes, num_features, num_classes, domain_adaptation=True).to(device)
+
+
+                train(model, metric, train_loader, test_data, test_labels, batch_size, device, epochs, task_type, subject_id, session_id)
+
+                logger.info("\n--------------> Finished training for all subjects session {}, acc {:<.4f} on subject {}",
+                            session_id, metric.accuracy[subject_id, session_id], subject_id
+                            )
+            
+            if only_one_experiment:
+                break
+
+
+    logger.info("\n-----------> Finished training for all subjects!!!!")
+    all_mean, all_std = metric.all_sessions_mean_acc()
+    two_mean, two_std = metric.two_best_sessions_mean_acc()
+    one_mean, one_std = metric.one_best_session_mean_acc()
+
+    logger.info("\n all: mean {} std {}\ntwo: mean {} std {}\none: mean {} std {}\n",
+                all_mean, all_std, two_mean, two_std, one_mean, one_std)
 
 
 if __name__ == "__main__":
