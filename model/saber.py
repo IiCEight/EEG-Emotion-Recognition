@@ -22,7 +22,7 @@ class Saber(nn.Module):
         self.dropout = dropout
         self.domain_adaptation = domain_adaptation
         self.num_classes = num_classes
-        self.conv_out_dim = 32
+        self.conv_out_dim = 16
 
         # used for weight to balance the contribution of the common and individual adjacency matrices
         self.omega = nn.Parameter(torch.zeros(1), requires_grad=True)

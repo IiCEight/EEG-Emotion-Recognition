@@ -7,9 +7,7 @@ from utils.graphConstructionFromStandard import *
 
 import numpy as np
 import random
-random.seed(0)
-
-dataset_path = {'seed4': '/home/wsl/f/Common_Win_WSL_Datasets/SEEDIV_DATASET/eeg_feature_smooth', 'seed3' : '/home/wsl/f/Common_Win_WSL_Datasets/SEED_DATASET/ExtractedFeatures'}
+# random.seed(0)
 
 def norminx(data, type='min_max'):
     '''

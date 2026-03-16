@@ -12,11 +12,10 @@ from loguru import logger
 
 from constant.model_map import MODEL
 from data.dataloder import load_data
-from data.utils import merge_for_all_subjects, merge_for_one_subject, split_data_wrt_subjects, split_data_wrt_trials
+from data.utils import merge_for_all_subjects, merge_for_one_subject, normalization_wrt_session, split_data_wrt_subjects, split_data_wrt_trials
 # from train.training_TAHAG import train
 from train.training import train
 
-from utils.graphConstructionFromStandard import get_adj_from_standard
 from utils.metric import Metric
 
 # use typer to parse command line arguments and parse Traceback stack
@@ -49,7 +48,7 @@ def main(
         typer.Option(
             help="type of experimental task (subject-dependent, subject-independent)"
         ),
-    ] = cli_enum.TaskTypeName.SUBJECT_DEPENDENT,
+    ] = cli_enum.TaskTypeName.SUBJECT_INDEPENDENT,
     split_type: Annotated[
         cli_enum.SplitTypeName,
         typer.Option(
@@ -93,6 +92,7 @@ def main(
         dataset, dataset_path
     )
 
+    # data = normalization_wrt_session(data, type='min_max')
 
     num_sessions = len(labels)
     subject_ids = list(range(num_subjects))
@@ -127,13 +127,12 @@ def main(
                     drop_last=True,
                     num_workers=4,
                 )
-                adj_matrix = get_adj_from_standard()
 
                 model = MODEL[model_name](num_electrodes, num_features, num_classes).to(device)
 
                 train(model, metric, train_loader, test_data, test_labels, batch_size, device, epochs, task_type, subject_id, session_id)
 
-                logger.info("\n--------------> Finished training for subject {} session {} acc {}",
+                logger.info("\n--------------> Finished training for subject {} session {} acc {:<.4f}",
                             subject_id, session_id, metric.accuracy[subject_id, session_id]
                             )
 
@@ -158,7 +157,6 @@ def main(
                     shuffle=True,
                     num_workers=4
                 )
-                adj_matrix = get_adj_from_standard()
 
                 model = MODEL[model_name](num_electrodes, num_features, num_classes, domain_adaptation=True).to(device)
 
@@ -178,7 +176,7 @@ def main(
     two_mean, two_std = metric.two_best_sessions_mean_acc()
     one_mean, one_std = metric.one_best_session_mean_acc()
 
-    logger.info("\n all: mean {} std {}\ntwo: mean {} std {}\none: mean {} std {}\n",
+    logger.info("\n all: mean {:<.4f} std {:<.4f}\ntwo: mean {:<.4f} std {:<.4f}\none: mean {:<.4f} std {:<.4f}\n",
                 all_mean, all_std, two_mean, two_std, one_mean, one_std)
 
 

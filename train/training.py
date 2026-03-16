@@ -24,7 +24,7 @@ def train(
     task_type: str,
     subject_id: int,
     session_id:int,
-    learning_rate: float = 0.001,
+    learning_rate: float = 5e-4,
 ):
 
     criterion = torch.nn.CrossEntropyLoss()
@@ -45,19 +45,18 @@ def train(
 
     # Define the DANN decay math
     # PyTorch automatically multiplies this result by your initial_lr
-    # decay_math = lambda epoch: 1.0 / (1.0 + 10 * (epoch / epochs)) ** 0.75
-    # # Attach the built-in scheduler to your optimizer
-    # scheduler = LambdaLR(optimizer, lr_lambda=decay_math)
+    decay_math = lambda epoch: 1.0 / (1.0 + 10 * (epoch / epochs)) ** 0.75
+    # Attach the built-in scheduler to your optimizer
+    scheduler = LambdaLR(optimizer, lr_lambda=decay_math)
 
     # 1. Initialize the Cosine Scheduler
     # T_max is the number of steps until the LR hits the minimum. 
     # eta_min is the lowest the LR will go (prevents it from hitting absolute zero).
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-        optimizer, 
-        T_max=epochs,  # Set this to your total epochs
-        eta_min=1e-4
-    )
-
+    # scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+    #     optimizer,
+    #     T_max=epochs,  # Set this to your total epochs
+    #     eta_min=1e-4
+    # )
 
     test_data = torch.tensor(test_data).float()
     test_labels = torch.tensor(test_labels).float()
@@ -105,7 +104,7 @@ def train(
             loss.backward()
 
             #  Add a gradient clipping step to prevent exploding gradients
-            clip_grad_norm_(model.parameters(), max_norm=1.0)
+            # clip_grad_norm_(model.parameters(), max_norm=1.0)
 
             optimizer.step()
             epoch_loss += loss.item()
