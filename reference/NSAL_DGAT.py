@@ -4,6 +4,7 @@
 ##
 ##
 
+from loguru import logger
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -251,7 +252,7 @@ class Discriminator(nn.Module):
 
 
 class Domain_adaption_model(nn.Module):
-    def __init__(self, channels=62, feature_dim=5, num_of_class=3, layers=2, hidden_1=256, hidden_2=64, device='cuda:1', source_num=3944):
+    def __init__(self, channels=62, feature_dim=5, num_of_class=3, layers=2, hidden_1=256, hidden_2=64, device='cuda:0', source_num=3944):
         super(Domain_adaption_model, self).__init__()
         in_planes = [feature_dim, channels]
         self.encoder = Encoder(in_planes=in_planes, layers=layers, hidden_1=hidden_1, hidden_2=hidden_2, class_nums=num_of_class )
@@ -293,6 +294,7 @@ class Domain_adaption_model(nn.Module):
         return target_predict
 
     def get_init_banks(self, source, source_index):
+        # logger.info(source_index.shape)
         self.eval()
         source_f, source_att = self.encoder(source)
 

@@ -4,6 +4,40 @@ import awkward as ak
 from einops import rearrange
 from loguru import logger
 import numpy as np
+import torch
+from torch.utils.data import DataLoader, TensorDataset
+
+from constant import CLI_arguments_enum
+
+
+def merge_and_split(data:list, labels:list, task_type, session_id, subject_id, split_ratio, data_random
+                    )-> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    if task_type == CLI_arguments_enum.TaskTypeName.SUBJECT_DEPENDENT:
+        train_data, train_labels, test_data, test_labels = (
+            split_data_wrt_trials(
+                data[session_id][subject_id], 
+                labels[session_id][subject_id], split_ratio, data_random)
+        )
+        # merge train data and labels
+        train_data, train_labels = merge_for_one_subject(train_data, train_labels)
+        # We keep session dimension for test data, 
+        # since we want to test on all sessions separately.
+        test_data, test_labels = merge_for_one_subject(test_data, test_labels)
+
+    else:
+        # For subject-independent setting, we leave current subject out as test data
+        # and merge the rest subjects' data as train data.
+        train_data, train_labels, test_data, test_labels = (
+            split_data_wrt_subjects(
+                data[session_id], labels[session_id], subject_id)
+        )
+
+        train_data, train_labels = merge_for_all_subjects(train_data, train_labels)
+
+        test_data, test_labels = merge_for_one_subject(test_data, test_labels)
+
+    return train_data, train_labels, test_data, test_labels
+
 
 
 def merge_for_all_subjects(

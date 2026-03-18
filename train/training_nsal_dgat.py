@@ -4,171 +4,160 @@ from typing import Optional
 import numpy as np
 import torch
 from loguru import logger
+from torch import nn
 from torch.optim.lr_scheduler import LambdaLR
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler, TensorDataset
 
+from reference.NSAL_DGAT import DAANLoss, Discriminator
 from constant import CLI_arguments_enum
-from model.NSAL_DGAT import DAANLoss, Discriminator, NSALDGAT
 from utils.metric import Metric
 
 
 def train(
-    model: NSALDGAT,
+    model: nn.Module,
     metric: Metric,
-    train_loader: DataLoader,
+    train_data: np.ndarray,
+    train_labels: np.ndarray,
     test_data: np.ndarray,
     test_labels: np.ndarray,
     batch_size: int,
+    num_classes: int,
     device: str,
     epochs: int,
     task_type: str,
     subject_id: int,
     session_id: int,
-    learning_rate: float = 1e-3,
+    learning_rate: float = 0.001,
 ):
-    criterion = torch.nn.CrossEntropyLoss()
 
-    source_loader = DataLoader(
-        dataset=train_loader.dataset,
-        sampler=RandomSampler(train_loader.dataset),
-        batch_size=batch_size,
-        num_workers=4,
-        drop_last=True,
+    logger.info("len of train data: {}, len of test data: {}", len(train_data), len(test_data))
+
+    dataset_train =TensorDataset(torch.Tensor(train_data),torch.arange(len(train_data)).long(), torch.Tensor(train_labels))
+    dataset_test = TensorDataset(torch.Tensor(test_data), torch.Tensor(test_labels))
+
+    sampler_train = RandomSampler(dataset_train)
+
+    train_loader = DataLoader(
+        dataset_train, sampler=sampler_train, batch_size=batch_size, num_workers=4, drop_last=True
     )
 
-    if task_type == CLI_arguments_enum.TaskTypeName.SUBJECT_INDEPENDENT:
-        target_dataset = TensorDataset(torch.tensor(test_data).float(), torch.tensor(test_labels).long())
-        target_loader = DataLoader(
-            dataset=target_dataset,
-            sampler=SequentialSampler(target_dataset),
-            batch_size=batch_size,
-            num_workers=4,
-            drop_last=True,
-        )
-        target_loader_iter = enumerate(target_loader)
-    else:
-        target_loader = None
-        target_loader_iter = None
+    test_loader = DataLoader(
+        dataset_test, batch_size=batch_size, num_workers=4,drop_last=True
+    )
 
-    domain_discriminator = Discriminator(hidden_1=model.source_f_bank.shape[1]).to(device)
-    dann_loss = DAANLoss(domain_discriminator, max_iter=max(1, epochs * len(source_loader))).to(device)
+    target_loader_inf_iter = pytorch_safe_cycle(test_loader)
 
+
+    hidden_2 = 64
+    domain_discriminator = Discriminator(hidden_2).to(device)
+    logger.info("num_classes {}", num_classes)
+    dann_loss = DAANLoss(domain_discriminator, num_class=num_classes).to(device)
+
+    criterion = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.AdamW(
         list(model.parameters()) + list(domain_discriminator.parameters()),
         lr=learning_rate,
         weight_decay=0.001,
     )
 
+    #  TODO.
     decay_math = lambda epoch: 1.0 / (1.0 + 10 * (epoch / max(1, epochs))) ** 0.75
     scheduler = LambdaLR(optimizer, lr_lambda=decay_math)
 
+    lr_scheduler = StepwiseLR_GRL(optimizer, init_lr=learning_rate, gamma=10, decay_rate=0.75, max_iter=epochs)
+
+
     model.train()
-    model.reset_source_bank(len(source_loader.dataset), device=torch.device(device))
-    _initialize_source_bank(model, source_loader, device)
+
+    getInit(train_loader, model, device)
 
     test_data = torch.tensor(test_data).float()
     test_labels = torch.tensor(test_labels).long()
-    iteration = math.ceil(len(source_loader.dataset) / batch_size)
 
     for epoch in range(1, epochs + 1):
         model.train()
         epoch_loss = 0.0
-        source_loader_iter = enumerate(source_loader)
 
-        for _ in range(iteration):
-            try:
-                _, batch = next(source_loader_iter)
-            except Exception:
-                source_loader_iter = enumerate(source_loader)
-                _, batch = next(source_loader_iter)
-
-            if len(batch) == 3:
-                data, source_index, labels = batch
-            else:
-                data, labels = batch
-                source_index = torch.arange(data.size(0), dtype=torch.long)
+        for data, index, labels in train_loader:
+            # No prefix means it's the source domain.
+            # TODO
+            optimizer.zero_grad()
 
             data = data.to(device)
             labels = labels.long().to(device)
-            source_index = source_index.long().to(device)
+            index = index.long().to(device)
 
-            optimizer.zero_grad()
+            target_data, _ = next(target_loader_inf_iter)
+            target_data = target_data.to(device)
 
-            if task_type == CLI_arguments_enum.TaskTypeName.SUBJECT_INDEPENDENT:
-                try:
-                    _, (target_data, _) = next(target_loader_iter)
-                except Exception:
-                    target_loader_iter = enumerate(target_loader)
-                    _, (target_data, _) = next(target_loader_iter)
-                target_data = target_data.to(device)
 
-                src_logits, tgt_logits, src_feat, tgt_feat, pseudo_target = model(
-                    source=data,
-                    target=target_data,
-                    source_index=source_index,
-                )
-
-                cls_loss = criterion(src_logits, labels)
-                pseudo_labels = torch.argmax(pseudo_target.detach(), dim=1)
-                target_loss = criterion(tgt_logits, pseudo_labels)
-                transfer_loss = dann_loss(
-                    src_feat + 0.005 * torch.randn_like(src_feat),
-                    tgt_feat + 0.005 * torch.randn_like(tgt_feat),
-                    src_logits,
-                    tgt_logits,
-                )
-
-                boost_factor = 2.0 * (2.0 / (1.0 + math.exp(-1.0 * epoch / 1000.0)) - 1.0)
-                loss = cls_loss + transfer_loss + boost_factor * target_loss
-            else:
-                src_logits = model(source=data)
-                loss = criterion(src_logits, labels)
-
+            output, feature, target_output, target_feature, _, _, target_labels = model(
+                data,
+                target_data,
+                labels,
+                index,
+            )
+            loss = criterion(output, labels)
+            target_labels = torch.argmax(target_labels, dim=1)
+            target_loss = criterion(target_output, target_labels)
+            global_transfer_loss = dann_loss(
+                feature + 0.005 * torch.randn((feature.shape[0], (hidden_2))).to(device),
+                target_feature + 0.005 * torch.randn((target_feature.shape[0], (hidden_2))).to(device),
+                output, target_output)
+            boost_factor = 2.0 * (2.0 / (1.0 + math.exp(-1 * (epoch-1) / 1000)) - 1)
+            loss += global_transfer_loss + boost_factor * target_loss
+            # logger.info("sum of data {}, target {} loss {}", data.sum(), target_data.sum(), loss.item())
             loss.backward()
             optimizer.step()
             epoch_loss += loss.item()
 
-        scheduler.step()
-
+        # scheduler.step()
+        lr_scheduler.step()
         evaluate(model, metric, test_data, test_labels, device, subject_id, session_id)
+        avg_loss = epoch_loss / len(train_loader)
 
         if epoch % 5 == 0:
-            avg_loss = epoch_loss / max(1, iteration)
             logger.info("Epoch {}/{} | Train Loss: {:.4f}", epoch, epochs, avg_loss)
-            logger.info("Current lr = {:.6f}", scheduler.get_last_lr()[0])
+            # logger.info("Current lr = {:.6f}", scheduler.get_last_lr()[0])
+            logger.info("Current lr = {:.6f}", lr_scheduler.get_lr())
 
 
-@torch.no_grad()
-def _initialize_source_bank(model: NSALDGAT, train_loader: DataLoader, device: str) -> None:
+from torch.optim.optimizer import Optimizer
+from typing import Optional
+class StepwiseLR_GRL:
+    def __init__(self, optimizer: Optimizer, init_lr: Optional[float] = 0.01,
+                 gamma: Optional[float] = 0.001, decay_rate: Optional[float] = 0.75, max_iter: Optional[float] = 1000):
+        self.init_lr = init_lr
+        self.gamma = gamma
+        self.decay_rate = decay_rate
+        self.optimizer = optimizer
+        self.iter_num = 0
+        self.max_iter = max_iter
+
+    def get_lr(self) -> float:
+        lr = self.init_lr / (1.0 + self.gamma * (self.iter_num / self.max_iter)) ** (self.decay_rate)
+        return lr
+
+    def step(self):
+        """Increase iteration number `i` by 1 and update learning rate in `optimizer`"""
+        lr = self.get_lr()
+        for param_group in self.optimizer.param_groups:
+            if 'lr_mult' not in param_group:
+                param_group['lr_mult'] = 1.
+            param_group['lr'] = lr * param_group['lr_mult']
+
+        self.iter_num += 1
+
+
+def getInit(train_loader, model, device):
     model.eval()
-    for batch in train_loader:
-        if len(batch) == 3:
-            data, source_index, _ = batch
-        else:
-            data, _ = batch
-            source_index = torch.arange(data.size(0), dtype=torch.long)
-
-        data = data.to(device)
-        source_index = source_index.long().to(device)
-
-        if hasattr(model, "get_init_banks"):
-            model.get_init_banks(data, source_index)
-            continue
-
-        source_feat, _ = model.encoder(data)
-        if hasattr(model, "classifier"):
-            source_logits = model.classifier(source_feat)
-        else:
-            source_logits = model.cls_classifier(source_feat)
-        source_probs = torch.softmax(source_logits, dim=1)
-
-        model.source_f_bank[source_index] = torch.nn.functional.normalize(source_feat, dim=1).detach()
-        model.source_score_bank[source_index] = source_probs.detach()
-
+    for _, (tran_input, tran_indx, _ ) in enumerate(train_loader):
+        tran_input, tran_indx = tran_input.to(device), tran_indx.to(device)
+        model.get_init_banks(tran_input, tran_indx)
 
 @torch.no_grad()
 def evaluate(
-    model: NSALDGAT,
+    model: nn.Module,
     metric: Metric,
     data: torch.Tensor,
     labels: torch.Tensor,
@@ -181,7 +170,7 @@ def evaluate(
     data = data.to(device)
     labels = labels.to(device)
 
-    outputs = model(source=data)
+    outputs = model.target_predict(data)
     predictions = torch.argmax(outputs, dim=1)
 
     correct_in_batch = (predictions == labels).sum().item()
