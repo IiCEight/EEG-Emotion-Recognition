@@ -109,16 +109,12 @@ def main(
     # data = normalization_wrt_session(data, type='min_max')
 
     num_sessions = len(labels)
-    subject_ids = list(range(num_subjects))
-    if data_random:
-        shuffle(subject_ids)
-
     metric = Metric(num_subjects, num_sessions)
 
     logger.debug("num_sessions {} num_subjects {}", num_sessions, num_subjects)
 
     for session_id in range(num_sessions):
-        for subject_id in subject_ids:
+        for subject_id in range(num_subjects):
             setup_seed(random_seed)
 
             train_data, train_labels, test_data, test_labels = merge_and_split(

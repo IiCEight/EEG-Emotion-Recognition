@@ -28,7 +28,7 @@ def train(
     task_type: str,
     subject_id: int,
     session_id: int,
-    learning_rate: float = 0.001,
+    learning_rate: float,
 ):
 
     logger.info("len of train data: {}, len of test data: {}", len(train_data), len(test_data))
@@ -108,6 +108,7 @@ def train(
                 feature + 0.005 * torch.randn((feature.shape[0], (hidden_2))).to(device),
                 target_feature + 0.005 * torch.randn((target_feature.shape[0], (hidden_2))).to(device),
                 output, target_output)
+            # model.eval()
             boost_factor = 2.0 * (2.0 / (1.0 + math.exp(-1 * (epoch-1) / 1000)) - 1)
             # loss = source_loss + global_transfer_loss + boost_factor * target_loss
             

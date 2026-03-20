@@ -74,6 +74,8 @@ def main(
     only_one_session: Annotated[bool, typer.Option(help="whether to run only one session for debugging")] = True,
     random_seed: Annotated[int | None, typer.Option(
         help="random seed for reproducibility, None for no seed (i.e., random)")] = 42,
+    learning_rate: Annotated[float, typer.Option(
+        help="learning rate for training")] = 0.001,
     level: Annotated[
         cli_enum.LevelName, typer.Option(
             "-l", help="level of severity for logging")
@@ -129,7 +131,8 @@ def main(
                 num_electrodes, num_features, num_classes, device = device, source_num = len(train_data)).to(device)
 
             train(model, metric, train_data, train_labels, test_data, test_labels,
-                  batch_size,num_classes, device, epochs, task_type, subject_id, session_id)
+                  batch_size,num_classes, device, epochs, task_type, subject_id, 
+                  session_id, learning_rate)
 
             logger.info("\n--------------> Finished training w.r.t. subject {} session {} acc {:<.4f}",
                         subject_id, session_id, metric.accuracy[subject_id, session_id]

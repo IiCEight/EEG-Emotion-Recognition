@@ -126,7 +126,9 @@ class resGCN(nn.Module):
                 nn.init.constant_(m.bias, 0)
 
     def forward(self, x, x_p, L):
-        x = self.bn2(self.GConv2(self.ELU(self.bn1(self.GConv1(x)))))
+        # x = self.bn2(self.GConv2(self.ELU(self.bn1(self.GConv1(x)))))
+        # discard batch normalization.
+        x = self.GConv2(self.ELU(self.GConv1(x)))
         y = einsum(x, L, 'b i j k, k p -> b i j p')
         y = self.ELU(torch.add(y, x_p))
         return y
@@ -234,10 +236,10 @@ class Encoder(nn.Module):
         out = self.fc1(g_feat.reshape(g_feat.size(0), -1))
         # logger.info("out shape after fc1: {}", out.shape)
         out = F.relu(out)
-        out = self.dropout1(out)
+        # out = self.dropout1(out)
         out = self.fc2(out)
         out = F.relu(out)
-        out = self.dropout2(out)
+        # out = self.dropout2(out)
         return out, [g_adj, ca, sa]
 
 
@@ -263,7 +265,7 @@ class Discriminator(nn.Module):
     def forward(self, x):
         x = self.fc1(x)
         x = F.relu(x)
-        x = self.dropout1(x)
+        # x = self.dropout1(x)
         x = self.fc2(x)
         x = self.sigmoid(x)
         return x
@@ -291,8 +293,8 @@ class Domain_adaption_model(nn.Module):
         source_label_feature = torch.nn.functional.softmax(source_predict, dim=1)
         target_label_feature = torch.nn.functional.softmax(target_predict, dim=1)
 
-        target_label = self.get_target_labels(source_f, source_label_feature, source_index, target_f)
-        # target_label = None
+        # target_label = self.get_target_labels(source_f, source_label_feature, source_index, target_f)
+        target_label = None
         return source_predict, source_f, target_predict, target_f, [self.src_adj, self.src_sa, self.src_ca], [self.tar_adj, self.tar_sa, self.tar_ca], target_label
 
 
