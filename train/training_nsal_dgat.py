@@ -1,14 +1,15 @@
 import math
 from typing import Optional
-
+from einops import rearrange
 import numpy as np
 import torch
 from loguru import logger
 from torch import nn
+from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LambdaLR
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler, TensorDataset
 
-from reference.NSAL_DGAT import DAANLoss, Discriminator
+from model.NSAL_DGAT import DAANLoss, Discriminator
 from constant import CLI_arguments_enum
 from utils.metric import Metric
 
@@ -36,17 +37,17 @@ def train(
     dataset_test = TensorDataset(torch.Tensor(test_data), torch.Tensor(test_labels))
 
     sampler_train = RandomSampler(dataset_train)
+    sampler_test = SequentialSampler(dataset_test)
 
     train_loader = DataLoader(
         dataset_train, sampler=sampler_train, batch_size=batch_size, num_workers=4, drop_last=True
     )
 
     test_loader = DataLoader(
-        dataset_test, batch_size=batch_size, num_workers=4,drop_last=True
+        dataset_test, sampler=sampler_test, batch_size=batch_size, num_workers=4,drop_last=True
     )
 
     target_loader_inf_iter = pytorch_safe_cycle(test_loader)
-
 
     hidden_2 = 64
     domain_discriminator = Discriminator(hidden_2).to(device)
@@ -69,7 +70,7 @@ def train(
 
     model.train()
 
-    getInit(train_loader, model, device)
+    # getInit(train_loader, model, device)
 
     test_data = torch.tensor(test_data).float()
     test_labels = torch.tensor(test_labels).long()
@@ -78,7 +79,9 @@ def train(
         model.train()
         epoch_loss = 0.0
 
+        iter = 0
         for data, index, labels in train_loader:
+            iter += 1
             # No prefix means it's the source domain.
             # TODO
             optimizer.zero_grad()
@@ -89,7 +92,8 @@ def train(
 
             target_data, _ = next(target_loader_inf_iter)
             target_data = target_data.to(device)
-
+            data = rearrange(data, 'b chan feature -> b feature chan', chan= 62, feature = 5)
+            target_data = rearrange(target_data, 'b chan feature -> b feature chan', chan= 62, feature = 5)
 
             output, feature, target_output, target_feature, _, _, target_labels = model(
                 data,
@@ -97,16 +101,19 @@ def train(
                 labels,
                 index,
             )
-            loss = criterion(output, labels)
-            target_labels = torch.argmax(target_labels, dim=1)
-            target_loss = criterion(target_output, target_labels)
+            source_loss = criterion(output, labels)
+            # target_labels = torch.argmax(target_labels, dim=1)
+            # target_loss = criterion(target_output, target_labels)
             global_transfer_loss = dann_loss(
                 feature + 0.005 * torch.randn((feature.shape[0], (hidden_2))).to(device),
                 target_feature + 0.005 * torch.randn((target_feature.shape[0], (hidden_2))).to(device),
                 output, target_output)
             boost_factor = 2.0 * (2.0 / (1.0 + math.exp(-1 * (epoch-1) / 1000)) - 1)
-            loss += global_transfer_loss + boost_factor * target_loss
-            # logger.info("sum of data {}, target {} loss {}", data.sum(), target_data.sum(), loss.item())
+            # loss = source_loss + global_transfer_loss + boost_factor * target_loss
+            
+            # delete clustering component
+            loss = source_loss + global_transfer_loss
+
             loss.backward()
             optimizer.step()
             epoch_loss += loss.item()
@@ -122,8 +129,7 @@ def train(
             logger.info("Current lr = {:.6f}", lr_scheduler.get_lr())
 
 
-from torch.optim.optimizer import Optimizer
-from typing import Optional
+
 class StepwiseLR_GRL:
     def __init__(self, optimizer: Optimizer, init_lr: Optional[float] = 0.01,
                  gamma: Optional[float] = 0.001, decay_rate: Optional[float] = 0.75, max_iter: Optional[float] = 1000):
@@ -169,13 +175,13 @@ def evaluate(
 
     data = data.to(device)
     labels = labels.to(device)
-
+    data = rearrange(data, 'b chan feature -> b feature chan', chan= 62, feature = 5)
+    
     outputs = model.target_predict(data)
     predictions = torch.argmax(outputs, dim=1)
 
     correct_in_batch = (predictions == labels).sum().item()
     acc = correct_in_batch / labels.size(0)
-
     metric.update(subject_id, session_id, acc)
 
 

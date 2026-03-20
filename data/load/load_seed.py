@@ -57,8 +57,8 @@ def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[list, lis
             1 = Clip Number (1-15) i.e., the trial number.
         NOTE: The shape each trial is different!
         In one value for key 'de_LDS1', 
-            it is a (electrode, time window, frequency band) array,
-            but the time window dimension is different for different trial.
+            it is a (electrode, sample, frequency band) array,
+            but the sample dimension is different for different trial.
     
     """
     logger.info(f"Loading SEED dataset from path {dataset_path} ...")
@@ -144,7 +144,7 @@ def parallel_read_seed_feature(feature_id, dir_path, label, file):
     trail_datas = []
     for i in range(15):
         trail_data = list(np.array(subject_data[keys[i * 12+feature_id]]).transpose((1, 0, 2)))
-        # logger.debug(f"Subject {file} session {dir_path[-1]} trail {i} data shape: {np.array(trail_data).shape}")
+        # logger.info(f"Subject {file} session {dir_path[-1]} trail {i} data shape: {np.array(trail_data).shape}")
         trail_datas.append(trail_data)
     
     return trail_datas

@@ -1,5 +1,6 @@
 from random import shuffle
 from typing import Annotated
+from torch import nn
 from torch.utils.data import DataLoader, TensorDataset
 
 import numpy as np
@@ -12,11 +13,12 @@ from loguru import logger
 
 from constant.model_map import MODEL
 from data.dataloder import load_data
-from data.utils import merge_for_all_subjects, merge_for_one_subject, normalization_wrt_session, split_data_wrt_subjects, split_data_wrt_trials
 # from train.training_TAHAG import train
-from train.training import train
+from data.utils import merge_and_split
 
+from train.training import train
 from utils.metric import Metric
+from utils.random_seed import setup_seed
 
 # use typer to parse command line arguments and parse Traceback stack
 app = typer.Typer(
@@ -24,22 +26,25 @@ app = typer.Typer(
     # pretty_exceptions_short=True         # This makes the traceback even more concise
 )
 
+
 @app.command()
 def main(
     model_name: Annotated[
         cli_enum.ModelName, typer.Option("-m", help="model name")
-    ] = cli_enum.ModelName.SABER,
+    ] = cli_enum.ModelName.NSAL_DGAT,
     dataset: Annotated[
         cli_enum.DatasetName, typer.Option(help="dataset name")
     ] = cli_enum.DatasetName.SEED,
     dataset_path: Annotated[
         str, typer.Option(help="path to the dataset")
     ] = "../data/SEED",
-    device: Annotated[str, typer.Option(help="device to run the model on")] = "cuda",
+    device: Annotated[str, typer.Option(
+        help="device to run the model on")] = "cuda",
     sample_length: Annotated[
         int, typer.Option(help="length of data points in each sample")
     ] = 1,
-    stride: Annotated[int, typer.Option(help="stride for segmenting data")] = 128,
+    stride: Annotated[int, typer.Option(
+        help="stride for segmenting data")] = 128,
     label_type: Annotated[
         str, typer.Option(help="type of label to use (valence, arousal)")
     ] = "valence",
@@ -48,7 +53,7 @@ def main(
         typer.Option(
             help="type of experimental task (subject-dependent, subject-independent)"
         ),
-    ] = cli_enum.TaskTypeName.SUBJECT_INDEPENDENT,
+    ] = cli_enum.TaskTypeName.SUBJECT_DEPENDENT,
     split_type: Annotated[
         cli_enum.SplitTypeName,
         typer.Option(
@@ -58,12 +63,20 @@ def main(
     split_ratio: Annotated[
         float, typer.Option(help="ratio for train data size")
     ] = 0.6,
-    batch_size: Annotated[int, typer.Option(help="batch size for training")] = 64,
-    epochs: Annotated[int, typer.Option(help="number of epochs for training")] = 100,
-    data_random: Annotated[bool, typer.Option(help="whether to shuffle the data")] = False,
-    only_one_experiment: Annotated[bool, typer.Option(help="whether to run only one experiment for debugging")] = True,
+    batch_size: Annotated[int, typer.Option(
+        help="batch size for training")] = 128,
+    epochs: Annotated[int, typer.Option(
+        help="number of epochs for training")] = 60,
+    data_random: Annotated[bool, typer.Option(
+        help="whether to shuffle the data")] = False,
+    only_one_experiment: Annotated[bool, typer.Option(
+        help="whether to run only one experiment for debugging")] = False,
+    only_one_session: Annotated[bool, typer.Option(help="whether to run only one session for debugging")] = True,
+    random_seed: Annotated[int | None, typer.Option(
+        help="random seed for reproducibility, None for no seed (i.e., random)")] = None,
     level: Annotated[
-        cli_enum.LevelName, typer.Option("-l", help="level of severity for logging")
+        cli_enum.LevelName, typer.Option(
+            "-l", help="level of severity for logging")
     ] = cli_enum.LevelName.INFO
 ):
     """
@@ -74,6 +87,7 @@ def main(
 
     # ------------------ set up logger ------------------
     setUpLogger(level=level)
+    setup_seed(random_seed)
 
     logger.info("CUDA Available: {}", torch.cuda.is_available())
     logger.info("Device Count: {}", torch.cuda.device_count())
@@ -105,79 +119,34 @@ def main(
 
     for session_id in range(num_sessions):
         for subject_id in subject_ids:
-            if task_type == cli_enum.TaskTypeName.SUBJECT_DEPENDENT:
-                train_data, train_labels, test_data, test_labels = (
-                    split_data_wrt_trials(
-                        data[session_id][subject_id], 
-                        labels[session_id][subject_id], split_ratio, data_random)
-                )
-                # merge train data and labels
-                train_data, train_labels = merge_for_one_subject(train_data, train_labels)
-                # We keep session dimension for test data, 
-                # since we want to test on all sessions separately.
-                test_data, test_labels = merge_for_one_subject(test_data, test_labels)
+            setup_seed(random_seed)
 
-                train_loader = DataLoader(
-                    dataset=TensorDataset(
-                        torch.tensor(train_data).float(),
-                        torch.tensor(train_labels).float(),
-                    ),
-                    batch_size=batch_size,
-                    shuffle=True,
-                    drop_last=True,
-                    num_workers=4,
-                )
+            train_data, train_labels, test_data, test_labels = merge_and_split(
+                data, labels, task_type, session_id, subject_id, split_ratio, data_random)
 
-                model = MODEL[model_name](num_electrodes, num_features, num_classes).to(device)
+            model = MODEL[model_name](
+                num_electrodes, num_features, num_classes, device = device, source_num = len(train_data)).to(device)
 
-                train(model, metric, train_loader, test_data, test_labels, batch_size, device, epochs, task_type, subject_id, session_id)
+            train(model, metric, train_data, train_labels, test_data, test_labels,
+                  batch_size,num_classes, device, epochs, task_type, subject_id, session_id)
 
-                logger.info("\n--------------> Finished training for subject {} session {} acc {:<.4f}",
-                            subject_id, session_id, metric.accuracy[subject_id, session_id]
-                            )
+            logger.info("\n--------------> Finished training w.r.t. subject {} session {} acc {:<.4f}",
+                        subject_id, session_id, metric.accuracy[subject_id, session_id]
+                        )
 
-            else:
-                # For subject-independent setting, we leave current subject out as test data
-                # and merge the rest subjects' data as train data.
-                train_data, train_labels, test_data, test_labels = (
-                    split_data_wrt_subjects(
-                        data[session_id], labels[session_id], subject_id)
-                )
-
-                train_data, train_labels = merge_for_all_subjects(train_data, train_labels)
-
-                test_data, test_labels = merge_for_one_subject(test_data, test_labels)
-
-                train_loader = DataLoader(
-                    dataset=TensorDataset(
-                        torch.tensor(train_data).float(),
-                        torch.tensor(train_labels).float(),
-                    ),
-                    batch_size=batch_size,
-                    shuffle=True,
-                    num_workers=4
-                )
-
-                model = MODEL[model_name](num_electrodes, num_features, num_classes, domain_adaptation=True).to(device)
-
-
-                train(model, metric, train_loader, test_data, test_labels, batch_size, device, epochs, task_type, subject_id, session_id)
-
-                logger.info("\n--------------> Finished training for all subjects session {}, acc {:<.4f} on subject {}",
-                            session_id, metric.accuracy[subject_id, session_id], subject_id
-                            )
-            
             if only_one_experiment:
                 break
-
+        if only_one_session or only_one_experiment:
+            break
 
     logger.info("\n-----------> Finished training for all subjects!!!!")
     all_mean, all_std = metric.all_sessions_mean_acc()
     two_mean, two_std = metric.two_best_sessions_mean_acc()
     one_mean, one_std = metric.one_best_session_mean_acc()
 
-    logger.info("\n all: mean {:<.4f} std {:<.4f}\ntwo: mean {:<.4f} std {:<.4f}\none: mean {:<.4f} std {:<.4f}\n",
-                all_mean, all_std, two_mean, two_std, one_mean, one_std)
+    logger.info("\n all: mean {:<.4f} std {:<.4f}\ntwo: mean {:<.4f} std {:<.4f}" +
+                "\none: mean {:<.4f} std {:<.4f}\n", all_mean, all_std, two_mean, 
+                two_std, one_mean, one_std)
 
 
 if __name__ == "__main__":

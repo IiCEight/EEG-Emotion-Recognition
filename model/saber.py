@@ -87,6 +87,31 @@ class Saber(nn.Module):
         return x, domain_output
 
 
+class feature_extractor(nn.Module):
+    def __init__(self, num_electrodes=62, in_features=5, num_classes=3, num_layers=2, num_hidden=128,
+                 dropout=0.7):
+        super().__init__()
+
+        self.num_electrodes = num_electrodes
+        self.in_features = in_features
+        self.num_layers = num_layers
+        self.num_hidden = num_hidden
+        self.dropout = dropout
+        self.num_classes = num_classes
+        self.conv_out_dim = 16
+
+        self.sgc = SimpleGraphConv(in_feature=self.in_features, out_feature=self.num_hidden, num_layers=self.num_layers)
+        self.xs, self.ys = torch.tril_indices(self.num_electrodes, self.num_electrodes, offset=0)
+
+    def forward(self, x):
+        adj_common = torch.zeros((self.num_electrodes, self.num_electrodes), device=x.device)
+        adj_common[self.xs.to(adj_common.device), self.ys.to(adj_common.device)] = 1.0
+        adj_common = adj_common + adj_common.transpose(1, 0) - torch.diag(
+            adj_common.diagonal())  # copy values from lower tri to upper tri
+
+        x = F.relu(self.sgc(x, adj_common))
+        return x
+
 def global_add_pool(x):
     """
     summing the output of each channel

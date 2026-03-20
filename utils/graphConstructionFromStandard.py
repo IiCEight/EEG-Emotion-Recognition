@@ -491,7 +491,7 @@ def format_adj_matrix_from_standard(
     return np.array(adj_matrix.tolist())
 
 
-def get_adj_from_standard():
+def get_adj_from_standard()->np.ndarray:
     adj = format_adj_matrix_from_standard(SEED_CHANNEL_LIST, STANDARD_1005_CHANNEL_LOCATION_DICT)
 
     return adj

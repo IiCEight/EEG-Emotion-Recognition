@@ -4,8 +4,7 @@ from model.RGNN import RGNN
 from model.RGNN_official import SymSimGCNNet
 from model.TAHAG_Independent import TAHAG
 from model.saber import Saber
-from model.NSAL_DGAT import NSALDGAT
-from reference.NSAL_DGAT import Domain_adaption_model
+from model.NSAL_DGAT import Domain_adaption_model
 
 
 MODEL = {

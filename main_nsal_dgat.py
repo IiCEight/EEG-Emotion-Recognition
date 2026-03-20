@@ -53,7 +53,7 @@ def main(
         typer.Option(
             help="type of experimental task (subject-dependent, subject-independent)"
         ),
-    ] = cli_enum.TaskTypeName.SUBJECT_INDEPENDENT,
+    ] = cli_enum.TaskTypeName.SUBJECT_DEPENDENT,
     split_type: Annotated[
         cli_enum.SplitTypeName,
         typer.Option(
@@ -66,13 +66,14 @@ def main(
     batch_size: Annotated[int, typer.Option(
         help="batch size for training")] = 128,
     epochs: Annotated[int, typer.Option(
-        help="number of epochs for training")] = 100,
+        help="number of epochs for training")] = 60,
     data_random: Annotated[bool, typer.Option(
         help="whether to shuffle the data")] = False,
     only_one_experiment: Annotated[bool, typer.Option(
-        help="whether to run only one experiment for debugging")] = True,
-    random_seed: Annotated[int, typer.Option(
-        help="random seed for reproducibility")] = 1,
+        help="whether to run only one experiment for debugging")] = False,
+    only_one_session: Annotated[bool, typer.Option(help="whether to run only one session for debugging")] = True,
+    random_seed: Annotated[int | None, typer.Option(
+        help="random seed for reproducibility, None for no seed (i.e., random)")] = 42,
     level: Annotated[
         cli_enum.LevelName, typer.Option(
             "-l", help="level of severity for logging")
@@ -98,7 +99,8 @@ def main(
         f"Launching....\nmodel_name: {model_name}\ndataset: {dataset}\ndataset_path: {dataset_path}"
         + f"\ndevice: {device}\nlogging level: {level}\ntask type: {task_type}"
         + f"\nsplit type: {split_type}\nbatch_size: {batch_size}\nepochs: {epochs}"
-        + f"\ndata random: {data_random}"
+        + f"\ndata random: {data_random}\nrandom seed: {random_seed}"
+        + f"\nonly one experiment: {only_one_experiment}\nonly one session: {only_one_session}"
     )
 
     data, labels, num_subjects, num_electrodes, num_features, num_classes = load_data(
@@ -118,6 +120,7 @@ def main(
 
     for session_id in range(num_sessions):
         for subject_id in subject_ids:
+            setup_seed(random_seed)
 
             train_data, train_labels, test_data, test_labels = merge_and_split(
                 data, labels, task_type, session_id, subject_id, split_ratio, data_random)
@@ -134,7 +137,7 @@ def main(
 
             if only_one_experiment:
                 break
-        if only_one_experiment:
+        if only_one_session or only_one_experiment:
             break
 
     logger.info("\n-----------> Finished training for all subjects!!!!")

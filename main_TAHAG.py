@@ -60,7 +60,7 @@ def main(
         float, typer.Option(help="ratio for train data size")
     ] = 0.6,
     batch_size: Annotated[int, typer.Option(help="batch size for training")] = 128,
-    epochs: Annotated[int, typer.Option(help="number of epochs for training")] = 100,
+    epochs: Annotated[int, typer.Option(help="number of epochs for training")] = 200,
     data_random: Annotated[bool, typer.Option(help="whether to shuffle the data")] = False,
     only_one_experiment: Annotated[bool, typer.Option(help="whether to run only one experiment for debugging")] = True,
     level: Annotated[

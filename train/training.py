@@ -1,5 +1,6 @@
 
 import itertools
+from torch import nn
 from torch.optim.lr_scheduler import LambdaLR
 
 from einops import rearrange
@@ -8,40 +9,50 @@ import numpy as np
 import torch
 
 from torch.nn.utils import clip_grad_norm_
-from torch.utils.data import DataLoader, TensorDataset
+from torch.utils.data import DataLoader, RandomSampler, RandomSampler, SequentialSampler, TensorDataset
 from constant import CLI_arguments_enum
 from utils.metric import Metric
 
 def train(
-    model: torch.nn.Module,
+    model: nn.Module,
     metric: Metric,
-    train_loader: DataLoader,
+    train_data: np.ndarray,
+    train_labels: np.ndarray,
     test_data: np.ndarray,
     test_labels: np.ndarray,
     batch_size: int,
+    num_classes: int,
     device: str,
     epochs: int,
     task_type: str,
     subject_id: int,
-    session_id:int,
-    learning_rate: float = 5e-4,
+    session_id: int,
+    learning_rate: float = 0.001,
 ):
+    
+    dataset_train =TensorDataset(torch.Tensor(train_data),torch.arange(len(train_data)).long(), torch.Tensor(train_labels))
+    dataset_test = TensorDataset(torch.Tensor(test_data), torch.Tensor(test_labels))
+
+    sampler_train = RandomSampler(dataset_train)
+    sampler_test = SequentialSampler(dataset_test)
+
+    train_loader = DataLoader(
+        dataset_train, sampler=sampler_train, batch_size=batch_size, num_workers=4, drop_last=True
+    )
+
+    test_loader = DataLoader(
+        dataset_test, sampler=sampler_test, batch_size=batch_size, num_workers=4,drop_last=True
+    )
+
+    target_loader_inf_iter = pytorch_safe_cycle(test_loader)
+
+    # generate domain labels for source and target data
+    source_domain_labels = torch.zeros(batch_size, dtype=torch.long, device=device)
+    target_domain_labels = torch.ones(batch_size, dtype=torch.long, device=device)
 
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
-    target_Loader_iter = None
-    # Since we need to apply DANN, we need to prepare the target set to train
-    if task_type == CLI_arguments_enum.TaskTypeName.SUBJECT_INDEPENDENT:
-        # cut the connection of computation graph, 
-        # since we only want to use them for evaluation, not for training
-        target_loader = DataLoader(
-            dataset=TensorDataset(
-                torch.tensor(test_data).float(),
-                torch.tensor(test_labels).float(),
-            )
-            , batch_size=batch_size, shuffle=False, drop_last=True)
-        target_Loader_iter = pytorch_safe_cycle(target_loader)
 
     # Define the DANN decay math
     # PyTorch automatically multiplies this result by your initial_lr
@@ -58,9 +69,6 @@ def train(
     #     eta_min=1e-4
     # )
 
-    test_data = torch.tensor(test_data).float()
-    test_labels = torch.tensor(test_labels).float()
-
     for epoch in range(epochs):
 
         # train the model on the training data for one epoch
@@ -68,38 +76,22 @@ def train(
         epoch_loss = 0.0
 
         for data, labels in train_loader:
-
             optimizer.zero_grad()
 
             data, labels = data.to(device), labels.to(device)
+            # hidden the taget lables.
+            target_data, _ = next(target_loader_inf_iter)
+            target_data = target_data.to(device)
 
-            outputs, source_domain_output = model(data)
+            output, domain, target_output, target_domain = model(data, target_data)
 
             # NOTE: If the label is not one-hot encoded, the type of labels 
             # should be long for CrossEntropyLoss
-            loss = criterion(outputs, labels.long())
+            loss = criterion(output, labels.long())
 
-            if task_type == CLI_arguments_enum.TaskTypeName.SUBJECT_INDEPENDENT:
-                # Train the domain classifier with target domain labels
-                # but without backpropagating to the feature extractor
-
-                # hidden the taget lables.
-                target_data, _ = next(target_Loader_iter)
-                target_data = target_data.to(device)
-
-                _, target_domain_output = model(target_data)
-
-                # reshape since the cross entropy loss expects the input to 
-                # be (batch_size, num_classes) and the labels to be (batch_size)
-                target_domain_output = rearrange(target_domain_output, "batch electrode feature -> (batch electrode) feature")
-                source_domain_output = rearrange(source_domain_output, "batch electrode feature -> (batch electrode) feature")
-
-                # generate domain labels for source and target data
-                # source domain label: 0, target domain label: 1
-                source_domain_labels = torch.zeros(source_domain_output.size(0), dtype=torch.long, device=device)
-                target_domain_labels = torch.ones(target_domain_output.size(0), dtype=torch.long, device=device)
-                loss += criterion(target_domain_output, target_domain_labels)
-                loss += criterion(source_domain_output, source_domain_labels)
+            # generate domain labels for source and target data
+            # source domain label: 0, target domain label: 1
+            loss += 0.5 * criterion(domain, target_domain_labels) + criterion(target_domain, source_domain_labels)
 
             loss.backward()
 

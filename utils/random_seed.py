@@ -8,6 +8,8 @@ import torch
 
 
 def setup_seed(seed):
+    if seed is None:
+        return
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
     np.random.seed(seed)
