@@ -154,8 +154,9 @@ def train(
         weight_decay=0.001,
     )
 
-    # Cosine annealing with warm restarts — restarts every 20 epochs
-    scheduler = CosineAnnealingWarmRestarts(optimizer, T_0=20, T_mult=1, eta_min=1e-5)
+    # Smooth cosine annealing — no restarts, decays over full training
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+        optimizer, T_max=epochs, eta_min=1e-5)
 
     # Auxiliary loss weights
     lambda_aux_max = 0.3
