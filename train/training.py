@@ -6,7 +6,7 @@ import torch
 from loguru import logger
 from torch import nn
 from torch.optim import Optimizer
-from torch.optim.lr_scheduler import LambdaLR
+from torch.optim.lr_scheduler import LambdaLR, CosineAnnealingWarmRestarts
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler, TensorDataset
 
 from model.NSAL_DGAT import DAANLoss, Discriminator
@@ -154,11 +154,8 @@ def train(
         weight_decay=0.001,
     )
 
-    #  TODO.
-    decay_math = lambda epoch: 1.0 / (1.0 + 10 * (epoch / max(1, epochs))) ** 0.75
-    scheduler = LambdaLR(optimizer, lr_lambda=decay_math)
-
-    # lr_scheduler = StepwiseLR_GRL(optimizer, init_lr=learning_rate, gamma=10, decay_rate=0.75, max_iter=epochs)
+    # Cosine annealing with warm restarts — restarts every 20 epochs
+    scheduler = CosineAnnealingWarmRestarts(optimizer, T_0=20, T_mult=1, eta_min=1e-5)
 
     # Auxiliary loss weights
     lambda_aux_max = 0.3
@@ -193,16 +190,21 @@ def train(
 
             target_data, _ = next(target_loader_inf_iter)
             target_data = target_data.to(device)
-            # data = rearrange(data, 'b chan feature -> b feature chan', chan= 62, feature = 5)
-            # target_data = rearrange(target_data, 'b chan feature -> b feature chan', chan= 62, feature = 5)
+
+            # ---- Mixup augmentation (α=0.4) ----
+            mixup_alpha = 0.4
+            lam = np.random.beta(mixup_alpha, mixup_alpha) if mixup_alpha > 0 else 1.0
+            perm = torch.randperm(data.size(0), device=device)
+            data_mixed = lam * data + (1 - lam) * data[perm]
+            labels_perm = labels[perm]
 
             (output, domain_output_source, domain_output_target,
              aux_a_logits, aux_b_logits,
              branch_a_feat, branch_b_feat,
-             fused_feat) = model(data, target_data)
+             fused_feat) = model(data_mixed, target_data)
 
-            # --- Main losses ---
-            source_loss = criterion(output, labels)
+            # --- Main losses (mixup-aware) ---
+            source_loss = lam * criterion(output, labels) + (1 - lam) * criterion(output, labels_perm)
             domain_loss = 0.5 * criterion(domain_output_source, source_domain_labels)
             domain_loss += criterion(domain_output_target, target_domain_labels)
 
@@ -235,7 +237,7 @@ def train(
 
         if epoch % 5 == 0:
             logger.info("Epoch {}/{} | Train Loss: {:.4f}", epoch, epochs, avg_loss)
-            logger.info("Current lr = {:.6f}", scheduler.get_last_lr()[0])
+            logger.info("Current lr = {:.6f}", optimizer.param_groups[0]['lr'])
             # logger.info("Current lr = {:.6f}", lr_scheduler.get_lr())
 
 
