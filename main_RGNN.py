@@ -15,8 +15,8 @@ from constant.model_map import MODEL
 from data.dataloder import load_data
 # from train.training_TAHAG import train
 from data.utils import merge_and_split
-from train.training_nsal_dgat import train
 
+from train.training_RGNN import train
 from utils.metric import Metric
 from utils.random_seed import setup_seed
 
@@ -54,12 +54,12 @@ def main(
             help="type of experimental task (subject-dependent, subject-independent)"
         ),
     ] = cli_enum.TaskTypeName.SUBJECT_DEPENDENT,
-    split_type: Annotated[
-        cli_enum.SplitTypeName,
-        typer.Option(
-            help="type of data split (kfold, leave-one-subject-out)"
-        ),
-    ] = cli_enum.SplitTypeName.LEAVE_ONE_SUBJECT_OUT,
+    # split_type: Annotated[
+    #     cli_enum.SplitTypeName,
+    #     typer.Option(
+    #         help="type of data split (kfold, leave-one-subject-out)"
+    #     ),
+    # ] = cli_enum.SplitTypeName.LEAVE_ONE_SUBJECT_OUT,
     split_ratio: Annotated[
         float, typer.Option(help="ratio for train data size")
     ] = 0.6,
@@ -73,9 +73,7 @@ def main(
         help="whether to run only one experiment for debugging")] = False,
     only_one_session: Annotated[bool, typer.Option(help="whether to run only one session for debugging")] = True,
     random_seed: Annotated[int | None, typer.Option(
-        help="random seed for reproducibility, None for no seed (i.e., random)")] = 42,
-    learning_rate: Annotated[float, typer.Option(
-        help="learning rate for training")] = 0.001,
+        help="random seed for reproducibility, None for no seed (i.e., random)")] = None,
     level: Annotated[
         cli_enum.LevelName, typer.Option(
             "-l", help="level of severity for logging")
@@ -100,9 +98,8 @@ def main(
     logger.info(
         f"Launching....\nmodel_name: {model_name}\ndataset: {dataset}\ndataset_path: {dataset_path}"
         + f"\ndevice: {device}\nlogging level: {level}\ntask type: {task_type}"
-        + f"\nsplit type: {split_type}\nbatch_size: {batch_size}\nepochs: {epochs}"
-        + f"\ndata random: {data_random}\nrandom seed: {random_seed}"
-        + f"\nonly one experiment: {only_one_experiment}\nonly one session: {only_one_session}"
+        + f"\nbatch_size: {batch_size}\nepochs: {epochs}"
+        + f"\ndata random: {data_random}"
     )
 
     data, labels, num_subjects, num_electrodes, num_features, num_classes = load_data(
@@ -112,16 +109,12 @@ def main(
     # data = normalization_wrt_session(data, type='min_max')
 
     num_sessions = len(labels)
-    subject_ids = list(range(num_subjects))
-    if data_random:
-        shuffle(subject_ids)
-
     metric = Metric(num_subjects, num_sessions)
 
     logger.debug("num_sessions {} num_subjects {}", num_sessions, num_subjects)
 
     for session_id in range(num_sessions):
-        for subject_id in subject_ids:
+        for subject_id in range(num_subjects):
             setup_seed(random_seed)
 
             train_data, train_labels, test_data, test_labels = merge_and_split(
@@ -131,8 +124,7 @@ def main(
                 num_electrodes, num_features, num_classes, device = device, source_num = len(train_data)).to(device)
 
             train(model, metric, train_data, train_labels, test_data, test_labels,
-                  batch_size,num_classes, device, epochs, task_type, subject_id, 
-                  session_id, learning_rate)
+                  batch_size,num_classes, device, epochs, task_type, subject_id, session_id)
 
             logger.info("\n--------------> Finished training w.r.t. subject {} session {} acc {:<.4f}",
                         subject_id, session_id, metric.accuracy[subject_id, session_id]

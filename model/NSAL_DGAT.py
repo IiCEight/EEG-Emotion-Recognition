@@ -126,9 +126,11 @@ class resGCN(nn.Module):
                 nn.init.constant_(m.bias, 0)
 
     def forward(self, x, x_p, L):
-        # x = self.bn2(self.GConv2(self.ELU(self.bn1(self.GConv1(x)))))
+        # x = self.GConv2(self.bn2(self.ELU(self.GConv1(self.bn1(x)))))
+        x = self.bn2(self.GConv2(self.ELU(self.bn1(self.GConv1(x)))))
+
         # discard batch normalization.
-        x = self.GConv2(self.ELU(self.GConv1(x)))
+        # x = self.GConv2(self.ELU(self.GConv1(x)))
         y = einsum(x, L, 'b i j k, k p -> b i j p')
         y = self.ELU(torch.add(y, x_p))
         return y
@@ -192,11 +194,12 @@ class MHGCN(nn.Module):
                     if isinstance(j, nn.Linear):
                         nn.init.xavier_uniform_(j.weight, gain=1)
 
-    def forward(self, x):
-        self.A = self.A.to(x.device)
-        A_ds = self.GATENet(self.A)
+    def forward(self, x, A=None):
+        # self.A = self.A.to(x.device)
+        # A_ds = self.GATENet(self.A)
         # A_ds = self.GATENet(A)
-        A_ds = A_ds.reshape(self.chan_num, self.chan_num)
+        # NOTE: delete the GATENet.
+        A_ds = A.reshape(self.chan_num, self.chan_num)
         output = []
         output.append(x)
         for i in range(len(self.HGCN_layers)):
@@ -212,8 +215,13 @@ class Encoder(nn.Module):
         super(Encoder, self).__init__()
         self.chan_num = in_planes[1]
         self.band_num = in_planes[0]
-        # self.adj = nn.Parameter(torch.rand((1,self.chan_num * self.chan_num), dtype=torch.float32), requires_grad=True)
-        self.GGCN = MHGCN(layers=layers, dim=1, chan_num=self.chan_num, band_num=self.band_num, hidden_1=hidden_1,
+        self.adj_a = nn.Parameter(torch.tensor(get_adj_from_standard().reshape(1, self.chan_num * self.chan_num)).float(), requires_grad=True)
+        self.adj_b = nn.Parameter(torch.tensor(get_adj_from_standard().reshape(1, self.chan_num * self.chan_num)).float(), requires_grad=True)
+
+        self.GGCN_a = MHGCN(layers=layers, dim=1, chan_num=self.chan_num, band_num=self.band_num, hidden_1=hidden_1,
+                          hidden_2=hidden_2)
+        
+        self.GGCN_b = MHGCN(layers=layers, dim=1, chan_num=self.chan_num, band_num=self.band_num, hidden_1=hidden_1,
                           hidden_2=hidden_2)
 
         self.CBAM =CBAMBlock(channel=(layers + 1) * self.band_num, reduction=4, kernel_size=3)
@@ -228,9 +236,12 @@ class Encoder(nn.Module):
         x = x.unsqueeze(2)
         # logger.info('Encoder input shape after reshape: {}', x.shape)
 
-        
-        # g_feat, g_adj = self.GGCN(x, self.adj)
-        g_feat, g_adj = self.GGCN(x)
+        g_feat_a, g_adj_a = self.GGCN_a(x, self.adj_a)
+        g_feat_b, g_adj_b = self.GGCN_b(x, self.adj_b)
+        # g_feat, g_adj = self.GGCN(x)
+
+        g_feat = (g_feat_a + g_feat_b) / 2.0
+        g_adj = (g_adj_a + g_adj_b) / 2.0
 
         g_feat, ca, sa = self.CBAM(g_feat)
         out = self.fc1(g_feat.reshape(g_feat.size(0), -1))
@@ -267,7 +278,7 @@ class Discriminator(nn.Module):
         x = F.relu(x)
         # x = self.dropout1(x)
         x = self.fc2(x)
-        x = self.sigmoid(x)
+        # x = self.sigmoid(x)
         return x
 
 
@@ -318,7 +329,7 @@ class Domain_adaption_model(nn.Module):
     def get_init_banks(self, source, source_index):
         # logger.info(source_index.shape)
         self.eval()
-        source_f, source_att = self.encoder(source)
+        source_f, source_att = self.encoder(source, self.adj)
 
         source_predict = self.cls_classifier(source_f)
         source_label_feature = torch.nn.functional.softmax(source_predict, dim=1)
@@ -440,9 +451,10 @@ class DomainAdversarialLoss(nn.Module):
         f = self.grl(torch.cat((f_s, f_t), dim=0))
         d = self.domain_discriminator(f)
         d_s, d_t = d.chunk(2, dim=0)
+        # shape of d_s and d_t should be (B, 1)BCEWithLogitsLoss
         d_label_s = torch.ones((f_s.size(0), 1)).to(f_s.device)
         d_label_t = torch.zeros((f_t.size(0), 1)).to(f_t.device)
-        self.domain_discriminator_accuracy = 0.5 * (binary_accuracy(d_s, d_label_s) + binary_accuracy(d_t, d_label_t))
+        # self.domain_discriminator_accuracy = 0.5 * (binary_accuracy(d_s, d_label_s) + binary_accuracy(d_t, d_label_t))
         return 0.5 * (self.bce(d_s, d_label_s) + self.bce(d_t, d_label_t))
 
 
@@ -472,6 +484,7 @@ class DAANLoss(nn.Module):
         return global_loss
 
     def get_global_adversarial_result(self, f_s, f_t):
+        # the shape of f_s and f_t should be (B, hidden_2)
         f = self.grl(torch.cat((f_s, f_t), dim=0))
         d = self.global_classifiers(f)
         d_s, d_t = d.chunk(2, dim=0)

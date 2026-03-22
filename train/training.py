@@ -1,20 +1,22 @@
-
-import itertools
-from torch import nn
-from torch.optim.lr_scheduler import LambdaLR
-
+import math
+from typing import Optional
 from einops import rearrange
-from loguru import logger
 import numpy as np
 import torch
+from loguru import logger
+from torch import nn
+from torch.optim import Optimizer
+from torch.optim.lr_scheduler import LambdaLR
+from torch.utils.data import DataLoader, RandomSampler, SequentialSampler, TensorDataset
 
-from torch.nn.utils import clip_grad_norm_
-from torch.utils.data import DataLoader, RandomSampler, RandomSampler, SequentialSampler, TensorDataset
+from model.NSAL_DGAT import DAANLoss, Discriminator
 from constant import CLI_arguments_enum
+from model.saber import Saber
 from utils.metric import Metric
 
+
 def train(
-    model: nn.Module,
+    model: Sajber,
     metric: Metric,
     train_data: np.ndarray,
     train_labels: np.ndarray,
@@ -27,9 +29,14 @@ def train(
     task_type: str,
     subject_id: int,
     session_id: int,
-    learning_rate: float = 0.001,
+    learning_rate: float,
 ):
-    
+
+    logger.info("len of train data: {}, len of test data: {}", len(train_data), len(test_data))
+
+    train_data = rearrange(train_data, 'sample chan feature -> sample feature chan', chan= 62, feature = 5)
+    test_data =  rearrange(test_data, 'sample chan feature -> sample feature chan', chan= 62, feature = 5)
+
     dataset_train =TensorDataset(torch.Tensor(train_data),torch.arange(len(train_data)).long(), torch.Tensor(train_labels))
     dataset_test = TensorDataset(torch.Tensor(test_data), torch.Tensor(test_labels))
 
@@ -46,106 +53,126 @@ def train(
 
     target_loader_inf_iter = pytorch_safe_cycle(test_loader)
 
+    criterion = torch.nn.CrossEntropyLoss()
+    optimizer = torch.optim.AdamW(
+        model.parameters(),
+        lr=learning_rate,
+        weight_decay=0.001,
+    )
+
+    #  TODO.
+    decay_math = lambda epoch: 1.0 / (1.0 + 10 * (epoch / max(1, epochs))) ** 0.75
+    scheduler = LambdaLR(optimizer, lr_lambda=decay_math)
+
+    # lr_scheduler = StepwiseLR_GRL(optimizer, init_lr=learning_rate, gamma=10, decay_rate=0.75, max_iter=epochs)
+
+
+    test_data = torch.tensor(test_data).float()
+    test_labels = torch.tensor(test_labels).long()
+
     # generate domain labels for source and target data
     source_domain_labels = torch.zeros(batch_size, dtype=torch.long, device=device)
     target_domain_labels = torch.ones(batch_size, dtype=torch.long, device=device)
 
-    criterion = torch.nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
-
-
-    # Define the DANN decay math
-    # PyTorch automatically multiplies this result by your initial_lr
-    decay_math = lambda epoch: 1.0 / (1.0 + 10 * (epoch / epochs)) ** 0.75
-    # Attach the built-in scheduler to your optimizer
-    scheduler = LambdaLR(optimizer, lr_lambda=decay_math)
-
-    # 1. Initialize the Cosine Scheduler
-    # T_max is the number of steps until the LR hits the minimum. 
-    # eta_min is the lowest the LR will go (prevents it from hitting absolute zero).
-    # scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-    #     optimizer,
-    #     T_max=epochs,  # Set this to your total epochs
-    #     eta_min=1e-4
-    # )
-
-    for epoch in range(epochs):
-
-        # train the model on the training data for one epoch
+    for epoch in range(1, epochs + 1):
         model.train()
         epoch_loss = 0.0
 
-        for data, labels in train_loader:
+        iter = 0
+        for data, index, labels in train_loader:
+            iter += 1
+            # No prefix means it's the source domain.
+            # TODO
             optimizer.zero_grad()
 
-            data, labels = data.to(device), labels.to(device)
-            # hidden the taget lables.
+            data = data.to(device)
+            labels = labels.long().to(device)
+            index = index.long().to(device)
+
             target_data, _ = next(target_loader_inf_iter)
             target_data = target_data.to(device)
+            # data = rearrange(data, 'b chan feature -> b feature chan', chan= 62, feature = 5)
+            # target_data = rearrange(target_data, 'b chan feature -> b feature chan', chan= 62, feature = 5)
 
-            output, domain, target_output, target_domain = model(data, target_data)
-
-            # NOTE: If the label is not one-hot encoded, the type of labels 
-            # should be long for CrossEntropyLoss
-            loss = criterion(output, labels.long())
-
-            # generate domain labels for source and target data
-            # source domain label: 0, target domain label: 1
-            loss += 0.5 * criterion(domain, target_domain_labels) + criterion(target_domain, source_domain_labels)
+            output, domain_output_source, domain_output_target = model(data, target_data)
+            source_loss = criterion(output, labels)
+            domain_loss = 0.5 * criterion(domain_output_source, source_domain_labels)
+            domain_loss += criterion(domain_output_target, target_domain_labels)
+            loss = source_loss + domain_loss
 
             loss.backward()
-
-            #  Add a gradient clipping step to prevent exploding gradients
-            # clip_grad_norm_(model.parameters(), max_norm=1.0)
-
             optimizer.step()
             epoch_loss += loss.item()
 
-        scheduler.step()  # Update the learning rate based on the decay math
-
-        # Log progress periodically
-        evaluate(model, metric, test_data, test_labels, device, criterion, subject_id, session_id)
+        scheduler.step()
+        # lr_scheduler.step()
+        evaluate(model, metric, test_data, test_labels, device, subject_id, session_id)
         avg_loss = epoch_loss / len(train_loader)
 
-        show_log_per_epoch = 10 if task_type == CLI_arguments_enum.TaskTypeName.SUBJECT_DEPENDENT else 5
-        if (epoch + 1) % show_log_per_epoch == 0:
-            logger.info(f"Epoch {epoch+1}/{epochs} | Train Loss: {avg_loss:.4f}")
-            logger.info("Current lr = {:<.6f}", scheduler.get_last_lr()[0])
+        if epoch % 5 == 0:
+            logger.info("Epoch {}/{} | Train Loss: {:.4f}", epoch, epochs, avg_loss)
+            logger.info("Current lr = {:.6f}", scheduler.get_last_lr()[0])
+            # logger.info("Current lr = {:.6f}", lr_scheduler.get_lr())
+
+
+
+
+class StepwiseLR_GRL:
+    def __init__(self, optimizer: Optimizer, init_lr: Optional[float] = 0.01,
+                 gamma: Optional[float] = 0.001, decay_rate: Optional[float] = 0.75, max_iter: Optional[float] = 1000):
+        self.init_lr = init_lr
+        self.gamma = gamma
+        self.decay_rate = decay_rate
+        self.optimizer = optimizer
+        self.iter_num = 0
+        self.max_iter = max_iter
+
+    def get_lr(self) -> float:
+        lr = self.init_lr / (1.0 + self.gamma * (self.iter_num / self.max_iter)) ** (self.decay_rate)
+        return lr
+
+    def step(self):
+        """Increase iteration number `i` by 1 and update learning rate in `optimizer`"""
+        lr = self.get_lr()
+        for param_group in self.optimizer.param_groups:
+            if 'lr_mult' not in param_group:
+                param_group['lr_mult'] = 1.
+            param_group['lr'] = lr * param_group['lr_mult']
+
+        self.iter_num += 1
+
+
+def getInit(train_loader, model, device):
+    model.eval()
+    for _, (tran_input, tran_indx, _ ) in enumerate(train_loader):
+        tran_input, tran_indx = tran_input.to(device), tran_indx.to(device)
+        model.get_init_banks(tran_input, tran_indx)
 
 @torch.no_grad()
-def evaluate(model, metric:Metric, data, labels, device, criterion, subject_id, session_id):
-    """
-        The shaple of data is (session, sample, electrode, feature), 
-            and the shape of labels is (session, sample)
-    """
+def evaluate(
+    model: nn.Module,
+    metric: Metric,
+    data: torch.Tensor,
+    labels: torch.Tensor,
+    device: str,
+    subject_id: int,
+    session_id: int,
+):
     model.eval()
 
     data = data.to(device)
     labels = labels.to(device)
+    # data = rearrange(data, 'b chan feature -> b feature chan', chan= 62, feature = 5)
     
-    outputs, _ = model(data)
-    
-    # You might not need loss in eval, but if you do:
-    # loss = criterion(outputs, labels.long())
+    outputs = model.predict(data)
+    predictions = torch.argmax(outputs, dim=1)
 
-    # shape of outputs: [batch_size, num_classes]
-    _, predictions = torch.max(outputs, dim=1)
-
-
-    # 2. Compare predictions to actual labels and count the matches
     correct_in_batch = (predictions == labels).sum().item()
-
     acc = correct_in_batch / labels.size(0)
-
-
-    # logger.info("Session {}: Accuracy: {:.4f}, Loss: {:.4f}", session_id, acc, loss.item())
-    
     metric.update(subject_id, session_id, acc)
-    
 
-# Put this helper function at the top of your file
+
 def pytorch_safe_cycle(iterable):
-    """Infinitely loops a PyTorch DataLoader, safely reshuffling every epoch."""
     while True:
         for x in iterable:
             yield x

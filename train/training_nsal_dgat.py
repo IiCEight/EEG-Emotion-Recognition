@@ -33,6 +33,9 @@ def train(
 
     logger.info("len of train data: {}, len of test data: {}", len(train_data), len(test_data))
 
+    train_data = rearrange(train_data, 'sample chan feature -> sample feature chan', chan= 62, feature = 5)
+    test_data =  rearrange(test_data, 'sample chan feature -> sample feature chan', chan= 62, feature = 5)
+
     dataset_train =TensorDataset(torch.Tensor(train_data),torch.arange(len(train_data)).long(), torch.Tensor(train_labels))
     dataset_test = TensorDataset(torch.Tensor(test_data), torch.Tensor(test_labels))
 
@@ -92,8 +95,8 @@ def train(
 
             target_data, _ = next(target_loader_inf_iter)
             target_data = target_data.to(device)
-            data = rearrange(data, 'b chan feature -> b feature chan', chan= 62, feature = 5)
-            target_data = rearrange(target_data, 'b chan feature -> b feature chan', chan= 62, feature = 5)
+            # data = rearrange(data, 'b chan feature -> b feature chan', chan= 62, feature = 5)
+            # target_data = rearrange(target_data, 'b chan feature -> b feature chan', chan= 62, feature = 5)
 
             output, feature, target_output, target_feature, _, _, target_labels = model(
                 data,
@@ -119,15 +122,16 @@ def train(
             optimizer.step()
             epoch_loss += loss.item()
 
-        # scheduler.step()
-        lr_scheduler.step()
+        scheduler.step()
+        # lr_scheduler.step()
         evaluate(model, metric, test_data, test_labels, device, subject_id, session_id)
         avg_loss = epoch_loss / len(train_loader)
 
         if epoch % 5 == 0:
             logger.info("Epoch {}/{} | Train Loss: {:.4f}", epoch, epochs, avg_loss)
-            # logger.info("Current lr = {:.6f}", scheduler.get_last_lr()[0])
-            logger.info("Current lr = {:.6f}", lr_scheduler.get_lr())
+            logger.info("Current lr = {:.6f}", scheduler.get_last_lr()[0])
+            # logger.info("Current lr = {:.6f}", lr_scheduler.get_lr())
+
 
 
 
@@ -176,7 +180,7 @@ def evaluate(
 
     data = data.to(device)
     labels = labels.to(device)
-    data = rearrange(data, 'b chan feature -> b feature chan', chan= 62, feature = 5)
+    # data = rearrange(data, 'b chan feature -> b feature chan', chan= 62, feature = 5)
     
     outputs = model.target_predict(data)
     predictions = torch.argmax(outputs, dim=1)

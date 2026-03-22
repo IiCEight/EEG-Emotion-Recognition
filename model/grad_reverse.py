@@ -17,7 +17,7 @@ class WarmStartGradientReverseLayer(nn.Module):
 
     def __init__(self, alpha: float = 1.0, low: float = 0.0, high: float = 1.,
                  max_iters: int = 1000., auto_step: bool = False):
-        super(WarmStartGradientReverseLayer, self).__init__()
+        super().__init__()
         self.alpha = alpha
         self.low = low
         self.high = high
