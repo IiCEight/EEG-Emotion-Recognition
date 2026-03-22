@@ -15,6 +15,47 @@ from model.saber import Saber
 from utils.metric import Metric
 
 
+# ---------------------------------------------------------------------------
+# Polarity label helpers
+# ---------------------------------------------------------------------------
+
+def make_polarity_labels(labels: torch.Tensor):
+    """
+    Convert 3-class emotion labels into two binary polarity targets.
+
+    Original label mapping (SEED):
+        0 = Negative, 1 = Neutral, 2 = Positive
+
+    Returns:
+        polarity_a  – binary target for branch A  (1 = Positive,  0 = otherwise)
+        polarity_b  – binary target for branch B  (1 = Negative,  0 = otherwise)
+    """
+    polarity_a = (labels == 2).long()   # positive-vs-rest
+    polarity_b = (labels == 0).long()   # negative-vs-rest
+    return polarity_a, polarity_b
+
+
+def orthogonality_loss(feat_a: torch.Tensor, feat_b: torch.Tensor) -> torch.Tensor:
+    """
+    Encourage the two branch representations to be decorrelated.
+
+    L_ortho = mean( (norm_a · norm_b)^2 )
+
+    Args:
+        feat_a: [B, D]  branch A projected features
+        feat_b: [B, D]  branch B projected features
+    Returns:
+        scalar loss
+    """
+    norm_a = F.normalize(feat_a, p=2, dim=1)
+    norm_b = F.normalize(feat_b, p=2, dim=1)
+    cosine = (norm_a * norm_b).sum(dim=1)         # [B]
+    return (cosine ** 2).mean()
+
+
+import torch.nn.functional as F   # used by orthogonality_loss
+
+
 def train(
     model: Saber,
     metric: Metric,
@@ -54,6 +95,7 @@ def train(
     target_loader_inf_iter = pytorch_safe_cycle(test_loader)
 
     criterion = torch.nn.CrossEntropyLoss()
+    criterion_aux = torch.nn.CrossEntropyLoss()  # for auxiliary polarity heads
     optimizer = torch.optim.AdamW(
         model.parameters(),
         lr=learning_rate,
@@ -66,6 +108,9 @@ def train(
 
     # lr_scheduler = StepwiseLR_GRL(optimizer, init_lr=learning_rate, gamma=10, decay_rate=0.75, max_iter=epochs)
 
+    # Auxiliary loss weights
+    lambda_aux = 0.3
+    lambda_ortho = 0.1
 
     test_data = torch.tensor(test_data).float()
     test_labels = torch.tensor(test_labels).long()
@@ -94,11 +139,27 @@ def train(
             # data = rearrange(data, 'b chan feature -> b feature chan', chan= 62, feature = 5)
             # target_data = rearrange(target_data, 'b chan feature -> b feature chan', chan= 62, feature = 5)
 
-            output, domain_output_source, domain_output_target = model(data, target_data)
+            (output, domain_output_source, domain_output_target,
+             aux_a_logits, aux_b_logits,
+             branch_a_feat, branch_b_feat) = model(data, target_data)
+
+            # --- Main losses (unchanged) ---
             source_loss = criterion(output, labels)
             domain_loss = 0.5 * criterion(domain_output_source, source_domain_labels)
             domain_loss += criterion(domain_output_target, target_domain_labels)
-            loss = source_loss + domain_loss
+
+            # --- Auxiliary polarity specialization losses ---
+            polarity_a, polarity_b = make_polarity_labels(labels)
+            aux_loss_a = criterion_aux(aux_a_logits, polarity_a)
+            aux_loss_b = criterion_aux(aux_b_logits, polarity_b)
+
+            # --- Orthogonality regularization ---
+            ortho = orthogonality_loss(branch_a_feat, branch_b_feat)
+
+            loss = (source_loss
+                    + domain_loss
+                    + lambda_aux * (aux_loss_a + aux_loss_b)
+                    + lambda_ortho * ortho)
 
             loss.backward()
             optimizer.step()
