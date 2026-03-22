@@ -20,8 +20,8 @@ class GatedFusion(nn.Module):
     
     Given two feature tensors of shape [B, C, H, W], produces a soft
     per-branch scalar gate via global-average-pooled features and a
-    learned sigmoid projection.  The fused output is a weighted sum
-    of the two inputs.
+    learned softmax projection.  The fused output is a convex combination
+    of the two inputs (weights always sum to 1).
     """
 
     def __init__(self, channels):
@@ -45,8 +45,8 @@ class GatedFusion(nn.Module):
         pool_a = feat_a.mean(dim=[2, 3])
         pool_b = feat_b.mean(dim=[2, 3])
 
-        gate_input = torch.cat([pool_a, pool_b], dim=1)   # [B, 2C]
-        gate_weights = torch.sigmoid(self.gate(gate_input))  # [B, 2]
+        gate_input = torch.cat([pool_a, pool_b], dim=1)        # [B, 2C]
+        gate_weights = F.softmax(self.gate(gate_input), dim=1)  # [B, 2]  sums to 1
 
         w_a = gate_weights[:, 0:1].unsqueeze(-1).unsqueeze(-1)  # [B, 1, 1, 1]
         w_b = gate_weights[:, 1:2].unsqueeze(-1).unsqueeze(-1)  # [B, 1, 1, 1]

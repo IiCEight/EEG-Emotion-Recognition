@@ -109,8 +109,9 @@ def train(
     # lr_scheduler = StepwiseLR_GRL(optimizer, init_lr=learning_rate, gamma=10, decay_rate=0.75, max_iter=epochs)
 
     # Auxiliary loss weights
-    lambda_aux = 0.3
-    lambda_ortho = 0.1
+    lambda_aux_max = 0.3
+    lambda_ortho = 0.05
+    warmup_epochs = 15        # linearly ramp auxiliary losses over this many epochs
 
     test_data = torch.tensor(test_data).float()
     test_labels = torch.tensor(test_labels).long()
@@ -120,6 +121,9 @@ def train(
     target_domain_labels = torch.ones(batch_size, dtype=torch.long, device=device)
 
     for epoch in range(1, epochs + 1):
+        # Warmup: linearly increase auxiliary weight from 0 → lambda_aux_max
+        warmup_ratio = min(1.0, epoch / max(1, warmup_epochs))
+        lambda_aux = lambda_aux_max * warmup_ratio
         model.train()
         epoch_loss = 0.0
 
@@ -162,6 +166,7 @@ def train(
                     + lambda_ortho * ortho)
 
             loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
             epoch_loss += loss.item()
 
