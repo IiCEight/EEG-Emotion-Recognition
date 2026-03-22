@@ -14,69 +14,6 @@ from model.simple_graph_conv import SimpleGraphConv
 from utils.graphConstructionFromStandard import get_adj_from_standard
 
 
-# ---------------------------------------------------------------------------
-# Spectral Interaction Attention
-# ---------------------------------------------------------------------------
-
-class SpectralInteraction(nn.Module):
-    """
-    Transformer-style self-attention across frequency bands.
-
-    Treats the 5 EEG frequency bands as tokens, each with a 62-d
-    electrode embedding.  Self-attention lets bands attend to each
-    other, capturing cross-frequency coupling phenomena (e.g.,
-    theta-gamma phase-amplitude coupling) that are important for
-    emotion processing but ignored by independent-band GCN.
-
-    Architecture:  Pre-LN Transformer block
-        LayerNorm → MultiheadAttention → residual
-        LayerNorm → FFN(62→124→62)     → residual
-    """
-
-    def __init__(self, chan_num=62, num_heads=1, ffn_expansion=2, dropout=0.1):
-        super().__init__()
-        self.norm1 = nn.LayerNorm(chan_num)
-        self.attn = nn.MultiheadAttention(
-            embed_dim=chan_num, num_heads=num_heads,
-            dropout=dropout, batch_first=True,
-        )
-        self.norm2 = nn.LayerNorm(chan_num)
-        self.ffn = nn.Sequential(
-            nn.Linear(chan_num, chan_num * ffn_expansion),
-            nn.GELU(),
-            nn.Dropout(dropout),
-            nn.Linear(chan_num * ffn_expansion, chan_num),
-            nn.Dropout(dropout),
-        )
-
-    def forward(self, x):
-        """
-        Args:
-            x: [B, band, 1, chan]  e.g. [B, 5, 1, 62]
-        Returns:
-            same shape, with cross-frequency information mixed in.
-        """
-        x_2d = x.squeeze(2)              # [B, 5, 62]
-
-        # Self-attention across frequency bands
-        residual = x_2d
-        h = self.norm1(x_2d)
-        h, _ = self.attn(h, h, h)        # [B, 5, 62]
-        x_2d = residual + h
-
-        # Feed-forward
-        residual = x_2d
-        h = self.norm2(x_2d)
-        h = self.ffn(h)
-        x_2d = residual + h
-
-        return x_2d.unsqueeze(2)          # [B, 5, 1, 62]
-
-
-# ---------------------------------------------------------------------------
-# Gated Fusion
-# ---------------------------------------------------------------------------
-
 class GatedFusion(nn.Module):
     """
     Attention-gated fusion for two feature maps.
@@ -108,10 +45,6 @@ class GatedFusion(nn.Module):
         return w_a * feat_a + w_b * feat_b
 
 
-# ---------------------------------------------------------------------------
-# Auxiliary Classifier (for polarity specialization)
-# ---------------------------------------------------------------------------
-
 class AuxiliaryClassifier(nn.Module):
     """Lightweight binary classifier for emotion-polarity specialization."""
 
@@ -127,10 +60,6 @@ class AuxiliaryClassifier(nn.Module):
     def forward(self, x):
         return self.head(x)
 
-
-# ---------------------------------------------------------------------------
-# Top-level Saber
-# ---------------------------------------------------------------------------
 
 class Saber(nn.Module):
     def __init__(self, num_electrodes=62, in_features=5, num_classes=3, num_layers=2):
@@ -174,17 +103,13 @@ class Saber(nn.Module):
         return (class_output, domain_output_source, domain_output_target,
                 aux_a_logits, aux_b_logits,
                 source_branch_a, source_branch_b,
-                source_fused)   # 8th output: for contrastive loss
+                source_fused)   # for contrastive loss
 
     def predict(self, x):
         features = self.feature_extractor(x, return_branches=False)
         class_output = self.class_classifier(features)
         return class_output
 
-
-# ---------------------------------------------------------------------------
-# Feature Extractor
-# ---------------------------------------------------------------------------
 
 class FeatureExtractor(nn.Module):
     def __init__(self, num_electrodes, num_feature, layers=2, hidden_1=256, hidden_2=64, class_nums=3):
@@ -198,10 +123,6 @@ class FeatureExtractor(nn.Module):
             get_adj_from_standard()).float(), requires_grad=True)
         self.adj_b = nn.Parameter(torch.tensor(
             get_adj_from_standard()).float(), requires_grad=True)
-
-        # Spectral interaction — cross-frequency attention before GCN
-        self.spectral_interaction = SpectralInteraction(
-            chan_num=self.chan_num, num_heads=1, ffn_expansion=2, dropout=0.1)
 
         self.MRGCN_a = MulipleResidualGCN(layers, self.chan_num, self.band_num)
         self.MRGCN_b = MulipleResidualGCN(layers, self.chan_num, self.band_num)
@@ -238,12 +159,8 @@ class FeatureExtractor(nn.Module):
 
     def forward(self, x, return_branches=False):
         x = x.reshape(x.size(0), 5, 62)
-        x = x.unsqueeze(2)                          # [B, 5, 1, 62]
+        x = x.unsqueeze(2)
 
-        # ---- Cross-frequency interaction ----
-        x = self.spectral_interaction(x)             # [B, 5, 1, 62]
-
-        # ---- Dual graph streams ----
         g_feat_a, g_adj_a = self.MRGCN_a(x, self.adj_a)
         g_feat_b, g_adj_b = self.MRGCN_b(x, self.adj_b)
 
