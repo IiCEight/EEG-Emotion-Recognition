@@ -218,4 +218,18 @@ SABER can be viewed as:
 The combined objective encourages features that remain discriminative for emotion recognition while becoming less sensitive to domain shift between source and target EEG distributions.
 
 # What You Need To Do
+
+## Set up
+
+Before you modify the code, Create a new the branch from `main` branch.
+
+Read the Task and try to modify and improve on orginal model.
+
+After the your modification, commit with a short text description of what this experiment tried.
+
+You DONN'T need to run the model. 
+
+
+## Task
 I want to improve the Two parallel graph streams. And the intuition is that I want different graph streams to learn different emotions separately. For example, One branch like the emotions about positive, and other learn the negative. Help me implement this idea innovatively and create a good way to fuse these graph streams. Current fusion way is averaging them, but it doesn't work well(No improve).
+
