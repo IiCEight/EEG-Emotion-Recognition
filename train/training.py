@@ -16,7 +16,7 @@ from utils.metric import Metric
 
 
 def train(
-    model: Sajber,
+    model: Saber,
     metric: Metric,
     train_data: np.ndarray,
     train_labels: np.ndarray,
