@@ -163,7 +163,7 @@ def train(
     # Auxiliary loss weights
     lambda_aux_max = 0.3
     lambda_ortho = 0.05
-    lambda_con = 0.2          # supervised contrastive loss weight
+    lambda_con = 0.05         # supervised contrastive loss weight
     warmup_epochs = 15        # linearly ramp auxiliary losses over this many epochs
 
     test_data = torch.tensor(test_data).float()
