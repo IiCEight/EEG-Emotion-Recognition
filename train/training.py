@@ -56,6 +56,57 @@ def orthogonality_loss(feat_a: torch.Tensor, feat_b: torch.Tensor) -> torch.Tens
 import torch.nn.functional as F   # used by orthogonality_loss
 
 
+class SupConLoss(nn.Module):
+    """
+    Supervised Contrastive Loss (Khosla et al., 2020).
+
+    Pulls features of the same class together and pushes features of
+    different classes apart in the embedding space.
+    """
+
+    def __init__(self, temperature=0.1):
+        super().__init__()
+        self.temperature = temperature
+
+    def forward(self, features, labels):
+        """
+        Args:
+            features: [B, D]  L2-normalized feature vectors
+            labels:   [B]     class labels
+        Returns:
+            scalar loss
+        """
+        features = F.normalize(features, dim=1)
+        batch_size = features.size(0)
+
+        # Pairwise cosine similarity / temperature
+        similarity = features @ features.T / self.temperature   # [B, B]
+
+        # Positive mask: same class, excluding self
+        labels_col = labels.unsqueeze(0)       # [1, B]
+        labels_row = labels.unsqueeze(1)       # [B, 1]
+        positive_mask = (labels_row == labels_col).float()     # [B, B]
+        self_mask = 1.0 - torch.eye(batch_size, device=features.device)
+        positive_mask = positive_mask * self_mask              # exclude diagonal
+
+        # Numerically stable log-softmax over non-self entries
+        # Subtract max for numerical stability
+        logits_max, _ = similarity.max(dim=1, keepdim=True)
+        logits = similarity - logits_max.detach()
+
+        exp_logits = torch.exp(logits) * self_mask
+        log_prob = logits - torch.log(exp_logits.sum(dim=1, keepdim=True) + 1e-8)
+
+        # Average log-prob over positive pairs
+        num_positives = positive_mask.sum(dim=1)                # [B]
+        mean_log_prob = (positive_mask * log_prob).sum(dim=1) / (num_positives + 1e-8)
+
+        # Only count samples that have at least one positive pair
+        valid = (num_positives > 0).float()
+        loss = -(mean_log_prob * valid).sum() / (valid.sum() + 1e-8)
+        return loss
+
+
 def train(
     model: Saber,
     metric: Metric,
@@ -94,8 +145,9 @@ def train(
 
     target_loader_inf_iter = pytorch_safe_cycle(test_loader)
 
-    criterion = torch.nn.CrossEntropyLoss()
+    criterion = torch.nn.CrossEntropyLoss(label_smoothing=0.1)
     criterion_aux = torch.nn.CrossEntropyLoss()  # for auxiliary polarity heads
+    supcon_criterion = SupConLoss(temperature=0.1)
     optimizer = torch.optim.AdamW(
         model.parameters(),
         lr=learning_rate,
@@ -111,6 +163,7 @@ def train(
     # Auxiliary loss weights
     lambda_aux_max = 0.3
     lambda_ortho = 0.05
+    lambda_con = 0.2          # supervised contrastive loss weight
     warmup_epochs = 15        # linearly ramp auxiliary losses over this many epochs
 
     test_data = torch.tensor(test_data).float()
@@ -145,9 +198,10 @@ def train(
 
             (output, domain_output_source, domain_output_target,
              aux_a_logits, aux_b_logits,
-             branch_a_feat, branch_b_feat) = model(data, target_data)
+             branch_a_feat, branch_b_feat,
+             fused_feat) = model(data, target_data)
 
-            # --- Main losses (unchanged) ---
+            # --- Main losses ---
             source_loss = criterion(output, labels)
             domain_loss = 0.5 * criterion(domain_output_source, source_domain_labels)
             domain_loss += criterion(domain_output_target, target_domain_labels)
@@ -160,10 +214,14 @@ def train(
             # --- Orthogonality regularization ---
             ortho = orthogonality_loss(branch_a_feat, branch_b_feat)
 
+            # --- Supervised contrastive loss ---
+            con_loss = supcon_criterion(fused_feat, labels)
+
             loss = (source_loss
                     + domain_loss
                     + lambda_aux * (aux_loss_a + aux_loss_b)
-                    + lambda_ortho * ortho)
+                    + lambda_ortho * ortho
+                    + lambda_con * con_loss)
 
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
