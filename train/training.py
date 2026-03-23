@@ -146,7 +146,8 @@ def train(
     target_loader_inf_iter = pytorch_safe_cycle(test_loader)
 
     criterion = torch.nn.CrossEntropyLoss(label_smoothing=0.1)
-    criterion_aux = torch.nn.CrossEntropyLoss()  # for auxiliary polarity heads
+    criterion_domain = torch.nn.CrossEntropyLoss()   # no smoothing for domain
+    criterion_aux = torch.nn.CrossEntropyLoss()       # for auxiliary polarity heads
     supcon_criterion = SupConLoss(temperature=0.1)
     optimizer = torch.optim.AdamW(
         model.parameters(),
@@ -206,25 +207,36 @@ def train(
 
             # --- Main losses (mixup-aware) ---
             source_loss = lam * criterion(output, labels) + (1 - lam) * criterion(output, labels_perm)
-            domain_loss = 0.5 * criterion(domain_output_source, source_domain_labels)
-            domain_loss += criterion(domain_output_target, target_domain_labels)
+            domain_loss = 0.5 * criterion_domain(domain_output_source, source_domain_labels)
+            domain_loss += criterion_domain(domain_output_target, target_domain_labels)
 
-            # --- Auxiliary polarity specialization losses ---
+            # --- Auxiliary polarity specialization losses (mixup-aware) ---
             polarity_a, polarity_b = make_polarity_labels(labels)
-            aux_loss_a = criterion_aux(aux_a_logits, polarity_a)
-            aux_loss_b = criterion_aux(aux_b_logits, polarity_b)
+            polarity_a_perm, polarity_b_perm = make_polarity_labels(labels_perm)
+            aux_loss_a = lam * criterion_aux(aux_a_logits, polarity_a) + (1 - lam) * criterion_aux(aux_a_logits, polarity_a_perm)
+            aux_loss_b = lam * criterion_aux(aux_b_logits, polarity_b) + (1 - lam) * criterion_aux(aux_b_logits, polarity_b_perm)
 
             # --- Orthogonality regularization ---
             ortho = orthogonality_loss(branch_a_feat, branch_b_feat)
 
-            # --- Supervised contrastive loss ---
-            con_loss = supcon_criterion(fused_feat, labels)
+            # --- Supervised contrastive loss (skip when heavily mixed) ---
+            # SupCon assumes features cleanly belong to one class;
+            # Mixup-interpolated features violate this → can cause NaN
+            if lam > 0.9:
+                con_loss = supcon_criterion(fused_feat, labels)
+            else:
+                con_loss = torch.tensor(0.0, device=device)
 
             loss = (source_loss
                     + domain_loss
                     + lambda_aux * (aux_loss_a + aux_loss_b)
                     + lambda_ortho * ortho
                     + lambda_con * con_loss)
+
+            # NaN safety guard — must check BEFORE backward
+            if torch.isnan(loss) or torch.isinf(loss):
+                optimizer.zero_grad()
+                continue
 
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
