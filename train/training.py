@@ -71,6 +71,11 @@ def train(
     source_domain_labels = torch.zeros(batch_size, dtype=torch.long, device=device)
     target_domain_labels = torch.ones(batch_size, dtype=torch.long, device=device)
 
+    # Early stopping state
+    patience = 15                    # stop after this many epochs without improvement
+    best_acc = 0.0
+    epochs_without_improvement = 0
+
     for epoch in range(1, epochs + 1):
         model.train()
         total_loss = 0.0
@@ -113,6 +118,25 @@ def train(
 
         scheduler.step()
         evaluate_all(model, metric, test_data, test_labels, device, subject_id, session_id)
+
+        # --- Early stopping check ---
+        current_acc = metric.accuracy[subject_id, session_id]
+
+        if current_acc >= 1.0 - 1e-6:
+            logger.info("Early stop at epoch {} — perfect accuracy reached ({:.4f})",
+                        epoch, current_acc)
+            break
+
+        if current_acc > best_acc + 1e-6:
+            best_acc = current_acc
+            epochs_without_improvement = 0
+        else:
+            epochs_without_improvement += 1
+
+        if epochs_without_improvement >= patience:
+            logger.info("Early stop at epoch {} — no improvement for {} epochs (best={:.4f})",
+                        epoch, patience, best_acc)
+            break
 
         n_batches = len(train_loader)
         total_loss /= n_batches
