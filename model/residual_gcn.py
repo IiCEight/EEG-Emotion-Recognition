@@ -42,7 +42,7 @@ class SampleAdaptiveAdj(nn.Module):
             Q.permute(0, 2, 1) @ K / scale     # [B, N, N]
         )
         adj = adj_global.unsqueeze(0) + self.alpha * A_sample
-        return adj                              # [B, N, N]
+        return torch.relu(adj)                  # [B, N, N] non-negative
 
 
 class MulipleResidualGCN(nn.Module):
@@ -132,7 +132,8 @@ class ResidualGCN(nn.Module):
             adj_batch: [B, N, N]      per-sample adjacency
         """
         # Degree-normalize adjacency per sample: L = A * D^{-1}
-        deg = adj_batch.sum(dim=-1, keepdim=True).clamp(min=1e-8)  # [B, N, 1]
+        # Column-sum (matches original convention)
+        deg = adj_batch.sum(dim=-2, keepdim=True).clamp(min=1e-8)  # [B, 1, N]
         adj_normalized = adj_batch / deg                            # [B, N, N]
 
         residual = x
