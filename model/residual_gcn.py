@@ -1,9 +1,48 @@
 
 
-
 from einops import einsum, rearrange
 from torch import nn
 import torch
+
+
+class SampleAdaptiveAdj(nn.Module):
+    """
+    Generate per-sample adjacency modulation via Q·K^T attention.
+
+    Inspired by TAHAG (unit_gcn): each sample produces its own electrode
+    connectivity graph from its features, blended with a global learned
+    adjacency via a learnable α scalar.
+
+    A_final[b] = A_global + α × tanh(Q[b]·K[b]^T / √d)
+
+    α starts at 0 (pure global) and learns how much sample-specificity helps.
+    """
+
+    def __init__(self, in_features, num_electrodes, proj_dim=4):
+        super().__init__()
+        self.num_electrodes = num_electrodes
+        self.proj_dim = proj_dim
+        # Q and K are 1×1 convolutions (same as TAHAG's conv_a/conv_b)
+        self.query = nn.Conv2d(in_features, proj_dim, kernel_size=1, bias=False)
+        self.key   = nn.Conv2d(in_features, proj_dim, kernel_size=1, bias=False)
+        self.alpha = nn.Parameter(torch.zeros(1))  # starts at 0 = pure global
+
+    def forward(self, x, adj_global):
+        """
+        Args:
+            x:          [B, C, 1, N]  input features (C=bands, N=electrodes)
+            adj_global: [N, N]        learned global adjacency
+        Returns:
+            adj:        [B, N, N]     per-sample adjacency
+        """
+        Q = self.query(x).squeeze(2)           # [B, d, N]
+        K = self.key(x).squeeze(2)             # [B, d, N]
+        scale = Q.size(1) ** 0.5
+        A_sample = torch.tanh(
+            Q.permute(0, 2, 1) @ K / scale     # [B, N, N]
+        )
+        adj = adj_global.unsqueeze(0) + self.alpha * A_sample
+        return adj                              # [B, N, N]
 
 
 class MulipleResidualGCN(nn.Module):
@@ -11,7 +50,14 @@ class MulipleResidualGCN(nn.Module):
         super().__init__()
         self.chan_num = chan_num
         self.feature_num = feature_num
-        self.remap_adj = RemapAdjacencyMatrix(self.chan_num, reduction_ratio=128)
+
+        # Sample-adaptive adjacency (replaces old RemapAdjacencyMatrix)
+        self.adaptive_adj = SampleAdaptiveAdj(
+            in_features=feature_num,
+            num_electrodes=chan_num,
+            proj_dim=4,
+        )
+
         self.residual_gcn_layers = nn.ModuleList()
         for i in range(layers):
             self.residual_gcn_layers.append(ResidualGCN(feature_num=self.feature_num))
@@ -19,8 +65,6 @@ class MulipleResidualGCN(nn.Module):
         self.initialize()
 
     def initialize(self):
-        gamma = 0.1
-        # self.A = gamma * self.A +  (1 - gamma)*torch.tensor(get_adj_from_standard()).reshape(1, self.chan_num * self.chan_num).float()
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 nn.init.xavier_uniform_(m.weight, gain=1)
@@ -33,40 +77,24 @@ class MulipleResidualGCN(nn.Module):
                         nn.init.xavier_uniform_(j.weight, gain=1)
 
     def forward(self, x, adj=None):
-        # self.A = self.A.to(x.device)
-        # A_ds = self.GATENet(self.A)
-        adj = self.remap_adj(adj)
+        # adj: [N, N] global learned adjacency
+        # Returns per-sample adjacency [B, N, N]
+        adj_batch = self.adaptive_adj(x, adj)  # [B, N, N]
+
         output = []
         output.append(x)
         for i in range(len(self.residual_gcn_layers)):
             input = x
-            output.append(self.residual_gcn_layers[i](input, adj))
+            output.append(self.residual_gcn_layers[i](input, adj_batch))
             x = output[-1]
         out = torch.cat(output, dim=1)
-        return out, adj
+        return out, adj_batch
 
-
-class RemapAdjacencyMatrix(nn.Module):
-    def __init__(self, num_electrodes, reduction_ratio=128):
-        super().__init__()
-        self.num_electrodes = num_electrodes
-        in_channel = num_electrodes * num_electrodes
-        self.fc = nn.Sequential(nn.Linear(in_channel, in_channel // reduction_ratio, bias=False),
-                                nn.ELU(inplace=False),
-                                nn.Linear(in_channel // reduction_ratio, in_channel, bias=False),
-                                nn.Tanh(),
-                                nn.ReLU(inplace=False))
-
-    def forward(self, adj):
-        adj = rearrange(adj, 'row column -> (row column)', row=self.num_electrodes, column = self.num_electrodes)
-        adj = self.fc(adj)
-        adj = rearrange(adj, '(row column) -> row column', row=self.num_electrodes, column=self.num_electrodes)
-        return adj
 
 class ResidualGCN(nn.Module):
     def __init__(self, feature_num):
         """
-        dim == 1 for default.
+        Single residual GCN layer with BatchNorm.
         """
         super().__init__()
         self.GConv1 = nn.Conv2d(in_channels=feature_num,
@@ -87,7 +115,6 @@ class ResidualGCN(nn.Module):
         self.bn2 = nn.BatchNorm2d(feature_num)
         self.ELU = nn.ELU(inplace=False)
 
-        self.ELU = nn.ELU(inplace=False)
         self.initialize()
 
     def initialize(self):
@@ -97,18 +124,21 @@ class ResidualGCN(nn.Module):
             elif isinstance(m, nn.BatchNorm2d):
                 nn.init.constant_(m.weight, 1)
                 nn.init.constant_(m.bias, 0)
-            elif isinstance(m, nn.Sequential):
-                for j in m:
-                    if isinstance(j, nn.Linear):
-                        nn.init.xavier_uniform_(j.weight, gain=1)
 
-    def forward(self, x, adj_ds):
-        # L = A_ds * D^{-1}
-        adj_normalized = einsum(adj_ds, torch.diag(torch.reciprocal(sum(adj_ds))), 'i k, k p -> i p')
+    def forward(self, x, adj_batch):
+        """
+        Args:
+            x:         [B, C, 1, N]   input features
+            adj_batch: [B, N, N]      per-sample adjacency
+        """
+        # Degree-normalize adjacency per sample: L = A * D^{-1}
+        deg = adj_batch.sum(dim=-1, keepdim=True).clamp(min=1e-8)  # [B, N, 1]
+        adj_normalized = adj_batch / deg                            # [B, N, N]
+
         residual = x
         x = self.bn2(self.GConv2(self.ELU(self.bn1(self.GConv1(x)))))
-        # discard batch normalization.
-        # x = self.GConv2(self.ELU(self.GConv1(x)))
-        y = einsum(x, adj_normalized, 'b i j k, k p -> b i j p')
+
+        # Batched graph convolution: [B, C, 1, N] × [B, N, N] → [B, C, 1, N]
+        y = torch.einsum('bcjk,bkp->bcjp', x, adj_normalized)
         y = self.ELU(torch.add(y, residual))
         return y

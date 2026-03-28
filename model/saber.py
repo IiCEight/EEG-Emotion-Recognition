@@ -124,6 +124,9 @@ class FeatureExtractor(nn.Module):
         self.adj_b = nn.Parameter(torch.tensor(
             get_adj_from_standard()).float(), requires_grad=True)
 
+        # Input normalization (TAHAG-inspired)
+        self.data_bn = nn.BatchNorm1d(num_feature)
+
         self.MRGCN_a = MulipleResidualGCN(layers, self.chan_num, self.band_num)
         self.MRGCN_b = MulipleResidualGCN(layers, self.chan_num, self.band_num)
 
@@ -157,6 +160,7 @@ class FeatureExtractor(nn.Module):
 
     def forward(self, x, return_branches=False):
         x = x.reshape(x.size(0), 5, 62)
+        x = self.data_bn(x)              # normalize across batch
         x = x.unsqueeze(2)
 
         g_feat_a, g_adj_a = self.MRGCN_a(x, self.adj_a)
