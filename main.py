@@ -63,7 +63,7 @@ def main(
         float, typer.Option(help="ratio for train data size")
     ] = 0.6,
     batch_size: Annotated[int, typer.Option(
-        help="batch size for training")] = 128,
+        help="batch size for training")] = 32,
     epochs: Annotated[int, typer.Option(
         help="number of epochs for training")] = 60,
     data_random: Annotated[bool, typer.Option(
@@ -149,7 +149,7 @@ def main(
     two_mean, two_std = metric.two_best_sessions_mean_acc()
     one_mean, one_std = metric.one_best_session_mean_acc()
 
-    logger.info("\n all: mean {:<.4f} std {:<.4f}\ntwo: mean {:<.4f} std {:<.4f}" +
+    logger.info("\nall: mean {:<.4f} std {:<.4f}\ntwo: mean {:<.4f} std {:<.4f}" +
                 "\none: mean {:<.4f} std {:<.4f}\n", all_mean, all_std, two_mean, 
                 two_std, one_mean, one_std)
 

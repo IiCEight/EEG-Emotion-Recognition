@@ -129,7 +129,7 @@ def train(
     train_data = rearrange(train_data, 'sample chan feature -> sample feature chan', chan= 62, feature = 5)
     test_data =  rearrange(test_data, 'sample chan feature -> sample feature chan', chan= 62, feature = 5)
 
-    dataset_train =TensorDataset(torch.Tensor(train_data),torch.arange(len(train_data)).long(), torch.Tensor(train_labels))
+    dataset_train =TensorDataset(torch.Tensor(train_data), torch.Tensor(train_labels))
     dataset_test = TensorDataset(torch.Tensor(test_data), torch.Tensor(test_labels))
 
     sampler_train = RandomSampler(dataset_train)
@@ -178,10 +178,14 @@ def train(
         warmup_ratio = min(1.0, epoch / max(1, warmup_epochs))
         lambda_aux = lambda_aux_max * warmup_ratio
         model.train()
-        epoch_loss = 0.0
+        total_loss = 0.0
+        source_loss_total = 0.0
+        domain_loss_total = 0.0
+        aux_loss = 0.0
+        ortho_loss = 0.0
 
         iter = 0
-        for data, index, labels in train_loader:
+        for data, labels in train_loader:
             iter += 1
             # No prefix means it's the source domain.
             # TODO
@@ -189,7 +193,6 @@ def train(
 
             data = data.to(device)
             labels = labels.long().to(device)
-            index = index.long().to(device)
 
             target_data, _ = next(target_loader_inf_iter)
             target_data = target_data.to(device)
@@ -230,16 +233,29 @@ def train(
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
-            epoch_loss += loss.item()
+            total_loss += loss.item() 
+            source_loss_total += source_loss.item()
+            domain_loss_total += domain_loss.item()
+            aux_loss += lambda_aux * (aux_loss_a.item() + aux_loss_b.item()) 
+            ortho_loss += lambda_ortho * ortho.item()
 
         scheduler.step()
         # lr_scheduler.step()
-        evaluate(model, metric, test_data, test_labels, device, subject_id, session_id)
-        avg_loss = epoch_loss / len(train_loader)
+        evaluate_all(model, metric, test_data, test_labels, device, subject_id, session_id)
+        total_loss /= len(train_loader)
+        source_loss_avg = source_loss_total / len(train_loader)
+        domain_loss_avg = domain_loss_total / len(train_loader)
+        aux_loss /= len(train_loader)
+        ortho_loss /= len(train_loader)
 
         if epoch % 5 == 0:
-            logger.info("Epoch {}/{} | Train Loss: {:.4f}", epoch, epochs, avg_loss)
+            logger.info("Epoch {}/{} | Total Loss: {:.4f}, Source Loss: {:.4f}, Domain "
+                        + "Loss: {:.4f}, Auxiliary Loss: {:.4f}, Orthogonality Loss: {:.4f}", 
+                        epoch, epochs, total_loss, source_loss_avg,
+                        domain_loss_avg, aux_loss, ortho_loss)
             logger.info("Current lr = {:.6f}", scheduler.get_last_lr()[0])
+            train_acc = evaluate_batch(model, metric, train_loader, device, subject_id, session_id)
+            logger.info("Train Accuracy: {:.4f}", train_acc)
             # logger.info("Current lr = {:.6f}", lr_scheduler.get_lr())
 
 
@@ -277,7 +293,38 @@ def getInit(train_loader, model, device):
         model.get_init_banks(tran_input, tran_indx)
 
 @torch.no_grad()
-def evaluate(
+def evaluate_batch(
+    model: nn.Module,
+    metric: Metric,
+    data_loader: DataLoader,
+    device: str,
+    subject_id: int,
+    session_id: int,
+):
+    """
+    Evaluate the model on the data_loader and update the metric.
+    
+    NOTE: If the drop_last of data_loader is True, 
+    the last few samples that don't fit into a full batch will be dropped.
+    """
+    model.eval()
+    total_correct = 0
+    total = 0
+    for data, labels in data_loader:
+        data = data.to(device)
+        labels = labels.to(device)
+
+        outputs = model.predict(data)
+        predictions = torch.argmax(outputs, dim=1)
+
+        correct_in_batch = (predictions == labels).sum().item()
+        total_correct += correct_in_batch
+        total += labels.size(0)
+    return (total_correct / total) if total > 0 else 0.0
+
+
+@torch.no_grad()
+def evaluate_all(
     model: nn.Module,
     metric: Metric,
     data: torch.Tensor,
