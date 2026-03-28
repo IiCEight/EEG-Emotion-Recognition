@@ -8,9 +8,7 @@ import torch.nn.functional as F
 from data.seed import SEED_RGNN_ADJACENCY_MATRIX
 from model.classifier import Classifier, Discriminator
 from model.grad_reverse import GradientReverse, WarmStartGradientReverseLayer
-from model.graph_attention import CBAMBlock
 from model.residual_gcn import MulipleResidualGCN
-from model.simple_graph_conv import SimpleGraphConv
 from utils.graphConstructionFromStandard import get_adj_from_standard
 
 
@@ -45,22 +43,6 @@ class GatedFusion(nn.Module):
         return w_a * feat_a + w_b * feat_b
 
 
-class AuxiliaryClassifier(nn.Module):
-    """Lightweight binary classifier for emotion-polarity specialization."""
-
-    def __init__(self, in_features, num_classes=2):
-        super().__init__()
-        hidden = in_features // 2
-        self.head = nn.Sequential(
-            nn.Linear(in_features, hidden),
-            nn.ReLU(inplace=True),
-            nn.Linear(hidden, num_classes),
-        )
-
-    def forward(self, x):
-        return self.head(x)
-
-
 class Saber(nn.Module):
     def __init__(self, num_electrodes=62, in_features=5, num_classes=3, num_layers=2):
         super().__init__()
@@ -69,14 +51,12 @@ class Saber(nn.Module):
         self.in_features = in_features
         self.num_layers = num_layers
         self.num_classes = num_classes
-        self.conv_out_dim = 16
         self.grad_reverse_max_iter = 1000
 
-        self.hidden_1 = 256
         self.hidden_2 = 64
 
         self.feature_extractor = FeatureExtractor(
-            num_electrodes, in_features, num_layers, self.hidden_1, self.hidden_2, num_classes)
+            num_electrodes, in_features, num_layers, hidden_2=self.hidden_2)
 
         self.class_classifier = Classifier(self.hidden_2, num_classes)
         self.domain_classifier = Discriminator(self.hidden_2)
@@ -84,35 +64,25 @@ class Saber(nn.Module):
         self.grad_reverse_layer = WarmStartGradientReverseLayer(
             alpha=1.0, low=0., high=1., max_iters=self.grad_reverse_max_iter, auto_step=True)
 
-        # Auxiliary polarity heads
-        self.aux_classifier_a = AuxiliaryClassifier(self.hidden_2, num_classes=2)
-        self.aux_classifier_b = AuxiliaryClassifier(self.hidden_2, num_classes=2)
-
     def forward(self, source, target):
-        source_fused, source_branch_a, source_branch_b = self.feature_extractor(source, return_branches=True)
-        target_fused, _, _ = self.feature_extractor(target, return_branches=True)
+        source_feat = self.feature_extractor(source)
+        target_feat = self.feature_extractor(target)
 
-        class_output = self.class_classifier(source_fused)
+        class_output = self.class_classifier(source_feat)
 
-        domain_output_source = self.domain_classifier(self.grad_reverse_layer(source_fused))
-        domain_output_target = self.domain_classifier(self.grad_reverse_layer(target_fused))
+        domain_output_source = self.domain_classifier(self.grad_reverse_layer(source_feat))
+        domain_output_target = self.domain_classifier(self.grad_reverse_layer(target_feat))
 
-        aux_a_logits = self.aux_classifier_a(source_branch_a)
-        aux_b_logits = self.aux_classifier_b(source_branch_b)
-
-        return (class_output, domain_output_source, domain_output_target,
-                aux_a_logits, aux_b_logits,
-                source_branch_a, source_branch_b,
-                source_fused)   # for contrastive loss
+        return class_output, domain_output_source, domain_output_target, source_feat
 
     def predict(self, x):
-        features = self.feature_extractor(x, return_branches=False)
+        features = self.feature_extractor(x)
         class_output = self.class_classifier(features)
         return class_output
 
 
 class FeatureExtractor(nn.Module):
-    def __init__(self, num_electrodes, num_feature, layers=2, hidden_1=256, hidden_2=64, class_nums=3):
+    def __init__(self, num_electrodes, num_feature, layers=2, hidden_2=64):
         super().__init__()
         self.chan_num = num_electrodes
         self.band_num = num_feature
@@ -135,40 +105,19 @@ class FeatureExtractor(nn.Module):
         # Attention-gated fusion
         self.gated_fusion = GatedFusion(channels=mrgcn_out_channels)
 
-        self.CBAM_a = CBAMBlock(channel=mrgcn_out_channels, reduction=4, kernel_size=3)
-        self.CBAM_b = CBAMBlock(channel=mrgcn_out_channels, reduction=4, kernel_size=3)
-
         flatten_dim = self.chan_num * mrgcn_out_channels
 
         # Shared projection
         self.fc1 = nn.Linear(flatten_dim, hidden_2)
         self.fc2 = nn.Linear(hidden_2, hidden_2)
 
-        # Per-branch projections (flatten GCN features for aux/ortho)
-        self.branch_proj_a = nn.Sequential(
-            nn.Linear(flatten_dim, hidden_2),
-            nn.ReLU(inplace=True),
-            nn.Linear(hidden_2, hidden_2),
-            nn.ReLU(inplace=True),
-        )
-        self.branch_proj_b = nn.Sequential(
-            nn.Linear(flatten_dim, hidden_2),
-            nn.ReLU(inplace=True),
-            nn.Linear(hidden_2, hidden_2),
-            nn.ReLU(inplace=True),
-        )
-
-    def forward(self, x, return_branches=False):
+    def forward(self, x):
         x = x.reshape(x.size(0), 5, 62)
         x = self.data_bn(x)              # normalize across batch
         x = x.unsqueeze(2)
 
-        g_feat_a, g_adj_a = self.MRGCN_a(x, self.adj_a)
-        g_feat_b, g_adj_b = self.MRGCN_b(x, self.adj_b)
-
-        # ---- CBAM per-branch ----
-        g_feat_a = self.CBAM_a(g_feat_a)
-        g_feat_b = self.CBAM_b(g_feat_b)
+        g_feat_a, _ = self.MRGCN_a(x, self.adj_a)
+        g_feat_b, _ = self.MRGCN_b(x, self.adj_b)
 
         # ---- Gated fusion ----
         g_feat = self.gated_fusion(g_feat_a, g_feat_b)
@@ -178,12 +127,5 @@ class FeatureExtractor(nn.Module):
         out = F.relu(out)
         out = self.fc2(out)
         out = F.relu(out)
-
-        if return_branches:
-            flat_a = g_feat_a.reshape(g_feat_a.size(0), -1)
-            flat_b = g_feat_b.reshape(g_feat_b.size(0), -1)
-            branch_a_feat = self.branch_proj_a(flat_a)
-            branch_b_feat = self.branch_proj_b(flat_b)
-            return out, branch_a_feat, branch_b_feat
 
         return out
