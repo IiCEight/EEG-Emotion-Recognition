@@ -132,7 +132,8 @@ class FeatureExtractor(nn.Module):
         # Attention-gated fusion
         self.gated_fusion = GatedFusion(channels=mrgcn_out_channels)
 
-        self.CBAM = CBAMBlock(channel=mrgcn_out_channels, reduction=4, kernel_size=3)
+        self.CBAM_a = CBAMBlock(channel=mrgcn_out_channels, reduction=4, kernel_size=3)
+        self.CBAM_b = CBAMBlock(channel=mrgcn_out_channels, reduction=4, kernel_size=3)
 
         flatten_dim = self.chan_num * mrgcn_out_channels
 
@@ -140,22 +141,19 @@ class FeatureExtractor(nn.Module):
         self.fc1 = nn.Linear(flatten_dim, hidden_2)
         self.fc2 = nn.Linear(hidden_2, hidden_2)
 
-        # Per-branch projections
-        self.branch_proj_a = nn.Sequential(
-            nn.Linear(flatten_dim, hidden_2),
-            nn.ReLU(inplace=True),
-            nn.Linear(hidden_2, hidden_2),
-            nn.ReLU(inplace=True),
-        )
-        self.branch_proj_b = nn.Sequential(
-            nn.Linear(flatten_dim, hidden_2),
-            nn.ReLU(inplace=True),
-            nn.Linear(hidden_2, hidden_2),
-            nn.ReLU(inplace=True),
-        )
-
-        self.dropout1 = nn.Dropout(p=0.25)
-        self.dropout2 = nn.Dropout(p=0.25)
+        # # Per-branch projections
+        # self.branch_proj_a = nn.Sequential(
+        #     nn.Linear(flatten_dim, hidden_2),
+        #     nn.ReLU(inplace=True),
+        #     nn.Linear(hidden_2, hidden_2),
+        #     nn.ReLU(inplace=True),
+        # )
+        # self.branch_proj_b = nn.Sequential(
+        #     nn.Linear(flatten_dim, hidden_2),
+        #     nn.ReLU(inplace=True),
+        #     nn.Linear(hidden_2, hidden_2),
+        #     nn.ReLU(inplace=True),
+        # )
 
     def forward(self, x, return_branches=False):
         x = x.reshape(x.size(0), 5, 62)
@@ -164,11 +162,12 @@ class FeatureExtractor(nn.Module):
         g_feat_a, g_adj_a = self.MRGCN_a(x, self.adj_a)
         g_feat_b, g_adj_b = self.MRGCN_b(x, self.adj_b)
 
-        # ---- Gated fusion ----
-        g_feat = self.gated_fusion(g_feat_a, g_feat_b)
-
         # ---- CBAM ----
-        g_feat, ca, sa = self.CBAM(g_feat)
+        g_feat_a = self.CBAM_a(g_feat_a)
+        g_feat_b = self.CBAM_b(g_feat_b)
+
+                # ---- Gated fusion ----
+        g_feat = self.gated_fusion(g_feat_a, g_feat_b)
 
         # ---- Shared projection ----
         out = self.fc1(g_feat.reshape(g_feat.size(0), -1))
@@ -177,10 +176,10 @@ class FeatureExtractor(nn.Module):
         out = F.relu(out)
 
         if return_branches:
-            flat_a = g_feat_a.reshape(g_feat_a.size(0), -1)
-            flat_b = g_feat_b.reshape(g_feat_b.size(0), -1)
-            branch_a_feat = self.branch_proj_a(flat_a)
-            branch_b_feat = self.branch_proj_b(flat_b)
-            return out, branch_a_feat, branch_b_feat
+            # flat_a = g_feat_a.reshape(g_feat_a.size(0), -1)
+            # flat_b = g_feat_b.reshape(g_feat_b.size(0), -1)
+            # branch_a_feat = self.branch_proj_a(flat_a)
+            # branch_b_feat = self.branch_proj_b(flat_b)
+            return out, g_feat_a, g_feat_b
 
         return out

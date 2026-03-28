@@ -1,54 +1,797 @@
-00:14:07 | INFO     __main__ main     91  CUDA Available: True
-00:14:07 | INFO     __main__ main     92  Device Count: 1
-00:14:07 | INFO     __main__ main     95  GPU Name: NVIDIA GeForce RTX 4090
-00:14:07 | INFO     __main__ main     97  Launching....
-model_name: ModelName.NSAL_DGAT
+20:29:41 | INFO     __main__ main     93  CUDA Available: True
+20:29:41 | INFO     __main__ main     94  Device Count: 1
+20:29:41 | INFO     __main__ main     97  GPU Name: NVIDIA GeForce RTX 4090
+20:29:41 | INFO     __main__ main     99  Launching....
+model_name: ModelName.SABER
 dataset: DatasetName.SEED
 dataset_path: ../data/SEED
 device: cuda
 logging level: LevelName.INFO
-task type: TaskTypeName.SUBJECT_DEPENDENT
+task type: TaskTypeName.SUBJECT_INDEPENDENT
 split type: SplitTypeName.LEAVE_ONE_SUBJECT_OUT
 batch_size: 128
-epochs: 200
+epochs: 100
 data random: False
-00:14:07 | INFO     data.dataloder load_data 24  Loading dataset DatasetName.SEED from path ../data/SEED
-00:14:07 | INFO     data.load.load_seed load_seed 64  Loading SEED dataset from path ../data/SEED ...
-00:14:15 | INFO     data.utils split_data_wrt_trials 139 Number of trials for train 9
-00:14:17 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-00:14:17 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (2010, 62, 5), label shape: (2010,)
-00:14:17 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-00:14:17 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (1384, 62, 5), label shape: (1384,)
-00:14:18 | INFO     train.training_nsal_dgat train    34  len of train data: 2010, len of test data: 1384
-00:14:18 | INFO     train.training_nsal_dgat train    55  num_classes 3
-00:14:27 | INFO     utils.metric update   25  --> A new better acc 0.3432 on subject 0 session 0
-00:14:36 | INFO     train.training_nsal_dgat train    125 Epoch 5/200 | Train Loss: 1.8222
-00:14:36 | INFO     train.training_nsal_dgat train    127 Current lr = 0.000846
-00:14:37 | INFO     utils.metric update   25  --> A new better acc 0.6105 on subject 0 session 0
-00:14:39 | INFO     utils.metric update   25  --> A new better acc 0.6828 on subject 0 session 0
-00:14:41 | INFO     train.training_nsal_dgat train    125 Epoch 10/200 | Train Loss: 1.6958
-00:14:41 | INFO     train.training_nsal_dgat train    127 Current lr = 0.000738
-00:14:47 | INFO     utils.metric update   25  --> A new better acc 0.7681 on subject 0 session 0
-00:14:48 | INFO     train.training_nsal_dgat train    125 Epoch 15/200 | Train Loss: 1.5609
-00:14:48 | INFO     train.training_nsal_dgat train    127 Current lr = 0.000657
-00:14:53 | INFO     train.training_nsal_dgat train    125 Epoch 20/200 | Train Loss: 1.3487
-00:14:53 | INFO     train.training_nsal_dgat train    127 Current lr = 0.000595
-00:14:55 | INFO     utils.metric update   25  --> A new better acc 0.7970 on subject 0 session 0
-00:14:58 | INFO     train.training_nsal_dgat train    125 Epoch 25/200 | Train Loss: 1.1992
-00:14:58 | INFO     train.training_nsal_dgat train    127 Current lr = 0.000544
-00:15:07 | INFO     train.training_nsal_dgat train    125 Epoch 30/200 | Train Loss: 1.1684
-00:15:07 | INFO     train.training_nsal_dgat train    127 Current lr = 0.000503
-00:15:12 | INFO     train.training_nsal_dgat train    125 Epoch 35/200 | Train Loss: 1.1011
-00:15:12 | INFO     train.training_nsal_dgat train    127 Current lr = 0.000468
-00:15:18 | INFO     train.training_nsal_dgat train    125 Epoch 40/200 | Train Loss: 1.0564
-00:15:18 | INFO     train.training_nsal_dgat train    127 Current lr = 0.000439
-00:15:23 | INFO     train.training_nsal_dgat train    125 Epoch 45/200 | Train Loss: 1.0278
-00:15:23 | INFO     train.training_nsal_dgat train    127 Current lr = 0.000413
-00:15:28 | INFO     train.training_nsal_dgat train    125 Epoch 50/200 | Train Loss: 0.9869
-00:15:28 | INFO     train.training_nsal_dgat train    127 Current lr = 0.000391
-00:15:34 | INFO     train.training_nsal_dgat train    125 Epoch 55/200 | Train Loss: 0.9623
-00:15:34 | INFO     train.training_nsal_dgat train    127 Current lr = 0.000371
-00:15:42 | INFO     utils.metric update   25  --> A new better acc 0.8020 on subject 0 session 0
-00:15:42 | INFO     train.training_nsal_dgat train    125 Epoch 60/200 | Train Loss: 0.9361
-00:15:42 | INFO     train.training_nsal_dgat train    127 Current lr = 0.000354
-00:15:43 | INFO     utils.metric update   25  --> A new better acc 0.8064 on subject 0 session 0
+random seed: 42
+only one experiment: False
+only one session: True
+20:29:41 | INFO     data.dataloder load_data 24  Loading dataset DatasetName.SEED from path ../data/SEED
+20:29:41 | INFO     data.load.load_seed load_seed 64  Loading SEED dataset from path ../data/SEED ...
+20:30:01 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+20:30:03 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+20:30:03 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+20:30:03 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+20:30:04 | INFO     train.training train    127 len of train data: 47516, len of test data: 3394
+20:30:34 | INFO     utils.metric update   25  --> A new better acc 0.3609 on subject 0 session 0
+20:32:25 | INFO     train.training train    252 Epoch 5/100 | Train Loss: 3.0754
+20:32:25 | INFO     train.training train    253 Current lr = 0.000994
+20:32:53 | INFO     utils.metric update   25  --> A new better acc 0.3715 on subject 0 session 0
+20:33:21 | INFO     utils.metric update   25  --> A new better acc 0.4738 on subject 0 session 0
+20:34:12 | INFO     utils.metric update   25  --> A new better acc 0.6111 on subject 0 session 0
+20:34:40 | INFO     train.training train    252 Epoch 10/100 | Train Loss: 2.2964
+20:34:40 | INFO     train.training train    253 Current lr = 0.000976
+20:36:26 | INFO     utils.metric update   25  --> A new better acc 0.6612 on subject 0 session 0
+20:36:53 | INFO     train.training train    252 Epoch 15/100 | Train Loss: 2.4241
+20:36:53 | INFO     train.training train    253 Current lr = 0.000946
+20:38:30 | INFO     train.training train    252 Epoch 20/100 | Train Loss: 0.0000
+20:38:30 | INFO     train.training train    253 Current lr = 0.000905
+20:39:31 | INFO     train.training train    252 Epoch 25/100 | Train Loss: 0.0000
+20:39:31 | INFO     train.training train    253 Current lr = 0.000855
+20:40:34 | INFO     train.training train    252 Epoch 30/100 | Train Loss: 0.0000
+20:40:34 | INFO     train.training train    253 Current lr = 0.000796
+20:41:31 | INFO     train.training train    252 Epoch 35/100 | Train Loss: 0.0000
+20:41:31 | INFO     train.training train    253 Current lr = 0.000730
+20:42:34 | INFO     train.training train    252 Epoch 40/100 | Train Loss: 0.0000
+20:42:34 | INFO     train.training train    253 Current lr = 0.000658
+20:43:34 | INFO     train.training train    252 Epoch 45/100 | Train Loss: 0.0000
+20:43:34 | INFO     train.training train    253 Current lr = 0.000582
+20:44:32 | INFO     train.training train    252 Epoch 50/100 | Train Loss: 0.0000
+20:44:32 | INFO     train.training train    253 Current lr = 0.000505
+20:45:33 | INFO     train.training train    252 Epoch 55/100 | Train Loss: 0.0000
+20:45:33 | INFO     train.training train    253 Current lr = 0.000428
+20:46:35 | INFO     train.training train    252 Epoch 60/100 | Train Loss: 0.0000
+20:46:35 | INFO     train.training train    253 Current lr = 0.000352
+20:47:35 | INFO     train.training train    252 Epoch 65/100 | Train Loss: 0.0000
+20:47:35 | INFO     train.training train    253 Current lr = 0.000280
+20:48:37 | INFO     train.training train    252 Epoch 70/100 | Train Loss: 0.0000
+20:48:37 | INFO     train.training train    253 Current lr = 0.000214
+20:49:39 | INFO     train.training train    252 Epoch 75/100 | Train Loss: 0.0000
+20:49:39 | INFO     train.training train    253 Current lr = 0.000155
+20:50:37 | INFO     train.training train    252 Epoch 80/100 | Train Loss: 0.0000
+20:50:37 | INFO     train.training train    253 Current lr = 0.000105
+20:51:40 | INFO     train.training train    252 Epoch 85/100 | Train Loss: 0.0000
+20:51:40 | INFO     train.training train    253 Current lr = 0.000064
+20:52:41 | INFO     train.training train    252 Epoch 90/100 | Train Loss: 0.0000
+20:52:41 | INFO     train.training train    253 Current lr = 0.000034
+20:53:43 | INFO     train.training train    252 Epoch 95/100 | Train Loss: 0.0000
+20:53:43 | INFO     train.training train    253 Current lr = 0.000016
+20:54:41 | INFO     train.training train    252 Epoch 100/100 | Train Loss: 0.0000
+20:54:41 | INFO     train.training train    253 Current lr = 0.000010
+20:54:41 | INFO     __main__ main     138 
+--------------> Finished training w.r.t. subject 0 session 0 acc 0.6612
+20:54:56 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+20:54:57 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+20:54:57 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+20:54:57 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+20:54:57 | INFO     train.training train    127 len of train data: 47516, len of test data: 3394
+20:55:22 | INFO     utils.metric update   25  --> A new better acc 0.3256 on subject 1 session 0
+20:55:51 | INFO     utils.metric update   25  --> A new better acc 0.3680 on subject 1 session 0
+20:56:18 | INFO     utils.metric update   25  --> A new better acc 0.6049 on subject 1 session 0
+20:57:12 | INFO     train.training train    252 Epoch 5/100 | Train Loss: 2.0611
+20:57:12 | INFO     train.training train    253 Current lr = 0.000994
+20:59:26 | INFO     train.training train    252 Epoch 10/100 | Train Loss: 2.0452
+20:59:26 | INFO     train.training train    253 Current lr = 0.000976
+21:00:46 | INFO     utils.metric update   25  --> A new better acc 0.6768 on subject 1 session 0
+21:01:43 | INFO     train.training train    252 Epoch 15/100 | Train Loss: 2.0806
+21:01:43 | INFO     train.training train    253 Current lr = 0.000946
+21:04:02 | INFO     train.training train    252 Epoch 20/100 | Train Loss: 2.0295
+21:04:02 | INFO     train.training train    253 Current lr = 0.000905
+21:04:31 | INFO     utils.metric update   25  --> A new better acc 0.6800 on subject 1 session 0
+21:04:55 | INFO     utils.metric update   25  --> A new better acc 0.7481 on subject 1 session 0
+21:06:20 | INFO     train.training train    252 Epoch 25/100 | Train Loss: 1.9824
+21:06:20 | INFO     train.training train    253 Current lr = 0.000855
+21:08:47 | INFO     train.training train    252 Epoch 30/100 | Train Loss: 1.9932
+21:08:47 | INFO     train.training train    253 Current lr = 0.000796
+21:11:01 | INFO     train.training train    252 Epoch 35/100 | Train Loss: 1.9502
+21:11:01 | INFO     train.training train    253 Current lr = 0.000730
+21:13:18 | INFO     train.training train    252 Epoch 40/100 | Train Loss: 1.9496
+21:13:18 | INFO     train.training train    253 Current lr = 0.000658
+21:15:29 | INFO     train.training train    252 Epoch 45/100 | Train Loss: 1.9316
+21:15:29 | INFO     train.training train    253 Current lr = 0.000582
+21:17:45 | INFO     train.training train    252 Epoch 50/100 | Train Loss: 1.9285
+21:17:45 | INFO     train.training train    253 Current lr = 0.000505
+21:19:59 | INFO     train.training train    252 Epoch 55/100 | Train Loss: 1.8884
+21:19:59 | INFO     train.training train    253 Current lr = 0.000428
+21:22:19 | INFO     train.training train    252 Epoch 60/100 | Train Loss: 1.8852
+21:22:19 | INFO     train.training train    253 Current lr = 0.000352
+21:24:38 | INFO     train.training train    252 Epoch 65/100 | Train Loss: 1.8539
+21:24:38 | INFO     train.training train    253 Current lr = 0.000280
+21:26:52 | INFO     train.training train    252 Epoch 70/100 | Train Loss: 1.8908
+21:26:52 | INFO     train.training train    253 Current lr = 0.000214
+21:29:11 | INFO     train.training train    252 Epoch 75/100 | Train Loss: 1.8815
+21:29:11 | INFO     train.training train    253 Current lr = 0.000155
+21:31:25 | INFO     train.training train    252 Epoch 80/100 | Train Loss: 1.8689
+21:31:25 | INFO     train.training train    253 Current lr = 0.000105
+21:33:42 | INFO     train.training train    252 Epoch 85/100 | Train Loss: 1.8437
+21:33:42 | INFO     train.training train    253 Current lr = 0.000064
+21:36:16 | INFO     train.training train    252 Epoch 90/100 | Train Loss: 1.8766
+21:36:16 | INFO     train.training train    253 Current lr = 0.000034
+21:39:42 | INFO     train.training train    252 Epoch 95/100 | Train Loss: 1.8615
+21:39:42 | INFO     train.training train    253 Current lr = 0.000016
+21:43:05 | INFO     train.training train    252 Epoch 100/100 | Train Loss: 1.8621
+21:43:05 | INFO     train.training train    253 Current lr = 0.000010
+21:43:05 | INFO     __main__ main     138 
+--------------> Finished training w.r.t. subject 1 session 0 acc 0.7481
+21:43:22 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+21:43:24 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+21:43:24 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+21:43:24 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+21:43:25 | INFO     train.training train    127 len of train data: 47516, len of test data: 3394
+21:44:06 | INFO     utils.metric update   25  --> A new better acc 0.3347 on subject 2 session 0
+21:44:47 | INFO     utils.metric update   25  --> A new better acc 0.3565 on subject 2 session 0
+21:45:45 | INFO     train.training train    252 Epoch 5/100 | Train Loss: 0.0000
+21:45:45 | INFO     train.training train    253 Current lr = 0.000994
+21:47:10 | INFO     train.training train    252 Epoch 10/100 | Train Loss: 0.0000
+21:47:10 | INFO     train.training train    253 Current lr = 0.000976
+21:48:37 | INFO     train.training train    252 Epoch 15/100 | Train Loss: 0.0000
+21:48:37 | INFO     train.training train    253 Current lr = 0.000946
+21:50:00 | INFO     train.training train    252 Epoch 20/100 | Train Loss: 0.0000
+21:50:00 | INFO     train.training train    253 Current lr = 0.000905
+21:51:10 | INFO     train.training train    252 Epoch 25/100 | Train Loss: 0.0000
+21:51:10 | INFO     train.training train    253 Current lr = 0.000855
+21:52:11 | INFO     train.training train    252 Epoch 30/100 | Train Loss: 0.0000
+21:52:11 | INFO     train.training train    253 Current lr = 0.000796
+21:53:14 | INFO     train.training train    252 Epoch 35/100 | Train Loss: 0.0000
+21:53:14 | INFO     train.training train    253 Current lr = 0.000730
+21:54:14 | INFO     train.training train    252 Epoch 40/100 | Train Loss: 0.0000
+21:54:14 | INFO     train.training train    253 Current lr = 0.000658
+21:55:14 | INFO     train.training train    252 Epoch 45/100 | Train Loss: 0.0000
+21:55:14 | INFO     train.training train    253 Current lr = 0.000582
+21:56:15 | INFO     train.training train    252 Epoch 50/100 | Train Loss: 0.0000
+21:56:15 | INFO     train.training train    253 Current lr = 0.000505
+21:57:13 | INFO     train.training train    252 Epoch 55/100 | Train Loss: 0.0000
+21:57:13 | INFO     train.training train    253 Current lr = 0.000428
+21:58:16 | INFO     train.training train    252 Epoch 60/100 | Train Loss: 0.0000
+21:58:16 | INFO     train.training train    253 Current lr = 0.000352
+21:59:14 | INFO     train.training train    252 Epoch 65/100 | Train Loss: 0.0000
+21:59:14 | INFO     train.training train    253 Current lr = 0.000280
+22:00:14 | INFO     train.training train    252 Epoch 70/100 | Train Loss: 0.0000
+22:00:14 | INFO     train.training train    253 Current lr = 0.000214
+22:01:18 | INFO     train.training train    252 Epoch 75/100 | Train Loss: 0.0000
+22:01:18 | INFO     train.training train    253 Current lr = 0.000155
+22:02:20 | INFO     train.training train    252 Epoch 80/100 | Train Loss: 0.0000
+22:02:20 | INFO     train.training train    253 Current lr = 0.000105
+22:03:21 | INFO     train.training train    252 Epoch 85/100 | Train Loss: 0.0000
+22:03:21 | INFO     train.training train    253 Current lr = 0.000064
+22:04:21 | INFO     train.training train    252 Epoch 90/100 | Train Loss: 0.0000
+22:04:21 | INFO     train.training train    253 Current lr = 0.000034
+22:05:24 | INFO     train.training train    252 Epoch 95/100 | Train Loss: 0.0000
+22:05:24 | INFO     train.training train    253 Current lr = 0.000016
+22:06:25 | INFO     train.training train    252 Epoch 100/100 | Train Loss: 0.0000
+22:06:25 | INFO     train.training train    253 Current lr = 0.000010
+22:06:25 | INFO     __main__ main     138 
+--------------> Finished training w.r.t. subject 2 session 0 acc 0.3565
+22:06:39 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+22:06:41 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+22:06:41 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+22:06:41 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+22:06:41 | INFO     train.training train    127 len of train data: 47516, len of test data: 3394
+22:07:10 | INFO     utils.metric update   25  --> A new better acc 0.4022 on subject 3 session 0
+22:07:36 | INFO     utils.metric update   25  --> A new better acc 0.4667 on subject 3 session 0
+22:08:34 | INFO     utils.metric update   25  --> A new better acc 0.4673 on subject 3 session 0
+22:09:04 | INFO     train.training train    252 Epoch 5/100 | Train Loss: 2.1248
+22:09:04 | INFO     train.training train    253 Current lr = 0.000994
+22:09:33 | INFO     utils.metric update   25  --> A new better acc 0.5881 on subject 3 session 0
+22:11:21 | INFO     train.training train    252 Epoch 10/100 | Train Loss: 2.2365
+22:11:21 | INFO     train.training train    253 Current lr = 0.000976
+22:12:19 | INFO     utils.metric update   25  --> A new better acc 0.6011 on subject 3 session 0
+22:13:26 | INFO     utils.metric update   25  --> A new better acc 0.6016 on subject 3 session 0
+22:13:55 | INFO     utils.metric update   25  --> A new better acc 0.6783 on subject 3 session 0
+22:13:55 | INFO     train.training train    252 Epoch 15/100 | Train Loss: 2.1759
+22:13:55 | INFO     train.training train    253 Current lr = 0.000946
+22:15:22 | INFO     utils.metric update   25  --> A new better acc 0.6836 on subject 3 session 0
+22:16:15 | INFO     train.training train    252 Epoch 20/100 | Train Loss: 2.1429
+22:16:15 | INFO     train.training train    253 Current lr = 0.000905
+22:18:38 | INFO     train.training train    252 Epoch 25/100 | Train Loss: 2.1235
+22:18:38 | INFO     train.training train    253 Current lr = 0.000855
+22:19:03 | INFO     utils.metric update   25  --> A new better acc 0.7048 on subject 3 session 0
+22:20:57 | INFO     train.training train    252 Epoch 30/100 | Train Loss: 2.1152
+22:20:57 | INFO     train.training train    253 Current lr = 0.000796
+22:23:12 | INFO     train.training train    252 Epoch 35/100 | Train Loss: 2.0900
+22:23:12 | INFO     train.training train    253 Current lr = 0.000730
+22:25:29 | INFO     train.training train    252 Epoch 40/100 | Train Loss: 2.0831
+22:25:29 | INFO     train.training train    253 Current lr = 0.000658
+22:27:44 | INFO     train.training train    252 Epoch 45/100 | Train Loss: 2.0701
+22:27:44 | INFO     train.training train    253 Current lr = 0.000582
+22:30:02 | INFO     train.training train    252 Epoch 50/100 | Train Loss: 2.0579
+22:30:02 | INFO     train.training train    253 Current lr = 0.000505
+22:32:23 | INFO     train.training train    252 Epoch 55/100 | Train Loss: 2.0400
+22:32:23 | INFO     train.training train    253 Current lr = 0.000428
+22:34:43 | INFO     train.training train    252 Epoch 60/100 | Train Loss: 2.0295
+22:34:43 | INFO     train.training train    253 Current lr = 0.000352
+22:36:59 | INFO     train.training train    252 Epoch 65/100 | Train Loss: 1.9984
+22:36:59 | INFO     train.training train    253 Current lr = 0.000280
+22:39:24 | INFO     train.training train    252 Epoch 70/100 | Train Loss: 2.0223
+22:39:24 | INFO     train.training train    253 Current lr = 0.000214
+22:41:46 | INFO     train.training train    252 Epoch 75/100 | Train Loss: 2.0167
+22:41:46 | INFO     train.training train    253 Current lr = 0.000155
+22:44:06 | INFO     train.training train    252 Epoch 80/100 | Train Loss: 2.0032
+22:44:06 | INFO     train.training train    253 Current lr = 0.000105
+22:46:31 | INFO     train.training train    252 Epoch 85/100 | Train Loss: 1.9820
+22:46:31 | INFO     train.training train    253 Current lr = 0.000064
+22:48:51 | INFO     train.training train    252 Epoch 90/100 | Train Loss: 2.0054
+22:48:51 | INFO     train.training train    253 Current lr = 0.000034
+22:52:42 | INFO     train.training train    252 Epoch 95/100 | Train Loss: 1.9835
+22:52:42 | INFO     train.training train    253 Current lr = 0.000016
+22:56:45 | INFO     train.training train    252 Epoch 100/100 | Train Loss: 1.9867
+22:56:45 | INFO     train.training train    253 Current lr = 0.000010
+22:56:45 | INFO     __main__ main     138 
+--------------> Finished training w.r.t. subject 3 session 0 acc 0.7048
+22:57:01 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+22:57:03 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+22:57:04 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+22:57:04 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+22:57:04 | INFO     train.training train    127 len of train data: 47516, len of test data: 3394
+22:57:52 | INFO     utils.metric update   25  --> A new better acc 0.5769 on subject 4 session 0
+22:58:44 | INFO     utils.metric update   25  --> A new better acc 0.5931 on subject 4 session 0
+23:01:12 | INFO     train.training train    252 Epoch 5/100 | Train Loss: 2.2723
+23:01:12 | INFO     train.training train    253 Current lr = 0.000994
+23:05:20 | INFO     train.training train    252 Epoch 10/100 | Train Loss: 2.1193
+23:05:20 | INFO     train.training train    253 Current lr = 0.000976
+23:09:27 | INFO     train.training train    252 Epoch 15/100 | Train Loss: 2.2206
+23:09:27 | INFO     train.training train    253 Current lr = 0.000946
+23:13:42 | INFO     train.training train    252 Epoch 20/100 | Train Loss: 2.2055
+23:13:42 | INFO     train.training train    253 Current lr = 0.000905
+23:16:02 | INFO     train.training train    252 Epoch 25/100 | Train Loss: 2.1788
+23:16:02 | INFO     train.training train    253 Current lr = 0.000855
+23:18:28 | INFO     train.training train    252 Epoch 30/100 | Train Loss: 2.1770
+23:18:28 | INFO     train.training train    253 Current lr = 0.000796
+23:20:48 | INFO     train.training train    252 Epoch 35/100 | Train Loss: 2.1989
+23:20:48 | INFO     train.training train    253 Current lr = 0.000730
+23:21:15 | INFO     utils.metric update   25  --> A new better acc 0.6623 on subject 4 session 0
+23:23:04 | INFO     train.training train    252 Epoch 40/100 | Train Loss: 2.1624
+23:23:04 | INFO     train.training train    253 Current lr = 0.000658
+23:25:26 | INFO     train.training train    252 Epoch 45/100 | Train Loss: 2.1621
+23:25:26 | INFO     train.training train    253 Current lr = 0.000582
+23:27:48 | INFO     train.training train    252 Epoch 50/100 | Train Loss: 2.1057
+23:27:48 | INFO     train.training train    253 Current lr = 0.000505
+23:30:07 | INFO     train.training train    252 Epoch 55/100 | Train Loss: 2.0817
+23:30:07 | INFO     train.training train    253 Current lr = 0.000428
+23:32:26 | INFO     train.training train    252 Epoch 60/100 | Train Loss: 2.0611
+23:32:26 | INFO     train.training train    253 Current lr = 0.000352
+23:34:48 | INFO     train.training train    252 Epoch 65/100 | Train Loss: 2.0294
+23:34:48 | INFO     train.training train    253 Current lr = 0.000280
+23:37:05 | INFO     train.training train    252 Epoch 70/100 | Train Loss: 2.0612
+23:37:05 | INFO     train.training train    253 Current lr = 0.000214
+23:39:24 | INFO     train.training train    252 Epoch 75/100 | Train Loss: 2.0468
+23:39:24 | INFO     train.training train    253 Current lr = 0.000155
+23:41:46 | INFO     train.training train    252 Epoch 80/100 | Train Loss: 2.0338
+23:41:46 | INFO     train.training train    253 Current lr = 0.000105
+23:44:03 | INFO     train.training train    252 Epoch 85/100 | Train Loss: 2.0139
+23:44:03 | INFO     train.training train    253 Current lr = 0.000064
+23:46:22 | INFO     train.training train    252 Epoch 90/100 | Train Loss: 2.0422
+23:46:22 | INFO     train.training train    253 Current lr = 0.000034
+23:48:36 | INFO     train.training train    252 Epoch 95/100 | Train Loss: 2.0188
+23:48:36 | INFO     train.training train    253 Current lr = 0.000016
+23:50:54 | INFO     train.training train    252 Epoch 100/100 | Train Loss: 2.0246
+23:50:54 | INFO     train.training train    253 Current lr = 0.000010
+23:50:54 | INFO     __main__ main     138 
+--------------> Finished training w.r.t. subject 4 session 0 acc 0.6623
+23:51:10 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+23:51:12 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+23:51:12 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+23:51:12 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+23:51:12 | INFO     train.training train    127 len of train data: 47516, len of test data: 3394
+23:51:42 | INFO     utils.metric update   25  --> A new better acc 0.5946 on subject 5 session 0
+23:53:17 | INFO     train.training train    252 Epoch 5/100 | Train Loss: 0.2166
+23:53:17 | INFO     train.training train    253 Current lr = 0.000994
+23:54:20 | INFO     train.training train    252 Epoch 10/100 | Train Loss: 0.0000
+23:54:20 | INFO     train.training train    253 Current lr = 0.000976
+23:55:22 | INFO     train.training train    252 Epoch 15/100 | Train Loss: 0.0000
+23:55:22 | INFO     train.training train    253 Current lr = 0.000946
+23:56:25 | INFO     train.training train    252 Epoch 20/100 | Train Loss: 0.0000
+23:56:25 | INFO     train.training train    253 Current lr = 0.000905
+23:57:25 | INFO     train.training train    252 Epoch 25/100 | Train Loss: 0.0000
+23:57:25 | INFO     train.training train    253 Current lr = 0.000855
+23:58:28 | INFO     train.training train    252 Epoch 30/100 | Train Loss: 0.0000
+23:58:28 | INFO     train.training train    253 Current lr = 0.000796
+23:59:31 | INFO     train.training train    252 Epoch 35/100 | Train Loss: 0.0000
+23:59:31 | INFO     train.training train    253 Current lr = 0.000730
+00:00:34 | INFO     train.training train    252 Epoch 40/100 | Train Loss: 0.0000
+00:00:34 | INFO     train.training train    253 Current lr = 0.000658
+00:01:39 | INFO     train.training train    252 Epoch 45/100 | Train Loss: 0.0000
+00:01:39 | INFO     train.training train    253 Current lr = 0.000582
+00:02:38 | INFO     train.training train    252 Epoch 50/100 | Train Loss: 0.0000
+00:02:38 | INFO     train.training train    253 Current lr = 0.000505
+00:03:43 | INFO     train.training train    252 Epoch 55/100 | Train Loss: 0.0000
+00:03:43 | INFO     train.training train    253 Current lr = 0.000428
+00:04:46 | INFO     train.training train    252 Epoch 60/100 | Train Loss: 0.0000
+00:04:46 | INFO     train.training train    253 Current lr = 0.000352
+00:05:48 | INFO     train.training train    252 Epoch 65/100 | Train Loss: 0.0000
+00:05:48 | INFO     train.training train    253 Current lr = 0.000280
+00:06:48 | INFO     train.training train    252 Epoch 70/100 | Train Loss: 0.0000
+00:06:48 | INFO     train.training train    253 Current lr = 0.000214
+00:07:52 | INFO     train.training train    252 Epoch 75/100 | Train Loss: 0.0000
+00:07:52 | INFO     train.training train    253 Current lr = 0.000155
+00:08:55 | INFO     train.training train    252 Epoch 80/100 | Train Loss: 0.0000
+00:08:55 | INFO     train.training train    253 Current lr = 0.000105
+00:09:58 | INFO     train.training train    252 Epoch 85/100 | Train Loss: 0.0000
+00:09:58 | INFO     train.training train    253 Current lr = 0.000064
+00:10:58 | INFO     train.training train    252 Epoch 90/100 | Train Loss: 0.0000
+00:10:58 | INFO     train.training train    253 Current lr = 0.000034
+00:12:06 | INFO     train.training train    252 Epoch 95/100 | Train Loss: 0.0000
+00:12:06 | INFO     train.training train    253 Current lr = 0.000016
+00:13:09 | INFO     train.training train    252 Epoch 100/100 | Train Loss: 0.0000
+00:13:09 | INFO     train.training train    253 Current lr = 0.000010
+00:13:09 | INFO     __main__ main     138 
+--------------> Finished training w.r.t. subject 5 session 0 acc 0.5946
+00:13:26 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+00:13:27 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+00:13:28 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+00:13:28 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+00:13:28 | INFO     train.training train    127 len of train data: 47516, len of test data: 3394
+00:13:54 | INFO     utils.metric update   25  --> A new better acc 0.6193 on subject 6 session 0
+00:14:51 | INFO     utils.metric update   25  --> A new better acc 0.6856 on subject 6 session 0
+00:15:48 | INFO     train.training train    252 Epoch 5/100 | Train Loss: 2.2179
+00:15:48 | INFO     train.training train    253 Current lr = 0.000994
+00:18:09 | INFO     train.training train    252 Epoch 10/100 | Train Loss: 2.2062
+00:18:09 | INFO     train.training train    253 Current lr = 0.000976
+00:20:29 | INFO     train.training train    252 Epoch 15/100 | Train Loss: 2.4100
+00:20:29 | INFO     train.training train    253 Current lr = 0.000946
+00:22:58 | INFO     train.training train    252 Epoch 20/100 | Train Loss: 2.4048
+00:22:58 | INFO     train.training train    253 Current lr = 0.000905
+00:25:18 | INFO     train.training train    252 Epoch 25/100 | Train Loss: 2.4056
+00:25:18 | INFO     train.training train    253 Current lr = 0.000855
+00:27:33 | INFO     train.training train    252 Epoch 30/100 | Train Loss: 2.3923
+00:27:33 | INFO     train.training train    253 Current lr = 0.000796
+00:29:46 | INFO     train.training train    252 Epoch 35/100 | Train Loss: 2.3957
+00:29:46 | INFO     train.training train    253 Current lr = 0.000730
+00:32:04 | INFO     train.training train    252 Epoch 40/100 | Train Loss: 2.3867
+00:32:04 | INFO     train.training train    253 Current lr = 0.000658
+00:34:23 | INFO     train.training train    252 Epoch 45/100 | Train Loss: 2.3841
+00:34:23 | INFO     train.training train    253 Current lr = 0.000582
+00:36:38 | INFO     train.training train    252 Epoch 50/100 | Train Loss: 2.3915
+00:36:38 | INFO     train.training train    253 Current lr = 0.000505
+00:39:02 | INFO     train.training train    252 Epoch 55/100 | Train Loss: 2.3965
+00:39:02 | INFO     train.training train    253 Current lr = 0.000428
+00:41:26 | INFO     train.training train    252 Epoch 60/100 | Train Loss: 2.3786
+00:41:26 | INFO     train.training train    253 Current lr = 0.000352
+00:43:44 | INFO     train.training train    252 Epoch 65/100 | Train Loss: 2.3776
+00:43:44 | INFO     train.training train    253 Current lr = 0.000280
+00:46:00 | INFO     train.training train    252 Epoch 70/100 | Train Loss: 2.3736
+00:46:00 | INFO     train.training train    253 Current lr = 0.000214
+00:48:19 | INFO     train.training train    252 Epoch 75/100 | Train Loss: 2.3886
+00:48:19 | INFO     train.training train    253 Current lr = 0.000155
+00:50:38 | INFO     train.training train    252 Epoch 80/100 | Train Loss: 2.3726
+00:50:38 | INFO     train.training train    253 Current lr = 0.000105
+00:52:55 | INFO     train.training train    252 Epoch 85/100 | Train Loss: 2.3746
+00:52:55 | INFO     train.training train    253 Current lr = 0.000064
+00:55:18 | INFO     train.training train    252 Epoch 90/100 | Train Loss: 2.3810
+00:55:18 | INFO     train.training train    253 Current lr = 0.000034
+00:57:40 | INFO     train.training train    252 Epoch 95/100 | Train Loss: 2.3756
+00:57:40 | INFO     train.training train    253 Current lr = 0.000016
+00:59:55 | INFO     train.training train    252 Epoch 100/100 | Train Loss: 2.3729
+00:59:55 | INFO     train.training train    253 Current lr = 0.000010
+00:59:55 | INFO     __main__ main     138 
+--------------> Finished training w.r.t. subject 6 session 0 acc 0.6856
+01:00:11 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+01:00:12 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+01:00:13 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+01:00:13 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+01:00:13 | INFO     train.training train    127 len of train data: 47516, len of test data: 3394
+01:00:42 | INFO     utils.metric update   25  --> A new better acc 0.8244 on subject 7 session 0
+01:02:31 | INFO     train.training train    252 Epoch 5/100 | Train Loss: 2.0342
+01:02:31 | INFO     train.training train    253 Current lr = 0.000994
+01:04:50 | INFO     train.training train    252 Epoch 10/100 | Train Loss: 2.0689
+01:04:50 | INFO     train.training train    253 Current lr = 0.000976
+01:07:03 | INFO     train.training train    252 Epoch 15/100 | Train Loss: 2.1513
+01:07:03 | INFO     train.training train    253 Current lr = 0.000946
+01:09:21 | INFO     train.training train    252 Epoch 20/100 | Train Loss: 2.1371
+01:09:21 | INFO     train.training train    253 Current lr = 0.000905
+01:11:45 | INFO     train.training train    252 Epoch 25/100 | Train Loss: 2.1163
+01:11:45 | INFO     train.training train    253 Current lr = 0.000855
+01:13:40 | INFO     utils.metric update   25  --> A new better acc 0.8379 on subject 7 session 0
+01:14:09 | INFO     train.training train    252 Epoch 30/100 | Train Loss: 2.0986
+01:14:09 | INFO     train.training train    253 Current lr = 0.000796
+01:16:30 | INFO     train.training train    252 Epoch 35/100 | Train Loss: 2.0663
+01:16:30 | INFO     train.training train    253 Current lr = 0.000730
+01:18:50 | INFO     train.training train    252 Epoch 40/100 | Train Loss: 2.0634
+01:18:50 | INFO     train.training train    253 Current lr = 0.000658
+01:21:10 | INFO     train.training train    252 Epoch 45/100 | Train Loss: 2.0512
+01:21:10 | INFO     train.training train    253 Current lr = 0.000582
+01:23:38 | INFO     train.training train    252 Epoch 50/100 | Train Loss: 2.0343
+01:23:38 | INFO     train.training train    253 Current lr = 0.000505
+01:25:58 | INFO     train.training train    252 Epoch 55/100 | Train Loss: 2.0155
+01:25:58 | INFO     train.training train    253 Current lr = 0.000428
+01:28:23 | INFO     train.training train    252 Epoch 60/100 | Train Loss: 2.0055
+01:28:23 | INFO     train.training train    253 Current lr = 0.000352
+01:30:40 | INFO     train.training train    252 Epoch 65/100 | Train Loss: 1.9697
+01:30:40 | INFO     train.training train    253 Current lr = 0.000280
+01:32:58 | INFO     train.training train    252 Epoch 70/100 | Train Loss: 2.0120
+01:32:58 | INFO     train.training train    253 Current lr = 0.000214
+01:35:18 | INFO     train.training train    252 Epoch 75/100 | Train Loss: 1.9914
+01:35:18 | INFO     train.training train    253 Current lr = 0.000155
+01:37:39 | INFO     train.training train    252 Epoch 80/100 | Train Loss: 1.9809
+01:37:39 | INFO     train.training train    253 Current lr = 0.000105
+01:39:51 | INFO     train.training train    252 Epoch 85/100 | Train Loss: 1.9583
+01:39:51 | INFO     train.training train    253 Current lr = 0.000064
+01:42:09 | INFO     train.training train    252 Epoch 90/100 | Train Loss: 1.9878
+01:42:09 | INFO     train.training train    253 Current lr = 0.000034
+01:44:28 | INFO     train.training train    252 Epoch 95/100 | Train Loss: 1.9637
+01:44:28 | INFO     train.training train    253 Current lr = 0.000016
+01:46:46 | INFO     train.training train    252 Epoch 100/100 | Train Loss: 1.9690
+01:46:46 | INFO     train.training train    253 Current lr = 0.000010
+01:46:46 | INFO     __main__ main     138 
+--------------> Finished training w.r.t. subject 7 session 0 acc 0.8379
+01:46:59 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+01:47:00 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+01:47:00 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+01:47:01 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+01:47:01 | INFO     train.training train    127 len of train data: 47516, len of test data: 3394
+01:47:29 | INFO     utils.metric update   25  --> A new better acc 0.4408 on subject 8 session 0
+01:48:54 | INFO     utils.metric update   25  --> A new better acc 0.5309 on subject 8 session 0
+01:49:23 | INFO     train.training train    252 Epoch 5/100 | Train Loss: 2.1350
+01:49:23 | INFO     train.training train    253 Current lr = 0.000994
+01:49:51 | INFO     utils.metric update   25  --> A new better acc 0.6671 on subject 8 session 0
+01:50:19 | INFO     utils.metric update   25  --> A new better acc 0.6724 on subject 8 session 0
+01:50:48 | INFO     utils.metric update   25  --> A new better acc 0.7213 on subject 8 session 0
+01:51:41 | INFO     train.training train    252 Epoch 10/100 | Train Loss: 2.1310
+01:51:41 | INFO     train.training train    253 Current lr = 0.000976
+01:52:09 | INFO     utils.metric update   25  --> A new better acc 0.7837 on subject 8 session 0
+01:53:58 | INFO     train.training train    252 Epoch 15/100 | Train Loss: 2.2285
+01:53:58 | INFO     train.training train    253 Current lr = 0.000946
+01:56:14 | INFO     train.training train    252 Epoch 20/100 | Train Loss: 2.2108
+01:56:14 | INFO     train.training train    253 Current lr = 0.000905
+01:58:33 | INFO     train.training train    252 Epoch 25/100 | Train Loss: 2.1904
+01:58:33 | INFO     train.training train    253 Current lr = 0.000855
+01:59:01 | INFO     utils.metric update   25  --> A new better acc 0.8005 on subject 8 session 0
+02:00:22 | INFO     utils.metric update   25  --> A new better acc 0.8052 on subject 8 session 0
+02:00:50 | INFO     train.training train    252 Epoch 30/100 | Train Loss: 2.1826
+02:00:50 | INFO     train.training train    253 Current lr = 0.000796
+02:03:03 | INFO     train.training train    252 Epoch 35/100 | Train Loss: 2.1569
+02:03:03 | INFO     train.training train    253 Current lr = 0.000730
+02:05:20 | INFO     train.training train    252 Epoch 40/100 | Train Loss: 2.1573
+02:05:20 | INFO     train.training train    253 Current lr = 0.000658
+02:07:40 | INFO     train.training train    252 Epoch 45/100 | Train Loss: 2.1416
+02:07:40 | INFO     train.training train    253 Current lr = 0.000582
+02:09:59 | INFO     train.training train    252 Epoch 50/100 | Train Loss: 2.1279
+02:09:59 | INFO     train.training train    253 Current lr = 0.000505
+02:12:17 | INFO     train.training train    252 Epoch 55/100 | Train Loss: 2.1193
+02:12:17 | INFO     train.training train    253 Current lr = 0.000428
+02:14:36 | INFO     train.training train    252 Epoch 60/100 | Train Loss: 2.1069
+02:14:36 | INFO     train.training train    253 Current lr = 0.000352
+02:16:55 | INFO     train.training train    252 Epoch 65/100 | Train Loss: 2.0823
+02:16:55 | INFO     train.training train    253 Current lr = 0.000280
+02:19:13 | INFO     train.training train    252 Epoch 70/100 | Train Loss: 2.1099
+02:19:13 | INFO     train.training train    253 Current lr = 0.000214
+02:21:27 | INFO     train.training train    252 Epoch 75/100 | Train Loss: 2.1057
+02:21:27 | INFO     train.training train    253 Current lr = 0.000155
+02:23:47 | INFO     train.training train    252 Epoch 80/100 | Train Loss: 2.0859
+02:23:47 | INFO     train.training train    253 Current lr = 0.000105
+02:26:06 | INFO     train.training train    252 Epoch 85/100 | Train Loss: 2.0720
+02:26:06 | INFO     train.training train    253 Current lr = 0.000064
+02:28:29 | INFO     train.training train    252 Epoch 90/100 | Train Loss: 2.0957
+02:28:29 | INFO     train.training train    253 Current lr = 0.000034
+02:30:48 | INFO     train.training train    252 Epoch 95/100 | Train Loss: 2.0748
+02:30:48 | INFO     train.training train    253 Current lr = 0.000016
+02:33:09 | INFO     train.training train    252 Epoch 100/100 | Train Loss: 2.0789
+02:33:09 | INFO     train.training train    253 Current lr = 0.000010
+02:33:09 | INFO     __main__ main     138 
+--------------> Finished training w.r.t. subject 8 session 0 acc 0.8052
+02:33:20 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+02:33:22 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+02:33:22 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+02:33:22 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+02:33:22 | INFO     train.training train    127 len of train data: 47516, len of test data: 3394
+02:33:50 | INFO     utils.metric update   25  --> A new better acc 0.6090 on subject 9 session 0
+02:35:38 | INFO     utils.metric update   25  --> A new better acc 0.6741 on subject 9 session 0
+02:35:38 | INFO     train.training train    252 Epoch 5/100 | Train Loss: 2.3319
+02:35:38 | INFO     train.training train    253 Current lr = 0.000994
+02:37:00 | INFO     utils.metric update   25  --> A new better acc 0.6836 on subject 9 session 0
+02:37:57 | INFO     train.training train    252 Epoch 10/100 | Train Loss: 2.1631
+02:37:57 | INFO     train.training train    253 Current lr = 0.000976
+02:40:16 | INFO     train.training train    252 Epoch 15/100 | Train Loss: 2.2438
+02:40:16 | INFO     train.training train    253 Current lr = 0.000946
+02:40:45 | INFO     utils.metric update   25  --> A new better acc 0.6906 on subject 9 session 0
+02:42:07 | INFO     utils.metric update   25  --> A new better acc 0.7717 on subject 9 session 0
+02:42:33 | INFO     train.training train    252 Epoch 20/100 | Train Loss: 2.1718
+02:42:33 | INFO     train.training train    253 Current lr = 0.000905
+02:42:57 | INFO     utils.metric update   25  --> A new better acc 0.7805 on subject 9 session 0
+02:43:52 | INFO     utils.metric update   25  --> A new better acc 0.7885 on subject 9 session 0
+02:44:49 | INFO     utils.metric update   25  --> A new better acc 0.8008 on subject 9 session 0
+02:44:49 | INFO     train.training train    252 Epoch 25/100 | Train Loss: 2.0865
+02:44:49 | INFO     train.training train    253 Current lr = 0.000855
+02:47:05 | INFO     train.training train    252 Epoch 30/100 | Train Loss: 2.0724
+02:47:05 | INFO     train.training train    253 Current lr = 0.000796
+02:49:24 | INFO     utils.metric update   25  --> A new better acc 0.8041 on subject 9 session 0
+02:49:24 | INFO     train.training train    252 Epoch 35/100 | Train Loss: 2.0414
+02:49:24 | INFO     train.training train    253 Current lr = 0.000730
+02:51:41 | INFO     train.training train    252 Epoch 40/100 | Train Loss: 2.0462
+02:51:41 | INFO     train.training train    253 Current lr = 0.000658
+02:53:57 | INFO     train.training train    252 Epoch 45/100 | Train Loss: 2.0148
+02:53:57 | INFO     train.training train    253 Current lr = 0.000582
+02:54:51 | INFO     utils.metric update   25  --> A new better acc 0.8052 on subject 9 session 0
+02:56:15 | INFO     train.training train    252 Epoch 50/100 | Train Loss: 2.0101
+02:56:15 | INFO     train.training train    253 Current lr = 0.000505
+02:58:28 | INFO     train.training train    252 Epoch 55/100 | Train Loss: 1.9840
+02:58:28 | INFO     train.training train    253 Current lr = 0.000428
+03:00:47 | INFO     train.training train    252 Epoch 60/100 | Train Loss: 1.9852
+03:00:47 | INFO     train.training train    253 Current lr = 0.000352
+03:03:04 | INFO     train.training train    252 Epoch 65/100 | Train Loss: 1.9533
+03:03:04 | INFO     train.training train    253 Current lr = 0.000280
+03:05:24 | INFO     train.training train    252 Epoch 70/100 | Train Loss: 1.9824
+03:05:24 | INFO     train.training train    253 Current lr = 0.000214
+03:07:41 | INFO     train.training train    252 Epoch 75/100 | Train Loss: 1.9816
+03:07:41 | INFO     train.training train    253 Current lr = 0.000155
+03:09:59 | INFO     train.training train    252 Epoch 80/100 | Train Loss: 1.9640
+03:09:59 | INFO     train.training train    253 Current lr = 0.000105
+03:12:25 | INFO     train.training train    252 Epoch 85/100 | Train Loss: 1.9448
+03:12:25 | INFO     train.training train    253 Current lr = 0.000064
+03:14:44 | INFO     train.training train    252 Epoch 90/100 | Train Loss: 1.9758
+03:14:44 | INFO     train.training train    253 Current lr = 0.000034
+03:16:58 | INFO     train.training train    252 Epoch 95/100 | Train Loss: 1.9469
+03:16:58 | INFO     train.training train    253 Current lr = 0.000016
+03:19:17 | INFO     train.training train    252 Epoch 100/100 | Train Loss: 1.9565
+03:19:17 | INFO     train.training train    253 Current lr = 0.000010
+03:19:17 | INFO     __main__ main     138 
+--------------> Finished training w.r.t. subject 9 session 0 acc 0.8052
+03:19:32 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+03:19:34 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+03:19:34 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+03:19:34 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+03:19:34 | INFO     train.training train    127 len of train data: 47516, len of test data: 3394
+03:20:03 | INFO     utils.metric update   25  --> A new better acc 0.6332 on subject 10 session 0
+03:20:57 | INFO     utils.metric update   25  --> A new better acc 0.7976 on subject 10 session 0
+03:21:53 | INFO     train.training train    252 Epoch 5/100 | Train Loss: 2.2053
+03:21:53 | INFO     train.training train    253 Current lr = 0.000994
+03:24:06 | INFO     train.training train    252 Epoch 10/100 | Train Loss: 2.0941
+03:24:06 | INFO     train.training train    253 Current lr = 0.000976
+03:26:24 | INFO     train.training train    252 Epoch 15/100 | Train Loss: 2.0627
+03:26:24 | INFO     train.training train    253 Current lr = 0.000946
+03:28:43 | INFO     train.training train    252 Epoch 20/100 | Train Loss: 2.0277
+03:28:43 | INFO     train.training train    253 Current lr = 0.000905
+03:31:04 | INFO     train.training train    252 Epoch 25/100 | Train Loss: 1.9742
+03:31:04 | INFO     train.training train    253 Current lr = 0.000855
+03:33:35 | INFO     train.training train    252 Epoch 30/100 | Train Loss: 1.9945
+03:33:35 | INFO     train.training train    253 Current lr = 0.000796
+03:35:58 | INFO     train.training train    252 Epoch 35/100 | Train Loss: 1.9675
+03:35:58 | INFO     train.training train    253 Current lr = 0.000730
+03:37:22 | INFO     utils.metric update   25  --> A new better acc 0.8206 on subject 10 session 0
+03:38:17 | INFO     train.training train    252 Epoch 40/100 | Train Loss: 1.9559
+03:38:17 | INFO     train.training train    253 Current lr = 0.000658
+03:40:38 | INFO     train.training train    252 Epoch 45/100 | Train Loss: 1.9219
+03:40:38 | INFO     train.training train    253 Current lr = 0.000582
+03:42:58 | INFO     train.training train    252 Epoch 50/100 | Train Loss: 1.9106
+03:42:58 | INFO     train.training train    253 Current lr = 0.000505
+03:45:21 | INFO     train.training train    252 Epoch 55/100 | Train Loss: 1.8847
+03:45:21 | INFO     train.training train    253 Current lr = 0.000428
+03:47:38 | INFO     train.training train    252 Epoch 60/100 | Train Loss: 1.8807
+03:47:38 | INFO     train.training train    253 Current lr = 0.000352
+03:49:55 | INFO     train.training train    252 Epoch 65/100 | Train Loss: 1.8544
+03:49:55 | INFO     train.training train    253 Current lr = 0.000280
+03:52:07 | INFO     train.training train    252 Epoch 70/100 | Train Loss: 1.8834
+03:52:07 | INFO     train.training train    253 Current lr = 0.000214
+03:54:24 | INFO     train.training train    252 Epoch 75/100 | Train Loss: 1.8744
+03:54:24 | INFO     train.training train    253 Current lr = 0.000155
+03:56:39 | INFO     train.training train    252 Epoch 80/100 | Train Loss: 1.8588
+03:56:39 | INFO     train.training train    253 Current lr = 0.000105
+03:58:57 | INFO     train.training train    252 Epoch 85/100 | Train Loss: 1.8380
+03:58:57 | INFO     train.training train    253 Current lr = 0.000064
+04:01:15 | INFO     train.training train    252 Epoch 90/100 | Train Loss: 1.8648
+04:01:15 | INFO     train.training train    253 Current lr = 0.000034
+04:03:29 | INFO     train.training train    252 Epoch 95/100 | Train Loss: 1.8392
+04:03:29 | INFO     train.training train    253 Current lr = 0.000016
+04:05:47 | INFO     train.training train    252 Epoch 100/100 | Train Loss: 1.8452
+04:05:47 | INFO     train.training train    253 Current lr = 0.000010
+04:05:47 | INFO     __main__ main     138 
+--------------> Finished training w.r.t. subject 10 session 0 acc 0.8206
+04:06:03 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+04:06:04 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+04:06:04 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+04:06:05 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+04:06:05 | INFO     train.training train    127 len of train data: 47516, len of test data: 3394
+04:06:30 | INFO     utils.metric update   25  --> A new better acc 0.3733 on subject 11 session 0
+04:06:59 | INFO     utils.metric update   25  --> A new better acc 0.6635 on subject 11 session 0
+04:08:25 | INFO     train.training train    252 Epoch 5/100 | Train Loss: 2.0214
+04:08:25 | INFO     train.training train    253 Current lr = 0.000994
+04:10:42 | INFO     train.training train    252 Epoch 10/100 | Train Loss: 2.0786
+04:10:42 | INFO     train.training train    253 Current lr = 0.000976
+04:13:02 | INFO     train.training train    252 Epoch 15/100 | Train Loss: 2.1660
+04:13:02 | INFO     train.training train    253 Current lr = 0.000946
+04:15:20 | INFO     train.training train    252 Epoch 20/100 | Train Loss: 2.1390
+04:15:20 | INFO     train.training train    253 Current lr = 0.000905
+04:17:41 | INFO     train.training train    252 Epoch 25/100 | Train Loss: 2.1229
+04:17:41 | INFO     train.training train    253 Current lr = 0.000855
+04:20:01 | INFO     train.training train    252 Epoch 30/100 | Train Loss: 2.1206
+04:20:01 | INFO     train.training train    253 Current lr = 0.000796
+04:22:22 | INFO     train.training train    252 Epoch 35/100 | Train Loss: 2.1054
+04:22:22 | INFO     train.training train    253 Current lr = 0.000730
+04:24:42 | INFO     train.training train    252 Epoch 40/100 | Train Loss: 2.1081
+04:24:42 | INFO     train.training train    253 Current lr = 0.000658
+04:27:00 | INFO     train.training train    252 Epoch 45/100 | Train Loss: 2.0918
+04:27:00 | INFO     train.training train    253 Current lr = 0.000582
+04:28:22 | INFO     utils.metric update   25  --> A new better acc 0.6786 on subject 11 session 0
+04:29:18 | INFO     train.training train    252 Epoch 50/100 | Train Loss: 2.0796
+04:29:18 | INFO     train.training train    253 Current lr = 0.000505
+04:31:41 | INFO     train.training train    252 Epoch 55/100 | Train Loss: 2.0594
+04:31:41 | INFO     train.training train    253 Current lr = 0.000428
+04:32:08 | INFO     utils.metric update   25  --> A new better acc 0.6794 on subject 11 session 0
+04:34:03 | INFO     train.training train    252 Epoch 60/100 | Train Loss: 2.0520
+04:34:03 | INFO     train.training train    253 Current lr = 0.000352
+04:36:14 | INFO     train.training train    252 Epoch 65/100 | Train Loss: 2.0165
+04:36:14 | INFO     train.training train    253 Current lr = 0.000280
+04:38:38 | INFO     train.training train    252 Epoch 70/100 | Train Loss: 2.0376
+04:38:38 | INFO     train.training train    253 Current lr = 0.000214
+04:41:00 | INFO     train.training train    252 Epoch 75/100 | Train Loss: 2.0208
+04:41:00 | INFO     train.training train    253 Current lr = 0.000155
+04:42:26 | INFO     utils.metric update   25  --> A new better acc 0.6912 on subject 11 session 0
+04:43:17 | INFO     train.training train    252 Epoch 80/100 | Train Loss: 2.0055
+04:43:17 | INFO     train.training train    253 Current lr = 0.000105
+04:45:35 | INFO     train.training train    252 Epoch 85/100 | Train Loss: 1.9859
+04:45:35 | INFO     train.training train    253 Current lr = 0.000064
+04:47:55 | INFO     train.training train    252 Epoch 90/100 | Train Loss: 2.0072
+04:47:55 | INFO     train.training train    253 Current lr = 0.000034
+04:49:46 | INFO     utils.metric update   25  --> A new better acc 0.6915 on subject 11 session 0
+04:50:15 | INFO     train.training train    252 Epoch 95/100 | Train Loss: 1.9886
+04:50:15 | INFO     train.training train    253 Current lr = 0.000016
+04:52:27 | INFO     train.training train    252 Epoch 100/100 | Train Loss: 1.9895
+04:52:27 | INFO     train.training train    253 Current lr = 0.000010
+04:52:27 | INFO     __main__ main     138 
+--------------> Finished training w.r.t. subject 11 session 0 acc 0.6915
+04:52:43 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+04:52:44 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+04:52:44 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+04:52:45 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+04:52:45 | INFO     train.training train    127 len of train data: 47516, len of test data: 3394
+04:53:13 | INFO     utils.metric update   25  --> A new better acc 0.5701 on subject 12 session 0
+04:54:34 | INFO     utils.metric update   25  --> A new better acc 0.6497 on subject 12 session 0
+04:55:02 | INFO     train.training train    252 Epoch 5/100 | Train Loss: 2.2265
+04:55:02 | INFO     train.training train    253 Current lr = 0.000994
+04:57:23 | INFO     train.training train    252 Epoch 10/100 | Train Loss: 2.1628
+04:57:23 | INFO     train.training train    253 Current lr = 0.000976
+04:58:43 | INFO     utils.metric update   25  --> A new better acc 0.6529 on subject 12 session 0
+04:59:34 | INFO     train.training train    252 Epoch 15/100 | Train Loss: 2.1946
+04:59:34 | INFO     train.training train    253 Current lr = 0.000946
+05:00:03 | INFO     utils.metric update   25  --> A new better acc 0.6927 on subject 12 session 0
+05:01:51 | INFO     train.training train    252 Epoch 20/100 | Train Loss: 2.4230
+05:01:51 | INFO     train.training train    253 Current lr = 0.000905
+05:04:18 | INFO     train.training train    252 Epoch 25/100 | Train Loss: 2.1406
+05:04:18 | INFO     train.training train    253 Current lr = 0.000855
+05:06:35 | INFO     train.training train    252 Epoch 30/100 | Train Loss: 2.1344
+05:06:35 | INFO     train.training train    253 Current lr = 0.000796
+05:08:51 | INFO     train.training train    252 Epoch 35/100 | Train Loss: 2.1091
+05:08:51 | INFO     train.training train    253 Current lr = 0.000730
+05:11:07 | INFO     train.training train    252 Epoch 40/100 | Train Loss: 2.2515
+05:11:07 | INFO     train.training train    253 Current lr = 0.000658
+05:12:08 | INFO     utils.metric update   25  --> A new better acc 0.7006 on subject 12 session 0
+05:13:28 | INFO     train.training train    252 Epoch 45/100 | Train Loss: 2.1212
+05:13:28 | INFO     train.training train    253 Current lr = 0.000582
+05:15:43 | INFO     train.training train    252 Epoch 50/100 | Train Loss: 2.1033
+05:15:43 | INFO     train.training train    253 Current lr = 0.000505
+05:18:01 | INFO     train.training train    252 Epoch 55/100 | Train Loss: 2.0839
+05:18:01 | INFO     train.training train    253 Current lr = 0.000428
+05:20:20 | INFO     train.training train    252 Epoch 60/100 | Train Loss: 2.0695
+05:20:20 | INFO     train.training train    253 Current lr = 0.000352
+05:22:39 | INFO     train.training train    252 Epoch 65/100 | Train Loss: 2.0471
+05:22:39 | INFO     train.training train    253 Current lr = 0.000280
+05:24:55 | INFO     train.training train    252 Epoch 70/100 | Train Loss: 2.0649
+05:24:55 | INFO     train.training train    253 Current lr = 0.000214
+05:27:15 | INFO     train.training train    252 Epoch 75/100 | Train Loss: 2.0694
+05:27:15 | INFO     train.training train    253 Current lr = 0.000155
+05:29:24 | INFO     train.training train    252 Epoch 80/100 | Train Loss: 2.0471
+05:29:24 | INFO     train.training train    253 Current lr = 0.000105
+05:31:38 | INFO     train.training train    252 Epoch 85/100 | Train Loss: 2.0340
+05:31:38 | INFO     train.training train    253 Current lr = 0.000064
+05:33:58 | INFO     train.training train    252 Epoch 90/100 | Train Loss: 2.0553
+05:33:58 | INFO     train.training train    253 Current lr = 0.000034
+05:36:19 | INFO     train.training train    252 Epoch 95/100 | Train Loss: 2.0361
+05:36:19 | INFO     train.training train    253 Current lr = 0.000016
+05:38:37 | INFO     train.training train    252 Epoch 100/100 | Train Loss: 2.0396
+05:38:37 | INFO     train.training train    253 Current lr = 0.000010
+05:38:38 | INFO     __main__ main     138 
+--------------> Finished training w.r.t. subject 12 session 0 acc 0.7006
+05:38:50 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+05:38:51 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+05:38:52 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+05:38:52 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+05:38:52 | INFO     train.training train    127 len of train data: 47516, len of test data: 3394
+05:39:20 | INFO     utils.metric update   25  --> A new better acc 0.7030 on subject 13 session 0
+05:41:09 | INFO     train.training train    252 Epoch 5/100 | Train Loss: 2.0683
+05:41:09 | INFO     train.training train    253 Current lr = 0.000994
+05:43:41 | INFO     train.training train    252 Epoch 10/100 | Train Loss: 2.1268
+05:43:41 | INFO     train.training train    253 Current lr = 0.000976
+05:46:04 | INFO     train.training train    252 Epoch 15/100 | Train Loss: 2.1668
+05:46:04 | INFO     train.training train    253 Current lr = 0.000946
+05:48:20 | INFO     train.training train    252 Epoch 20/100 | Train Loss: 2.1514
+05:48:20 | INFO     train.training train    253 Current lr = 0.000905
+05:50:37 | INFO     train.training train    252 Epoch 25/100 | Train Loss: 2.1156
+05:50:37 | INFO     train.training train    253 Current lr = 0.000855
+05:52:56 | INFO     train.training train    252 Epoch 30/100 | Train Loss: 2.1188
+05:52:56 | INFO     train.training train    253 Current lr = 0.000796
+05:55:11 | INFO     train.training train    252 Epoch 35/100 | Train Loss: 2.0974
+05:55:11 | INFO     train.training train    253 Current lr = 0.000730
+05:57:27 | INFO     train.training train    252 Epoch 40/100 | Train Loss: 2.0985
+05:57:27 | INFO     train.training train    253 Current lr = 0.000658
+05:59:44 | INFO     train.training train    252 Epoch 45/100 | Train Loss: 2.0883
+05:59:44 | INFO     train.training train    253 Current lr = 0.000582
+06:02:06 | INFO     train.training train    252 Epoch 50/100 | Train Loss: 2.0823
+06:02:06 | INFO     train.training train    253 Current lr = 0.000505
+06:04:24 | INFO     train.training train    252 Epoch 55/100 | Train Loss: 2.0704
+06:04:24 | INFO     train.training train    253 Current lr = 0.000428
+06:06:43 | INFO     train.training train    252 Epoch 60/100 | Train Loss: 2.0686
+06:06:43 | INFO     train.training train    253 Current lr = 0.000352
+06:09:02 | INFO     train.training train    252 Epoch 65/100 | Train Loss: 2.0480
+06:09:02 | INFO     train.training train    253 Current lr = 0.000280
+06:11:18 | INFO     train.training train    252 Epoch 70/100 | Train Loss: 2.0690
+06:11:18 | INFO     train.training train    253 Current lr = 0.000214
+06:13:41 | INFO     train.training train    252 Epoch 75/100 | Train Loss: 2.0667
+06:13:41 | INFO     train.training train    253 Current lr = 0.000155
+06:16:02 | INFO     train.training train    252 Epoch 80/100 | Train Loss: 2.0472
+06:16:02 | INFO     train.training train    253 Current lr = 0.000105
+06:18:21 | INFO     train.training train    252 Epoch 85/100 | Train Loss: 2.0351
+06:18:21 | INFO     train.training train    253 Current lr = 0.000064
+06:20:36 | INFO     train.training train    252 Epoch 90/100 | Train Loss: 2.0538
+06:20:36 | INFO     train.training train    253 Current lr = 0.000034
+06:22:51 | INFO     train.training train    252 Epoch 95/100 | Train Loss: 2.0356
+06:22:51 | INFO     train.training train    253 Current lr = 0.000016
+06:25:09 | INFO     train.training train    252 Epoch 100/100 | Train Loss: 2.0364
+06:25:09 | INFO     train.training train    253 Current lr = 0.000010
+06:25:09 | INFO     __main__ main     138 
+--------------> Finished training w.r.t. subject 13 session 0 acc 0.7030
+06:25:26 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+06:25:28 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+06:25:28 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+06:25:28 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+06:25:28 | INFO     train.training train    127 len of train data: 47516, len of test data: 3394
+06:25:57 | INFO     utils.metric update   25  --> A new better acc 0.3300 on subject 14 session 0
+06:26:24 | INFO     utils.metric update   25  --> A new better acc 0.3677 on subject 14 session 0
+06:27:45 | INFO     train.training train    252 Epoch 5/100 | Train Loss: 2.0927
+06:27:45 | INFO     train.training train    253 Current lr = 0.000994
+06:28:14 | INFO     utils.metric update   25  --> A new better acc 0.4361 on subject 14 session 0
+06:30:04 | INFO     train.training train    252 Epoch 10/100 | Train Loss: 2.5156
+06:30:04 | INFO     train.training train    253 Current lr = 0.000976
+06:32:25 | INFO     train.training train    252 Epoch 15/100 | Train Loss: 3.0403
+06:32:25 | INFO     train.training train    253 Current lr = 0.000946
+06:34:40 | INFO     train.training train    252 Epoch 20/100 | Train Loss: 2.4010
+06:34:40 | INFO     train.training train    253 Current lr = 0.000905
+06:36:56 | INFO     train.training train    252 Epoch 25/100 | Train Loss: 2.4011
+06:36:56 | INFO     train.training train    253 Current lr = 0.000855
+06:39:15 | INFO     train.training train    252 Epoch 30/100 | Train Loss: 2.3900
+06:39:15 | INFO     train.training train    253 Current lr = 0.000796
+06:41:35 | INFO     train.training train    252 Epoch 35/100 | Train Loss: 2.3915
+06:41:35 | INFO     train.training train    253 Current lr = 0.000730
+06:43:53 | INFO     train.training train    252 Epoch 40/100 | Train Loss: 2.3826
+06:43:53 | INFO     train.training train    253 Current lr = 0.000658
+06:46:13 | INFO     train.training train    252 Epoch 45/100 | Train Loss: 2.3791
+06:46:13 | INFO     train.training train    253 Current lr = 0.000582
+06:48:40 | INFO     train.training train    252 Epoch 50/100 | Train Loss: 2.3893
+06:48:40 | INFO     train.training train    253 Current lr = 0.000505
+06:50:54 | INFO     train.training train    252 Epoch 55/100 | Train Loss: 2.3938
+06:50:54 | INFO     train.training train    253 Current lr = 0.000428
+06:53:12 | INFO     train.training train    252 Epoch 60/100 | Train Loss: 2.3753
+06:53:12 | INFO     train.training train    253 Current lr = 0.000352
+06:55:31 | INFO     train.training train    252 Epoch 65/100 | Train Loss: 2.3736
+06:55:31 | INFO     train.training train    253 Current lr = 0.000280
+06:57:52 | INFO     train.training train    252 Epoch 70/100 | Train Loss: 2.3701
+06:57:52 | INFO     train.training train    253 Current lr = 0.000214
+07:00:07 | INFO     train.training train    252 Epoch 75/100 | Train Loss: 2.3857
+07:00:07 | INFO     train.training train    253 Current lr = 0.000155
+07:02:29 | INFO     train.training train    252 Epoch 80/100 | Train Loss: 2.3683
+07:02:29 | INFO     train.training train    253 Current lr = 0.000105
+07:04:51 | INFO     train.training train    252 Epoch 85/100 | Train Loss: 2.3711
+07:04:51 | INFO     train.training train    253 Current lr = 0.000064
+07:07:10 | INFO     train.training train    252 Epoch 90/100 | Train Loss: 2.3774
+07:07:10 | INFO     train.training train    253 Current lr = 0.000034
+07:09:32 | INFO     train.training train    252 Epoch 95/100 | Train Loss: 2.3722
+07:09:32 | INFO     train.training train    253 Current lr = 0.000016
+07:11:56 | INFO     train.training train    252 Epoch 100/100 | Train Loss: 2.3695
+07:11:56 | INFO     train.training train    253 Current lr = 0.000010
+07:11:57 | INFO     __main__ main     138 
+--------------> Finished training w.r.t. subject 14 session 0 acc 0.4361
+07:11:57 | INFO     __main__ main     147 
+-----------> Finished training for all subjects!!!!
+07:11:57 | INFO     __main__ main     152 
+ all: mean 0.2270 std 0.3297
+two: mean 0.3404 std 0.3527
+one: mean 0.6809 std 0.1303
+

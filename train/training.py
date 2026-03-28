@@ -215,13 +215,17 @@ def train(
             ortho = orthogonality_loss(branch_a_feat, branch_b_feat)
 
             # --- Supervised contrastive loss ---
-            con_loss = supcon_criterion(fused_feat, labels)
+            # con_loss = supcon_criterion(fused_feat, labels)
 
             loss = (source_loss
                     + domain_loss
                     + lambda_aux * (aux_loss_a + aux_loss_b)
-                    + lambda_ortho * ortho
-                    + lambda_con * con_loss)
+                    + lambda_ortho * ortho)
+            # loss = (source_loss
+            #         + domain_loss
+            #         + lambda_aux * (aux_loss_a + aux_loss_b)
+            #         + lambda_ortho * ortho
+            #         + lambda_con * con_loss)
 
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)

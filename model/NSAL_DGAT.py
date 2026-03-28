@@ -304,8 +304,8 @@ class Domain_adaption_model(nn.Module):
         source_label_feature = torch.nn.functional.softmax(source_predict, dim=1)
         target_label_feature = torch.nn.functional.softmax(target_predict, dim=1)
 
-        # target_label = self.get_target_labels(source_f, source_label_feature, source_index, target_f)
-        target_label = None
+        target_label = self.get_target_labels(source_f, source_label_feature, source_index, target_f)
+        # target_label = None
         return source_predict, source_f, target_predict, target_f, [self.src_adj, self.src_sa, self.src_ca], [self.tar_adj, self.tar_sa, self.tar_ca], target_label
 
 
