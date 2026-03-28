@@ -31,6 +31,7 @@ def train(
     subject_id: int,
     session_id: int,
     learning_rate: float,
+    early_stop_patience: int = 15,
 ):
 
     logger.info("len of train data: {}, len of test data: {}", len(train_data), len(test_data))
@@ -72,7 +73,7 @@ def train(
     target_domain_labels = torch.ones(batch_size, dtype=torch.long, device=device)
 
     # Early stopping state
-    patience = 15                    # stop after this many epochs without improvement
+    patience = early_stop_patience   # 0 = disabled
     best_acc = 0.0
     epochs_without_improvement = 0
 
@@ -133,7 +134,7 @@ def train(
         else:
             epochs_without_improvement += 1
 
-        if epochs_without_improvement >= patience:
+        if patience > 0 and epochs_without_improvement >= patience:
             logger.info("Early stop at epoch {} — no improvement for {} epochs (best={:.4f})",
                         epoch, patience, best_acc)
             break

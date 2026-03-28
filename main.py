@@ -75,6 +75,8 @@ def main(
         help="random seed for reproducibility, None for no seed (i.e., random)")] = 42,
     learning_rate: Annotated[float, typer.Option(
         help="learning rate for training")] = 0.001,
+    early_stop_patience: Annotated[int, typer.Option(
+        help="early stop after N epochs without test acc improvement (0 = disabled)")] = 15,
     level: Annotated[
         cli_enum.LevelName, typer.Option(
             "-l", help="level of severity for logging")
@@ -131,8 +133,8 @@ def main(
 
 
             train(model, metric, train_data, train_labels, test_data, test_labels,
-                  batch_size,num_classes, device, epochs, task_type, subject_id, 
-                  session_id, learning_rate)
+                  batch_size, num_classes, device, epochs, task_type, subject_id,
+                  session_id, learning_rate, early_stop_patience)
 
 
             logger.info("\n--------------> Finished training w.r.t. subject {} session {} acc {:<.4f}",
