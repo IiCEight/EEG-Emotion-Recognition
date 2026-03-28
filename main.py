@@ -77,6 +77,8 @@ def main(
         help="learning rate for training")] = 0.001,
     early_stop_patience: Annotated[int, typer.Option(
         help="early stop after N epochs without test acc improvement (0 = disabled)")] = 15,
+    single_branch: Annotated[bool, typer.Option(
+        help="ablation: use single GCN branch instead of dual-branch + fusion")] = False,
     level: Annotated[
         cli_enum.LevelName, typer.Option(
             "-l", help="level of severity for logging")
@@ -104,6 +106,8 @@ def main(
         + f"\nsplit type: {split_type}\nbatch_size: {batch_size}\nepochs: {epochs}"
         + f"\ndata random: {data_random}\nrandom seed: {random_seed}"
         + f"\nonly one experiment: {only_one_experiment}\nonly one session: {only_one_session}"
+        + f"\nlearning rate: {learning_rate}\nearly stop patience: {early_stop_patience}"
+        + f"\nsingle branch: {single_branch}"
     )
 
     data, labels, num_subjects, num_electrodes, num_features, num_classes = load_data(
@@ -129,7 +133,9 @@ def main(
                 data, labels, task_type, session_id, subject_id, split_ratio, data_random)
 
             model = MODEL[model_name](
-                num_electrodes, num_features, num_classes).to(device)
+                num_electrodes, num_features, num_classes,
+                **(dict(single_branch=single_branch) if model_name == cli_enum.ModelName.SABER else {})
+            ).to(device)
 
 
             train(model, metric, train_data, train_labels, test_data, test_labels,

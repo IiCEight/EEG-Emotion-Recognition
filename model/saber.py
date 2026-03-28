@@ -44,7 +44,7 @@ class GatedFusion(nn.Module):
 
 
 class Saber(nn.Module):
-    def __init__(self, num_electrodes=62, in_features=5, num_classes=3, num_layers=2):
+    def __init__(self, num_electrodes=62, in_features=5, num_classes=3, num_layers=2, single_branch=False):
         super().__init__()
 
         self.num_electrodes = num_electrodes
@@ -56,7 +56,8 @@ class Saber(nn.Module):
         self.hidden_2 = 64
 
         self.feature_extractor = FeatureExtractor(
-            num_electrodes, in_features, num_layers, hidden_2=self.hidden_2)
+            num_electrodes, in_features, num_layers, hidden_2=self.hidden_2,
+            single_branch=single_branch)
 
         self.class_classifier = Classifier(self.hidden_2, num_classes)
         self.domain_classifier = Discriminator(self.hidden_2)
@@ -82,28 +83,31 @@ class Saber(nn.Module):
 
 
 class FeatureExtractor(nn.Module):
-    def __init__(self, num_electrodes, num_feature, layers=2, hidden_2=64):
+    def __init__(self, num_electrodes, num_feature, layers=2, hidden_2=64, single_branch=False):
         super().__init__()
         self.chan_num = num_electrodes
         self.band_num = num_feature
         self.hidden_2 = hidden_2
         self.layers = layers
+        self.single_branch = single_branch
 
         self.adj_a = nn.Parameter(torch.tensor(
-            get_adj_from_standard()).float(), requires_grad=True)
-        self.adj_b = nn.Parameter(torch.tensor(
             get_adj_from_standard()).float(), requires_grad=True)
 
         # Input normalization (TAHAG-inspired)
         self.data_bn = nn.BatchNorm1d(num_feature)
 
         self.MRGCN_a = MulipleResidualGCN(layers, self.chan_num, self.band_num)
-        self.MRGCN_b = MulipleResidualGCN(layers, self.chan_num, self.band_num)
+
+        if not single_branch:
+            self.adj_b = nn.Parameter(torch.tensor(
+                get_adj_from_standard()).float(), requires_grad=True)
+            self.MRGCN_b = MulipleResidualGCN(layers, self.chan_num, self.band_num)
 
         mrgcn_out_channels = (layers + 1) * self.band_num
 
-        # Attention-gated fusion
-        self.gated_fusion = GatedFusion(channels=mrgcn_out_channels)
+        if not single_branch:
+            self.gated_fusion = GatedFusion(channels=mrgcn_out_channels)
 
         flatten_dim = self.chan_num * mrgcn_out_channels
 
@@ -113,14 +117,16 @@ class FeatureExtractor(nn.Module):
 
     def forward(self, x):
         x = x.reshape(x.size(0), 5, 62)
-        x = self.data_bn(x)              # normalize across batch
+        x = self.data_bn(x)
         x = x.unsqueeze(2)
 
         g_feat_a, _ = self.MRGCN_a(x, self.adj_a)
-        g_feat_b, _ = self.MRGCN_b(x, self.adj_b)
 
-        # ---- Gated fusion ----
-        g_feat = self.gated_fusion(g_feat_a, g_feat_b)
+        if self.single_branch:
+            g_feat = g_feat_a
+        else:
+            g_feat_b, _ = self.MRGCN_b(x, self.adj_b)
+            g_feat = self.gated_fusion(g_feat_a, g_feat_b)
 
         # ---- Shared projection ----
         out = self.fc1(g_feat.reshape(g_feat.size(0), -1))
