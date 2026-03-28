@@ -67,17 +67,19 @@ class Saber(nn.Module):
             alpha=1.0, low=0., high=1., max_iters=self.grad_reverse_max_iter, auto_step=True)
 
         # Auxiliary classifiers for dual-branch specialization
+        # Auxiliary binary polarity heads (dual-branch only)
+        # Branch A: positive-vs-rest, Branch B: negative-vs-rest
         if not single_branch:
             flatten_dim = num_electrodes * ((num_layers + 1) * in_features)
             self.aux_classifier_a = nn.Sequential(
                 nn.Linear(flatten_dim, self.hidden_2),
                 nn.ReLU(inplace=True),
-                nn.Linear(self.hidden_2, num_classes),
+                nn.Linear(self.hidden_2, 2),
             )
             self.aux_classifier_b = nn.Sequential(
                 nn.Linear(flatten_dim, self.hidden_2),
                 nn.ReLU(inplace=True),
-                nn.Linear(self.hidden_2, num_classes),
+                nn.Linear(self.hidden_2, 2),
             )
 
     def forward(self, source, target):

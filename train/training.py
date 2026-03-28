@@ -16,6 +16,20 @@ from utils.metric import Metric
 import torch.nn.functional as F
 
 
+def make_polarity_labels(labels: torch.Tensor):
+    """
+    Convert 3-class emotion labels into two binary polarity targets.
+    SEED: 0=Negative, 1=Neutral, 2=Positive
+
+    Returns:
+        polarity_a – binary target for branch A (1=Positive, 0=otherwise)
+        polarity_b – binary target for branch B (1=Negative, 0=otherwise)
+    """
+    polarity_a = (labels == 2).long()   # positive-vs-rest
+    polarity_b = (labels == 0).long()   # negative-vs-rest
+    return polarity_a, polarity_b
+
+
 def train(
     model: Saber,
     metric: Metric,
@@ -118,9 +132,10 @@ def train(
 
             loss = source_loss + domain_loss
 
-            # --- Auxiliary losses (dual-branch only) ---
+            # --- Auxiliary polarity losses (dual-branch only) ---
             if has_aux:
-                aux_loss = criterion_aux(aux_a, labels) + criterion_aux(aux_b, labels)
+                polarity_a, polarity_b = make_polarity_labels(labels)
+                aux_loss = criterion_aux(aux_a, polarity_a) + criterion_aux(aux_b, polarity_b)
                 loss = loss + lambda_aux * aux_loss
                 aux_loss_total += lambda_aux * aux_loss.item()
 
