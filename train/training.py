@@ -56,6 +56,7 @@ def train(
     target_loader_inf_iter = pytorch_safe_cycle(test_loader)
 
     criterion = torch.nn.CrossEntropyLoss(label_smoothing=0.1)
+    criterion_aux = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.AdamW(
         model.parameters(),
         lr=learning_rate,
@@ -72,6 +73,11 @@ def train(
     source_domain_labels = torch.zeros(batch_size, dtype=torch.long, device=device)
     target_domain_labels = torch.ones(batch_size, dtype=torch.long, device=device)
 
+    # Aux loss config
+    has_aux = hasattr(model, 'aux_classifier_a')
+    lambda_aux_max = 0.3
+    warmup_epochs = 15
+
     # Early stopping state
     patience = early_stop_patience   # 0 = disabled
     best_acc = 0.0
@@ -82,8 +88,12 @@ def train(
         total_loss = 0.0
         source_loss_total = 0.0
         domain_loss_total = 0.0
+        aux_loss_total = 0.0
         correct = 0
         total_samples = 0
+
+        # Warmup aux weight
+        lambda_aux = lambda_aux_max * min(1.0, epoch / max(1, warmup_epochs)) if has_aux else 0.0
 
         for data, labels in train_loader:
             optimizer.zero_grad()
@@ -94,8 +104,12 @@ def train(
             target_data, _ = next(target_loader_inf_iter)
             target_data = target_data.to(device)
 
-            (output, domain_output_source, domain_output_target,
-             fused_feat) = model(data, target_data)
+            model_out = model(data, target_data)
+
+            if has_aux:
+                output, domain_output_source, domain_output_target, fused_feat, aux_a, aux_b = model_out
+            else:
+                output, domain_output_source, domain_output_target, fused_feat = model_out
 
             # --- Main losses ---
             source_loss = criterion(output, labels)
@@ -103,6 +117,12 @@ def train(
             domain_loss += criterion(domain_output_target, target_domain_labels)
 
             loss = source_loss + domain_loss
+
+            # --- Auxiliary losses (dual-branch only) ---
+            if has_aux:
+                aux_loss = criterion_aux(aux_a, labels) + criterion_aux(aux_b, labels)
+                loss = loss + lambda_aux * aux_loss
+                aux_loss_total += lambda_aux * aux_loss.item()
 
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
@@ -143,12 +163,16 @@ def train(
         total_loss /= n_batches
         source_loss_avg = source_loss_total / n_batches
         domain_loss_avg = domain_loss_total / n_batches
+        aux_loss_avg = aux_loss_total / n_batches
         train_acc = correct / total_samples if total_samples > 0 else 0.0
 
         if epoch % 5 == 0:
-            logger.info("Epoch {}/{} | Total Loss: {:.4f}, Source Loss: {:.4f}, Domain "
-                        + "Loss: {:.4f}",
-                        epoch, epochs, total_loss, source_loss_avg, domain_loss_avg)
+            log_msg = "Epoch {}/{} | Total Loss: {:.4f}, Source: {:.4f}, Domain: {:.4f}"
+            log_args = [epoch, epochs, total_loss, source_loss_avg, domain_loss_avg]
+            if has_aux:
+                log_msg += ", Aux: {:.4f}"
+                log_args.append(aux_loss_avg)
+            logger.info(log_msg, *log_args)
             logger.info("Current lr = {:.6f}", scheduler.get_last_lr()[0])
             logger.info("Train Accuracy: {:.4f}", train_acc)
 

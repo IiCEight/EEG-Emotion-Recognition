@@ -52,6 +52,7 @@ class Saber(nn.Module):
         self.num_layers = num_layers
         self.num_classes = num_classes
         self.grad_reverse_max_iter = 1000
+        self.single_branch = single_branch
 
         self.hidden_2 = 64
 
@@ -65,19 +66,46 @@ class Saber(nn.Module):
         self.grad_reverse_layer = WarmStartGradientReverseLayer(
             alpha=1.0, low=0., high=1., max_iters=self.grad_reverse_max_iter, auto_step=True)
 
+        # Auxiliary classifiers for dual-branch specialization
+        if not single_branch:
+            flatten_dim = num_electrodes * ((num_layers + 1) * in_features)
+            self.aux_classifier_a = nn.Sequential(
+                nn.Linear(flatten_dim, self.hidden_2),
+                nn.ReLU(inplace=True),
+                nn.Linear(self.hidden_2, num_classes),
+            )
+            self.aux_classifier_b = nn.Sequential(
+                nn.Linear(flatten_dim, self.hidden_2),
+                nn.ReLU(inplace=True),
+                nn.Linear(self.hidden_2, num_classes),
+            )
+
     def forward(self, source, target):
-        source_feat = self.feature_extractor(source)
-        target_feat = self.feature_extractor(target)
+        source_out = self.feature_extractor(source)
+        target_out = self.feature_extractor(target)
+
+        if self.single_branch:
+            source_feat = source_out
+            target_feat = target_out
+        else:
+            source_feat, src_branch_a, src_branch_b = source_out
+            target_feat, _, _ = target_out
 
         class_output = self.class_classifier(source_feat)
 
         domain_output_source = self.domain_classifier(self.grad_reverse_layer(source_feat))
         domain_output_target = self.domain_classifier(self.grad_reverse_layer(target_feat))
 
+        if not self.single_branch:
+            aux_a = self.aux_classifier_a(src_branch_a)
+            aux_b = self.aux_classifier_b(src_branch_b)
+            return class_output, domain_output_source, domain_output_target, source_feat, aux_a, aux_b
+
         return class_output, domain_output_source, domain_output_target, source_feat
 
     def predict(self, x):
-        features = self.feature_extractor(x)
+        out = self.feature_extractor(x)
+        features = out if self.single_branch else out[0]
         class_output = self.class_classifier(features)
         return class_output
 
@@ -134,4 +162,10 @@ class FeatureExtractor(nn.Module):
         out = self.fc2(out)
         out = F.relu(out)
 
-        return out
+        if self.single_branch:
+            return out
+
+        # Return flattened branch features for aux classifiers
+        flat_a = g_feat_a.reshape(g_feat_a.size(0), -1)
+        flat_b = g_feat_b.reshape(g_feat_b.size(0), -1)
+        return out, flat_a, flat_b
