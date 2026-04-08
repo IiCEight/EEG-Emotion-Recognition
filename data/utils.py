@@ -145,12 +145,12 @@ def split_data_wrt_trials(data:list, labels:list, split_ratio:float, random = Fa
         np.random.shuffle(mask)
 
     # Use bool index of ak
+    # convert back to list
     train_data = data[mask].to_list()
     train_labels = labels[mask].to_list()
     test_data = data[~mask].to_list()
     test_labels = labels[~mask].to_list()
 
-    # convert back to list
     
     return train_data, train_labels, test_data, test_labels
 

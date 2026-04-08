@@ -66,8 +66,9 @@ def train(
     test_loader = DataLoader(
         dataset_test, sampler=sampler_test, batch_size=batch_size, num_workers=4, drop_last=True
     )
-
+    source_loader_inf_iter = pytorch_safe_cycle(train_loader)
     target_loader_inf_iter = pytorch_safe_cycle(test_loader)
+    
 
     criterion = torch.nn.CrossEntropyLoss(label_smoothing=0.1)
     criterion_aux = torch.nn.CrossEntropyLoss()
@@ -89,8 +90,8 @@ def train(
 
     # Aux loss config
     has_aux = hasattr(model, 'aux_classifier_a')
-    lambda_aux_max = 0.3
-    warmup_epochs = 15
+    lambda_aux_max = 1000
+    warmup_epochs = 25
 
     # Early stopping state
     patience = early_stop_patience   # 0 = disabled
@@ -109,13 +110,17 @@ def train(
         # Warmup aux weight
         lambda_aux = lambda_aux_max * min(1.0, epoch / max(1, warmup_epochs)) if has_aux else 0.0
 
-        for data, labels in train_loader:
+        num_batches = min(len(train_loader), len(test_loader))
+
+        for _ in range(num_batches):
             optimizer.zero_grad()
+
+            data, labels = next(source_loader_inf_iter)
+            target_data, _ = next(target_loader_inf_iter)
 
             data = data.to(device)
             labels = labels.long().to(device)
 
-            target_data, _ = next(target_loader_inf_iter)
             target_data = target_data.to(device)
 
             model_out = model(data, target_data)
@@ -174,11 +179,10 @@ def train(
                         epoch, patience, best_acc)
             break
 
-        n_batches = len(train_loader)
-        total_loss /= n_batches
-        source_loss_avg = source_loss_total / n_batches
-        domain_loss_avg = domain_loss_total / n_batches
-        aux_loss_avg = aux_loss_total / n_batches
+        total_loss /= num_batches
+        source_loss_avg = source_loss_total / num_batches
+        domain_loss_avg = domain_loss_total / num_batches
+        aux_loss_avg = aux_loss_total / num_batches
         train_acc = correct / total_samples if total_samples > 0 else 0.0
 
         if epoch % 5 == 0:
@@ -187,6 +191,7 @@ def train(
             if has_aux:
                 log_msg += ", Aux: {:.4f}"
                 log_args.append(aux_loss_avg)
+            logger.info("auxiliary loss weight: {:.4f}", lambda_aux)
             logger.info(log_msg, *log_args)
             logger.info("Current lr = {:.6f}", scheduler.get_last_lr()[0])
             logger.info("Train Accuracy: {:.4f}", train_acc)

@@ -37,6 +37,8 @@ def main(
     dataset_path: Annotated[
         str, typer.Option(help="path to the dataset")
     ] = "../data/SEED",
+    cache_dir: Annotated[str | None, typer.Option(
+        help="cache directory for loaded dataset (disabled if not set)")] = "./cache",
     device: Annotated[str, typer.Option(
         help="device to run the model on")] = "cuda",
     sample_length: Annotated[
@@ -52,7 +54,7 @@ def main(
         typer.Option(
             help="type of experimental task (subject-dependent, subject-independent)"
         ),
-    ] = cli_enum.TaskTypeName.SUBJECT_DEPENDENT,
+    ] = cli_enum.TaskTypeName.SUBJECT_INDEPENDENT,
     split_type: Annotated[
         cli_enum.SplitTypeName,
         typer.Option(
@@ -63,7 +65,7 @@ def main(
         float, typer.Option(help="ratio for train data size")
     ] = 0.6,
     batch_size: Annotated[int, typer.Option(
-        help="batch size for training")] = 32,
+        help="batch size for training")] = 128,
     epochs: Annotated[int, typer.Option(
         help="number of epochs for training")] = 60,
     data_random: Annotated[bool, typer.Option(
@@ -76,7 +78,7 @@ def main(
     learning_rate: Annotated[float, typer.Option(
         help="learning rate for training")] = 0.001,
     early_stop_patience: Annotated[int, typer.Option(
-        help="early stop after N epochs without test acc improvement (0 = disabled)")] = 15,
+        help="early stop after N epochs without test acc improvement (0 = disabled)")] = 0,
     single_branch: Annotated[bool, typer.Option(
         help="ablation: use single GCN branch instead of dual-branch + fusion")] = False,
     level: Annotated[
@@ -102,6 +104,7 @@ def main(
 
     logger.info(
         f"Launching....\nmodel_name: {model_name}\ndataset: {dataset}\ndataset_path: {dataset_path}"
+        + f"\ncache_dir: {cache_dir}"
         + f"\ndevice: {device}\nlogging level: {level}\ntask type: {task_type}"
         + f"\nsplit type: {split_type}\nbatch_size: {batch_size}\nepochs: {epochs}"
         + f"\ndata random: {data_random}\nrandom seed: {random_seed}"
@@ -111,8 +114,9 @@ def main(
     )
 
     data, labels, num_subjects, num_electrodes, num_features, num_classes = load_data(
-        dataset, dataset_path
-    )
+        dataset_name=dataset,
+        dataset_path=dataset_path,
+        cache_dir=cache_dir)
 
     # data = normalization_wrt_session(data, type='min_max')
 

@@ -9,7 +9,7 @@ from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LambdaLR
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler, TensorDataset
 
-from model.NSAL_DGAT import DAANLoss, Discriminator
+from model.NSAL_DGAT_modified import DAANLoss, Discriminator
 from constant import CLI_arguments_enum
 from utils.metric import Metric
 
@@ -73,7 +73,7 @@ def train(
 
     model.train()
 
-    # getInit(train_loader, model, device)
+    getInit(train_loader, model, device)
 
     test_data = torch.tensor(test_data).float()
     test_labels = torch.tensor(test_labels).long()
@@ -105,32 +105,30 @@ def train(
                 index,
             )
             source_loss = criterion(output, labels)
-            # target_labels = torch.argmax(target_labels, dim=1)
-            # target_loss = criterion(target_output, target_labels)
+            target_labels = torch.argmax(target_labels, dim=1)
+            target_loss = criterion(target_output, target_labels)
             global_transfer_loss = dann_loss(
                 feature + 0.005 * torch.randn((feature.shape[0], (hidden_2))).to(device),
                 target_feature + 0.005 * torch.randn((target_feature.shape[0], (hidden_2))).to(device),
                 output, target_output)
             # model.eval()
             boost_factor = 2.0 * (2.0 / (1.0 + math.exp(-1 * (epoch-1) / 1000)) - 1)
-            # loss = source_loss + global_transfer_loss + boost_factor * target_loss
+            loss = source_loss + global_transfer_loss + boost_factor * target_loss
             
-            # delete clustering component
-            loss = source_loss + global_transfer_loss
 
             loss.backward()
             optimizer.step()
             epoch_loss += loss.item()
 
-        scheduler.step()
-        # lr_scheduler.step()
+        # scheduler.step()
+        lr_scheduler.step()
         evaluate(model, metric, test_data, test_labels, device, subject_id, session_id)
         avg_loss = epoch_loss / len(train_loader)
 
         if epoch % 5 == 0:
             logger.info("Epoch {}/{} | Train Loss: {:.4f}", epoch, epochs, avg_loss)
-            logger.info("Current lr = {:.6f}", scheduler.get_last_lr()[0])
-            # logger.info("Current lr = {:.6f}", lr_scheduler.get_lr())
+            # logger.info("Current lr = {:.6f}", scheduler.get_last_lr()[0])
+            logger.info("Current lr = {:.6f}", lr_scheduler.get_lr())
 
 
 

@@ -13,10 +13,9 @@ from loguru import logger
 
 from constant.model_map import MODEL
 from data.dataloder import load_data
-# from train.training_TAHAG import train
 from data.utils import merge_and_split
+from train.training_nsal_dgat import train
 
-from train.training_RGNN import train
 from utils.metric import Metric
 from utils.random_seed import setup_seed
 
@@ -55,27 +54,33 @@ def main(
         typer.Option(
             help="type of experimental task (subject-dependent, subject-independent)"
         ),
-    ] = cli_enum.TaskTypeName.SUBJECT_DEPENDENT,
-    # split_type: Annotated[
-    #     cli_enum.SplitTypeName,
-    #     typer.Option(
-    #         help="type of data split (kfold, leave-one-subject-out)"
-    #     ),
-    # ] = cli_enum.SplitTypeName.LEAVE_ONE_SUBJECT_OUT,
+    ] = cli_enum.TaskTypeName.SUBJECT_INDEPENDENT,
+    split_type: Annotated[
+        cli_enum.SplitTypeName,
+        typer.Option(
+            help="type of data split (kfold, leave-one-subject-out)"
+        ),
+    ] = cli_enum.SplitTypeName.LEAVE_ONE_SUBJECT_OUT,
     split_ratio: Annotated[
         float, typer.Option(help="ratio for train data size")
     ] = 0.6,
     batch_size: Annotated[int, typer.Option(
         help="batch size for training")] = 128,
     epochs: Annotated[int, typer.Option(
-        help="number of epochs for training")] = 60,
+        help="number of epochs for training")] = 100,
     data_random: Annotated[bool, typer.Option(
         help="whether to shuffle the data")] = False,
     only_one_experiment: Annotated[bool, typer.Option(
         help="whether to run only one experiment for debugging")] = False,
     only_one_session: Annotated[bool, typer.Option(help="whether to run only one session for debugging")] = True,
     random_seed: Annotated[int | None, typer.Option(
-        help="random seed for reproducibility, None for no seed (i.e., random)")] = None,
+        help="random seed for reproducibility, None for no seed (i.e., random)")] = 42,
+    learning_rate: Annotated[float, typer.Option(
+        help="learning rate for training")] = 0.001,
+    early_stop_patience: Annotated[int, typer.Option(
+        help="early stop after N epochs without test acc improvement (0 = disabled)")] = 0,
+    single_branch: Annotated[bool, typer.Option(
+        help="ablation: use single GCN branch instead of dual-branch + fusion")] = False,
     level: Annotated[
         cli_enum.LevelName, typer.Option(
             "-l", help="level of severity for logging")
@@ -101,8 +106,10 @@ def main(
         f"Launching....\nmodel_name: {model_name}\ndataset: {dataset}\ndataset_path: {dataset_path}"
         + f"\ncache_dir: {cache_dir}"
         + f"\ndevice: {device}\nlogging level: {level}\ntask type: {task_type}"
-        + f"\nbatch_size: {batch_size}\nepochs: {epochs}"
-        + f"\ndata random: {data_random}"
+        + f"\nsplit type: {split_type}\nbatch_size: {batch_size}\nepochs: {epochs}"
+        + f"\ndata random: {data_random}\nrandom seed: {random_seed}"
+        + f"\nonly one experiment: {only_one_experiment}\nonly one session: {only_one_session}"
+        + f"\nlearning rate: {learning_rate}\nearly stop patience: {early_stop_patience}"
     )
 
     data, labels, num_subjects, num_electrodes, num_features, num_classes = load_data(
@@ -117,22 +124,30 @@ def main(
     # data = normalization_wrt_session(data, type='min_max')
 
     num_sessions = len(labels)
+    subject_ids = list(range(num_subjects))
+    if data_random:
+        shuffle(subject_ids)
+
     metric = Metric(num_subjects, num_sessions)
 
     logger.debug("num_sessions {} num_subjects {}", num_sessions, num_subjects)
 
     for session_id in range(num_sessions):
-        for subject_id in range(num_subjects):
+        for subject_id in subject_ids:
             setup_seed(random_seed)
 
             train_data, train_labels, test_data, test_labels = merge_and_split(
                 data, labels, task_type, session_id, subject_id, split_ratio, data_random)
 
             model = MODEL[model_name](
-                num_electrodes, num_features, num_classes, device = device, source_num = len(train_data)).to(device)
+                num_electrodes, num_features, num_classes, source_num=len(train_data)
+            ).to(device)
+
 
             train(model, metric, train_data, train_labels, test_data, test_labels,
-                  batch_size,num_classes, device, epochs, task_type, subject_id, session_id)
+                  batch_size, num_classes, device, epochs, task_type, subject_id,
+                  session_id, learning_rate)
+
 
             logger.info("\n--------------> Finished training w.r.t. subject {} session {} acc {:<.4f}",
                         subject_id, session_id, metric.accuracy[subject_id, session_id]
@@ -148,7 +163,7 @@ def main(
     two_mean, two_std = metric.two_best_sessions_mean_acc()
     one_mean, one_std = metric.one_best_session_mean_acc()
 
-    logger.info("\n all: mean {:<.4f} std {:<.4f}\ntwo: mean {:<.4f} std {:<.4f}" +
+    logger.info("\nall: mean {:<.4f} std {:<.4f}\ntwo: mean {:<.4f} std {:<.4f}" +
                 "\none: mean {:<.4f} std {:<.4f}\n", all_mean, all_std, two_mean, 
                 two_std, one_mean, one_std)
 

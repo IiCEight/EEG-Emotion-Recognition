@@ -4,9 +4,13 @@
 ##
 ##
 
+from loguru import logger
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from einops import einsum, rearrange
+
+from utils.graphConstructionFromStandard import get_adj_from_standard
 
 class ChannelAttention(nn.Module):
     def __init__(self, channel, reduction=16):
@@ -71,7 +75,7 @@ class CBAMBlock(nn.Module):
         ca = self.ca(x)
         out = x * ca
         sa = self.sa(out)
-        out = out * sa
+        out = out * sa 
         return out + residual, ca, sa
 
 
@@ -122,14 +126,21 @@ class resGCN(nn.Module):
                 nn.init.constant_(m.bias, 0)
 
     def forward(self, x, x_p, L):
+        # x = self.GConv2(self.bn2(self.ELU(self.GConv1(self.bn1(x)))))
         x = self.bn2(self.GConv2(self.ELU(self.bn1(self.GConv1(x)))))
-        y = torch.einsum('bijk,kp->bijp', (x, L))
+
+        # discard batch normalization.
+        # x = self.GConv2(self.ELU(self.GConv1(x)))
+        y = einsum(x, L, 'b i j k, k p -> b i j p')
         y = self.ELU(torch.add(y, x_p))
         return y
 
 
 class HGCN(nn.Module):
     def __init__(self, dim, chan_num, band_num):
+        """
+        dim == 1 for default.
+        """
         super(HGCN, self).__init__()
         self.chan_num = chan_num
         self.dim = dim
@@ -151,7 +162,8 @@ class HGCN(nn.Module):
                         nn.init.xavier_uniform_(j.weight, gain=1)
 
     def forward(self, x, A_ds):
-        L = torch.einsum('ik,kp->ip', (A_ds, torch.diag(torch.reciprocal(sum(A_ds)))))
+        # L = A_ds * D^{-1}
+        L = einsum(A_ds, torch.diag(torch.reciprocal(sum(A_ds))), 'i k, k p -> i p')
         G = self.resGCN(x, x, L).contiguous()
         return G
 
@@ -169,6 +181,8 @@ class MHGCN(nn.Module):
         self.initialize()
 
     def initialize(self):
+        gamma = 0.1
+        # self.A = gamma * self.A +  (1 - gamma)*torch.tensor(get_adj_from_standard()).reshape(1, self.chan_num * self.chan_num).float()
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 nn.init.xavier_uniform_(m.weight, gain=1)
@@ -180,10 +194,12 @@ class MHGCN(nn.Module):
                     if isinstance(j, nn.Linear):
                         nn.init.xavier_uniform_(j.weight, gain=1)
 
-    def forward(self, x):
-        self.A = self.A.to(x.device)
-        A_ds = self.GATENet(self.A)
-        A_ds = A_ds.reshape(self.chan_num, self.chan_num)
+    def forward(self, x, A=None):
+        # self.A = self.A.to(x.device)
+        # A_ds = self.GATENet(self.A)
+        # A_ds = self.GATENet(A)
+        # NOTE: delete the GATENet.
+        A_ds = A.reshape(self.chan_num, self.chan_num)
         output = []
         output.append(x)
         for i in range(len(self.HGCN_layers)):
@@ -199,7 +215,13 @@ class Encoder(nn.Module):
         super(Encoder, self).__init__()
         self.chan_num = in_planes[1]
         self.band_num = in_planes[0]
-        self.GGCN = MHGCN(layers=layers, dim=1, chan_num=self.chan_num, band_num=self.band_num, hidden_1=hidden_1,
+        self.adj_a = nn.Parameter(torch.tensor(get_adj_from_standard().reshape(1, self.chan_num * self.chan_num)).float(), requires_grad=True)
+        self.adj_b = nn.Parameter(torch.tensor(get_adj_from_standard().reshape(1, self.chan_num * self.chan_num)).float(), requires_grad=True)
+
+        self.GGCN_a = MHGCN(layers=layers, dim=1, chan_num=self.chan_num, band_num=self.band_num, hidden_1=hidden_1,
+                          hidden_2=hidden_2)
+        
+        self.GGCN_b = MHGCN(layers=layers, dim=1, chan_num=self.chan_num, band_num=self.band_num, hidden_1=hidden_1,
                           hidden_2=hidden_2)
 
         self.CBAM =CBAMBlock(channel=(layers + 1) * self.band_num, reduction=4, kernel_size=3)
@@ -209,16 +231,26 @@ class Encoder(nn.Module):
         self.dropout2 = nn.Dropout(p=0.25)
 
     def forward(self, x):
+        # x = rearrange(x, 'b chan feature -> b feature chan', chan= 62, feature = 5) 
         x = x.reshape(x.size(0), 5, 62)
         x = x.unsqueeze(2)
-        g_feat, g_adj = self.GGCN(x)
+        # logger.info('Encoder input shape after reshape: {}', x.shape)
+
+        g_feat_a, g_adj_a = self.GGCN_a(x, self.adj_a)
+        g_feat_b, g_adj_b = self.GGCN_b(x, self.adj_b)
+        # g_feat, g_adj = self.GGCN(x)
+
+        g_feat = (g_feat_a + g_feat_b) / 2.0
+        g_adj = (g_adj_a + g_adj_b) / 2.0
+
         g_feat, ca, sa = self.CBAM(g_feat)
         out = self.fc1(g_feat.reshape(g_feat.size(0), -1))
+        # logger.info("out shape after fc1: {}", out.shape)
         out = F.relu(out)
-        out = self.dropout1(out)
+        # out = self.dropout1(out)
         out = self.fc2(out)
         out = F.relu(out)
-        out = self.dropout2(out)
+        # out = self.dropout2(out)
         return out, [g_adj, ca, sa]
 
 
@@ -244,9 +276,9 @@ class Discriminator(nn.Module):
     def forward(self, x):
         x = self.fc1(x)
         x = F.relu(x)
-        x = self.dropout1(x)
+        # x = self.dropout1(x)
         x = self.fc2(x)
-        x = self.sigmoid(x)
+        # x = self.sigmoid(x)
         return x
 
 
@@ -262,6 +294,7 @@ class Domain_adaption_model(nn.Module):
         self.ema_factor = 0.8
 
     def forward(self, source, target, source_label, source_index):
+        # logger.info('source: {}', source.shape)
         source_f, [self.src_adj, self.src_sa, self.src_ca] = self.encoder(source)
         target_f, [self.tar_adj, self.tar_sa, self.tar_ca] = self.encoder(target)
 
@@ -272,6 +305,7 @@ class Domain_adaption_model(nn.Module):
         target_label_feature = torch.nn.functional.softmax(target_predict, dim=1)
 
         target_label = self.get_target_labels(source_f, source_label_feature, source_index, target_f)
+        # target_label = None
         return source_predict, source_f, target_predict, target_f, [self.src_adj, self.src_sa, self.src_ca], [self.tar_adj, self.tar_sa, self.tar_ca], target_label
 
 
@@ -287,14 +321,15 @@ class Domain_adaption_model(nn.Module):
         _, idx_near = torch.topk(distance, dim=-1, largest=True, k=7)
         score_near = self.source_score_bank[idx_near]  # batch x K x num_class
         score_near_weight = self.get_weight(score_near)
-        score_near_sum_weight = torch.einsum('ijk,ij->ik', score_near, score_near_weight)
+        score_near_sum_weight = einsum(score_near, score_near_weight, 'i j k, i j -> i k')
         # score_near_sum_weight = torch.mean(score_near, dim=1)  # batch x num_class
         target_predict = torch.nn.functional.softmax(score_near_sum_weight, dim=1)
         return target_predict
 
     def get_init_banks(self, source, source_index):
+        # logger.info(source_index.shape)
         self.eval()
-        source_f, source_att = self.encoder(source)
+        source_f, source_att = self.encoder(source, self.adj)
 
         source_predict = self.cls_classifier(source_f)
         source_label_feature = torch.nn.functional.softmax(source_predict, dim=1)
@@ -416,9 +451,10 @@ class DomainAdversarialLoss(nn.Module):
         f = self.grl(torch.cat((f_s, f_t), dim=0))
         d = self.domain_discriminator(f)
         d_s, d_t = d.chunk(2, dim=0)
+        # shape of d_s and d_t should be (B, 1)BCEWithLogitsLoss
         d_label_s = torch.ones((f_s.size(0), 1)).to(f_s.device)
         d_label_t = torch.zeros((f_t.size(0), 1)).to(f_t.device)
-        self.domain_discriminator_accuracy = 0.5 * (binary_accuracy(d_s, d_label_s) + binary_accuracy(d_t, d_label_t))
+        # self.domain_discriminator_accuracy = 0.5 * (binary_accuracy(d_s, d_label_s) + binary_accuracy(d_t, d_label_t))
         return 0.5 * (self.bce(d_s, d_label_s) + self.bce(d_t, d_label_t))
 
 
@@ -436,9 +472,9 @@ class DAANLoss(nn.Module):
         self.d_g, self.d_l = 0, 0
         self.dynamic_factor = 0.5
 
-    def forward(self, source, target, source_logits, target_logits):
+    def forward(self, source_f, target_f, source_logits, target_logits):
 
-        global_loss = self.get_global_adversarial_result(source, target)
+        global_loss = self.get_global_adversarial_result(source_f, target_f)
 
         #
         # self.d_g = self.d_g + 2 * (1 - 2 * global_loss.cpu().item())
@@ -448,6 +484,7 @@ class DAANLoss(nn.Module):
         return global_loss
 
     def get_global_adversarial_result(self, f_s, f_t):
+        # the shape of f_s and f_t should be (B, hidden_2)
         f = self.grl(torch.cat((f_s, f_t), dim=0))
         d = self.global_classifiers(f)
         d_s, d_t = d.chunk(2, dim=0)

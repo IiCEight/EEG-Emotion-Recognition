@@ -36,6 +36,8 @@ def main(
     dataset_path: Annotated[
         str, typer.Option(help="path to the dataset")
     ] = "../data/SEED",
+    cache_dir: Annotated[str | None, typer.Option(
+        help="cache directory for loaded dataset (disabled if not set)")] = None,
     device: Annotated[str, typer.Option(help="device to run the model on")] = "cuda",
     sample_length: Annotated[
         int, typer.Option(help="length of data points in each sample")
@@ -84,13 +86,19 @@ def main(
 
     logger.info(
         f"Launching....\nmodel_name: {model_name}\ndataset: {dataset}\ndataset_path: {dataset_path}"
+        + f"\ncache_dir: {cache_dir}"
         + f"\ndevice: {device}\nlogging level: {level}\ntask type: {task_type}"
         + f"\nsplit type: {split_type}\nbatch_size: {batch_size}\nepochs: {epochs}"
         + f"\ndata random: {data_random}"
     )
 
     data, labels, num_subjects, num_electrodes, num_features, num_classes = load_data(
-        dataset, dataset_path
+        dataset_name=dataset,
+        dataset_path=dataset_path,
+        cache_dir=cache_dir,
+        sample_length=sample_length,
+        stride=stride,
+        label_type=label_type,
     )
 
     subject_ids = list(range(num_subjects))

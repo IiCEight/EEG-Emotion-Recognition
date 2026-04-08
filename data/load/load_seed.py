@@ -34,8 +34,8 @@ def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[list, lis
     feature_type: "raw", "de_lds"...
 
     return:
-        data  shape: (session(3), subject(15), trial(15), sample(different), electrode, frequency band)
-        label shape: (session(3), subject(15), trial(15), sample(different)) NOT ONE-HOT ENCODED, 
+        data:list  shape: (session(3), subject(15), trial(15), sample(different), electrode, frequency band)
+        label:list shape: (session(3), subject(15), trial(15), sample(different)) NOT ONE-HOT ENCODED, 
             value is 0, 1, 2 represent the emotion label.
 
     SEED dataset has two folders
