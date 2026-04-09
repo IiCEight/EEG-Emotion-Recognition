@@ -1,5 +1,5 @@
-import math
 from typing import Optional
+
 from einops import rearrange
 import numpy as np
 import torch
@@ -9,25 +9,13 @@ from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LambdaLR
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler, TensorDataset
 
-from constant import CLI_arguments_enum
 from model.saber import Saber
 from utils.metric import Metric
 
-import torch.nn.functional as F
 
-
-def make_polarity_labels(labels: torch.Tensor):
-    """
-    Convert 3-class emotion labels into two binary polarity targets.
-    SEED: 0=Negative, 1=Neutral, 2=Positive
-
-    Returns:
-        polarity_a – binary target for branch A (1=Positive, 0=otherwise)
-        polarity_b – binary target for branch B (1=Negative, 0=otherwise)
-    """
-    polarity_a = (labels == 2).long()   # positive-vs-rest
-    polarity_b = (labels == 0).long()   # negative-vs-rest
-    return polarity_a, polarity_b
+def _to_one_hot(labels: np.ndarray, num_classes: int) -> np.ndarray:
+    labels = labels.astype(np.int64)
+    return np.eye(num_classes, dtype=np.float32)[labels]
 
 
 def train(
@@ -46,15 +34,19 @@ def train(
     session_id: int,
     learning_rate: float,
     early_stop_patience: int = 15,
+    cluster_weight: float = 2.0,
 ):
 
-    logger.info("len of train data: {}, len of test data: {}", len(train_data), len(test_data))
+    logger.info('len of train data: {}, len of test data: {}', len(train_data), len(test_data))
 
-    train_data = rearrange(train_data, 'sample chan feature -> sample feature chan', chan= 62, feature = 5)
-    test_data =  rearrange(test_data, 'sample chan feature -> sample feature chan', chan= 62, feature = 5)
+    train_data = rearrange(train_data, 'sample chan feature -> sample feature chan', chan=62, feature=5)
+    test_data = rearrange(test_data, 'sample chan feature -> sample feature chan', chan=62, feature=5)
 
-    dataset_train =TensorDataset(torch.Tensor(train_data), torch.Tensor(train_labels))
-    dataset_test = TensorDataset(torch.Tensor(test_data), torch.Tensor(test_labels))
+    train_label_oh = _to_one_hot(train_labels, num_classes)
+    test_labels = test_labels.astype(np.int64)
+
+    dataset_train = TensorDataset(torch.Tensor(train_data), torch.Tensor(train_label_oh))
+    dataset_test = TensorDataset(torch.Tensor(test_data), torch.LongTensor(test_labels))
 
     sampler_train = RandomSampler(dataset_train)
     sampler_test = SequentialSampler(dataset_test)
@@ -62,16 +54,13 @@ def train(
     train_loader = DataLoader(
         dataset_train, sampler=sampler_train, batch_size=batch_size, num_workers=4, drop_last=True
     )
-
     test_loader = DataLoader(
         dataset_test, sampler=sampler_test, batch_size=batch_size, num_workers=4, drop_last=True
     )
+
     source_loader_inf_iter = pytorch_safe_cycle(train_loader)
     target_loader_inf_iter = pytorch_safe_cycle(test_loader)
-    
 
-    criterion = torch.nn.CrossEntropyLoss(label_smoothing=0.1)
-    criterion_aux = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.AdamW(
         model.parameters(),
         lr=learning_rate,
@@ -81,91 +70,76 @@ def train(
     decay_math = lambda epoch: 1.0 / (1.0 + 10 * (epoch / max(1, epochs))) ** 0.75
     scheduler = LambdaLR(optimizer, lr_lambda=decay_math)
 
-    test_data = torch.tensor(test_data).float()
-    test_labels = torch.tensor(test_labels).long()
+    train_data_tensor = torch.tensor(train_data).float()
+    train_labels_oh_tensor = torch.tensor(train_label_oh).float()
+    test_data_tensor = torch.tensor(test_data).float()
+    test_labels_tensor = torch.tensor(test_labels).long()
 
-    # Domain labels for source and target
-    source_domain_labels = torch.zeros(batch_size, dtype=torch.long, device=device)
-    target_domain_labels = torch.ones(batch_size, dtype=torch.long, device=device)
-
-    # Aux loss config
-    has_aux = hasattr(model, 'aux_classifier_a')
-    lambda_aux_max = 1000
-    warmup_epochs = 25
-
-    # Early stopping state
-    patience = early_stop_patience   # 0 = disabled
+    patience = early_stop_patience
     best_acc = 0.0
     epochs_without_improvement = 0
+    boost_factor = 0.0
 
     for epoch in range(1, epochs + 1):
         model.train()
-        total_loss = 0.0
-        source_loss_total = 0.0
-        domain_loss_total = 0.0
-        aux_loss_total = 0.0
-        correct = 0
-        total_samples = 0
 
-        # Warmup aux weight
-        lambda_aux = lambda_aux_max * min(1.0, epoch / max(1, warmup_epochs)) if has_aux else 0.0
+        total_loss = 0.0
+        clf_loss_total = 0.0
+        cluster_loss_total = 0.0
+        p_loss_total = 0.0
 
         num_batches = min(len(train_loader), len(test_loader))
 
         for _ in range(num_batches):
             optimizer.zero_grad()
 
-            data, labels = next(source_loader_inf_iter)
+            data, source_label_oh = next(source_loader_inf_iter)
             target_data, _ = next(target_loader_inf_iter)
 
             data = data.to(device)
-            labels = labels.long().to(device)
-
+            source_label_oh = source_label_oh.to(device)
             target_data = target_data.to(device)
 
-            model_out = model(data, target_data)
+            clf_loss, cluster_loss, p_loss = model(data, target_data, source_label_oh)
 
-            if has_aux:
-                output, domain_output_source, domain_output_target, fused_feat, aux_a, aux_b = model_out
-            else:
-                output, domain_output_source, domain_output_target, fused_feat = model_out
-
-            # --- Main losses ---
-            source_loss = criterion(output, labels)
-            domain_loss = 0.5 * criterion(domain_output_source, source_domain_labels)
-            domain_loss += criterion(domain_output_target, target_domain_labels)
-
-            loss = source_loss + domain_loss
-
-            # --- Auxiliary polarity losses (dual-branch only) ---
-            if has_aux:
-                polarity_a, polarity_b = make_polarity_labels(labels)
-                aux_loss = criterion_aux(aux_a, polarity_a) + criterion_aux(aux_b, polarity_b)
-                loss = loss + lambda_aux * aux_loss
-                aux_loss_total += lambda_aux * aux_loss.item()
+            loss = clf_loss + 0.01 * p_loss + boost_factor * cluster_loss
 
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
 
             total_loss += loss.item()
-            source_loss_total += source_loss.item()
-            domain_loss_total += domain_loss.item()
-
-            # Track train accuracy
-            preds = torch.argmax(output, dim=1)
-            correct += (preds == labels).sum().item()
-            total_samples += labels.size(0)
+            clf_loss_total += clf_loss.item()
+            cluster_loss_total += cluster_loss.item()
+            p_loss_total += p_loss.item()
 
         scheduler.step()
-        evaluate_all(model, metric, test_data, test_labels, device, subject_id, session_id)
 
-        # --- Early stopping check ---
+        boost_factor = cluster_weight * (epoch / max(1, epochs))
+        model.epoch_end_hook(
+            epoch - 1,
+            train_data_tensor.to(device),
+            train_labels_oh_tensor.to(device),
+        )
+
+        source_acc = evaluate_all(
+            model,
+            train_data_tensor,
+            torch.argmax(train_labels_oh_tensor, dim=1),
+            device,
+        )
+        target_acc = evaluate_all(
+            model,
+            test_data_tensor,
+            test_labels_tensor,
+            device,
+        )
+        metric.update(subject_id, session_id, target_acc)
+
         current_acc = metric.accuracy[subject_id, session_id]
 
         if current_acc >= 1.0 - 1e-6:
-            logger.info("Early stop at epoch {} — perfect accuracy reached ({:.4f})",
-                        epoch, current_acc)
+            logger.info('Early stop at epoch {} — perfect accuracy reached ({:.4f})', epoch, current_acc)
             break
 
         if current_acc > best_acc + 1e-6:
@@ -175,26 +149,32 @@ def train(
             epochs_without_improvement += 1
 
         if patience > 0 and epochs_without_improvement >= patience:
-            logger.info("Early stop at epoch {} — no improvement for {} epochs (best={:.4f})",
-                        epoch, patience, best_acc)
+            logger.info(
+                'Early stop at epoch {} — no improvement for {} epochs (best={:.4f})',
+                epoch,
+                patience,
+                best_acc,
+            )
             break
 
         total_loss /= num_batches
-        source_loss_avg = source_loss_total / num_batches
-        domain_loss_avg = domain_loss_total / num_batches
-        aux_loss_avg = aux_loss_total / num_batches
-        train_acc = correct / total_samples if total_samples > 0 else 0.0
+        clf_loss_avg = clf_loss_total / num_batches
+        cluster_loss_avg = cluster_loss_total / num_batches
+        p_loss_avg = p_loss_total / num_batches
 
         if epoch % 5 == 0:
-            log_msg = "Epoch {}/{} | Total Loss: {:.4f}, Source: {:.4f}, Domain: {:.4f}"
-            log_args = [epoch, epochs, total_loss, source_loss_avg, domain_loss_avg]
-            if has_aux:
-                log_msg += ", Aux: {:.4f}"
-                log_args.append(aux_loss_avg)
-            logger.info("auxiliary loss weight: {:.4f}", lambda_aux)
-            logger.info(log_msg, *log_args)
-            logger.info("Current lr = {:.6f}", scheduler.get_last_lr()[0])
-            logger.info("Train Accuracy: {:.4f}", train_acc)
+            logger.info(
+                'Epoch {}/{} | Total Loss: {:.4f}, Clf: {:.4f}, Cluster: {:.4f}, P: {:.4f}',
+                epoch,
+                epochs,
+                total_loss,
+                clf_loss_avg,
+                cluster_loss_avg,
+                p_loss_avg,
+            )
+            logger.info('cluster loss weight: {:.4f}', boost_factor)
+            logger.info('Current lr = {:.6f}', scheduler.get_last_lr()[0])
+            logger.info('Source Accuracy: {:.4f}, Target Accuracy: {:.4f}', source_acc, target_acc)
 
 
 class StepwiseLR_GRL:
@@ -225,12 +205,9 @@ class StepwiseLR_GRL:
 @torch.no_grad()
 def evaluate_all(
     model: nn.Module,
-    metric: Metric,
     data: torch.Tensor,
     labels: torch.Tensor,
     device: str,
-    subject_id: int,
-    session_id: int,
 ):
     model.eval()
 
@@ -238,11 +215,11 @@ def evaluate_all(
     labels = labels.to(device)
 
     outputs = model.predict(data)
-    predictions = torch.argmax(outputs, dim=1)
+    predictions = outputs.long() if outputs.ndim == 1 else torch.argmax(outputs, dim=1)
 
     correct_in_batch = (predictions == labels).sum().item()
     acc = correct_in_batch / labels.size(0)
-    metric.update(subject_id, session_id, acc)
+    return acc
 
 
 def pytorch_safe_cycle(iterable):
