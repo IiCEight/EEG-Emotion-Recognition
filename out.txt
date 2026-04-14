@@ -1,859 +1,559 @@
-19:53:16 | INFO     __main__ main     97  CUDA Available: True
-19:53:16 | INFO     __main__ main     98  Device Count: 1
-19:53:16 | INFO     __main__ main     101 GPU Name: NVIDIA GeForce RTX 4090
-19:53:16 | INFO     __main__ main     103 Launching....
-model_name: ModelName.NSAL_DGAT
+00:53:42 | INFO     __main__ main     72  CUDA Available: True
+00:53:42 | INFO     __main__ main     73  Device Count: 1
+00:53:42 | INFO     __main__ main     75  GPU Name: NVIDIA GeForce RTX 4090
+00:53:42 | INFO     __main__ main     77  Launching....
+model_name: ModelName.SABER
 dataset: DatasetName.SEED
 dataset_path: ../data/SEED
+cache_dir: ./cache
 device: cuda
 logging level: LevelName.INFO
 task type: TaskTypeName.SUBJECT_INDEPENDENT
 split type: SplitTypeName.LEAVE_ONE_SUBJECT_OUT
-batch_size: 128
-epochs: 100
+batch_size: 96
+epochs: 1000
 data random: False
 random seed: 42
 only one experiment: False
 only one session: True
 learning rate: 0.001
 early stop patience: 0
-19:53:16 | INFO     data.dataloder load_data 24  Loading dataset DatasetName.SEED from path ../data/SEED
-19:53:16 | INFO     data.load.load_seed load_seed 64  Loading SEED dataset from path ../data/SEED ...
-19:53:26 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
-19:53:28 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
-19:53:28 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-19:53:28 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
-19:53:28 | INFO     train.training_nsal_dgat train    34  len of train data: 47516, len of test data: 3394
-19:53:28 | INFO     train.training_nsal_dgat train    57  num_classes 3
-19:53:55 | INFO     utils.metric update   25  --> A new better acc 0.3447 on subject 0 session 0
-19:55:14 | INFO     utils.metric update   25  --> A new better acc 0.6897 on subject 0 session 0
-19:55:40 | INFO     utils.metric update   25  --> A new better acc 0.7115 on subject 0 session 0
-19:55:40 | INFO     train.training_nsal_dgat train    129 Epoch 5/100 | Train Loss: 1.5286
-19:55:40 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000738
-19:57:49 | INFO     train.training_nsal_dgat train    129 Epoch 10/100 | Train Loss: 1.3935
-19:57:49 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000595
-20:00:01 | INFO     train.training_nsal_dgat train    129 Epoch 15/100 | Train Loss: 1.4323
-20:00:01 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000503
-20:00:26 | INFO     utils.metric update   25  --> A new better acc 0.7387 on subject 0 session 0
-20:02:11 | INFO     train.training_nsal_dgat train    129 Epoch 20/100 | Train Loss: 1.2411
-20:02:11 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000439
-20:03:30 | INFO     utils.metric update   25  --> A new better acc 0.7929 on subject 0 session 0
-20:04:21 | INFO     train.training_nsal_dgat train    129 Epoch 25/100 | Train Loss: 1.1585
-20:04:21 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000391
-20:06:30 | INFO     utils.metric update   25  --> A new better acc 0.8270 on subject 0 session 0
-20:06:30 | INFO     train.training_nsal_dgat train    129 Epoch 30/100 | Train Loss: 1.3480
-20:06:30 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000354
-20:08:40 | INFO     train.training_nsal_dgat train    129 Epoch 35/100 | Train Loss: 0.9888
-20:08:40 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000324
-20:09:32 | INFO     utils.metric update   25  --> A new better acc 0.8459 on subject 0 session 0
-20:09:57 | INFO     utils.metric update   25  --> A new better acc 0.8562 on subject 0 session 0
-20:10:52 | INFO     train.training_nsal_dgat train    129 Epoch 40/100 | Train Loss: 0.9271
-20:10:52 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000299
-20:12:38 | INFO     utils.metric update   25  --> A new better acc 0.8715 on subject 0 session 0
-20:13:04 | INFO     train.training_nsal_dgat train    129 Epoch 45/100 | Train Loss: 0.8622
-20:13:04 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000278
-20:13:32 | INFO     utils.metric update   25  --> A new better acc 0.8727 on subject 0 session 0
-20:15:17 | INFO     train.training_nsal_dgat train    129 Epoch 50/100 | Train Loss: 0.8364
-20:15:17 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000261
-20:17:01 | INFO     utils.metric update   25  --> A new better acc 0.8798 on subject 0 session 0
-20:17:27 | INFO     train.training_nsal_dgat train    129 Epoch 55/100 | Train Loss: 0.7827
-20:17:27 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000246
-20:19:38 | INFO     train.training_nsal_dgat train    129 Epoch 60/100 | Train Loss: 0.7899
-20:19:38 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000232
-20:20:30 | INFO     utils.metric update   25  --> A new better acc 0.8889 on subject 0 session 0
-20:20:56 | INFO     utils.metric update   25  --> A new better acc 0.8936 on subject 0 session 0
-20:21:48 | INFO     train.training_nsal_dgat train    129 Epoch 65/100 | Train Loss: 0.7724
-20:21:48 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000221
-20:23:57 | INFO     train.training_nsal_dgat train    129 Epoch 70/100 | Train Loss: 0.7656
-20:23:57 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000210
-20:26:09 | INFO     train.training_nsal_dgat train    129 Epoch 75/100 | Train Loss: 0.7409
-20:26:09 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000201
-20:28:19 | INFO     train.training_nsal_dgat train    129 Epoch 80/100 | Train Loss: 0.7313
-20:28:19 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000192
-20:30:30 | INFO     train.training_nsal_dgat train    129 Epoch 85/100 | Train Loss: 0.7278
-20:30:30 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000185
-20:32:38 | INFO     train.training_nsal_dgat train    129 Epoch 90/100 | Train Loss: 0.7362
-20:32:38 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000178
-20:34:51 | INFO     train.training_nsal_dgat train    129 Epoch 95/100 | Train Loss: 0.7303
-20:34:51 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000171
-20:37:00 | INFO     train.training_nsal_dgat train    129 Epoch 100/100 | Train Loss: 0.7219
-20:37:00 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000166
-20:37:00 | INFO     __main__ main     144 
---------------> Finished training w.r.t. subject 0 session 0 acc 0.8936
-20:37:07 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
-20:37:09 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
-20:37:09 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-20:37:09 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
-20:37:09 | INFO     train.training_nsal_dgat train    34  len of train data: 47516, len of test data: 3394
-20:37:09 | INFO     train.training_nsal_dgat train    57  num_classes 3
-20:37:36 | INFO     utils.metric update   25  --> A new better acc 0.3745 on subject 1 session 0
-20:38:27 | INFO     utils.metric update   25  --> A new better acc 0.3989 on subject 1 session 0
-20:39:21 | INFO     train.training_nsal_dgat train    129 Epoch 5/100 | Train Loss: 1.7974
-20:39:21 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000738
-20:41:31 | INFO     train.training_nsal_dgat train    129 Epoch 10/100 | Train Loss: 1.8010
-20:41:31 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000595
-20:43:44 | INFO     train.training_nsal_dgat train    129 Epoch 15/100 | Train Loss: 1.8062
-20:43:44 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000503
-20:45:54 | INFO     train.training_nsal_dgat train    129 Epoch 20/100 | Train Loss: 1.8114
-20:45:54 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000439
-20:48:04 | INFO     train.training_nsal_dgat train    129 Epoch 25/100 | Train Loss: 1.8165
-20:48:04 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000391
-20:50:18 | INFO     train.training_nsal_dgat train    129 Epoch 30/100 | Train Loss: 1.8216
-20:50:18 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000354
-20:52:32 | INFO     train.training_nsal_dgat train    129 Epoch 35/100 | Train Loss: 1.8267
-20:52:32 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000324
-20:54:44 | INFO     train.training_nsal_dgat train    129 Epoch 40/100 | Train Loss: 1.8317
-20:54:44 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000299
-20:56:56 | INFO     train.training_nsal_dgat train    129 Epoch 45/100 | Train Loss: 1.8366
-20:56:56 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000278
-20:59:08 | INFO     train.training_nsal_dgat train    129 Epoch 50/100 | Train Loss: 1.8415
-20:59:08 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000261
-21:01:18 | INFO     train.training_nsal_dgat train    129 Epoch 55/100 | Train Loss: 1.8464
-21:01:18 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000246
-21:03:29 | INFO     train.training_nsal_dgat train    129 Epoch 60/100 | Train Loss: 1.8512
-21:03:29 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000232
-21:05:41 | INFO     train.training_nsal_dgat train    129 Epoch 65/100 | Train Loss: 1.8560
-21:05:41 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000221
-21:07:52 | INFO     train.training_nsal_dgat train    129 Epoch 70/100 | Train Loss: 1.8608
-21:07:52 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000210
-21:10:04 | INFO     train.training_nsal_dgat train    129 Epoch 75/100 | Train Loss: 1.8655
-21:10:04 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000201
-21:12:13 | INFO     train.training_nsal_dgat train    129 Epoch 80/100 | Train Loss: 1.8702
-21:12:13 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000192
-21:14:28 | INFO     train.training_nsal_dgat train    129 Epoch 85/100 | Train Loss: 1.8748
-21:14:28 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000185
-21:16:42 | INFO     train.training_nsal_dgat train    129 Epoch 90/100 | Train Loss: 1.8795
-21:16:42 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000178
-21:18:51 | INFO     train.training_nsal_dgat train    129 Epoch 95/100 | Train Loss: 1.8840
-21:18:51 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000171
-21:20:59 | INFO     train.training_nsal_dgat train    129 Epoch 100/100 | Train Loss: 1.8886
-21:20:59 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000166
-21:20:59 | INFO     __main__ main     144 
---------------> Finished training w.r.t. subject 1 session 0 acc 0.3989
-21:21:07 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
-21:21:08 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
-21:21:08 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-21:21:08 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
-21:21:08 | INFO     train.training_nsal_dgat train    34  len of train data: 47516, len of test data: 3394
-21:21:08 | INFO     train.training_nsal_dgat train    57  num_classes 3
-21:21:33 | INFO     utils.metric update   25  --> A new better acc 0.5021 on subject 2 session 0
-21:22:00 | INFO     utils.metric update   25  --> A new better acc 0.5274 on subject 2 session 0
-21:22:27 | INFO     utils.metric update   25  --> A new better acc 0.5740 on subject 2 session 0
-21:23:20 | INFO     train.training_nsal_dgat train    129 Epoch 5/100 | Train Loss: 1.4901
-21:23:20 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000738
-21:24:12 | INFO     utils.metric update   25  --> A new better acc 0.5993 on subject 2 session 0
-21:25:29 | INFO     train.training_nsal_dgat train    129 Epoch 10/100 | Train Loss: 7.3134
-21:25:29 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000595
-21:27:40 | INFO     utils.metric update   25  --> A new better acc 0.6208 on subject 2 session 0
-21:27:40 | INFO     train.training_nsal_dgat train    129 Epoch 15/100 | Train Loss: 1.2531
-21:27:40 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000503
-21:28:08 | INFO     utils.metric update   25  --> A new better acc 0.6441 on subject 2 session 0
-21:28:35 | INFO     utils.metric update   25  --> A new better acc 0.6509 on subject 2 session 0
-21:29:53 | INFO     train.training_nsal_dgat train    129 Epoch 20/100 | Train Loss: 2.1252
-21:29:53 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000439
-21:30:47 | INFO     utils.metric update   25  --> A new better acc 0.7198 on subject 2 session 0
-21:32:08 | INFO     train.training_nsal_dgat train    129 Epoch 25/100 | Train Loss: 1.2179
-21:32:08 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000391
-21:33:26 | INFO     utils.metric update   25  --> A new better acc 0.7313 on subject 2 session 0
-21:34:17 | INFO     train.training_nsal_dgat train    129 Epoch 30/100 | Train Loss: 1.1916
-21:34:17 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000354
-21:36:26 | INFO     train.training_nsal_dgat train    129 Epoch 35/100 | Train Loss: 1.4683
-21:36:26 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000324
-21:38:39 | INFO     train.training_nsal_dgat train    129 Epoch 40/100 | Train Loss: 1.0997
-21:38:39 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000299
-21:40:51 | INFO     train.training_nsal_dgat train    129 Epoch 45/100 | Train Loss: 1.0362
-21:40:51 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000278
-21:43:00 | INFO     utils.metric update   25  --> A new better acc 0.7322 on subject 2 session 0
-21:43:00 | INFO     train.training_nsal_dgat train    129 Epoch 50/100 | Train Loss: 0.9833
-21:43:00 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000261
-21:43:51 | INFO     utils.metric update   25  --> A new better acc 0.7331 on subject 2 session 0
-21:45:12 | INFO     train.training_nsal_dgat train    129 Epoch 55/100 | Train Loss: 0.9933
-21:45:12 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000246
-21:47:21 | INFO     train.training_nsal_dgat train    129 Epoch 60/100 | Train Loss: 0.9564
-21:47:21 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000232
-21:49:34 | INFO     utils.metric update   25  --> A new better acc 0.7381 on subject 2 session 0
-21:49:34 | INFO     train.training_nsal_dgat train    129 Epoch 65/100 | Train Loss: 0.8857
-21:49:34 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000221
-21:50:53 | INFO     utils.metric update   25  --> A new better acc 0.7490 on subject 2 session 0
-21:51:45 | INFO     utils.metric update   25  --> A new better acc 0.7808 on subject 2 session 0
-21:51:45 | INFO     train.training_nsal_dgat train    129 Epoch 70/100 | Train Loss: 0.9216
-21:51:45 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000210
-21:53:56 | INFO     train.training_nsal_dgat train    129 Epoch 75/100 | Train Loss: 0.8343
-21:53:56 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000201
-21:55:43 | INFO     utils.metric update   25  --> A new better acc 0.7879 on subject 2 session 0
-21:56:09 | INFO     train.training_nsal_dgat train    129 Epoch 80/100 | Train Loss: 0.7983
-21:56:09 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000192
-21:58:19 | INFO     train.training_nsal_dgat train    129 Epoch 85/100 | Train Loss: 0.7785
-21:58:19 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000185
-21:58:46 | INFO     utils.metric update   25  --> A new better acc 0.8029 on subject 2 session 0
-22:00:31 | INFO     train.training_nsal_dgat train    129 Epoch 90/100 | Train Loss: 0.7653
-22:00:31 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000178
-22:02:42 | INFO     train.training_nsal_dgat train    129 Epoch 95/100 | Train Loss: 0.7702
-22:02:42 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000171
-22:04:54 | INFO     train.training_nsal_dgat train    129 Epoch 100/100 | Train Loss: 0.7460
-22:04:54 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000166
-22:04:54 | INFO     __main__ main     144 
---------------> Finished training w.r.t. subject 2 session 0 acc 0.8029
-22:05:00 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
-22:05:02 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
-22:05:02 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-22:05:02 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
-22:05:02 | INFO     train.training_nsal_dgat train    34  len of train data: 47516, len of test data: 3394
-22:05:02 | INFO     train.training_nsal_dgat train    57  num_classes 3
-22:05:28 | INFO     utils.metric update   25  --> A new better acc 0.3872 on subject 3 session 0
-22:05:53 | INFO     utils.metric update   25  --> A new better acc 0.5616 on subject 3 session 0
-22:06:46 | INFO     utils.metric update   25  --> A new better acc 0.5651 on subject 3 session 0
-22:07:13 | INFO     train.training_nsal_dgat train    129 Epoch 5/100 | Train Loss: 1.5203
-22:07:13 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000738
-22:07:37 | INFO     utils.metric update   25  --> A new better acc 0.7251 on subject 3 session 0
-22:08:02 | INFO     utils.metric update   25  --> A new better acc 0.7690 on subject 3 session 0
-22:09:21 | INFO     train.training_nsal_dgat train    129 Epoch 10/100 | Train Loss: 1.4674
-22:09:21 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000595
-22:11:36 | INFO     train.training_nsal_dgat train    129 Epoch 15/100 | Train Loss: 1.4098
-22:11:36 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000503
-22:13:46 | INFO     train.training_nsal_dgat train    129 Epoch 20/100 | Train Loss: 1.3151
-22:13:46 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000439
-22:15:56 | INFO     train.training_nsal_dgat train    129 Epoch 25/100 | Train Loss: 1.2676
-22:15:56 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000391
-22:18:09 | INFO     train.training_nsal_dgat train    129 Epoch 30/100 | Train Loss: 1.2171
-22:18:09 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000354
-22:20:20 | INFO     train.training_nsal_dgat train    129 Epoch 35/100 | Train Loss: 1.1699
-22:20:20 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000324
-22:22:30 | INFO     train.training_nsal_dgat train    129 Epoch 40/100 | Train Loss: 1.0960
-22:22:30 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000299
-22:24:41 | INFO     train.training_nsal_dgat train    129 Epoch 45/100 | Train Loss: 1.0348
-22:24:41 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000278
-22:26:25 | INFO     utils.metric update   25  --> A new better acc 0.7958 on subject 3 session 0
-22:26:51 | INFO     train.training_nsal_dgat train    129 Epoch 50/100 | Train Loss: 0.9552
-22:26:51 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000261
-22:29:01 | INFO     train.training_nsal_dgat train    129 Epoch 55/100 | Train Loss: 0.8777
-22:29:01 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000246
-22:31:15 | INFO     train.training_nsal_dgat train    129 Epoch 60/100 | Train Loss: 0.8286
-22:31:15 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000232
-22:32:33 | INFO     utils.metric update   25  --> A new better acc 0.8011 on subject 3 session 0
-22:33:27 | INFO     train.training_nsal_dgat train    129 Epoch 65/100 | Train Loss: 0.8031
-22:33:27 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000221
-22:35:11 | INFO     utils.metric update   25  --> A new better acc 0.8073 on subject 3 session 0
-22:35:37 | INFO     train.training_nsal_dgat train    129 Epoch 70/100 | Train Loss: 0.7849
-22:35:37 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000210
-22:37:47 | INFO     train.training_nsal_dgat train    129 Epoch 75/100 | Train Loss: 0.7645
-22:37:47 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000201
-22:39:58 | INFO     train.training_nsal_dgat train    129 Epoch 80/100 | Train Loss: 0.7480
-22:39:58 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000192
-22:42:08 | INFO     train.training_nsal_dgat train    129 Epoch 85/100 | Train Loss: 0.7381
-22:42:08 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000185
-22:44:18 | INFO     train.training_nsal_dgat train    129 Epoch 90/100 | Train Loss: 0.7266
-22:44:18 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000178
-22:45:36 | INFO     utils.metric update   25  --> A new better acc 0.8170 on subject 3 session 0
-22:46:28 | INFO     train.training_nsal_dgat train    129 Epoch 95/100 | Train Loss: 0.7423
-22:46:28 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000171
-22:48:40 | INFO     train.training_nsal_dgat train    129 Epoch 100/100 | Train Loss: 0.7401
-22:48:40 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000166
-22:48:40 | INFO     __main__ main     144 
---------------> Finished training w.r.t. subject 3 session 0 acc 0.8170
-22:48:46 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
-22:48:49 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
-22:48:50 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-22:48:50 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
-22:48:50 | INFO     train.training_nsal_dgat train    34  len of train data: 47516, len of test data: 3394
-22:48:50 | INFO     train.training_nsal_dgat train    57  num_classes 3
-22:49:14 | INFO     utils.metric update   25  --> A new better acc 0.4148 on subject 4 session 0
-22:49:40 | INFO     utils.metric update   25  --> A new better acc 0.5421 on subject 4 session 0
-22:50:58 | INFO     utils.metric update   25  --> A new better acc 0.5999 on subject 4 session 0
-22:50:58 | INFO     train.training_nsal_dgat train    129 Epoch 5/100 | Train Loss: 1.5590
-22:50:58 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000738
-22:53:12 | INFO     train.training_nsal_dgat train    129 Epoch 10/100 | Train Loss: 2.0005
-22:53:12 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000595
-22:55:23 | INFO     train.training_nsal_dgat train    129 Epoch 15/100 | Train Loss: 1.4323
-22:55:23 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000503
-22:57:35 | INFO     utils.metric update   25  --> A new better acc 0.6562 on subject 4 session 0
-22:57:35 | INFO     train.training_nsal_dgat train    129 Epoch 20/100 | Train Loss: 1.3267
-22:57:35 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000439
-22:59:45 | INFO     train.training_nsal_dgat train    129 Epoch 25/100 | Train Loss: 1.3555
-22:59:45 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000391
-23:01:56 | INFO     train.training_nsal_dgat train    129 Epoch 30/100 | Train Loss: 1.1383
-23:01:56 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000354
-23:04:06 | INFO     train.training_nsal_dgat train    129 Epoch 35/100 | Train Loss: 1.1294
-23:04:06 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000324
-23:06:17 | INFO     train.training_nsal_dgat train    129 Epoch 40/100 | Train Loss: 1.0616
-23:06:17 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000299
-23:08:25 | INFO     train.training_nsal_dgat train    129 Epoch 45/100 | Train Loss: 0.9933
-23:08:25 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000278
-23:10:36 | INFO     train.training_nsal_dgat train    129 Epoch 50/100 | Train Loss: 0.9510
-23:10:36 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000261
-23:12:46 | INFO     train.training_nsal_dgat train    129 Epoch 55/100 | Train Loss: 0.8849
-23:12:46 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000246
-23:15:00 | INFO     train.training_nsal_dgat train    129 Epoch 60/100 | Train Loss: 0.8283
-23:15:00 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000232
-23:17:11 | INFO     train.training_nsal_dgat train    129 Epoch 65/100 | Train Loss: 0.7829
-23:17:11 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000221
-23:19:23 | INFO     train.training_nsal_dgat train    129 Epoch 70/100 | Train Loss: 0.7769
-23:19:23 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000210
-23:21:34 | INFO     train.training_nsal_dgat train    129 Epoch 75/100 | Train Loss: 0.8127
-23:21:34 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000201
-23:23:41 | INFO     train.training_nsal_dgat train    129 Epoch 80/100 | Train Loss: 0.7576
-23:23:41 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000192
-23:25:53 | INFO     train.training_nsal_dgat train    129 Epoch 85/100 | Train Loss: 0.7536
-23:25:53 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000185
-23:28:04 | INFO     train.training_nsal_dgat train    129 Epoch 90/100 | Train Loss: 0.7383
-23:28:04 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000178
-23:30:15 | INFO     train.training_nsal_dgat train    129 Epoch 95/100 | Train Loss: 0.7252
-23:30:15 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000171
-23:32:25 | INFO     train.training_nsal_dgat train    129 Epoch 100/100 | Train Loss: 0.7264
-23:32:25 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000166
-23:32:25 | INFO     __main__ main     144 
---------------> Finished training w.r.t. subject 4 session 0 acc 0.6562
-23:32:32 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
-23:32:34 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
-23:32:34 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-23:32:34 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
-23:32:34 | INFO     train.training_nsal_dgat train    34  len of train data: 47516, len of test data: 3394
-23:32:34 | INFO     train.training_nsal_dgat train    57  num_classes 3
-23:33:01 | INFO     utils.metric update   25  --> A new better acc 0.5737 on subject 5 session 0
-23:33:27 | INFO     utils.metric update   25  --> A new better acc 0.6117 on subject 5 session 0
-23:34:44 | INFO     utils.metric update   25  --> A new better acc 0.7499 on subject 5 session 0
-23:34:44 | INFO     train.training_nsal_dgat train    129 Epoch 5/100 | Train Loss: 1.5245
-23:34:44 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000738
-23:35:39 | INFO     utils.metric update   25  --> A new better acc 0.7991 on subject 5 session 0
-23:36:58 | INFO     train.training_nsal_dgat train    129 Epoch 10/100 | Train Loss: 1.3699
-23:36:58 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000595
-23:39:12 | INFO     train.training_nsal_dgat train    129 Epoch 15/100 | Train Loss: 1.6395
-23:39:12 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000503
-23:41:21 | INFO     train.training_nsal_dgat train    129 Epoch 20/100 | Train Loss: 1.4203
-23:41:21 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000439
-23:43:31 | INFO     train.training_nsal_dgat train    129 Epoch 25/100 | Train Loss: 1.6750
-23:43:31 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000391
-23:45:43 | INFO     train.training_nsal_dgat train    129 Epoch 30/100 | Train Loss: 1.2517
-23:45:43 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000354
-23:47:54 | INFO     train.training_nsal_dgat train    129 Epoch 35/100 | Train Loss: 1.1743
-23:47:54 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000324
-23:50:05 | INFO     train.training_nsal_dgat train    129 Epoch 40/100 | Train Loss: 1.0446
-23:50:05 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000299
-23:52:15 | INFO     train.training_nsal_dgat train    129 Epoch 45/100 | Train Loss: 1.1832
-23:52:15 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000278
-23:54:27 | INFO     train.training_nsal_dgat train    129 Epoch 50/100 | Train Loss: 1.0148
-23:54:27 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000261
-23:56:37 | INFO     train.training_nsal_dgat train    129 Epoch 55/100 | Train Loss: 0.9766
-23:56:37 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000246
-23:58:50 | INFO     train.training_nsal_dgat train    129 Epoch 60/100 | Train Loss: 1.0989
-23:58:50 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000232
-00:00:59 | INFO     train.training_nsal_dgat train    129 Epoch 65/100 | Train Loss: 0.9301
-00:00:59 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000221
-00:03:11 | INFO     train.training_nsal_dgat train    129 Epoch 70/100 | Train Loss: 0.8759
-00:03:11 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000210
-00:05:22 | INFO     train.training_nsal_dgat train    129 Epoch 75/100 | Train Loss: 0.8779
-00:05:22 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000201
-00:07:35 | INFO     train.training_nsal_dgat train    129 Epoch 80/100 | Train Loss: 0.8719
-00:07:35 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000192
-00:09:45 | INFO     train.training_nsal_dgat train    129 Epoch 85/100 | Train Loss: 0.7924
-00:09:45 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000185
-00:11:57 | INFO     train.training_nsal_dgat train    129 Epoch 90/100 | Train Loss: 0.7710
-00:11:57 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000178
-00:14:05 | INFO     train.training_nsal_dgat train    129 Epoch 95/100 | Train Loss: 0.7723
-00:14:05 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000171
-00:16:15 | INFO     train.training_nsal_dgat train    129 Epoch 100/100 | Train Loss: 0.7923
-00:16:15 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000166
-00:16:15 | INFO     __main__ main     144 
---------------> Finished training w.r.t. subject 5 session 0 acc 0.7991
-00:16:22 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
-00:16:23 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
-00:16:23 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-00:16:23 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
-00:16:23 | INFO     train.training_nsal_dgat train    34  len of train data: 47516, len of test data: 3394
-00:16:23 | INFO     train.training_nsal_dgat train    57  num_classes 3
-00:16:50 | INFO     utils.metric update   25  --> A new better acc 0.6264 on subject 6 session 0
-00:18:34 | INFO     train.training_nsal_dgat train    129 Epoch 5/100 | Train Loss: 1.5466
-00:18:34 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000738
-00:20:48 | INFO     train.training_nsal_dgat train    129 Epoch 10/100 | Train Loss: 18.1010
-00:20:48 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000595
-00:22:57 | INFO     utils.metric update   25  --> A new better acc 0.7204 on subject 6 session 0
-00:22:57 | INFO     train.training_nsal_dgat train    129 Epoch 15/100 | Train Loss: 1.2790
-00:22:57 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000503
-00:23:23 | INFO     utils.metric update   25  --> A new better acc 0.7440 on subject 6 session 0
-00:23:49 | INFO     utils.metric update   25  --> A new better acc 0.8002 on subject 6 session 0
-00:25:08 | INFO     train.training_nsal_dgat train    129 Epoch 20/100 | Train Loss: 1.1210
-00:25:08 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000439
-00:27:18 | INFO     train.training_nsal_dgat train    129 Epoch 25/100 | Train Loss: 1.0104
-00:27:18 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000391
-00:29:31 | INFO     train.training_nsal_dgat train    129 Epoch 30/100 | Train Loss: 0.9096
-00:29:31 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000354
-00:31:42 | INFO     train.training_nsal_dgat train    129 Epoch 35/100 | Train Loss: 0.8853
-00:31:42 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000324
-00:33:51 | INFO     train.training_nsal_dgat train    129 Epoch 40/100 | Train Loss: 0.8288
-00:33:51 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000299
-00:36:00 | INFO     train.training_nsal_dgat train    129 Epoch 45/100 | Train Loss: 0.7977
-00:36:00 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000278
-00:38:13 | INFO     train.training_nsal_dgat train    129 Epoch 50/100 | Train Loss: 0.7896
-00:38:13 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000261
-00:39:59 | INFO     utils.metric update   25  --> A new better acc 0.8100 on subject 6 session 0
-00:40:26 | INFO     train.training_nsal_dgat train    129 Epoch 55/100 | Train Loss: 0.7883
-00:40:26 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000246
-00:41:44 | INFO     utils.metric update   25  --> A new better acc 0.8182 on subject 6 session 0
-00:42:35 | INFO     train.training_nsal_dgat train    129 Epoch 60/100 | Train Loss: 0.7544
-00:42:35 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000232
-00:43:56 | INFO     utils.metric update   25  --> A new better acc 0.8197 on subject 6 session 0
-00:44:48 | INFO     train.training_nsal_dgat train    129 Epoch 65/100 | Train Loss: 0.7419
-00:44:48 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000221
-00:46:59 | INFO     train.training_nsal_dgat train    129 Epoch 70/100 | Train Loss: 0.7471
-00:46:59 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000210
-00:47:51 | INFO     utils.metric update   25  --> A new better acc 0.8220 on subject 6 session 0
-00:49:10 | INFO     train.training_nsal_dgat train    129 Epoch 75/100 | Train Loss: 0.7378
-00:49:10 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000201
-00:49:36 | INFO     utils.metric update   25  --> A new better acc 0.8459 on subject 6 session 0
-00:51:21 | INFO     train.training_nsal_dgat train    129 Epoch 80/100 | Train Loss: 0.7260
-00:51:21 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000192
-00:53:30 | INFO     train.training_nsal_dgat train    129 Epoch 85/100 | Train Loss: 0.7203
-00:53:30 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000185
-00:55:42 | INFO     train.training_nsal_dgat train    129 Epoch 90/100 | Train Loss: 0.7147
-00:55:42 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000178
-00:57:52 | INFO     train.training_nsal_dgat train    129 Epoch 95/100 | Train Loss: 0.7208
-00:57:52 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000171
-01:00:06 | INFO     train.training_nsal_dgat train    129 Epoch 100/100 | Train Loss: 0.7224
-01:00:06 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000166
-01:00:06 | INFO     __main__ main     144 
---------------> Finished training w.r.t. subject 6 session 0 acc 0.8459
-01:00:13 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
-01:00:14 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
-01:00:14 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-01:00:15 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
-01:00:15 | INFO     train.training_nsal_dgat train    34  len of train data: 47516, len of test data: 3394
-01:00:15 | INFO     train.training_nsal_dgat train    57  num_classes 3
-01:00:41 | INFO     utils.metric update   25  --> A new better acc 0.6659 on subject 7 session 0
-01:01:35 | INFO     utils.metric update   25  --> A new better acc 0.6700 on subject 7 session 0
-01:02:25 | INFO     utils.metric update   25  --> A new better acc 0.7169 on subject 7 session 0
-01:02:25 | INFO     train.training_nsal_dgat train    129 Epoch 5/100 | Train Loss: 1.5034
-01:02:25 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000738
-01:02:52 | INFO     utils.metric update   25  --> A new better acc 0.8114 on subject 7 session 0
-01:04:37 | INFO     train.training_nsal_dgat train    129 Epoch 10/100 | Train Loss: 1.4695
-01:04:37 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000595
-01:06:47 | INFO     train.training_nsal_dgat train    129 Epoch 15/100 | Train Loss: 1.6973
-01:06:47 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000503
-01:09:00 | INFO     train.training_nsal_dgat train    129 Epoch 20/100 | Train Loss: 1.3477
-01:09:00 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000439
-01:10:18 | INFO     utils.metric update   25  --> A new better acc 0.8374 on subject 7 session 0
-01:11:10 | INFO     train.training_nsal_dgat train    129 Epoch 25/100 | Train Loss: 1.1612
-01:11:10 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000391
-01:12:27 | INFO     utils.metric update   25  --> A new better acc 0.8456 on subject 7 session 0
-01:13:19 | INFO     train.training_nsal_dgat train    129 Epoch 30/100 | Train Loss: 6.5082
-01:13:19 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000354
-01:15:30 | INFO     train.training_nsal_dgat train    129 Epoch 35/100 | Train Loss: 1.1019
-01:15:30 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000324
-01:17:14 | INFO     utils.metric update   25  --> A new better acc 0.8521 on subject 7 session 0
-01:17:40 | INFO     train.training_nsal_dgat train    129 Epoch 40/100 | Train Loss: 1.0071
-01:17:40 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000299
-01:19:51 | INFO     train.training_nsal_dgat train    129 Epoch 45/100 | Train Loss: 1.0149
-01:19:51 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000278
-01:22:00 | INFO     train.training_nsal_dgat train    129 Epoch 50/100 | Train Loss: 0.9313
-01:22:00 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000261
-01:24:09 | INFO     train.training_nsal_dgat train    129 Epoch 55/100 | Train Loss: 0.8692
-01:24:09 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000246
-01:26:17 | INFO     train.training_nsal_dgat train    129 Epoch 60/100 | Train Loss: 0.8551
-01:26:17 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000232
-01:28:27 | INFO     train.training_nsal_dgat train    129 Epoch 65/100 | Train Loss: 0.8815
-01:28:27 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000221
-01:30:40 | INFO     train.training_nsal_dgat train    129 Epoch 70/100 | Train Loss: 0.8166
-01:30:40 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000210
-01:32:55 | INFO     train.training_nsal_dgat train    129 Epoch 75/100 | Train Loss: 0.7767
-01:32:55 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000201
-01:35:07 | INFO     train.training_nsal_dgat train    129 Epoch 80/100 | Train Loss: 0.7747
-01:35:07 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000192
-01:37:20 | INFO     train.training_nsal_dgat train    129 Epoch 85/100 | Train Loss: 0.7614
-01:37:20 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000185
-01:39:31 | INFO     train.training_nsal_dgat train    129 Epoch 90/100 | Train Loss: 0.7795
-01:39:31 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000178
-01:41:50 | INFO     train.training_nsal_dgat train    129 Epoch 95/100 | Train Loss: 0.7806
-01:41:50 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000171
-01:44:03 | INFO     train.training_nsal_dgat train    129 Epoch 100/100 | Train Loss: 0.7449
-01:44:03 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000166
-01:44:03 | INFO     __main__ main     144 
---------------> Finished training w.r.t. subject 7 session 0 acc 0.8521
-01:44:09 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
-01:44:11 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
-01:44:11 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-01:44:11 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
-01:44:11 | INFO     train.training_nsal_dgat train    34  len of train data: 47516, len of test data: 3394
-01:44:11 | INFO     train.training_nsal_dgat train    57  num_classes 3
-01:44:37 | INFO     utils.metric update   25  --> A new better acc 0.3447 on subject 8 session 0
-01:45:01 | INFO     utils.metric update   25  --> A new better acc 0.5725 on subject 8 session 0
-01:45:28 | INFO     utils.metric update   25  --> A new better acc 0.6603 on subject 8 session 0
-01:46:23 | INFO     train.training_nsal_dgat train    129 Epoch 5/100 | Train Loss: 1.6380
-01:46:23 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000738
-01:46:50 | INFO     utils.metric update   25  --> A new better acc 0.6700 on subject 8 session 0
-01:48:37 | INFO     train.training_nsal_dgat train    129 Epoch 10/100 | Train Loss: 1.2635
-01:48:37 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000595
-01:50:21 | INFO     utils.metric update   25  --> A new better acc 0.6936 on subject 8 session 0
-01:50:47 | INFO     train.training_nsal_dgat train    129 Epoch 15/100 | Train Loss: 1.1142
-01:50:47 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000503
-01:52:08 | INFO     utils.metric update   25  --> A new better acc 0.7039 on subject 8 session 0
-01:53:03 | INFO     train.training_nsal_dgat train    129 Epoch 20/100 | Train Loss: 1.0461
-01:53:03 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000439
-01:54:21 | INFO     utils.metric update   25  --> A new better acc 0.7068 on subject 8 session 0
-01:55:13 | INFO     train.training_nsal_dgat train    129 Epoch 25/100 | Train Loss: 1.0242
-01:55:13 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000391
-01:57:25 | INFO     train.training_nsal_dgat train    129 Epoch 30/100 | Train Loss: 1.0460
-01:57:25 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000354
-01:58:44 | INFO     utils.metric update   25  --> A new better acc 0.7157 on subject 8 session 0
-01:59:35 | INFO     train.training_nsal_dgat train    129 Epoch 35/100 | Train Loss: 0.9826
-01:59:35 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000324
-02:00:02 | INFO     utils.metric update   25  --> A new better acc 0.7463 on subject 8 session 0
-02:01:47 | INFO     train.training_nsal_dgat train    129 Epoch 40/100 | Train Loss: 0.8776
-02:01:47 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000299
-02:02:38 | INFO     utils.metric update   25  --> A new better acc 0.7496 on subject 8 session 0
-02:03:31 | INFO     utils.metric update   25  --> A new better acc 0.7861 on subject 8 session 0
-02:03:58 | INFO     train.training_nsal_dgat train    129 Epoch 45/100 | Train Loss: 0.8165
-02:03:58 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000278
-02:06:08 | INFO     train.training_nsal_dgat train    129 Epoch 50/100 | Train Loss: 0.7975
-02:06:08 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000261
-02:08:18 | INFO     train.training_nsal_dgat train    129 Epoch 55/100 | Train Loss: 0.7699
-02:08:18 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000246
-02:10:27 | INFO     train.training_nsal_dgat train    129 Epoch 60/100 | Train Loss: 0.7688
-02:10:27 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000232
-02:12:39 | INFO     train.training_nsal_dgat train    129 Epoch 65/100 | Train Loss: 0.7520
-02:12:39 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000221
-02:14:50 | INFO     train.training_nsal_dgat train    129 Epoch 70/100 | Train Loss: 0.7637
-02:14:50 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000210
-02:17:02 | INFO     train.training_nsal_dgat train    129 Epoch 75/100 | Train Loss: 0.7454
-02:17:02 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000201
-02:17:30 | INFO     utils.metric update   25  --> A new better acc 0.7896 on subject 8 session 0
-02:19:20 | INFO     train.training_nsal_dgat train    129 Epoch 80/100 | Train Loss: 0.7416
-02:19:20 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000192
-02:21:28 | INFO     train.training_nsal_dgat train    129 Epoch 85/100 | Train Loss: 0.7468
-02:21:28 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000185
-02:23:39 | INFO     train.training_nsal_dgat train    129 Epoch 90/100 | Train Loss: 0.7189
-02:23:39 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000178
-02:25:51 | INFO     train.training_nsal_dgat train    129 Epoch 95/100 | Train Loss: 0.7210
-02:25:51 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000171
-02:28:04 | INFO     train.training_nsal_dgat train    129 Epoch 100/100 | Train Loss: 0.7227
-02:28:04 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000166
-02:28:04 | INFO     __main__ main     144 
---------------> Finished training w.r.t. subject 8 session 0 acc 0.7896
-02:28:14 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
-02:28:15 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
-02:28:15 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-02:28:16 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
-02:28:16 | INFO     train.training_nsal_dgat train    34  len of train data: 47516, len of test data: 3394
-02:28:16 | INFO     train.training_nsal_dgat train    57  num_classes 3
-02:28:40 | INFO     utils.metric update   25  --> A new better acc 0.5952 on subject 9 session 0
-02:29:06 | INFO     utils.metric update   25  --> A new better acc 0.6099 on subject 9 session 0
-02:29:58 | INFO     utils.metric update   25  --> A new better acc 0.6491 on subject 9 session 0
-02:30:22 | INFO     train.training_nsal_dgat train    129 Epoch 5/100 | Train Loss: 1.5828
-02:30:22 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000738
-02:31:41 | INFO     utils.metric update   25  --> A new better acc 0.6520 on subject 9 session 0
-02:32:32 | INFO     train.training_nsal_dgat train    129 Epoch 10/100 | Train Loss: 1.4666
-02:32:32 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000595
-02:32:59 | INFO     utils.metric update   25  --> A new better acc 0.6626 on subject 9 session 0
-02:34:44 | INFO     train.training_nsal_dgat train    129 Epoch 15/100 | Train Loss: 1.3573
-02:34:44 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000503
-02:36:55 | INFO     train.training_nsal_dgat train    129 Epoch 20/100 | Train Loss: 1.2525
-02:36:55 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000439
-02:39:07 | INFO     train.training_nsal_dgat train    129 Epoch 25/100 | Train Loss: 1.1766
-02:39:07 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000391
-02:41:18 | INFO     train.training_nsal_dgat train    129 Epoch 30/100 | Train Loss: 1.1186
-02:41:18 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000354
-02:43:34 | INFO     train.training_nsal_dgat train    129 Epoch 35/100 | Train Loss: 1.0855
-02:43:34 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000324
-02:45:40 | INFO     train.training_nsal_dgat train    129 Epoch 40/100 | Train Loss: 1.0643
-02:45:40 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000299
-02:47:56 | INFO     train.training_nsal_dgat train    129 Epoch 45/100 | Train Loss: 1.0062
-02:47:56 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000278
-02:50:10 | INFO     train.training_nsal_dgat train    129 Epoch 50/100 | Train Loss: 0.9795
-02:50:10 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000261
-02:52:22 | INFO     train.training_nsal_dgat train    129 Epoch 55/100 | Train Loss: 0.9643
-02:52:22 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000246
-02:54:32 | INFO     train.training_nsal_dgat train    129 Epoch 60/100 | Train Loss: 0.9462
-02:54:32 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000232
-02:56:40 | INFO     train.training_nsal_dgat train    129 Epoch 65/100 | Train Loss: 0.9228
-02:56:40 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000221
-02:58:53 | INFO     train.training_nsal_dgat train    129 Epoch 70/100 | Train Loss: 0.9127
-02:58:53 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000210
-03:01:08 | INFO     train.training_nsal_dgat train    129 Epoch 75/100 | Train Loss: 0.8912
-03:01:08 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000201
-03:03:18 | INFO     train.training_nsal_dgat train    129 Epoch 80/100 | Train Loss: 0.9022
-03:03:18 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000192
-03:05:31 | INFO     train.training_nsal_dgat train    129 Epoch 85/100 | Train Loss: 0.8879
-03:05:31 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000185
-03:07:45 | INFO     train.training_nsal_dgat train    129 Epoch 90/100 | Train Loss: 0.8758
-03:07:45 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000178
-03:09:54 | INFO     train.training_nsal_dgat train    129 Epoch 95/100 | Train Loss: 0.8755
-03:09:54 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000171
-03:12:08 | INFO     train.training_nsal_dgat train    129 Epoch 100/100 | Train Loss: 0.8628
-03:12:08 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000166
-03:12:08 | INFO     __main__ main     144 
---------------> Finished training w.r.t. subject 9 session 0 acc 0.6626
-03:12:16 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
-03:12:18 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
-03:12:18 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-03:12:18 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
-03:12:18 | INFO     train.training_nsal_dgat train    34  len of train data: 47516, len of test data: 3394
-03:12:18 | INFO     train.training_nsal_dgat train    57  num_classes 3
-03:12:45 | INFO     utils.metric update   25  --> A new better acc 0.7021 on subject 10 session 0
-03:13:36 | INFO     utils.metric update   25  --> A new better acc 0.7555 on subject 10 session 0
-03:14:29 | INFO     train.training_nsal_dgat train    129 Epoch 5/100 | Train Loss: 1.5246
-03:14:29 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000738
-03:16:40 | INFO     train.training_nsal_dgat train    129 Epoch 10/100 | Train Loss: 1.7885
-03:16:40 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000595
-03:18:49 | INFO     train.training_nsal_dgat train    129 Epoch 15/100 | Train Loss: 1.7788
-03:18:49 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000503
-03:21:01 | INFO     train.training_nsal_dgat train    129 Epoch 20/100 | Train Loss: 0.6351
-03:21:01 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000439
-03:23:13 | INFO     train.training_nsal_dgat train    129 Epoch 25/100 | Train Loss: 5.2413
-03:23:13 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000391
-03:25:24 | INFO     train.training_nsal_dgat train    129 Epoch 30/100 | Train Loss: 1.3959
-03:25:24 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000354
-03:25:51 | INFO     utils.metric update   25  --> A new better acc 0.8441 on subject 10 session 0
-03:27:35 | INFO     train.training_nsal_dgat train    129 Epoch 35/100 | Train Loss: 1.6158
-03:27:35 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000324
-03:29:47 | INFO     train.training_nsal_dgat train    129 Epoch 40/100 | Train Loss: 1.2296
-03:29:47 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000299
-03:32:01 | INFO     train.training_nsal_dgat train    129 Epoch 45/100 | Train Loss: 1.1093
-03:32:01 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000278
-03:34:09 | INFO     train.training_nsal_dgat train    129 Epoch 50/100 | Train Loss: 1.6534
-03:34:09 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000261
-03:36:19 | INFO     train.training_nsal_dgat train    129 Epoch 55/100 | Train Loss: 2.0316
-03:36:19 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000246
-03:38:32 | INFO     train.training_nsal_dgat train    129 Epoch 60/100 | Train Loss: 0.8663
-03:38:32 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000232
-03:40:44 | INFO     train.training_nsal_dgat train    129 Epoch 65/100 | Train Loss: 0.9028
-03:40:44 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000221
-03:42:55 | INFO     train.training_nsal_dgat train    129 Epoch 70/100 | Train Loss: 1.2006
-03:42:55 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000210
-03:45:06 | INFO     train.training_nsal_dgat train    129 Epoch 75/100 | Train Loss: 1.1253
-03:45:06 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000201
-03:47:16 | INFO     train.training_nsal_dgat train    129 Epoch 80/100 | Train Loss: 1.0194
-03:47:16 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000192
-03:49:25 | INFO     train.training_nsal_dgat train    129 Epoch 85/100 | Train Loss: 0.9380
-03:49:25 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000185
-03:51:35 | INFO     train.training_nsal_dgat train    129 Epoch 90/100 | Train Loss: 0.8806
-03:51:35 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000178
-03:53:46 | INFO     train.training_nsal_dgat train    129 Epoch 95/100 | Train Loss: 0.8334
-03:53:46 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000171
-03:55:58 | INFO     train.training_nsal_dgat train    129 Epoch 100/100 | Train Loss: 0.8451
-03:55:58 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000166
-03:55:58 | INFO     __main__ main     144 
---------------> Finished training w.r.t. subject 10 session 0 acc 0.8441
-03:56:04 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
-03:56:06 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
-03:56:06 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-03:56:06 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
-03:56:06 | INFO     train.training_nsal_dgat train    34  len of train data: 47516, len of test data: 3394
-03:56:06 | INFO     train.training_nsal_dgat train    57  num_classes 3
-03:56:33 | INFO     utils.metric update   25  --> A new better acc 0.3447 on subject 11 session 0
-03:56:59 | INFO     utils.metric update   25  --> A new better acc 0.5215 on subject 11 session 0
-03:58:17 | INFO     train.training_nsal_dgat train    129 Epoch 5/100 | Train Loss: 1.4360
-03:58:17 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000738
-04:00:29 | INFO     train.training_nsal_dgat train    129 Epoch 10/100 | Train Loss: 1.3944
-04:00:29 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000595
-04:01:47 | INFO     utils.metric update   25  --> A new better acc 0.5242 on subject 11 session 0
-04:02:14 | INFO     utils.metric update   25  --> A new better acc 0.5884 on subject 11 session 0
-04:02:40 | INFO     train.training_nsal_dgat train    129 Epoch 15/100 | Train Loss: 1.3154
-04:02:40 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000503
-04:03:32 | INFO     utils.metric update   25  --> A new better acc 0.6352 on subject 11 session 0
-04:04:49 | INFO     train.training_nsal_dgat train    129 Epoch 20/100 | Train Loss: 1.2506
-04:04:49 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000439
-04:06:59 | INFO     train.training_nsal_dgat train    129 Epoch 25/100 | Train Loss: 1.1247
-04:06:59 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000391
-04:08:20 | INFO     utils.metric update   25  --> A new better acc 0.6948 on subject 11 session 0
-04:09:11 | INFO     train.training_nsal_dgat train    129 Epoch 30/100 | Train Loss: 0.9755
-04:09:11 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000354
-04:11:21 | INFO     train.training_nsal_dgat train    129 Epoch 35/100 | Train Loss: 0.8926
-04:11:21 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000324
-04:13:34 | INFO     train.training_nsal_dgat train    129 Epoch 40/100 | Train Loss: 0.8544
-04:13:34 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000299
-04:15:49 | INFO     train.training_nsal_dgat train    129 Epoch 45/100 | Train Loss: 0.7979
-04:15:49 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000278
-04:18:00 | INFO     train.training_nsal_dgat train    129 Epoch 50/100 | Train Loss: 0.7631
-04:18:00 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000261
-04:20:10 | INFO     train.training_nsal_dgat train    129 Epoch 55/100 | Train Loss: 0.7429
-04:20:10 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000246
-04:22:20 | INFO     train.training_nsal_dgat train    129 Epoch 60/100 | Train Loss: 0.7440
-04:22:20 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000232
-04:24:31 | INFO     train.training_nsal_dgat train    129 Epoch 65/100 | Train Loss: 0.7175
-04:24:31 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000221
-04:26:44 | INFO     train.training_nsal_dgat train    129 Epoch 70/100 | Train Loss: 0.7267
-04:26:44 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000210
-04:28:56 | INFO     train.training_nsal_dgat train    129 Epoch 75/100 | Train Loss: 0.7217
-04:28:56 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000201
-04:31:09 | INFO     train.training_nsal_dgat train    129 Epoch 80/100 | Train Loss: 0.7148
-04:31:09 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000192
-04:33:20 | INFO     train.training_nsal_dgat train    129 Epoch 85/100 | Train Loss: 1.1687
-04:33:20 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000185
-04:35:29 | INFO     train.training_nsal_dgat train    129 Epoch 90/100 | Train Loss: 0.7100
-04:35:29 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000178
-04:37:41 | INFO     train.training_nsal_dgat train    129 Epoch 95/100 | Train Loss: 0.7104
-04:37:41 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000171
-04:39:55 | INFO     train.training_nsal_dgat train    129 Epoch 100/100 | Train Loss: 0.6998
-04:39:55 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000166
-04:39:55 | INFO     __main__ main     144 
---------------> Finished training w.r.t. subject 11 session 0 acc 0.6948
-04:40:01 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
-04:40:02 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
-04:40:03 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-04:40:03 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
-04:40:03 | INFO     train.training_nsal_dgat train    34  len of train data: 47516, len of test data: 3394
-04:40:03 | INFO     train.training_nsal_dgat train    57  num_classes 3
-04:40:30 | INFO     utils.metric update   25  --> A new better acc 0.5404 on subject 12 session 0
-04:40:57 | INFO     utils.metric update   25  --> A new better acc 0.6108 on subject 12 session 0
-04:41:49 | INFO     utils.metric update   25  --> A new better acc 0.6435 on subject 12 session 0
-04:42:16 | INFO     train.training_nsal_dgat train    129 Epoch 5/100 | Train Loss: 1.5704
-04:42:16 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000738
-04:42:44 | INFO     utils.metric update   25  --> A new better acc 0.6744 on subject 12 session 0
-04:44:31 | INFO     utils.metric update   25  --> A new better acc 0.6939 on subject 12 session 0
-04:44:31 | INFO     train.training_nsal_dgat train    129 Epoch 10/100 | Train Loss: 1.1959
-04:44:31 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000595
-04:46:13 | INFO     utils.metric update   25  --> A new better acc 0.6989 on subject 12 session 0
-04:46:41 | INFO     train.training_nsal_dgat train    129 Epoch 15/100 | Train Loss: 1.0424
-04:46:41 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000503
-04:48:53 | INFO     train.training_nsal_dgat train    129 Epoch 20/100 | Train Loss: 1.1107
-04:48:53 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000439
-04:51:04 | INFO     train.training_nsal_dgat train    129 Epoch 25/100 | Train Loss: 0.8935
-04:51:04 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000391
-04:53:14 | INFO     train.training_nsal_dgat train    129 Epoch 30/100 | Train Loss: 0.8252
-04:53:14 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000354
-04:55:26 | INFO     train.training_nsal_dgat train    129 Epoch 35/100 | Train Loss: 0.7904
-04:55:26 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000324
-04:57:39 | INFO     train.training_nsal_dgat train    129 Epoch 40/100 | Train Loss: 0.7791
-04:57:39 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000299
-04:59:50 | INFO     train.training_nsal_dgat train    129 Epoch 45/100 | Train Loss: 0.7671
-04:59:50 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000278
-05:01:10 | INFO     utils.metric update   25  --> A new better acc 0.7110 on subject 12 session 0
-05:02:00 | INFO     train.training_nsal_dgat train    129 Epoch 50/100 | Train Loss: 0.7632
-05:02:00 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000261
-05:04:13 | INFO     train.training_nsal_dgat train    129 Epoch 55/100 | Train Loss: 0.7496
-05:04:13 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000246
-05:06:24 | INFO     train.training_nsal_dgat train    129 Epoch 60/100 | Train Loss: 0.7363
-05:06:24 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000232
-05:08:35 | INFO     train.training_nsal_dgat train    129 Epoch 65/100 | Train Loss: 0.7272
-05:08:35 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000221
-05:10:45 | INFO     train.training_nsal_dgat train    129 Epoch 70/100 | Train Loss: 0.7224
-05:10:45 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000210
-05:12:58 | INFO     train.training_nsal_dgat train    129 Epoch 75/100 | Train Loss: 0.7181
-05:12:58 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000201
-05:15:09 | INFO     train.training_nsal_dgat train    129 Epoch 80/100 | Train Loss: 0.7218
-05:15:09 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000192
-05:17:24 | INFO     train.training_nsal_dgat train    129 Epoch 85/100 | Train Loss: 0.7020
-05:17:24 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000185
-05:19:35 | INFO     train.training_nsal_dgat train    129 Epoch 90/100 | Train Loss: 0.7161
-05:19:35 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000178
-05:20:02 | INFO     utils.metric update   25  --> A new better acc 0.7163 on subject 12 session 0
-05:21:47 | INFO     train.training_nsal_dgat train    129 Epoch 95/100 | Train Loss: 0.7036
-05:21:47 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000171
-05:24:00 | INFO     train.training_nsal_dgat train    129 Epoch 100/100 | Train Loss: 0.7244
-05:24:00 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000166
-05:24:00 | INFO     __main__ main     144 
---------------> Finished training w.r.t. subject 12 session 0 acc 0.7163
-05:24:06 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
-05:24:07 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
-05:24:07 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-05:24:07 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
-05:24:08 | INFO     train.training_nsal_dgat train    34  len of train data: 47516, len of test data: 3394
-05:24:08 | INFO     train.training_nsal_dgat train    57  num_classes 3
-05:24:34 | INFO     utils.metric update   25  --> A new better acc 0.5021 on subject 13 session 0
-05:25:01 | INFO     utils.metric update   25  --> A new better acc 0.5289 on subject 13 session 0
-05:25:26 | INFO     utils.metric update   25  --> A new better acc 0.6022 on subject 13 session 0
-05:25:50 | INFO     utils.metric update   25  --> A new better acc 0.7222 on subject 13 session 0
-05:26:18 | INFO     utils.metric update   25  --> A new better acc 0.7493 on subject 13 session 0
-05:26:18 | INFO     train.training_nsal_dgat train    129 Epoch 5/100 | Train Loss: 1.4664
-05:26:18 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000738
-05:28:31 | INFO     train.training_nsal_dgat train    129 Epoch 10/100 | Train Loss: 1.1436
-05:28:31 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000595
-05:28:57 | INFO     utils.metric update   25  --> A new better acc 0.7575 on subject 13 session 0
-05:30:15 | INFO     utils.metric update   25  --> A new better acc 0.7849 on subject 13 session 0
-05:30:41 | INFO     train.training_nsal_dgat train    129 Epoch 15/100 | Train Loss: 1.0489
-05:30:41 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000503
-05:31:08 | INFO     utils.metric update   25  --> A new better acc 0.7870 on subject 13 session 0
-05:31:59 | INFO     utils.metric update   25  --> A new better acc 0.8002 on subject 13 session 0
-05:32:27 | INFO     utils.metric update   25  --> A new better acc 0.8129 on subject 13 session 0
-05:32:53 | INFO     train.training_nsal_dgat train    129 Epoch 20/100 | Train Loss: 0.9562
-05:32:53 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000439
-05:33:42 | INFO     utils.metric update   25  --> A new better acc 0.8477 on subject 13 session 0
-05:34:59 | INFO     train.training_nsal_dgat train    129 Epoch 25/100 | Train Loss: 0.8812
-05:34:59 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000391
-05:37:11 | INFO     train.training_nsal_dgat train    129 Epoch 30/100 | Train Loss: 0.8498
-05:37:11 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000354
-05:39:24 | INFO     train.training_nsal_dgat train    129 Epoch 35/100 | Train Loss: 0.8142
-05:39:24 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000324
-05:41:36 | INFO     train.training_nsal_dgat train    129 Epoch 40/100 | Train Loss: 0.7988
-05:41:36 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000299
-05:43:46 | INFO     train.training_nsal_dgat train    129 Epoch 45/100 | Train Loss: 0.7822
-05:43:46 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000278
-05:45:58 | INFO     train.training_nsal_dgat train    129 Epoch 50/100 | Train Loss: 0.7601
-05:45:58 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000261
-05:48:08 | INFO     train.training_nsal_dgat train    129 Epoch 55/100 | Train Loss: 0.7511
-05:48:08 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000246
-05:50:18 | INFO     train.training_nsal_dgat train    129 Epoch 60/100 | Train Loss: 0.7497
-05:50:18 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000232
-05:52:31 | INFO     train.training_nsal_dgat train    129 Epoch 65/100 | Train Loss: 0.7365
-05:52:31 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000221
-05:54:40 | INFO     train.training_nsal_dgat train    129 Epoch 70/100 | Train Loss: 0.7590
-05:54:40 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000210
-05:56:51 | INFO     train.training_nsal_dgat train    129 Epoch 75/100 | Train Loss: 0.7476
-05:56:51 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000201
-05:59:01 | INFO     train.training_nsal_dgat train    129 Epoch 80/100 | Train Loss: 0.7340
-05:59:01 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000192
-06:01:09 | INFO     train.training_nsal_dgat train    129 Epoch 85/100 | Train Loss: 0.7159
-06:01:09 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000185
-06:03:24 | INFO     train.training_nsal_dgat train    129 Epoch 90/100 | Train Loss: 0.7240
-06:03:24 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000178
-06:05:37 | INFO     train.training_nsal_dgat train    129 Epoch 95/100 | Train Loss: 0.7369
-06:05:37 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000171
-06:07:47 | INFO     train.training_nsal_dgat train    129 Epoch 100/100 | Train Loss: 0.7190
-06:07:47 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000166
-06:07:47 | INFO     __main__ main     144 
---------------> Finished training w.r.t. subject 13 session 0 acc 0.8477
-06:07:53 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
-06:07:55 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
-06:07:55 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
-06:07:55 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
-06:07:55 | INFO     train.training_nsal_dgat train    34  len of train data: 47516, len of test data: 3394
-06:07:55 | INFO     train.training_nsal_dgat train    57  num_classes 3
-06:08:21 | INFO     utils.metric update   25  --> A new better acc 0.3447 on subject 14 session 0
-06:09:38 | INFO     utils.metric update   25  --> A new better acc 0.7104 on subject 14 session 0
-06:10:04 | INFO     train.training_nsal_dgat train    129 Epoch 5/100 | Train Loss: 1.6553
-06:10:04 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000738
-06:12:18 | INFO     train.training_nsal_dgat train    129 Epoch 10/100 | Train Loss: 0.8894
-06:12:18 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000595
-06:14:29 | INFO     train.training_nsal_dgat train    129 Epoch 15/100 | Train Loss: 10.8856
-06:14:29 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000503
-06:16:41 | INFO     train.training_nsal_dgat train    129 Epoch 20/100 | Train Loss: 0.7949
-06:16:41 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000439
-06:18:49 | INFO     train.training_nsal_dgat train    129 Epoch 25/100 | Train Loss: 0.6909
-06:18:49 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000391
-06:21:00 | INFO     train.training_nsal_dgat train    129 Epoch 30/100 | Train Loss: 3.0561
-06:21:00 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000354
-06:23:12 | INFO     train.training_nsal_dgat train    129 Epoch 35/100 | Train Loss: 0.5883
-06:23:12 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000324
-06:25:21 | INFO     train.training_nsal_dgat train    129 Epoch 40/100 | Train Loss: 0.4875
-06:25:21 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000299
-06:27:35 | INFO     train.training_nsal_dgat train    129 Epoch 45/100 | Train Loss: 0.5800
-06:27:35 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000278
-06:29:43 | INFO     train.training_nsal_dgat train    129 Epoch 50/100 | Train Loss: 1.7455
-06:29:43 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000261
-06:31:57 | INFO     train.training_nsal_dgat train    129 Epoch 55/100 | Train Loss: 0.9395
-06:31:57 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000246
-06:34:07 | INFO     train.training_nsal_dgat train    129 Epoch 60/100 | Train Loss: 3.8807
-06:34:07 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000232
-06:36:17 | INFO     train.training_nsal_dgat train    129 Epoch 65/100 | Train Loss: 1.3420
-06:36:17 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000221
-06:38:29 | INFO     train.training_nsal_dgat train    129 Epoch 70/100 | Train Loss: 0.9450
-06:38:29 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000210
-06:40:42 | INFO     train.training_nsal_dgat train    129 Epoch 75/100 | Train Loss: 11.5157
-06:40:42 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000201
-06:42:54 | INFO     train.training_nsal_dgat train    129 Epoch 80/100 | Train Loss: 0.8877
-06:42:54 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000192
-06:45:04 | INFO     train.training_nsal_dgat train    129 Epoch 85/100 | Train Loss: 0.7116
-06:45:04 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000185
-06:47:16 | INFO     train.training_nsal_dgat train    129 Epoch 90/100 | Train Loss: 1.3608
-06:47:16 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000178
-06:49:29 | INFO     train.training_nsal_dgat train    129 Epoch 95/100 | Train Loss: 1.5118
-06:49:29 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000171
-06:51:41 | INFO     train.training_nsal_dgat train    129 Epoch 100/100 | Train Loss: 5.3181
-06:51:41 | INFO     train.training_nsal_dgat train    131 Current lr = 0.000166
-06:51:41 | INFO     __main__ main     144 
---------------> Finished training w.r.t. subject 14 session 0 acc 0.7104
-06:51:41 | INFO     __main__ main     153 
------------> Finished training for all subjects!!!!
-06:51:41 | INFO     __main__ main     158 
-all: mean 0.2518 std 0.3627
-two: mean 0.3777 std 0.3871
-one: mean 0.7554 std 0.1197
-
+00:53:42 | INFO     data.dataloder load_data 54  Loading dataset DatasetName.SEED from path ../data/SEED
+00:53:43 | INFO     data.dataloder load_data 76  Dataset cache hit: cache/seed_c6101f08aea90004d5cef5d0de942b8b.pkl
+00:53:52 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+00:53:54 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+00:53:55 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+00:53:55 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+00:53:55 | INFO     train.training_saber_prpl_matched train    68  len of train data: 47516, len of test data: 3394
+00:54:03 | INFO     utils.metric update   25  --> A new better acc 0.3447 on subject 0 session 0
+00:54:03 | INFO     train.training_saber_prpl_matched train    184 Epoch 1/1000 | loss_clf: 5.2982, loss_transfer: 0.4874, loss_cluster: 0.0073, loss_p: 76.1063, source_acc: 34.4663, target_acc: 34.4726, best_acc: 34.4726
+00:54:20 | INFO     utils.metric update   25  --> A new better acc 0.3869 on subject 0 session 0
+00:54:25 | INFO     utils.metric update   25  --> A new better acc 0.5580 on subject 0 session 0
+00:54:29 | INFO     utils.metric update   25  --> A new better acc 0.6264 on subject 0 session 0
+00:54:42 | INFO     utils.metric update   25  --> A new better acc 0.7160 on subject 0 session 0
+00:55:45 | INFO     utils.metric update   25  --> A new better acc 0.7248 on subject 0 session 0
+00:55:54 | INFO     utils.metric update   25  --> A new better acc 0.7746 on subject 0 session 0
+00:56:26 | INFO     utils.metric update   25  --> A new better acc 0.7767 on subject 0 session 0
+00:56:35 | INFO     utils.metric update   25  --> A new better acc 0.8403 on subject 0 session 0
+00:56:44 | INFO     utils.metric update   25  --> A new better acc 0.8612 on subject 0 session 0
+00:57:17 | INFO     utils.metric update   25  --> A new better acc 0.8827 on subject 0 session 0
+00:57:50 | INFO     train.training_saber_prpl_matched train    184 Epoch 50/1000 | loss_clf: 0.0028, loss_transfer: 0.6946, loss_cluster: 0.0111, loss_p: 7.9182, source_acc: 99.5812, target_acc: 84.7672, best_acc: 88.2734
+00:58:23 | INFO     utils.metric update   25  --> A new better acc 0.9216 on subject 0 session 0
+01:01:36 | INFO     train.training_saber_prpl_matched train    184 Epoch 100/1000 | loss_clf: 0.0015, loss_transfer: 0.6895, loss_cluster: 0.0117, loss_p: 7.9206, source_acc: 99.5559, target_acc: 80.4361, best_acc: 92.1626
+01:05:20 | INFO     train.training_saber_prpl_matched train    184 Epoch 150/1000 | loss_clf: 0.0055, loss_transfer: 0.6813, loss_cluster: 0.0049, loss_p: 7.8942, source_acc: 99.7664, target_acc: 59.9588, best_acc: 92.1626
+01:09:06 | INFO     train.training_saber_prpl_matched train    184 Epoch 200/1000 | loss_clf: 0.0007, loss_transfer: 0.6904, loss_cluster: 0.0022, loss_p: 8.0202, source_acc: 99.5391, target_acc: 67.3542, best_acc: 92.1626
+01:12:47 | INFO     train.training_saber_prpl_matched train    184 Epoch 250/1000 | loss_clf: 0.0261, loss_transfer: 0.6866, loss_cluster: 0.0008, loss_p: 8.0186, source_acc: 99.5623, target_acc: 66.0872, best_acc: 92.1626
+01:16:33 | INFO     train.training_saber_prpl_matched train    184 Epoch 300/1000 | loss_clf: 0.0265, loss_transfer: 0.6892, loss_cluster: 0.0038, loss_p: 8.3028, source_acc: 99.3202, target_acc: 60.4302, best_acc: 92.1626
+01:20:17 | INFO     train.training_saber_prpl_matched train    184 Epoch 350/1000 | loss_clf: 0.0005, loss_transfer: 0.6938, loss_cluster: 0.0009, loss_p: 8.0057, source_acc: 99.5054, target_acc: 45.4920, best_acc: 92.1626
+01:23:59 | INFO     train.training_saber_prpl_matched train    184 Epoch 400/1000 | loss_clf: 0.0001, loss_transfer: 0.6895, loss_cluster: 0.0027, loss_p: 8.0888, source_acc: 99.5791, target_acc: 41.9859, best_acc: 92.1626
+01:27:42 | INFO     train.training_saber_prpl_matched train    184 Epoch 450/1000 | loss_clf: 0.0011, loss_transfer: 0.6906, loss_cluster: 0.0018, loss_p: 8.5979, source_acc: 100.0000, target_acc: 61.3141, best_acc: 92.1626
+01:31:28 | INFO     train.training_saber_prpl_matched train    184 Epoch 500/1000 | loss_clf: 0.0038, loss_transfer: 0.6717, loss_cluster: 0.0011, loss_p: 8.7394, source_acc: 98.9604, target_acc: 46.3465, best_acc: 92.1626
+01:35:12 | INFO     train.training_saber_prpl_matched train    184 Epoch 550/1000 | loss_clf: 0.0183, loss_transfer: 0.6975, loss_cluster: 0.0033, loss_p: 8.2673, source_acc: 99.7685, target_acc: 47.4661, best_acc: 92.1626
+01:37:32 | INFO     train.training_saber_prpl_matched train    184 Epoch 600/1000 | loss_clf: 0.0022, loss_transfer: 0.6872, loss_cluster: 0.0000, loss_p: 8.0092, source_acc: 99.5181, target_acc: 53.5357, best_acc: 92.1626
+01:39:57 | INFO     train.training_saber_prpl_matched train    184 Epoch 650/1000 | loss_clf: 0.0293, loss_transfer: 0.6907, loss_cluster: 0.0006, loss_p: 8.1602, source_acc: 99.8842, target_acc: 59.2811, best_acc: 92.1626
+01:42:17 | INFO     train.training_saber_prpl_matched train    184 Epoch 700/1000 | loss_clf: 0.0114, loss_transfer: 0.6811, loss_cluster: 0.0014, loss_p: 8.0882, source_acc: 99.9853, target_acc: 56.1285, best_acc: 92.1626
+01:44:38 | INFO     train.training_saber_prpl_matched train    184 Epoch 750/1000 | loss_clf: 0.0012, loss_transfer: 0.6908, loss_cluster: 0.0005, loss_p: 8.2324, source_acc: 99.8106, target_acc: 60.4596, best_acc: 92.1626
+01:47:03 | INFO     train.training_saber_prpl_matched train    184 Epoch 800/1000 | loss_clf: 0.0031, loss_transfer: 0.6879, loss_cluster: 0.0001, loss_p: 7.9197, source_acc: 99.5181, target_acc: 59.2811, best_acc: 92.1626
+01:49:19 | INFO     train.training_saber_prpl_matched train    184 Epoch 850/1000 | loss_clf: 0.0037, loss_transfer: 0.6764, loss_cluster: 0.0026, loss_p: 8.1714, source_acc: 98.7057, target_acc: 48.7331, best_acc: 92.1626
+01:51:38 | INFO     train.training_saber_prpl_matched train    184 Epoch 900/1000 | loss_clf: 0.0001, loss_transfer: 0.6826, loss_cluster: 0.0007, loss_p: 8.1098, source_acc: 99.7390, target_acc: 57.9552, best_acc: 92.1626
+01:54:02 | INFO     train.training_saber_prpl_matched train    184 Epoch 950/1000 | loss_clf: 0.0031, loss_transfer: 0.6929, loss_cluster: 0.0031, loss_p: 8.0760, source_acc: 99.8211, target_acc: 48.6447, best_acc: 92.1626
+01:56:20 | INFO     train.training_saber_prpl_matched train    184 Epoch 1000/1000 | loss_clf: 0.0036, loss_transfer: 0.6455, loss_cluster: 0.0006, loss_p: 8.0383, source_acc: 97.6976, target_acc: 62.8167, best_acc: 92.1626
+01:56:20 | INFO     __main__ main     120 
+--------------> Finished training w.r.t. subject 0 session 0 acc 0.9216
+01:56:26 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+01:56:28 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+01:56:28 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+01:56:28 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+01:56:28 | INFO     train.training_saber_prpl_matched train    68  len of train data: 47516, len of test data: 3394
+01:56:31 | INFO     utils.metric update   25  --> A new better acc 0.3768 on subject 1 session 0
+01:56:31 | INFO     train.training_saber_prpl_matched train    184 Epoch 1/1000 | loss_clf: 5.5199, loss_transfer: 0.4210, loss_cluster: 0.0138, loss_p: 50.2800, source_acc: 36.1899, target_acc: 37.6841, best_acc: 37.6841
+01:56:33 | INFO     utils.metric update   25  --> A new better acc 0.4355 on subject 1 session 0
+01:56:44 | INFO     utils.metric update   25  --> A new better acc 0.5586 on subject 1 session 0
+01:56:48 | INFO     utils.metric update   25  --> A new better acc 0.5734 on subject 1 session 0
+01:57:08 | INFO     utils.metric update   25  --> A new better acc 0.5813 on subject 1 session 0
+01:57:11 | INFO     utils.metric update   25  --> A new better acc 0.6164 on subject 1 session 0
+01:57:14 | INFO     utils.metric update   25  --> A new better acc 0.6293 on subject 1 session 0
+01:57:20 | INFO     utils.metric update   25  --> A new better acc 0.6385 on subject 1 session 0
+01:57:22 | INFO     utils.metric update   25  --> A new better acc 0.6447 on subject 1 session 0
+01:57:28 | INFO     utils.metric update   25  --> A new better acc 0.6821 on subject 1 session 0
+01:57:31 | INFO     utils.metric update   25  --> A new better acc 0.6971 on subject 1 session 0
+01:57:49 | INFO     utils.metric update   25  --> A new better acc 0.7118 on subject 1 session 0
+01:58:46 | INFO     train.training_saber_prpl_matched train    184 Epoch 50/1000 | loss_clf: 0.0114, loss_transfer: 0.6899, loss_cluster: 0.0081, loss_p: 7.8841, source_acc: 99.8779, target_acc: 63.0819, best_acc: 71.1844
+01:59:20 | INFO     utils.metric update   25  --> A new better acc 0.7163 on subject 1 session 0
+01:59:23 | INFO     utils.metric update   25  --> A new better acc 0.7227 on subject 1 session 0
+01:59:32 | INFO     utils.metric update   25  --> A new better acc 0.7625 on subject 1 session 0
+01:59:35 | INFO     utils.metric update   25  --> A new better acc 0.7770 on subject 1 session 0
+02:00:27 | INFO     utils.metric update   25  --> A new better acc 0.7805 on subject 1 session 0
+02:00:35 | INFO     utils.metric update   25  --> A new better acc 0.7820 on subject 1 session 0
+02:00:39 | INFO     utils.metric update   25  --> A new better acc 0.7843 on subject 1 session 0
+02:00:41 | INFO     utils.metric update   25  --> A new better acc 0.7999 on subject 1 session 0
+02:00:53 | INFO     utils.metric update   25  --> A new better acc 0.8164 on subject 1 session 0
+02:00:56 | INFO     utils.metric update   25  --> A new better acc 0.8259 on subject 1 session 0
+02:00:58 | INFO     utils.metric update   25  --> A new better acc 0.8288 on subject 1 session 0
+02:01:07 | INFO     train.training_saber_prpl_matched train    184 Epoch 100/1000 | loss_clf: 0.0041, loss_transfer: 0.6934, loss_cluster: 0.0030, loss_p: 7.8845, source_acc: 99.7243, target_acc: 79.9057, best_acc: 82.8816
+02:01:31 | INFO     utils.metric update   25  --> A new better acc 0.8556 on subject 1 session 0
+02:03:35 | INFO     train.training_saber_prpl_matched train    184 Epoch 150/1000 | loss_clf: 0.0004, loss_transfer: 0.6947, loss_cluster: 0.0017, loss_p: 7.8842, source_acc: 99.9516, target_acc: 78.0790, best_acc: 85.5628
+02:05:47 | INFO     train.training_saber_prpl_matched train    184 Epoch 200/1000 | loss_clf: 0.0005, loss_transfer: 0.6941, loss_cluster: 0.0018, loss_p: 7.8446, source_acc: 100.0000, target_acc: 81.2316, best_acc: 85.5628
+02:08:06 | INFO     train.training_saber_prpl_matched train    184 Epoch 250/1000 | loss_clf: 0.0086, loss_transfer: 0.6941, loss_cluster: 0.0003, loss_p: 7.8988, source_acc: 99.8632, target_acc: 81.5852, best_acc: 85.5628
+02:10:28 | INFO     train.training_saber_prpl_matched train    184 Epoch 300/1000 | loss_clf: 0.0001, loss_transfer: 0.6944, loss_cluster: 0.0013, loss_p: 7.8915, source_acc: 100.0000, target_acc: 77.4602, best_acc: 85.5628
+02:12:26 | INFO     utils.metric update   25  --> A new better acc 0.8686 on subject 1 session 0
+02:12:31 | INFO     utils.metric update   25  --> A new better acc 0.8689 on subject 1 session 0
+02:12:46 | INFO     train.training_saber_prpl_matched train    184 Epoch 350/1000 | loss_clf: 0.0002, loss_transfer: 0.6872, loss_cluster: 0.0004, loss_p: 7.8588, source_acc: 100.0000, target_acc: 84.5021, best_acc: 86.8886
+02:12:57 | INFO     utils.metric update   25  --> A new better acc 0.8730 on subject 1 session 0
+02:13:09 | INFO     utils.metric update   25  --> A new better acc 0.8819 on subject 1 session 0
+02:15:06 | INFO     train.training_saber_prpl_matched train    184 Epoch 400/1000 | loss_clf: 0.0005, loss_transfer: 0.6869, loss_cluster: 0.0029, loss_p: 8.1099, source_acc: 99.9558, target_acc: 66.5881, best_acc: 88.1850
+02:17:27 | INFO     train.training_saber_prpl_matched train    184 Epoch 450/1000 | loss_clf: 0.0061, loss_transfer: 0.6523, loss_cluster: 0.0005, loss_p: 8.1756, source_acc: 99.9158, target_acc: 61.8444, best_acc: 88.1850
+02:19:51 | INFO     train.training_saber_prpl_matched train    184 Epoch 500/1000 | loss_clf: 0.0403, loss_transfer: 0.2854, loss_cluster: 0.0002, loss_p: 9.0742, source_acc: 99.7496, target_acc: 31.0843, best_acc: 88.1850
+02:22:05 | INFO     train.training_saber_prpl_matched train    184 Epoch 550/1000 | loss_clf: 0.0226, loss_transfer: 0.6906, loss_cluster: 0.0036, loss_p: 8.0562, source_acc: 99.6549, target_acc: 64.0247, best_acc: 88.1850
+02:24:23 | INFO     train.training_saber_prpl_matched train    184 Epoch 600/1000 | loss_clf: 0.0027, loss_transfer: 0.6934, loss_cluster: 0.0002, loss_p: 8.0485, source_acc: 99.9726, target_acc: 66.5881, best_acc: 88.1850
+02:26:48 | INFO     train.training_saber_prpl_matched train    184 Epoch 650/1000 | loss_clf: 0.0083, loss_transfer: 0.6726, loss_cluster: 0.0051, loss_p: 8.0164, source_acc: 100.0000, target_acc: 58.1025, best_acc: 88.1850
+02:29:03 | INFO     train.training_saber_prpl_matched train    184 Epoch 700/1000 | loss_clf: 0.0010, loss_transfer: 0.6953, loss_cluster: 0.0007, loss_p: 8.1243, source_acc: 99.9200, target_acc: 79.9941, best_acc: 88.1850
+02:31:22 | INFO     train.training_saber_prpl_matched train    184 Epoch 750/1000 | loss_clf: 0.0033, loss_transfer: 0.6908, loss_cluster: 0.0003, loss_p: 8.1435, source_acc: 99.6317, target_acc: 73.2174, best_acc: 88.1850
+02:33:44 | INFO     train.training_saber_prpl_matched train    184 Epoch 800/1000 | loss_clf: 0.0017, loss_transfer: 0.6891, loss_cluster: 0.0001, loss_p: 7.9687, source_acc: 96.6180, target_acc: 81.2610, best_acc: 88.1850
+02:36:08 | INFO     train.training_saber_prpl_matched train    184 Epoch 850/1000 | loss_clf: 0.0004, loss_transfer: 0.6845, loss_cluster: 0.0001, loss_p: 7.9387, source_acc: 99.8674, target_acc: 81.2610, best_acc: 88.1850
+02:38:30 | INFO     train.training_saber_prpl_matched train    184 Epoch 900/1000 | loss_clf: 0.0012, loss_transfer: 0.6838, loss_cluster: 0.0008, loss_p: 8.1028, source_acc: 100.0000, target_acc: 75.0147, best_acc: 88.1850
+02:40:50 | INFO     train.training_saber_prpl_matched train    184 Epoch 950/1000 | loss_clf: 0.0063, loss_transfer: 0.6939, loss_cluster: 0.0008, loss_p: 7.9485, source_acc: 99.8274, target_acc: 74.3960, best_acc: 88.1850
+02:43:16 | INFO     train.training_saber_prpl_matched train    184 Epoch 1000/1000 | loss_clf: 0.0345, loss_transfer: 0.6866, loss_cluster: 0.0065, loss_p: 8.3077, source_acc: 93.1770, target_acc: 70.7425, best_acc: 88.1850
+02:43:16 | INFO     __main__ main     120 
+--------------> Finished training w.r.t. subject 1 session 0 acc 0.8819
+02:43:23 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+02:43:26 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+02:43:26 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+02:43:26 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+02:43:26 | INFO     train.training_saber_prpl_matched train    68  len of train data: 47516, len of test data: 3394
+02:43:29 | INFO     utils.metric update   25  --> A new better acc 0.3170 on subject 2 session 0
+02:43:29 | INFO     train.training_saber_prpl_matched train    184 Epoch 1/1000 | loss_clf: 5.7477, loss_transfer: 0.4391, loss_cluster: 0.0098, loss_p: 79.1923, source_acc: 40.0728, target_acc: 31.7030, best_acc: 31.7030
+02:43:32 | INFO     utils.metric update   25  --> A new better acc 0.4048 on subject 2 session 0
+02:43:37 | INFO     utils.metric update   25  --> A new better acc 0.4057 on subject 2 session 0
+02:43:42 | INFO     utils.metric update   25  --> A new better acc 0.4476 on subject 2 session 0
+02:43:59 | INFO     utils.metric update   25  --> A new better acc 0.5890 on subject 2 session 0
+02:44:55 | INFO     utils.metric update   25  --> A new better acc 0.6485 on subject 2 session 0
+02:45:41 | INFO     train.training_saber_prpl_matched train    184 Epoch 50/1000 | loss_clf: 0.0467, loss_transfer: 0.6931, loss_cluster: 0.0118, loss_p: 7.8625, source_acc: 94.1051, target_acc: 42.3984, best_acc: 64.8497
+02:47:59 | INFO     train.training_saber_prpl_matched train    184 Epoch 100/1000 | loss_clf: 0.1075, loss_transfer: 0.6974, loss_cluster: 0.0037, loss_p: 7.8649, source_acc: 96.6601, target_acc: 53.6830, best_acc: 64.8497
+02:50:20 | INFO     train.training_saber_prpl_matched train    184 Epoch 150/1000 | loss_clf: 0.0165, loss_transfer: 0.6825, loss_cluster: 0.0047, loss_p: 7.9197, source_acc: 99.7432, target_acc: 57.2481, best_acc: 64.8497
+02:51:07 | INFO     utils.metric update   25  --> A new better acc 0.6509 on subject 2 session 0
+02:51:10 | INFO     utils.metric update   25  --> A new better acc 0.6597 on subject 2 session 0
+02:51:22 | INFO     utils.metric update   25  --> A new better acc 0.6676 on subject 2 session 0
+02:51:28 | INFO     utils.metric update   25  --> A new better acc 0.6724 on subject 2 session 0
+02:51:36 | INFO     utils.metric update   25  --> A new better acc 0.7121 on subject 2 session 0
+02:51:44 | INFO     utils.metric update   25  --> A new better acc 0.7404 on subject 2 session 0
+02:51:47 | INFO     utils.metric update   25  --> A new better acc 0.7501 on subject 2 session 0
+02:52:37 | INFO     train.training_saber_prpl_matched train    184 Epoch 200/1000 | loss_clf: 0.0030, loss_transfer: 0.6843, loss_cluster: 0.0063, loss_p: 7.9541, source_acc: 99.7369, target_acc: 46.1992, best_acc: 75.0147
+02:55:00 | INFO     train.training_saber_prpl_matched train    184 Epoch 250/1000 | loss_clf: 0.0035, loss_transfer: 0.6872, loss_cluster: 0.0018, loss_p: 8.0190, source_acc: 99.6969, target_acc: 69.5050, best_acc: 75.0147
+02:57:17 | INFO     train.training_saber_prpl_matched train    184 Epoch 300/1000 | loss_clf: 0.0272, loss_transfer: 0.7004, loss_cluster: 0.0015, loss_p: 8.1243, source_acc: 99.9032, target_acc: 55.5097, best_acc: 75.0147
+02:59:28 | INFO     train.training_saber_prpl_matched train    184 Epoch 350/1000 | loss_clf: 0.0151, loss_transfer: 0.6776, loss_cluster: 0.0034, loss_p: 8.0191, source_acc: 99.1540, target_acc: 59.3400, best_acc: 75.0147
+03:01:45 | INFO     train.training_saber_prpl_matched train    184 Epoch 400/1000 | loss_clf: 0.0087, loss_transfer: 0.6870, loss_cluster: 0.0008, loss_p: 7.9793, source_acc: 99.1855, target_acc: 69.0925, best_acc: 75.0147
+03:04:04 | INFO     train.training_saber_prpl_matched train    184 Epoch 450/1000 | loss_clf: 0.0096, loss_transfer: 0.6797, loss_cluster: 0.0023, loss_p: 8.0092, source_acc: 99.4760, target_acc: 57.9847, best_acc: 75.0147
+03:06:31 | INFO     train.training_saber_prpl_matched train    184 Epoch 500/1000 | loss_clf: 0.0087, loss_transfer: 0.6785, loss_cluster: 0.0023, loss_p: 8.5003, source_acc: 99.7643, target_acc: 60.3123, best_acc: 75.0147
+03:08:51 | INFO     train.training_saber_prpl_matched train    184 Epoch 550/1000 | loss_clf: 0.0099, loss_transfer: 0.6847, loss_cluster: 0.0022, loss_p: 8.2242, source_acc: 99.5749, target_acc: 67.2658, best_acc: 75.0147
+03:10:02 | INFO     utils.metric update   25  --> A new better acc 0.7714 on subject 2 session 0
+03:10:05 | INFO     utils.metric update   25  --> A new better acc 0.7793 on subject 2 session 0
+03:10:07 | INFO     utils.metric update   25  --> A new better acc 0.7882 on subject 2 session 0
+03:11:10 | INFO     train.training_saber_prpl_matched train    184 Epoch 600/1000 | loss_clf: 0.0079, loss_transfer: 0.6788, loss_cluster: 0.0005, loss_p: 8.1950, source_acc: 99.4381, target_acc: 56.5704, best_acc: 78.8156
+03:13:32 | INFO     train.training_saber_prpl_matched train    184 Epoch 650/1000 | loss_clf: 0.0002, loss_transfer: 0.6952, loss_cluster: 0.0012, loss_p: 8.1488, source_acc: 99.3897, target_acc: 69.0041, best_acc: 78.8156
+03:14:48 | INFO     utils.metric update   25  --> A new better acc 0.7908 on subject 2 session 0
+03:14:50 | INFO     utils.metric update   25  --> A new better acc 0.8129 on subject 2 session 0
+03:14:53 | INFO     utils.metric update   25  --> A new better acc 0.8321 on subject 2 session 0
+03:14:57 | INFO     utils.metric update   25  --> A new better acc 0.8332 on subject 2 session 0
+03:15:23 | INFO     utils.metric update   25  --> A new better acc 0.8624 on subject 2 session 0
+03:15:56 | INFO     train.training_saber_prpl_matched train    184 Epoch 700/1000 | loss_clf: 0.0048, loss_transfer: 0.6875, loss_cluster: 0.0007, loss_p: 7.9554, source_acc: 99.5244, target_acc: 76.1638, best_acc: 86.2404
+03:18:11 | INFO     train.training_saber_prpl_matched train    184 Epoch 750/1000 | loss_clf: 0.0006, loss_transfer: 0.6952, loss_cluster: 0.0002, loss_p: 8.1313, source_acc: 99.9642, target_acc: 71.3023, best_acc: 86.2404
+03:20:30 | INFO     train.training_saber_prpl_matched train    184 Epoch 800/1000 | loss_clf: 0.0037, loss_transfer: 0.6796, loss_cluster: 0.0029, loss_p: 8.0409, source_acc: 99.7243, target_acc: 62.4337, best_acc: 86.2404
+03:22:55 | INFO     train.training_saber_prpl_matched train    184 Epoch 850/1000 | loss_clf: 0.0112, loss_transfer: 0.6806, loss_cluster: 0.0044, loss_p: 8.4815, source_acc: 99.2739, target_acc: 70.8898, best_acc: 86.2404
+03:25:14 | INFO     train.training_saber_prpl_matched train    184 Epoch 900/1000 | loss_clf: 0.0237, loss_transfer: 0.6706, loss_cluster: 0.0028, loss_p: 8.2853, source_acc: 99.4002, target_acc: 60.7543, best_acc: 86.2404
+03:27:33 | INFO     train.training_saber_prpl_matched train    184 Epoch 950/1000 | loss_clf: 0.0288, loss_transfer: 0.6801, loss_cluster: 0.0071, loss_p: 8.6439, source_acc: 99.6696, target_acc: 61.3435, best_acc: 86.2404
+03:29:57 | INFO     train.training_saber_prpl_matched train    184 Epoch 1000/1000 | loss_clf: 0.0141, loss_transfer: 0.6898, loss_cluster: 0.0048, loss_p: 8.4056, source_acc: 99.8295, target_acc: 67.0301, best_acc: 86.2404
+03:29:57 | INFO     __main__ main     120 
+--------------> Finished training w.r.t. subject 2 session 0 acc 0.8624
+03:30:03 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+03:30:05 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+03:30:05 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+03:30:05 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+03:30:05 | INFO     train.training_saber_prpl_matched train    68  len of train data: 47516, len of test data: 3394
+03:30:09 | INFO     utils.metric update   25  --> A new better acc 0.4991 on subject 3 session 0
+03:30:09 | INFO     train.training_saber_prpl_matched train    184 Epoch 1/1000 | loss_clf: 6.9570, loss_transfer: 0.4120, loss_cluster: 0.0106, loss_p: 40.5166, source_acc: 35.8637, target_acc: 49.9116, best_acc: 49.9116
+03:30:44 | INFO     utils.metric update   25  --> A new better acc 0.5937 on subject 3 session 0
+03:30:50 | INFO     utils.metric update   25  --> A new better acc 0.6535 on subject 3 session 0
+03:31:19 | INFO     utils.metric update   25  --> A new better acc 0.6576 on subject 3 session 0
+03:32:09 | INFO     utils.metric update   25  --> A new better acc 0.6924 on subject 3 session 0
+03:32:14 | INFO     utils.metric update   25  --> A new better acc 0.7089 on subject 3 session 0
+03:32:22 | INFO     train.training_saber_prpl_matched train    184 Epoch 50/1000 | loss_clf: 0.0048, loss_transfer: 0.6913, loss_cluster: 0.0032, loss_p: 7.8598, source_acc: 98.1227, target_acc: 70.4773, best_acc: 70.8898
+03:32:33 | INFO     utils.metric update   25  --> A new better acc 0.7348 on subject 3 session 0
+03:33:19 | INFO     utils.metric update   25  --> A new better acc 0.7761 on subject 3 session 0
+03:33:34 | INFO     utils.metric update   25  --> A new better acc 0.7870 on subject 3 session 0
+03:33:37 | INFO     utils.metric update   25  --> A new better acc 0.7949 on subject 3 session 0
+03:33:43 | INFO     utils.metric update   25  --> A new better acc 0.8624 on subject 3 session 0
+03:33:45 | INFO     utils.metric update   25  --> A new better acc 0.8701 on subject 3 session 0
+03:34:14 | INFO     utils.metric update   25  --> A new better acc 0.8709 on subject 3 session 0
+03:34:24 | INFO     utils.metric update   25  --> A new better acc 0.8886 on subject 3 session 0
+03:34:27 | INFO     utils.metric update   25  --> A new better acc 0.9013 on subject 3 session 0
+03:34:29 | INFO     utils.metric update   25  --> A new better acc 0.9455 on subject 3 session 0
+03:34:35 | INFO     utils.metric update   25  --> A new better acc 0.9508 on subject 3 session 0
+03:34:43 | INFO     train.training_saber_prpl_matched train    184 Epoch 100/1000 | loss_clf: 0.0006, loss_transfer: 0.6889, loss_cluster: 0.0027, loss_p: 7.8742, source_acc: 99.9369, target_acc: 88.6270, best_acc: 95.0796
+03:37:04 | INFO     train.training_saber_prpl_matched train    184 Epoch 150/1000 | loss_clf: 0.0713, loss_transfer: 0.6880, loss_cluster: 0.0044, loss_p: 7.9085, source_acc: 99.5665, target_acc: 71.4791, best_acc: 95.0796
+03:39:30 | INFO     train.training_saber_prpl_matched train    184 Epoch 200/1000 | loss_clf: 0.0530, loss_transfer: 0.6938, loss_cluster: 0.0045, loss_p: 7.9684, source_acc: 98.6068, target_acc: 71.9505, best_acc: 95.0796
+03:40:36 | INFO     utils.metric update   25  --> A new better acc 0.9549 on subject 3 session 0
+03:40:39 | INFO     utils.metric update   25  --> A new better acc 0.9561 on subject 3 session 0
+03:40:42 | INFO     utils.metric update   25  --> A new better acc 0.9564 on subject 3 session 0
+03:40:47 | INFO     utils.metric update   25  --> A new better acc 0.9670 on subject 3 session 0
+03:40:56 | INFO     utils.metric update   25  --> A new better acc 0.9723 on subject 3 session 0
+03:41:11 | INFO     utils.metric update   25  --> A new better acc 0.9761 on subject 3 session 0
+03:41:17 | INFO     utils.metric update   25  --> A new better acc 0.9856 on subject 3 session 0
+03:41:45 | INFO     train.training_saber_prpl_matched train    184 Epoch 250/1000 | loss_clf: 0.0363, loss_transfer: 0.6931, loss_cluster: 0.0013, loss_p: 7.8725, source_acc: 99.3834, target_acc: 91.2198, best_acc: 98.5563
+03:42:22 | INFO     utils.metric update   25  --> A new better acc 1.0000 on subject 3 session 0
+03:44:02 | INFO     train.training_saber_prpl_matched train    184 Epoch 300/1000 | loss_clf: 0.0154, loss_transfer: 0.6885, loss_cluster: 0.0015, loss_p: 8.0030, source_acc: 99.9116, target_acc: 90.6895, best_acc: 100.0000
+03:46:26 | INFO     train.training_saber_prpl_matched train    184 Epoch 350/1000 | loss_clf: 0.0001, loss_transfer: 0.6941, loss_cluster: 0.0002, loss_p: 7.9207, source_acc: 99.8864, target_acc: 99.9411, best_acc: 100.0000
+03:48:38 | INFO     train.training_saber_prpl_matched train    184 Epoch 400/1000 | loss_clf: 0.0568, loss_transfer: 0.6889, loss_cluster: 0.0011, loss_p: 7.9176, source_acc: 99.7475, target_acc: 89.6288, best_acc: 100.0000
+03:50:59 | INFO     train.training_saber_prpl_matched train    184 Epoch 450/1000 | loss_clf: 0.0133, loss_transfer: 0.6987, loss_cluster: 0.0011, loss_p: 8.2125, source_acc: 99.7874, target_acc: 79.8468, best_acc: 100.0000
+03:53:19 | INFO     train.training_saber_prpl_matched train    184 Epoch 500/1000 | loss_clf: 0.0078, loss_transfer: 0.6941, loss_cluster: 0.0015, loss_p: 8.1035, source_acc: 98.8783, target_acc: 73.6594, best_acc: 100.0000
+03:55:43 | INFO     train.training_saber_prpl_matched train    184 Epoch 550/1000 | loss_clf: 0.0010, loss_transfer: 0.6896, loss_cluster: 0.0004, loss_p: 7.9564, source_acc: 99.8927, target_acc: 74.2487, best_acc: 100.0000
+03:57:57 | INFO     train.training_saber_prpl_matched train    184 Epoch 600/1000 | loss_clf: 0.0083, loss_transfer: 0.6747, loss_cluster: 0.0024, loss_p: 8.1167, source_acc: 100.0000, target_acc: 65.7042, best_acc: 100.0000
+04:00:15 | INFO     train.training_saber_prpl_matched train    184 Epoch 650/1000 | loss_clf: 0.0024, loss_transfer: 0.6934, loss_cluster: 0.0005, loss_p: 7.9604, source_acc: 99.9411, target_acc: 70.9782, best_acc: 100.0000
+04:02:42 | INFO     train.training_saber_prpl_matched train    184 Epoch 700/1000 | loss_clf: 0.0182, loss_transfer: 0.6871, loss_cluster: 0.0029, loss_p: 8.0182, source_acc: 99.4549, target_acc: 82.2334, best_acc: 100.0000
+04:04:57 | INFO     train.training_saber_prpl_matched train    184 Epoch 750/1000 | loss_clf: 0.0012, loss_transfer: 0.6825, loss_cluster: 0.0003, loss_p: 7.9638, source_acc: 97.1567, target_acc: 85.5628, best_acc: 100.0000
+04:07:17 | INFO     train.training_saber_prpl_matched train    184 Epoch 800/1000 | loss_clf: 0.0038, loss_transfer: 0.6703, loss_cluster: 0.0009, loss_p: 8.4933, source_acc: 99.4297, target_acc: 80.8191, best_acc: 100.0000
+04:09:39 | INFO     train.training_saber_prpl_matched train    184 Epoch 850/1000 | loss_clf: 0.0269, loss_transfer: 0.6627, loss_cluster: 0.0057, loss_p: 9.8767, source_acc: 98.9351, target_acc: 75.9281, best_acc: 100.0000
+04:12:02 | INFO     train.training_saber_prpl_matched train    184 Epoch 900/1000 | loss_clf: 0.0168, loss_transfer: 0.6692, loss_cluster: 0.0016, loss_p: 8.2353, source_acc: 99.2592, target_acc: 75.4272, best_acc: 100.0000
+04:14:21 | INFO     train.training_saber_prpl_matched train    184 Epoch 950/1000 | loss_clf: 0.0064, loss_transfer: 0.6751, loss_cluster: 0.0014, loss_p: 8.3722, source_acc: 99.0635, target_acc: 67.7961, best_acc: 100.0000
+04:16:41 | INFO     train.training_saber_prpl_matched train    184 Epoch 1000/1000 | loss_clf: 0.0101, loss_transfer: 0.6884, loss_cluster: 0.0008, loss_p: 8.0695, source_acc: 99.7348, target_acc: 64.8792, best_acc: 100.0000
+04:16:41 | INFO     __main__ main     120 
+--------------> Finished training w.r.t. subject 3 session 0 acc 1.0000
+04:16:48 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+04:16:49 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+04:16:49 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+04:16:50 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+04:16:50 | INFO     train.training_saber_prpl_matched train    68  len of train data: 47516, len of test data: 3394
+04:16:53 | INFO     utils.metric update   25  --> A new better acc 0.4635 on subject 4 session 0
+04:16:53 | INFO     train.training_saber_prpl_matched train    184 Epoch 1/1000 | loss_clf: 6.0606, loss_transfer: 0.5247, loss_cluster: 0.0111, loss_p: 43.5437, source_acc: 35.9079, target_acc: 46.3465, best_acc: 46.3465
+04:16:56 | INFO     utils.metric update   25  --> A new better acc 0.4906 on subject 4 session 0
+04:16:59 | INFO     utils.metric update   25  --> A new better acc 0.4953 on subject 4 session 0
+04:17:04 | INFO     utils.metric update   25  --> A new better acc 0.5153 on subject 4 session 0
+04:17:07 | INFO     utils.metric update   25  --> A new better acc 0.5218 on subject 4 session 0
+04:17:10 | INFO     utils.metric update   25  --> A new better acc 0.5412 on subject 4 session 0
+04:17:19 | INFO     utils.metric update   25  --> A new better acc 0.6117 on subject 4 session 0
+04:17:40 | INFO     utils.metric update   25  --> A new better acc 0.6258 on subject 4 session 0
+04:18:10 | INFO     utils.metric update   25  --> A new better acc 0.6491 on subject 4 session 0
+04:18:16 | INFO     utils.metric update   25  --> A new better acc 0.7021 on subject 4 session 0
+04:18:25 | INFO     utils.metric update   25  --> A new better acc 0.7882 on subject 4 session 0
+04:18:40 | INFO     utils.metric update   25  --> A new better acc 0.8164 on subject 4 session 0
+04:18:43 | INFO     utils.metric update   25  --> A new better acc 0.8636 on subject 4 session 0
+04:19:20 | INFO     train.training_saber_prpl_matched train    184 Epoch 50/1000 | loss_clf: 0.0642, loss_transfer: 0.6877, loss_cluster: 0.0122, loss_p: 7.8685, source_acc: 93.3622, target_acc: 68.5622, best_acc: 86.3583
+04:19:26 | INFO     utils.metric update   25  --> A new better acc 0.8786 on subject 4 session 0
+04:20:19 | INFO     utils.metric update   25  --> A new better acc 0.8895 on subject 4 session 0
+04:20:53 | INFO     utils.metric update   25  --> A new better acc 0.9034 on subject 4 session 0
+04:21:39 | INFO     train.training_saber_prpl_matched train    184 Epoch 100/1000 | loss_clf: 0.0153, loss_transfer: 0.6938, loss_cluster: 0.0040, loss_p: 7.8656, source_acc: 97.7860, target_acc: 76.7236, best_acc: 90.3359
+04:22:43 | INFO     utils.metric update   25  --> A new better acc 0.9101 on subject 4 session 0
+04:23:12 | INFO     utils.metric update   25  --> A new better acc 0.9175 on subject 4 session 0
+04:23:15 | INFO     utils.metric update   25  --> A new better acc 0.9190 on subject 4 session 0
+04:23:20 | INFO     utils.metric update   25  --> A new better acc 0.9246 on subject 4 session 0
+04:24:00 | INFO     train.training_saber_prpl_matched train    184 Epoch 150/1000 | loss_clf: 0.0184, loss_transfer: 0.6906, loss_cluster: 0.0039, loss_p: 7.8895, source_acc: 99.5328, target_acc: 91.6323, best_acc: 92.4573
+04:24:05 | INFO     utils.metric update   25  --> A new better acc 0.9278 on subject 4 session 0
+04:24:22 | INFO     utils.metric update   25  --> A new better acc 0.9425 on subject 4 session 0
+04:24:50 | INFO     utils.metric update   25  --> A new better acc 0.9437 on subject 4 session 0
+04:25:20 | INFO     utils.metric update   25  --> A new better acc 0.9452 on subject 4 session 0
+04:25:41 | INFO     utils.metric update   25  --> A new better acc 0.9723 on subject 4 session 0
+04:26:24 | INFO     train.training_saber_prpl_matched train    184 Epoch 200/1000 | loss_clf: 0.0073, loss_transfer: 0.6845, loss_cluster: 0.0017, loss_p: 7.9403, source_acc: 99.8337, target_acc: 83.7360, best_acc: 97.2304
+04:28:41 | INFO     train.training_saber_prpl_matched train    184 Epoch 250/1000 | loss_clf: 0.0472, loss_transfer: 0.6906, loss_cluster: 0.0038, loss_p: 7.8646, source_acc: 99.2066, target_acc: 78.8745, best_acc: 97.2304
+04:30:58 | INFO     train.training_saber_prpl_matched train    184 Epoch 300/1000 | loss_clf: 0.0006, loss_transfer: 0.6905, loss_cluster: 0.0010, loss_p: 7.9207, source_acc: 99.2276, target_acc: 62.1096, best_acc: 97.2304
+04:33:19 | INFO     train.training_saber_prpl_matched train    184 Epoch 350/1000 | loss_clf: 0.0147, loss_transfer: 0.6895, loss_cluster: 0.0034, loss_p: 8.4267, source_acc: 96.9105, target_acc: 58.2793, best_acc: 97.2304
+04:35:47 | INFO     train.training_saber_prpl_matched train    184 Epoch 400/1000 | loss_clf: 0.0006, loss_transfer: 0.6911, loss_cluster: 0.0005, loss_p: 7.9763, source_acc: 99.9726, target_acc: 66.3819, best_acc: 97.2304
+04:38:02 | INFO     train.training_saber_prpl_matched train    184 Epoch 450/1000 | loss_clf: 0.0019, loss_transfer: 0.6906, loss_cluster: 0.0003, loss_p: 7.9210, source_acc: 99.3202, target_acc: 67.0890, best_acc: 97.2304
+04:40:21 | INFO     train.training_saber_prpl_matched train    184 Epoch 500/1000 | loss_clf: 0.0016, loss_transfer: 0.6935, loss_cluster: 0.0003, loss_p: 7.9331, source_acc: 99.7874, target_acc: 73.0701, best_acc: 97.2304
+04:42:48 | INFO     train.training_saber_prpl_matched train    184 Epoch 550/1000 | loss_clf: 0.0018, loss_transfer: 0.6824, loss_cluster: 0.0036, loss_p: 7.9742, source_acc: 99.5623, target_acc: 59.2811, best_acc: 97.2304
+04:45:05 | INFO     train.training_saber_prpl_matched train    184 Epoch 600/1000 | loss_clf: 0.0122, loss_transfer: 0.6780, loss_cluster: 0.0006, loss_p: 8.0163, source_acc: 99.5265, target_acc: 71.7443, best_acc: 97.2304
+04:47:23 | INFO     train.training_saber_prpl_matched train    184 Epoch 650/1000 | loss_clf: 0.0028, loss_transfer: 0.6618, loss_cluster: 0.0028, loss_p: 8.1646, source_acc: 99.6822, target_acc: 64.8203, best_acc: 97.2304
+04:49:48 | INFO     train.training_saber_prpl_matched train    184 Epoch 700/1000 | loss_clf: 0.0084, loss_transfer: 0.6748, loss_cluster: 0.0008, loss_p: 8.1001, source_acc: 99.8085, target_acc: 57.3070, best_acc: 97.2304
+04:52:09 | INFO     train.training_saber_prpl_matched train    184 Epoch 750/1000 | loss_clf: 0.0030, loss_transfer: 0.6612, loss_cluster: 0.0011, loss_p: 9.0104, source_acc: 98.4195, target_acc: 49.7643, best_acc: 97.2304
+04:54:29 | INFO     train.training_saber_prpl_matched train    184 Epoch 800/1000 | loss_clf: 0.0040, loss_transfer: 0.6653, loss_cluster: 0.0013, loss_p: 8.5358, source_acc: 99.6612, target_acc: 46.5527, best_acc: 97.2304
+04:56:51 | INFO     train.training_saber_prpl_matched train    184 Epoch 850/1000 | loss_clf: 0.0202, loss_transfer: 0.6648, loss_cluster: 0.0054, loss_p: 8.3470, source_acc: 99.1308, target_acc: 45.7278, best_acc: 97.2304
+04:59:21 | INFO     train.training_saber_prpl_matched train    184 Epoch 900/1000 | loss_clf: 0.0071, loss_transfer: 0.6785, loss_cluster: 0.0010, loss_p: 8.1668, source_acc: 99.4255, target_acc: 37.7725, best_acc: 97.2304
+05:01:38 | INFO     train.training_saber_prpl_matched train    184 Epoch 950/1000 | loss_clf: 0.0240, loss_transfer: 0.6498, loss_cluster: 0.0041, loss_p: 8.2829, source_acc: 98.2195, target_acc: 49.9705, best_acc: 97.2304
+05:03:56 | INFO     train.training_saber_prpl_matched train    184 Epoch 1000/1000 | loss_clf: 0.0086, loss_transfer: 0.6387, loss_cluster: 0.0129, loss_p: 8.4826, source_acc: 98.4658, target_acc: 33.5003, best_acc: 97.2304
+05:03:56 | INFO     __main__ main     120 
+--------------> Finished training w.r.t. subject 4 session 0 acc 0.9723
+05:04:02 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+05:04:04 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+05:04:04 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+05:04:04 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+05:04:04 | INFO     train.training_saber_prpl_matched train    68  len of train data: 47516, len of test data: 3394
+05:04:07 | INFO     utils.metric update   25  --> A new better acc 0.3447 on subject 5 session 0
+05:04:07 | INFO     train.training_saber_prpl_matched train    184 Epoch 1/1000 | loss_clf: 5.5596, loss_transfer: 0.4062, loss_cluster: 0.0102, loss_p: 45.6692, source_acc: 34.4726, target_acc: 34.4726, best_acc: 34.4726
+05:04:13 | INFO     utils.metric update   25  --> A new better acc 0.5333 on subject 5 session 0
+05:04:16 | INFO     utils.metric update   25  --> A new better acc 0.5902 on subject 5 session 0
+05:04:18 | INFO     utils.metric update   25  --> A new better acc 0.7372 on subject 5 session 0
+05:04:42 | INFO     utils.metric update   25  --> A new better acc 0.7398 on subject 5 session 0
+05:04:52 | INFO     utils.metric update   25  --> A new better acc 0.8238 on subject 5 session 0
+05:05:24 | INFO     utils.metric update   25  --> A new better acc 0.8415 on subject 5 session 0
+05:05:33 | INFO     utils.metric update   25  --> A new better acc 0.9045 on subject 5 session 0
+05:05:44 | INFO     utils.metric update   25  --> A new better acc 0.9063 on subject 5 session 0
+05:05:49 | INFO     utils.metric update   25  --> A new better acc 0.9355 on subject 5 session 0
+05:06:29 | INFO     train.training_saber_prpl_matched train    184 Epoch 50/1000 | loss_clf: 0.0086, loss_transfer: 0.6925, loss_cluster: 0.0054, loss_p: 7.8798, source_acc: 98.7709, target_acc: 76.1638, best_acc: 93.5474
+05:08:49 | INFO     train.training_saber_prpl_matched train    184 Epoch 100/1000 | loss_clf: 0.0159, loss_transfer: 0.6834, loss_cluster: 0.0091, loss_p: 7.8582, source_acc: 98.5458, target_acc: 84.7083, best_acc: 93.5474
+05:11:09 | INFO     train.training_saber_prpl_matched train    184 Epoch 150/1000 | loss_clf: 0.0319, loss_transfer: 0.6964, loss_cluster: 0.0056, loss_p: 7.8676, source_acc: 98.5689, target_acc: 66.4997, best_acc: 93.5474
+05:13:29 | INFO     train.training_saber_prpl_matched train    184 Epoch 200/1000 | loss_clf: 0.0012, loss_transfer: 0.6889, loss_cluster: 0.0026, loss_p: 7.9505, source_acc: 98.4321, target_acc: 78.5504, best_acc: 93.5474
+05:15:52 | INFO     train.training_saber_prpl_matched train    184 Epoch 250/1000 | loss_clf: 0.0004, loss_transfer: 0.6931, loss_cluster: 0.0002, loss_p: 7.9385, source_acc: 97.8302, target_acc: 76.9888, best_acc: 93.5474
+05:18:08 | INFO     train.training_saber_prpl_matched train    184 Epoch 300/1000 | loss_clf: 0.0042, loss_transfer: 0.6693, loss_cluster: 0.0024, loss_p: 8.2575, source_acc: 98.7120, target_acc: 70.6541, best_acc: 93.5474
+05:20:25 | INFO     train.training_saber_prpl_matched train    184 Epoch 350/1000 | loss_clf: 0.0006, loss_transfer: 0.6889, loss_cluster: 0.0002, loss_p: 7.9662, source_acc: 98.9856, target_acc: 25.1621, best_acc: 93.5474
+05:22:50 | INFO     train.training_saber_prpl_matched train    184 Epoch 400/1000 | loss_clf: 0.0207, loss_transfer: 0.6761, loss_cluster: 0.0012, loss_p: 7.8968, source_acc: 97.5440, target_acc: 35.6217, best_acc: 93.5474
+05:25:10 | INFO     train.training_saber_prpl_matched train    184 Epoch 450/1000 | loss_clf: 0.0154, loss_transfer: 0.6744, loss_cluster: 0.0022, loss_p: 8.4023, source_acc: 96.7148, target_acc: 60.3123, best_acc: 93.5474
+05:27:27 | INFO     train.training_saber_prpl_matched train    184 Epoch 500/1000 | loss_clf: 0.0321, loss_transfer: 0.6906, loss_cluster: 0.0016, loss_p: 8.0104, source_acc: 98.0785, target_acc: 55.5097, best_acc: 93.5474
+05:29:48 | INFO     train.training_saber_prpl_matched train    184 Epoch 550/1000 | loss_clf: 0.0017, loss_transfer: 0.6851, loss_cluster: 0.0002, loss_p: 7.9578, source_acc: 97.8365, target_acc: 50.5303, best_acc: 93.5474
+05:32:11 | INFO     train.training_saber_prpl_matched train    184 Epoch 600/1000 | loss_clf: 0.0074, loss_transfer: 0.6844, loss_cluster: 0.0012, loss_p: 8.3631, source_acc: 97.5650, target_acc: 39.3047, best_acc: 93.5474
+05:34:28 | INFO     train.training_saber_prpl_matched train    184 Epoch 650/1000 | loss_clf: 0.0008, loss_transfer: 0.6902, loss_cluster: 0.0019, loss_p: 8.1076, source_acc: 98.2848, target_acc: 37.5368, best_acc: 93.5474
+05:36:47 | INFO     train.training_saber_prpl_matched train    184 Epoch 700/1000 | loss_clf: 0.0013, loss_transfer: 0.6929, loss_cluster: 0.0018, loss_p: 8.0582, source_acc: 99.0088, target_acc: 46.1402, best_acc: 93.5474
+05:39:12 | INFO     train.training_saber_prpl_matched train    184 Epoch 750/1000 | loss_clf: 0.0060, loss_transfer: 0.6730, loss_cluster: 0.0027, loss_p: 8.4170, source_acc: 98.6931, target_acc: 22.1567, best_acc: 93.5474
+05:41:28 | INFO     train.training_saber_prpl_matched train    184 Epoch 800/1000 | loss_clf: 0.0005, loss_transfer: 0.6790, loss_cluster: 0.0005, loss_p: 8.4226, source_acc: 98.3437, target_acc: 34.7967, best_acc: 93.5474
+05:43:48 | INFO     train.training_saber_prpl_matched train    184 Epoch 850/1000 | loss_clf: 0.0093, loss_transfer: 0.6924, loss_cluster: 0.0030, loss_p: 8.0081, source_acc: 98.8299, target_acc: 25.1326, best_acc: 93.5474
+05:46:14 | INFO     train.training_saber_prpl_matched train    184 Epoch 900/1000 | loss_clf: 0.0002, loss_transfer: 0.6800, loss_cluster: 0.0004, loss_p: 8.2890, source_acc: 98.2406, target_acc: 44.4019, best_acc: 93.5474
+05:48:32 | INFO     train.training_saber_prpl_matched train    184 Epoch 950/1000 | loss_clf: 0.0001, loss_transfer: 0.6926, loss_cluster: 0.0002, loss_p: 8.0070, source_acc: 97.7039, target_acc: 30.3477, best_acc: 93.5474
+05:50:52 | INFO     train.training_saber_prpl_matched train    184 Epoch 1000/1000 | loss_clf: 0.0005, loss_transfer: 0.6929, loss_cluster: 0.0020, loss_p: 8.1308, source_acc: 99.1498, target_acc: 25.0147, best_acc: 93.5474
+05:50:52 | INFO     __main__ main     120 
+--------------> Finished training w.r.t. subject 5 session 0 acc 0.9355
+05:50:58 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+05:51:00 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+05:51:00 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+05:51:00 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+05:51:00 | INFO     train.training_saber_prpl_matched train    68  len of train data: 47516, len of test data: 3394
+05:51:03 | INFO     utils.metric update   25  --> A new better acc 0.4048 on subject 6 session 0
+05:51:03 | INFO     train.training_saber_prpl_matched train    184 Epoch 1/1000 | loss_clf: 5.9246, loss_transfer: 0.4945, loss_cluster: 0.0115, loss_p: 70.5103, source_acc: 40.2243, target_acc: 40.4832, best_acc: 40.4832
+05:51:10 | INFO     utils.metric update   25  --> A new better acc 0.7263 on subject 6 session 0
+05:51:35 | INFO     utils.metric update   25  --> A new better acc 0.7431 on subject 6 session 0
+05:51:44 | INFO     utils.metric update   25  --> A new better acc 0.8114 on subject 6 session 0
+05:51:47 | INFO     utils.metric update   25  --> A new better acc 0.8671 on subject 6 session 0
+05:53:23 | INFO     train.training_saber_prpl_matched train    184 Epoch 50/1000 | loss_clf: 0.2066, loss_transfer: 0.9687, loss_cluster: 0.0070, loss_p: 7.8700, source_acc: 96.7232, target_acc: 34.6199, best_acc: 86.7118
+05:55:47 | INFO     train.training_saber_prpl_matched train    184 Epoch 100/1000 | loss_clf: 0.0011, loss_transfer: 0.6912, loss_cluster: 0.0036, loss_p: 7.8481, source_acc: 98.8699, target_acc: 62.1980, best_acc: 86.7118
+05:58:02 | INFO     train.training_saber_prpl_matched train    184 Epoch 150/1000 | loss_clf: 0.0657, loss_transfer: 0.6888, loss_cluster: 0.0026, loss_p: 7.9289, source_acc: 98.7246, target_acc: 68.4738, best_acc: 86.7118
+06:00:21 | INFO     train.training_saber_prpl_matched train    184 Epoch 200/1000 | loss_clf: 0.0108, loss_transfer: 0.6949, loss_cluster: 0.0033, loss_p: 7.9605, source_acc: 99.4234, target_acc: 71.9210, best_acc: 86.7118
+06:02:47 | INFO     train.training_saber_prpl_matched train    184 Epoch 250/1000 | loss_clf: 0.0023, loss_transfer: 0.6791, loss_cluster: 0.0040, loss_p: 7.9152, source_acc: 99.8316, target_acc: 73.4532, best_acc: 86.7118
+06:05:04 | INFO     train.training_saber_prpl_matched train    184 Epoch 300/1000 | loss_clf: 0.0016, loss_transfer: 0.6949, loss_cluster: 0.0007, loss_p: 8.0251, source_acc: 98.9730, target_acc: 63.4355, best_acc: 86.7118
+06:06:14 | INFO     utils.metric update   25  --> A new better acc 0.8730 on subject 6 session 0
+06:06:20 | INFO     utils.metric update   25  --> A new better acc 0.8792 on subject 6 session 0
+06:06:30 | INFO     utils.metric update   25  --> A new better acc 0.8804 on subject 6 session 0
+06:06:40 | INFO     utils.metric update   25  --> A new better acc 0.9278 on subject 6 session 0
+06:07:23 | INFO     train.training_saber_prpl_matched train    184 Epoch 350/1000 | loss_clf: 0.0003, loss_transfer: 0.6921, loss_cluster: 0.0003, loss_p: 8.0277, source_acc: 99.7559, target_acc: 84.5315, best_acc: 92.7814
+06:09:44 | INFO     train.training_saber_prpl_matched train    184 Epoch 400/1000 | loss_clf: 0.0004, loss_transfer: 0.6923, loss_cluster: 0.0000, loss_p: 7.8600, source_acc: 99.6022, target_acc: 86.4172, best_acc: 92.7814
+06:12:05 | INFO     train.training_saber_prpl_matched train    184 Epoch 450/1000 | loss_clf: 0.0004, loss_transfer: 0.6961, loss_cluster: 0.0000, loss_p: 7.8961, source_acc: 99.4781, target_acc: 87.0654, best_acc: 92.7814
+06:14:21 | INFO     train.training_saber_prpl_matched train    184 Epoch 500/1000 | loss_clf: 0.0002, loss_transfer: 0.6930, loss_cluster: 0.0009, loss_p: 7.9133, source_acc: 99.8295, target_acc: 87.0654, best_acc: 92.7814
+06:16:41 | INFO     train.training_saber_prpl_matched train    184 Epoch 550/1000 | loss_clf: 0.0012, loss_transfer: 0.6930, loss_cluster: 0.0003, loss_p: 8.0033, source_acc: 98.5121, target_acc: 56.7177, best_acc: 92.7814
+06:19:06 | INFO     train.training_saber_prpl_matched train    184 Epoch 600/1000 | loss_clf: 0.0024, loss_transfer: 0.6886, loss_cluster: 0.0006, loss_p: 8.0051, source_acc: 99.5265, target_acc: 68.1791, best_acc: 92.7814
+06:21:21 | INFO     train.training_saber_prpl_matched train    184 Epoch 650/1000 | loss_clf: 0.0011, loss_transfer: 0.6858, loss_cluster: 0.0003, loss_p: 8.0739, source_acc: 99.4718, target_acc: 71.7443, best_acc: 92.7814
+06:23:41 | INFO     train.training_saber_prpl_matched train    184 Epoch 700/1000 | loss_clf: 0.0002, loss_transfer: 0.6907, loss_cluster: 0.0005, loss_p: 8.0786, source_acc: 99.3749, target_acc: 69.8291, best_acc: 92.7814
+06:26:04 | INFO     train.training_saber_prpl_matched train    184 Epoch 750/1000 | loss_clf: 0.0021, loss_transfer: 0.6807, loss_cluster: 0.0022, loss_p: 8.4095, source_acc: 96.2960, target_acc: 80.1709, best_acc: 92.7814
+06:28:23 | INFO     train.training_saber_prpl_matched train    184 Epoch 800/1000 | loss_clf: 0.0012, loss_transfer: 0.6897, loss_cluster: 0.0007, loss_p: 8.3567, source_acc: 98.9540, target_acc: 46.9652, best_acc: 92.7814
+06:30:44 | INFO     train.training_saber_prpl_matched train    184 Epoch 850/1000 | loss_clf: 0.0004, loss_transfer: 0.6910, loss_cluster: 0.0011, loss_p: 8.3514, source_acc: 99.0761, target_acc: 77.4013, best_acc: 92.7814
+06:33:04 | INFO     train.training_saber_prpl_matched train    184 Epoch 900/1000 | loss_clf: 0.0028, loss_transfer: 0.6885, loss_cluster: 0.0015, loss_p: 8.3163, source_acc: 95.6162, target_acc: 65.6747, best_acc: 92.7814
+06:35:32 | INFO     train.training_saber_prpl_matched train    184 Epoch 950/1000 | loss_clf: 0.0007, loss_transfer: 0.6776, loss_cluster: 0.0012, loss_p: 8.8879, source_acc: 99.8064, target_acc: 54.9204, best_acc: 92.7814
+06:37:48 | INFO     train.training_saber_prpl_matched train    184 Epoch 1000/1000 | loss_clf: 0.0116, loss_transfer: 0.6799, loss_cluster: 0.0008, loss_p: 8.1285, source_acc: 97.0410, target_acc: 54.5374, best_acc: 92.7814
+06:37:48 | INFO     __main__ main     120 
+--------------> Finished training w.r.t. subject 6 session 0 acc 0.9278
+06:37:55 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+06:37:56 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+06:37:57 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+06:37:57 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+06:37:57 | INFO     train.training_saber_prpl_matched train    68  len of train data: 47516, len of test data: 3394
+06:37:59 | INFO     utils.metric update   25  --> A new better acc 0.5012 on subject 7 session 0
+06:37:59 | INFO     train.training_saber_prpl_matched train    184 Epoch 1/1000 | loss_clf: 6.4621, loss_transfer: 0.4475, loss_cluster: 0.0071, loss_p: 89.2620, source_acc: 38.2629, target_acc: 50.1179, best_acc: 50.1179
+06:38:05 | INFO     utils.metric update   25  --> A new better acc 0.6382 on subject 7 session 0
+06:38:08 | INFO     utils.metric update   25  --> A new better acc 0.6700 on subject 7 session 0
+06:38:20 | INFO     utils.metric update   25  --> A new better acc 0.6715 on subject 7 session 0
+06:38:30 | INFO     utils.metric update   25  --> A new better acc 0.7487 on subject 7 session 0
+06:39:52 | INFO     utils.metric update   25  --> A new better acc 0.7563 on subject 7 session 0
+06:40:14 | INFO     utils.metric update   25  --> A new better acc 0.7746 on subject 7 session 0
+06:40:17 | INFO     train.training_saber_prpl_matched train    184 Epoch 50/1000 | loss_clf: 0.0393, loss_transfer: 0.6980, loss_cluster: 0.0105, loss_p: 7.9041, source_acc: 96.6517, target_acc: 68.5327, best_acc: 77.4602
+06:41:35 | INFO     utils.metric update   25  --> A new better acc 0.7985 on subject 7 session 0
+06:41:41 | INFO     utils.metric update   25  --> A new better acc 0.8052 on subject 7 session 0
+06:41:54 | INFO     utils.metric update   25  --> A new better acc 0.8073 on subject 7 session 0
+06:42:42 | INFO     train.training_saber_prpl_matched train    184 Epoch 100/1000 | loss_clf: 0.0548, loss_transfer: 0.6935, loss_cluster: 0.0044, loss_p: 7.9032, source_acc: 98.7036, target_acc: 75.0442, best_acc: 80.7307
+06:43:17 | INFO     utils.metric update   25  --> A new better acc 0.8094 on subject 7 session 0
+06:45:00 | INFO     train.training_saber_prpl_matched train    184 Epoch 150/1000 | loss_clf: 0.0905, loss_transfer: 0.6946, loss_cluster: 0.0017, loss_p: 7.8489, source_acc: 98.7983, target_acc: 72.4219, best_acc: 80.9369
+06:47:19 | INFO     train.training_saber_prpl_matched train    184 Epoch 200/1000 | loss_clf: 0.0008, loss_transfer: 0.6867, loss_cluster: 0.0068, loss_p: 8.0629, source_acc: 99.6170, target_acc: 67.0595, best_acc: 80.9369
+06:49:41 | INFO     train.training_saber_prpl_matched train    184 Epoch 250/1000 | loss_clf: 0.0014, loss_transfer: 0.6851, loss_cluster: 0.0053, loss_p: 7.9964, source_acc: 97.5061, target_acc: 49.2929, best_acc: 80.9369
+06:52:00 | INFO     train.training_saber_prpl_matched train    184 Epoch 300/1000 | loss_clf: 0.0500, loss_transfer: 0.6897, loss_cluster: 0.0031, loss_p: 8.0282, source_acc: 98.2806, target_acc: 42.6341, best_acc: 80.9369
+06:54:20 | INFO     train.training_saber_prpl_matched train    184 Epoch 350/1000 | loss_clf: 0.0113, loss_transfer: 0.6910, loss_cluster: 0.0012, loss_p: 7.9775, source_acc: 98.8404, target_acc: 48.7331, best_acc: 80.9369
+06:56:41 | INFO     train.training_saber_prpl_matched train    184 Epoch 400/1000 | loss_clf: 0.0039, loss_transfer: 0.6940, loss_cluster: 0.0050, loss_p: 7.9830, source_acc: 97.9354, target_acc: 29.4932, best_acc: 80.9369
+06:59:04 | INFO     train.training_saber_prpl_matched train    184 Epoch 450/1000 | loss_clf: 0.0016, loss_transfer: 0.6897, loss_cluster: 0.0007, loss_p: 7.9879, source_acc: 99.6506, target_acc: 48.7036, best_acc: 80.9369
+07:01:16 | INFO     train.training_saber_prpl_matched train    184 Epoch 500/1000 | loss_clf: 0.0009, loss_transfer: 0.6871, loss_cluster: 0.0018, loss_p: 8.0609, source_acc: 98.8656, target_acc: 52.0625, best_acc: 80.9369
+07:03:37 | INFO     train.training_saber_prpl_matched train    184 Epoch 550/1000 | loss_clf: 0.0006, loss_transfer: 0.6850, loss_cluster: 0.0007, loss_p: 8.0446, source_acc: 99.1834, target_acc: 51.7384, best_acc: 80.9369
+07:05:59 | INFO     train.training_saber_prpl_matched train    184 Epoch 600/1000 | loss_clf: 0.0124, loss_transfer: 0.6788, loss_cluster: 0.0011, loss_p: 8.2330, source_acc: 99.9558, target_acc: 51.6500, best_acc: 80.9369
+07:08:20 | INFO     train.training_saber_prpl_matched train    184 Epoch 650/1000 | loss_clf: 0.0079, loss_transfer: 0.6524, loss_cluster: 0.0011, loss_p: 8.1539, source_acc: 99.2403, target_acc: 66.1756, best_acc: 80.9369
+07:10:36 | INFO     train.training_saber_prpl_matched train    184 Epoch 700/1000 | loss_clf: 0.0015, loss_transfer: 0.8432, loss_cluster: 0.0065, loss_p: 8.6716, source_acc: 97.1378, target_acc: 52.5928, best_acc: 80.9369
+07:12:56 | INFO     train.training_saber_prpl_matched train    184 Epoch 750/1000 | loss_clf: 0.0010, loss_transfer: 0.6735, loss_cluster: 0.0012, loss_p: 8.3864, source_acc: 99.5265, target_acc: 51.6500, best_acc: 80.9369
+07:15:22 | INFO     train.training_saber_prpl_matched train    184 Epoch 800/1000 | loss_clf: 0.0010, loss_transfer: 0.6932, loss_cluster: 0.0021, loss_p: 8.4093, source_acc: 99.6086, target_acc: 49.4991, best_acc: 80.9369
+07:17:40 | INFO     train.training_saber_prpl_matched train    184 Epoch 850/1000 | loss_clf: 0.0076, loss_transfer: 0.6930, loss_cluster: 0.0012, loss_p: 8.1937, source_acc: 99.3686, target_acc: 56.5704, best_acc: 80.9369
+07:19:59 | INFO     train.training_saber_prpl_matched train    184 Epoch 900/1000 | loss_clf: 0.0199, loss_transfer: 0.6654, loss_cluster: 0.0013, loss_p: 8.5569, source_acc: 98.5963, target_acc: 52.7696, best_acc: 80.9369
+07:22:22 | INFO     train.training_saber_prpl_matched train    184 Epoch 950/1000 | loss_clf: 0.0182, loss_transfer: 0.7013, loss_cluster: 0.0030, loss_p: 10.8453, source_acc: 98.6362, target_acc: 36.7118, best_acc: 80.9369
+07:24:40 | INFO     train.training_saber_prpl_matched train    184 Epoch 1000/1000 | loss_clf: 0.0297, loss_transfer: 0.6870, loss_cluster: 0.0016, loss_p: 8.0807, source_acc: 99.1035, target_acc: 60.8132, best_acc: 80.9369
+07:24:40 | INFO     __main__ main     120 
+--------------> Finished training w.r.t. subject 7 session 0 acc 0.8094
+07:24:46 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+07:24:48 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+07:24:48 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+07:24:48 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+07:24:48 | INFO     train.training_saber_prpl_matched train    68  len of train data: 47516, len of test data: 3394
+07:24:51 | INFO     utils.metric update   25  --> A new better acc 0.4915 on subject 8 session 0
+07:24:51 | INFO     train.training_saber_prpl_matched train    184 Epoch 1/1000 | loss_clf: 5.4073, loss_transfer: 0.5671, loss_cluster: 0.0097, loss_p: 46.0509, source_acc: 35.7795, target_acc: 49.1456, best_acc: 49.1456
+07:24:54 | INFO     utils.metric update   25  --> A new better acc 0.5144 on subject 8 session 0
+07:24:59 | INFO     utils.metric update   25  --> A new better acc 0.5439 on subject 8 session 0
+07:25:05 | INFO     utils.metric update   25  --> A new better acc 0.5907 on subject 8 session 0
+07:25:07 | INFO     utils.metric update   25  --> A new better acc 0.7092 on subject 8 session 0
+07:25:38 | INFO     utils.metric update   25  --> A new better acc 0.7569 on subject 8 session 0
+07:25:46 | INFO     utils.metric update   25  --> A new better acc 0.7943 on subject 8 session 0
+07:27:06 | INFO     train.training_saber_prpl_matched train    184 Epoch 50/1000 | loss_clf: 0.0952, loss_transfer: 0.6894, loss_cluster: 0.0101, loss_p: 7.8870, source_acc: 97.2683, target_acc: 59.6641, best_acc: 79.4343
+07:29:30 | INFO     train.training_saber_prpl_matched train    184 Epoch 100/1000 | loss_clf: 0.0147, loss_transfer: 0.6881, loss_cluster: 0.0039, loss_p: 7.8545, source_acc: 98.2574, target_acc: 78.1084, best_acc: 79.4343
+07:29:36 | INFO     utils.metric update   25  --> A new better acc 0.8103 on subject 8 session 0
+07:31:32 | INFO     utils.metric update   25  --> A new better acc 0.8120 on subject 8 session 0
+07:31:39 | INFO     utils.metric update   25  --> A new better acc 0.8400 on subject 8 session 0
+07:31:54 | INFO     train.training_saber_prpl_matched train    184 Epoch 150/1000 | loss_clf: 0.0507, loss_transfer: 0.6881, loss_cluster: 0.0045, loss_p: 7.9184, source_acc: 98.2869, target_acc: 78.4620, best_acc: 84.0012
+07:34:10 | INFO     train.training_saber_prpl_matched train    184 Epoch 200/1000 | loss_clf: 0.0102, loss_transfer: 0.6931, loss_cluster: 0.0018, loss_p: 7.8719, source_acc: 99.8716, target_acc: 70.9782, best_acc: 84.0012
+07:36:31 | INFO     train.training_saber_prpl_matched train    184 Epoch 250/1000 | loss_clf: 0.0003, loss_transfer: 0.6791, loss_cluster: 0.0022, loss_p: 7.9191, source_acc: 99.3897, target_acc: 51.9446, best_acc: 84.0012
+07:38:57 | INFO     train.training_saber_prpl_matched train    184 Epoch 300/1000 | loss_clf: 0.0089, loss_transfer: 0.6831, loss_cluster: 0.0044, loss_p: 8.2493, source_acc: 98.6299, target_acc: 57.3954, best_acc: 84.0012
+07:41:16 | INFO     train.training_saber_prpl_matched train    184 Epoch 350/1000 | loss_clf: 0.0080, loss_transfer: 0.6830, loss_cluster: 0.0008, loss_p: 8.1097, source_acc: 99.3244, target_acc: 80.4950, best_acc: 84.0012
+07:42:15 | INFO     utils.metric update   25  --> A new better acc 0.8471 on subject 8 session 0
+07:42:17 | INFO     utils.metric update   25  --> A new better acc 0.9207 on subject 8 session 0
+07:43:35 | INFO     train.training_saber_prpl_matched train    184 Epoch 400/1000 | loss_clf: 0.0194, loss_transfer: 0.6915, loss_cluster: 0.0040, loss_p: 8.1967, source_acc: 98.9582, target_acc: 79.5522, best_acc: 92.0742
+07:45:56 | INFO     train.training_saber_prpl_matched train    184 Epoch 450/1000 | loss_clf: 0.0009, loss_transfer: 0.6890, loss_cluster: 0.0034, loss_p: 8.1193, source_acc: 99.2739, target_acc: 82.4396, best_acc: 92.0742
+07:48:17 | INFO     train.training_saber_prpl_matched train    184 Epoch 500/1000 | loss_clf: 0.0135, loss_transfer: 0.6888, loss_cluster: 0.0007, loss_p: 8.0084, source_acc: 97.5208, target_acc: 74.7201, best_acc: 92.0742
+07:50:18 | INFO     utils.metric update   25  --> A new better acc 0.9234 on subject 8 session 0
+07:50:23 | INFO     utils.metric update   25  --> A new better acc 0.9275 on subject 8 session 0
+07:50:26 | INFO     utils.metric update   25  --> A new better acc 0.9313 on subject 8 session 0
+07:50:29 | INFO     utils.metric update   25  --> A new better acc 0.9372 on subject 8 session 0
+07:50:37 | INFO     train.training_saber_prpl_matched train    184 Epoch 550/1000 | loss_clf: 0.0682, loss_transfer: 0.6768, loss_cluster: 0.0025, loss_p: 8.0513, source_acc: 98.6194, target_acc: 91.3966, best_acc: 93.7242
+07:52:59 | INFO     train.training_saber_prpl_matched train    184 Epoch 600/1000 | loss_clf: 0.0043, loss_transfer: 0.6870, loss_cluster: 0.0037, loss_p: 8.1729, source_acc: 97.9754, target_acc: 80.4066, best_acc: 93.7242
+07:55:25 | INFO     train.training_saber_prpl_matched train    184 Epoch 650/1000 | loss_clf: 0.0021, loss_transfer: 0.6842, loss_cluster: 0.0024, loss_p: 8.1207, source_acc: 97.3083, target_acc: 87.6841, best_acc: 93.7242
+07:57:41 | INFO     train.training_saber_prpl_matched train    184 Epoch 700/1000 | loss_clf: 0.0002, loss_transfer: 0.6954, loss_cluster: 0.0004, loss_p: 7.9490, source_acc: 98.8299, target_acc: 85.8279, best_acc: 93.7242
+07:59:59 | INFO     train.training_saber_prpl_matched train    184 Epoch 750/1000 | loss_clf: 0.0006, loss_transfer: 0.6928, loss_cluster: 0.0002, loss_p: 8.0748, source_acc: 99.2718, target_acc: 81.6735, best_acc: 93.7242
+08:02:25 | INFO     train.training_saber_prpl_matched train    184 Epoch 800/1000 | loss_clf: 0.0102, loss_transfer: 0.6767, loss_cluster: 0.0042, loss_p: 7.9821, source_acc: 95.0501, target_acc: 74.1308, best_acc: 93.7242
+08:04:47 | INFO     train.training_saber_prpl_matched train    184 Epoch 850/1000 | loss_clf: 0.0022, loss_transfer: 0.7048, loss_cluster: 0.0007, loss_p: 9.5937, source_acc: 98.1585, target_acc: 79.3754, best_acc: 93.7242
+08:07:09 | INFO     train.training_saber_prpl_matched train    184 Epoch 900/1000 | loss_clf: 0.0084, loss_transfer: 0.6917, loss_cluster: 0.0093, loss_p: 8.2639, source_acc: 96.8116, target_acc: 61.9623, best_acc: 93.7242
+08:09:34 | INFO     train.training_saber_prpl_matched train    184 Epoch 950/1000 | loss_clf: 0.0068, loss_transfer: 0.7005, loss_cluster: 0.0013, loss_p: 8.5640, source_acc: 96.7674, target_acc: 67.2068, best_acc: 93.7242
+08:11:57 | INFO     train.training_saber_prpl_matched train    184 Epoch 1000/1000 | loss_clf: 0.0116, loss_transfer: 0.6774, loss_cluster: 0.0050, loss_p: 8.9500, source_acc: 99.0677, target_acc: 70.3595, best_acc: 93.7242
+08:11:57 | INFO     __main__ main     120 
+--------------> Finished training w.r.t. subject 8 session 0 acc 0.9372
+08:12:03 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+08:12:04 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+08:12:04 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+08:12:04 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+08:12:05 | INFO     train.training_saber_prpl_matched train    68  len of train data: 47516, len of test data: 3394
+08:12:07 | INFO     utils.metric update   25  --> A new better acc 0.5931 on subject 9 session 0
+08:12:07 | INFO     train.training_saber_prpl_matched train    184 Epoch 1/1000 | loss_clf: 5.7610, loss_transfer: 0.4765, loss_cluster: 0.0105, loss_p: 73.3360, source_acc: 42.4720, target_acc: 59.3105, best_acc: 59.3105
+08:12:27 | INFO     utils.metric update   25  --> A new better acc 0.5969 on subject 9 session 0
+08:12:30 | INFO     utils.metric update   25  --> A new better acc 0.6217 on subject 9 session 0
+08:12:59 | INFO     utils.metric update   25  --> A new better acc 0.6370 on subject 9 session 0
+08:13:02 | INFO     utils.metric update   25  --> A new better acc 0.6576 on subject 9 session 0
+08:13:05 | INFO     utils.metric update   25  --> A new better acc 0.6650 on subject 9 session 0
+08:13:07 | INFO     utils.metric update   25  --> A new better acc 0.6806 on subject 9 session 0
+08:14:25 | INFO     train.training_saber_prpl_matched train    184 Epoch 50/1000 | loss_clf: 0.1067, loss_transfer: 0.6902, loss_cluster: 0.0114, loss_p: 7.9004, source_acc: 90.5000, target_acc: 50.3830, best_acc: 68.0613
+08:16:04 | INFO     utils.metric update   25  --> A new better acc 0.6918 on subject 9 session 0
+08:16:14 | INFO     utils.metric update   25  --> A new better acc 0.7101 on subject 9 session 0
+08:16:38 | INFO     utils.metric update   25  --> A new better acc 0.7139 on subject 9 session 0
+08:16:42 | INFO     utils.metric update   25  --> A new better acc 0.7219 on subject 9 session 0
+08:16:45 | INFO     utils.metric update   25  --> A new better acc 0.7225 on subject 9 session 0
+08:16:48 | INFO     train.training_saber_prpl_matched train    184 Epoch 100/1000 | loss_clf: 0.0013, loss_transfer: 0.6945, loss_cluster: 0.0028, loss_p: 7.8914, source_acc: 98.1817, target_acc: 71.5380, best_acc: 72.2451
+08:16:50 | INFO     utils.metric update   25  --> A new better acc 0.7348 on subject 9 session 0
+08:19:13 | INFO     train.training_saber_prpl_matched train    184 Epoch 150/1000 | loss_clf: 0.2687, loss_transfer: 0.6902, loss_cluster: 0.0061, loss_p: 7.9477, source_acc: 99.1119, target_acc: 68.2381, best_acc: 73.4826
+08:21:32 | INFO     train.training_saber_prpl_matched train    184 Epoch 200/1000 | loss_clf: 0.0423, loss_transfer: 0.6900, loss_cluster: 0.0041, loss_p: 7.9590, source_acc: 98.0659, target_acc: 67.8256, best_acc: 73.4826
+08:21:46 | INFO     utils.metric update   25  --> A new better acc 0.7387 on subject 9 session 0
+08:21:56 | INFO     utils.metric update   25  --> A new better acc 0.7563 on subject 9 session 0
+08:21:59 | INFO     utils.metric update   25  --> A new better acc 0.7669 on subject 9 session 0
+08:23:14 | INFO     utils.metric update   25  --> A new better acc 0.7985 on subject 9 session 0
+08:23:51 | INFO     train.training_saber_prpl_matched train    184 Epoch 250/1000 | loss_clf: 0.0024, loss_transfer: 0.6920, loss_cluster: 0.0007, loss_p: 7.9261, source_acc: 98.2301, target_acc: 72.6282, best_acc: 79.8468
+08:26:17 | INFO     train.training_saber_prpl_matched train    184 Epoch 300/1000 | loss_clf: 0.0009, loss_transfer: 0.6909, loss_cluster: 0.0003, loss_p: 8.0016, source_acc: 99.3055, target_acc: 66.9711, best_acc: 79.8468
+08:28:35 | INFO     train.training_saber_prpl_matched train    184 Epoch 350/1000 | loss_clf: 0.0148, loss_transfer: 0.6874, loss_cluster: 0.0015, loss_p: 8.0648, source_acc: 97.2830, target_acc: 52.4160, best_acc: 79.8468
+08:30:57 | INFO     train.training_saber_prpl_matched train    184 Epoch 400/1000 | loss_clf: 0.0005, loss_transfer: 0.6921, loss_cluster: 0.0007, loss_p: 8.0886, source_acc: 99.7180, target_acc: 63.5533, best_acc: 79.8468
+08:33:21 | INFO     train.training_saber_prpl_matched train    184 Epoch 450/1000 | loss_clf: 0.0017, loss_transfer: 0.6745, loss_cluster: 0.0053, loss_p: 8.0898, source_acc: 98.9498, target_acc: 62.9346, best_acc: 79.8468
+08:35:46 | INFO     train.training_saber_prpl_matched train    184 Epoch 500/1000 | loss_clf: 0.0038, loss_transfer: 0.6881, loss_cluster: 0.0009, loss_p: 7.9916, source_acc: 99.4023, target_acc: 55.3919, best_acc: 79.8468
+08:38:02 | INFO     train.training_saber_prpl_matched train    184 Epoch 550/1000 | loss_clf: 0.0061, loss_transfer: 0.6942, loss_cluster: 0.0014, loss_p: 8.0997, source_acc: 98.5626, target_acc: 62.1685, best_acc: 79.8468
+08:40:21 | INFO     train.training_saber_prpl_matched train    184 Epoch 600/1000 | loss_clf: 0.0062, loss_transfer: 0.6857, loss_cluster: 0.0033, loss_p: 8.1072, source_acc: 98.9498, target_acc: 61.7266, best_acc: 79.8468
+08:42:49 | INFO     train.training_saber_prpl_matched train    184 Epoch 650/1000 | loss_clf: 0.0039, loss_transfer: 0.6878, loss_cluster: 0.0015, loss_p: 8.1332, source_acc: 98.9982, target_acc: 47.8197, best_acc: 79.8468
+08:45:05 | INFO     train.training_saber_prpl_matched train    184 Epoch 700/1000 | loss_clf: 0.0045, loss_transfer: 0.6884, loss_cluster: 0.0003, loss_p: 8.1151, source_acc: 98.9435, target_acc: 28.9923, best_acc: 79.8468
+08:47:24 | INFO     train.training_saber_prpl_matched train    184 Epoch 750/1000 | loss_clf: 0.0038, loss_transfer: 0.6906, loss_cluster: 0.0008, loss_p: 8.1013, source_acc: 94.8817, target_acc: 33.8833, best_acc: 79.8468
+08:49:47 | INFO     train.training_saber_prpl_matched train    184 Epoch 800/1000 | loss_clf: 0.0151, loss_transfer: 0.6508, loss_cluster: 0.0016, loss_p: 8.0510, source_acc: 98.5521, target_acc: 33.7065, best_acc: 79.8468
+08:52:09 | INFO     train.training_saber_prpl_matched train    184 Epoch 850/1000 | loss_clf: 0.0042, loss_transfer: 0.6729, loss_cluster: 0.0010, loss_p: 8.2144, source_acc: 98.5794, target_acc: 50.9134, best_acc: 79.8468
+08:54:29 | INFO     train.training_saber_prpl_matched train    184 Epoch 900/1000 | loss_clf: 0.0080, loss_transfer: 0.2263, loss_cluster: 0.0029, loss_p: 11.8860, source_acc: 99.0551, target_acc: 33.9128, best_acc: 79.8468
+08:56:49 | INFO     train.training_saber_prpl_matched train    184 Epoch 950/1000 | loss_clf: 0.0075, loss_transfer: 0.6684, loss_cluster: 0.0018, loss_p: 8.9471, source_acc: 99.4486, target_acc: 30.8191, best_acc: 79.8468
+08:59:15 | INFO     train.training_saber_prpl_matched train    184 Epoch 1000/1000 | loss_clf: 0.0194, loss_transfer: 0.6819, loss_cluster: 0.0001, loss_p: 8.4648, source_acc: 99.2802, target_acc: 28.0790, best_acc: 79.8468
+08:59:15 | INFO     __main__ main     120 
+--------------> Finished training w.r.t. subject 9 session 0 acc 0.7985
+08:59:23 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+08:59:24 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+08:59:24 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+08:59:25 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+08:59:25 | INFO     train.training_saber_prpl_matched train    68  len of train data: 47516, len of test data: 3394
+08:59:27 | INFO     utils.metric update   25  --> A new better acc 0.5902 on subject 10 session 0
+08:59:27 | INFO     train.training_saber_prpl_matched train    184 Epoch 1/1000 | loss_clf: 5.4539, loss_transfer: 0.4500, loss_cluster: 0.0053, loss_p: 51.6748, source_acc: 39.7087, target_acc: 59.0159, best_acc: 59.0159
+08:59:53 | INFO     utils.metric update   25  --> A new better acc 0.7537 on subject 10 session 0
+08:59:58 | INFO     utils.metric update   25  --> A new better acc 0.7834 on subject 10 session 0
+09:01:41 | INFO     train.training_saber_prpl_matched train    184 Epoch 50/1000 | loss_clf: 0.0110, loss_transfer: 0.6893, loss_cluster: 0.0093, loss_p: 7.8797, source_acc: 97.2767, target_acc: 75.3683, best_acc: 78.3441
+09:01:49 | INFO     utils.metric update   25  --> A new better acc 0.7882 on subject 10 session 0
+09:01:59 | INFO     utils.metric update   25  --> A new better acc 0.7908 on subject 10 session 0
+09:02:05 | INFO     utils.metric update   25  --> A new better acc 0.8070 on subject 10 session 0
+09:02:08 | INFO     utils.metric update   25  --> A new better acc 0.8430 on subject 10 session 0
+09:02:10 | INFO     utils.metric update   25  --> A new better acc 0.8636 on subject 10 session 0
+09:02:18 | INFO     utils.metric update   25  --> A new better acc 0.8736 on subject 10 session 0
+09:04:00 | INFO     train.training_saber_prpl_matched train    184 Epoch 100/1000 | loss_clf: 0.0666, loss_transfer: 0.6950, loss_cluster: 0.0037, loss_p: 8.0046, source_acc: 95.9214, target_acc: 69.2104, best_acc: 87.3600
+09:05:05 | INFO     utils.metric update   25  --> A new better acc 0.8768 on subject 10 session 0
+09:06:23 | INFO     train.training_saber_prpl_matched train    184 Epoch 150/1000 | loss_clf: 0.0094, loss_transfer: 0.6905, loss_cluster: 0.0048, loss_p: 7.9148, source_acc: 99.3118, target_acc: 77.8433, best_acc: 87.6841
+09:08:43 | INFO     train.training_saber_prpl_matched train    184 Epoch 200/1000 | loss_clf: 0.0200, loss_transfer: 0.6951, loss_cluster: 0.0029, loss_p: 7.9723, source_acc: 99.9095, target_acc: 83.7949, best_acc: 87.6841
+09:11:05 | INFO     train.training_saber_prpl_matched train    184 Epoch 250/1000 | loss_clf: 0.0003, loss_transfer: 0.6928, loss_cluster: 0.0003, loss_p: 7.9294, source_acc: 99.8316, target_acc: 86.7708, best_acc: 87.6841
+09:13:27 | INFO     train.training_saber_prpl_matched train    184 Epoch 300/1000 | loss_clf: 0.0025, loss_transfer: 0.6931, loss_cluster: 0.0001, loss_p: 7.8974, source_acc: 99.9495, target_acc: 73.7773, best_acc: 87.6841
+09:15:44 | INFO     train.training_saber_prpl_matched train    184 Epoch 350/1000 | loss_clf: 0.0209, loss_transfer: 0.6904, loss_cluster: 0.0035, loss_p: 8.2111, source_acc: 99.8590, target_acc: 58.1320, best_acc: 87.6841
+09:18:01 | INFO     train.training_saber_prpl_matched train    184 Epoch 400/1000 | loss_clf: 0.0017, loss_transfer: 0.6906, loss_cluster: 0.0009, loss_p: 7.9981, source_acc: 98.9961, target_acc: 59.0159, best_acc: 87.6841
+09:20:18 | INFO     train.training_saber_prpl_matched train    184 Epoch 450/1000 | loss_clf: 0.0009, loss_transfer: 0.6869, loss_cluster: 0.0002, loss_p: 7.9729, source_acc: 99.6990, target_acc: 53.8303, best_acc: 87.6841
+09:22:44 | INFO     train.training_saber_prpl_matched train    184 Epoch 500/1000 | loss_clf: 0.0126, loss_transfer: 0.6682, loss_cluster: 0.0016, loss_p: 8.0778, source_acc: 99.5875, target_acc: 47.2599, best_acc: 87.6841
+09:24:55 | INFO     train.training_saber_prpl_matched train    184 Epoch 550/1000 | loss_clf: 0.0035, loss_transfer: 0.6754, loss_cluster: 0.0026, loss_p: 8.0051, source_acc: 99.0740, target_acc: 59.4873, best_acc: 87.6841
+09:27:13 | INFO     train.training_saber_prpl_matched train    184 Epoch 600/1000 | loss_clf: 0.0008, loss_transfer: 0.6951, loss_cluster: 0.0005, loss_p: 8.0493, source_acc: 99.8127, target_acc: 63.6712, best_acc: 87.6841
+09:29:34 | INFO     train.training_saber_prpl_matched train    184 Epoch 650/1000 | loss_clf: 0.0119, loss_transfer: 0.6943, loss_cluster: 0.0003, loss_p: 7.9430, source_acc: 100.0000, target_acc: 55.1856, best_acc: 87.6841
+09:31:58 | INFO     train.training_saber_prpl_matched train    184 Epoch 700/1000 | loss_clf: 0.0007, loss_transfer: 0.6899, loss_cluster: 0.0003, loss_p: 7.9593, source_acc: 99.4444, target_acc: 64.7908, best_acc: 87.6841
+09:34:14 | INFO     train.training_saber_prpl_matched train    184 Epoch 750/1000 | loss_clf: 0.0098, loss_transfer: 0.6461, loss_cluster: 0.0008, loss_p: 8.0030, source_acc: 99.4970, target_acc: 67.0301, best_acc: 87.6841
+09:36:32 | INFO     train.training_saber_prpl_matched train    184 Epoch 800/1000 | loss_clf: 0.0126, loss_transfer: 0.6758, loss_cluster: 0.0016, loss_p: 8.0897, source_acc: 98.8404, target_acc: 62.2864, best_acc: 87.6841
+09:38:58 | INFO     train.training_saber_prpl_matched train    184 Epoch 850/1000 | loss_clf: 0.0012, loss_transfer: 0.6862, loss_cluster: 0.0018, loss_p: 8.6803, source_acc: 99.6001, target_acc: 68.5032, best_acc: 87.6841
+09:41:15 | INFO     train.training_saber_prpl_matched train    184 Epoch 900/1000 | loss_clf: 0.0079, loss_transfer: 0.6829, loss_cluster: 0.0021, loss_p: 8.3808, source_acc: 99.5307, target_acc: 63.1408, best_acc: 87.6841
+09:43:34 | INFO     train.training_saber_prpl_matched train    184 Epoch 950/1000 | loss_clf: 0.0010, loss_transfer: 0.6848, loss_cluster: 0.0024, loss_p: 8.0421, source_acc: 99.5833, target_acc: 72.5692, best_acc: 87.6841
+09:45:56 | INFO     train.training_saber_prpl_matched train    184 Epoch 1000/1000 | loss_clf: 0.0010, loss_transfer: 0.6842, loss_cluster: 0.0011, loss_p: 8.0548, source_acc: 99.7369, target_acc: 51.2669, best_acc: 87.6841
+09:45:56 | INFO     __main__ main     120 
+--------------> Finished training w.r.t. subject 10 session 0 acc 0.8768
+09:46:03 | INFO     data.utils merge_for_all_subjects 62  Merging data and labels....
+09:46:04 | INFO     data.utils merge_for_all_subjects 83  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+09:46:04 | INFO     data.utils merge_for_one_subject 100 Merging data and labels....
+09:46:04 | INFO     data.utils merge_for_one_subject 113 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+09:46:04 | INFO     train.training_saber_prpl_matched train    68  len of train data: 47516, len of test data: 3394
+09:46:07 | INFO     utils.metric update   25  --> A new better acc 0.3379 on subject 11 session 0
+09:46:07 | INFO     train.training_saber_prpl_matched train    184 Epoch 1/1000 | loss_clf: 5.4197, loss_transfer: 0.5032, loss_cluster: 0.0116, loss_p: 54.0182, source_acc: 33.5613, target_acc: 33.7949, best_acc: 33.7949
+09:46:10 | INFO     utils.metric update   25  --> A new better acc 0.3447 on subject 11 session 0
+09:46:13 | INFO     utils.metric update   25  --> A new better acc 0.4258 on subject 11 session 0
+09:46:19 | INFO     utils.metric update   25  --> A new better acc 0.5121 on subject 11 session 0
+09:46:22 | INFO     utils.metric update   25  --> A new better acc 0.5206 on subject 11 session 0
+09:46:29 | INFO     utils.metric update   25  --> A new better acc 0.5928 on subject 11 session 0
+09:46:32 | INFO     utils.metric update   25  --> A new better acc 0.6606 on subject 11 session 0
+09:46:38 | INFO     utils.metric update   25  --> A new better acc 0.7510 on subject 11 session 0
+09:46:41 | INFO     utils.metric update   25  --> A new better acc 0.8055 on subject 11 session 0
+09:48:26 | INFO     train.training_saber_prpl_matched train    184 Epoch 50/1000 | loss_clf: 0.1634, loss_transfer: 0.6921, loss_cluster: 0.0172, loss_p: 7.8647, source_acc: 95.3321, target_acc: 50.3241, best_acc: 80.5539
+09:50:46 | INFO     train.training_saber_prpl_matched train    184 Epoch 100/1000 | loss_clf: 0.1593, loss_transfer: 0.6893, loss_cluster: 0.0112, loss_p: 7.8522, source_acc: 99.4465, target_acc: 44.8438, best_acc: 80.5539
+09:53:08 | INFO     train.training_saber_prpl_matched train    184 Epoch 150/1000 | loss_clf: 0.0003, loss_transfer: 0.6941, loss_cluster: 0.0025, loss_p: 8.0014, source_acc: 99.5160, target_acc: 48.6447, best_acc: 80.5539
+09:55:36 | INFO     train.training_saber_prpl_matched train    184 Epoch 200/1000 | loss_clf: 0.0146, loss_transfer: 0.6925, loss_cluster: 0.0015, loss_p: 7.9367, source_acc: 97.7397, target_acc: 57.4543, best_acc: 80.5539
+09:57:53 | INFO     train.training_saber_prpl_matched train    184 Epoch 250/1000 | loss_clf: 0.0001, loss_transfer: 0.6956, loss_cluster: 0.0002, loss_p: 7.9331, source_acc: 99.3497, target_acc: 68.6506, best_acc: 80.5539
+10:00:12 | INFO     train.training_saber_prpl_matched train    184 Epoch 300/1000 | loss_clf: 0.0246, loss_transfer: 0.6890, loss_cluster: 0.0009, loss_p: 7.9154, source_acc: 99.4149, target_acc: 65.0560, best_acc: 80.5539
+10:00:59 | INFO     utils.metric update   25  --> A new better acc 0.8079 on subject 11 session 0
+10:02:38 | INFO     train.training_saber_prpl_matched train    184 Epoch 350/1000 | loss_clf: 0.0125, loss_transfer: 0.6822, loss_cluster: 0.0033, loss_p: 8.1819, source_acc: 98.9056, target_acc: 60.0471, best_acc: 80.7896
+10:04:07 | INFO     utils.metric update   25  --> A new better acc 0.8362 on subject 11 session 0
+10:04:53 | INFO     train.training_saber_prpl_matched train    184 Epoch 400/1000 | loss_clf: 0.0008, loss_transfer: 0.6898, loss_cluster: 0.0005, loss_p: 8.0263, source_acc: 99.5665, target_acc: 78.4620, best_acc: 83.6181
+10:06:55 | INFO     utils.metric update   25  --> A new better acc 0.9025 on subject 11 session 0
+10:07:12 | INFO     train.training_saber_prpl_matched train    184 Epoch 450/1000 | loss_clf: 0.0036, loss_transfer: 0.6736, loss_cluster: 0.0015, loss_p: 8.2518, source_acc: 99.9453, target_acc: 78.4620, best_acc: 90.2475
+10:10:07 | INFO     utils.metric update   25  --> A new better acc 0.9090 on subject 11 session 0
+10:10:15 | INFO     utils.metric update   25  --> A new better acc 0.9213 on subject 11 session 0
+10:10:21 | INFO     utils.metric update   25  --> A new better acc 0.9352 on subject 11 session 0
+10:10:25 | INFO     train.training_saber_prpl_matched train    184 Epoch 500/1000 | loss_clf: 0.0134, loss_transfer: 0.6947, loss_cluster: 0.0004, loss_p: 8.2400, source_acc: 98.2511, target_acc: 91.2787, best_acc: 93.5180
+10:10:34 | INFO     utils.metric update   25  --> A new better acc 0.9425 on subject 11 session 0
+10:11:14 | INFO     utils.metric update   25  --> A new better acc 0.9446 on subject 11 session 0
+10:14:08 | INFO     train.training_saber_prpl_matched train    184 Epoch 550/1000 | loss_clf: 0.0002, loss_transfer: 0.6919, loss_cluster: 0.0004, loss_p: 8.0082, source_acc: 97.9544, target_acc: 87.0654, best_acc: 94.4608
+10:15:44 | INFO     utils.metric update   25  --> A new better acc 0.9652 on subject 11 session 0
+10:16:15 | INFO     utils.metric update   25  --> A new better acc 0.9679 on subject 11 session 0
+10:17:48 | INFO     train.training_saber_prpl_matched train    184 Epoch 600/1000 | loss_clf: 0.0003, loss_transfer: 0.6910, loss_cluster: 0.0002, loss_p: 8.0451, source_acc: 99.1203, target_acc: 77.5486, best_acc: 96.7885
+10:21:00 | INFO     utils.metric update   25  --> A new better acc 1.0000 on subject 11 session 0
+10:21:31 | INFO     train.training_saber_prpl_matched train    184 Epoch 650/1000 | loss_clf: 0.0006, loss_transfer: 0.6940, loss_cluster: 0.0001, loss_p: 8.0242, source_acc: 99.6064, target_acc: 99.2339, best_acc: 100.0000
+10:25:11 | INFO     train.training_saber_prpl_matched train    184 Epoch 700/1000 | loss_clf: 0.0001, loss_transfer: 0.6908, loss_cluster: 0.0005, loss_p: 8.1047, source_acc: 97.3756, target_acc: 92.5751, best_acc: 100.0000
+10:28:52 | INFO     train.training_saber_prpl_matched train    184 Epoch 750/1000 | loss_clf: 0.0007, loss_transfer: 0.6894, loss_cluster: 0.0006, loss_p: 7.9804, source_acc: 97.3609, target_acc: 86.0931, best_acc: 100.0000
+10:32:13 | INFO     train.training_saber_prpl_matched train    184 Epoch 800/1000 | loss_clf: 0.0048, loss_transfer: 0.6839, loss_cluster: 0.0019, loss_p: 7.9223, source_acc: 99.9495, target_acc: 80.0236, best_acc: 100.0000
+10:35:28 | INFO     train.training_saber_prpl_matched train    184 Epoch 850/1000 | loss_clf: 0.0332, loss_transfer: 0.6913, loss_cluster: 0.0009, loss_p: 8.2741, source_acc: 98.7541, target_acc: 67.4720, best_acc: 100.0000
+10:38:47 | INFO     train.training_saber_prpl_matched train    184 Epoch 900/1000 | loss_clf: 0.0101, loss_transfer: 0.6896, loss_cluster: 0.0011, loss_p: 8.1971, source_acc: 98.3437, target_acc: 61.8739, best_acc: 100.0000
+10:42:08 | INFO     train.training_saber_prpl_matched train    184 Epoch 950/1000 | loss_clf: 0.0081, loss_transfer: 0.6690, loss_cluster: 0.0005, loss_p: 8.1779, source_acc: 98.6720, target_acc: 67.3836, best_acc: 100.0000

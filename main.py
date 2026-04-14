@@ -10,7 +10,8 @@ from loguru import logger
 from constant.model_map import MODEL
 from data.dataloder import load_data
 from data.utils import merge_and_split
-from train.training import train
+from train.training import train as train_default
+from train.training_saber_prpl_matched import train as train_saber_prpl_matched
 
 from utils.metric import Metric
 from utils.random_seed import setup_seed
@@ -52,14 +53,15 @@ def main(
         typer.Option(help='type of data split (kfold, leave-one-subject-out)'),
     ] = cli_enum.SplitTypeName.LEAVE_ONE_SUBJECT_OUT,
     split_ratio: Annotated[float, typer.Option(help='ratio for train data size')] = 0.6,
-    batch_size: Annotated[int, typer.Option(help='batch size for training')] = 128,
-    epochs: Annotated[int, typer.Option(help='number of epochs for training')] = 60,
+    batch_size: Annotated[int, typer.Option(help='batch size for training')] = 96,
+    epochs: Annotated[int, typer.Option(help='number of epochs for training')] = 1000,
     data_random: Annotated[bool, typer.Option(help='whether to shuffle the data')] = False,
     only_one_experiment: Annotated[bool, typer.Option(help='whether to run only one experiment for debugging')] = False,
     only_one_session: Annotated[bool, typer.Option(help='whether to run only one session for debugging')] = True,
     random_seed: Annotated[int | None, typer.Option(help='random seed for reproducibility, None for no seed (i.e., random)')] = 42,
     learning_rate: Annotated[float, typer.Option(help='learning rate for training')] = 0.001,
     early_stop_patience: Annotated[int, typer.Option(help='early stop after N epochs without test acc improvement (0 = disabled)')] = 0,
+
     level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
     """Welcome! Use --help option to see usage information."""
@@ -107,13 +109,12 @@ def main(
 
             model = MODEL[model_name](
                 num_electrodes, num_features, num_classes,
-                **(dict(single_branch=True) if model_name == cli_enum.ModelName.SABER else {})
             ).to(device)
 
 
-            train(model, metric, train_data, train_labels, test_data, test_labels,
-                  batch_size, num_classes, device, epochs, task_type, subject_id,
-                  session_id, learning_rate, early_stop_patience)
+            train_saber_prpl_matched(model, metric, train_data, train_labels, test_data, test_labels,
+                              batch_size, num_classes, device, epochs, task_type, subject_id,
+                              session_id, learning_rate, early_stop_patience)
 
 
             logger.info("\n--------------> Finished training w.r.t. subject {} session {} acc {:<.4f}",

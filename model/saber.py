@@ -2,13 +2,13 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from model.prpl import LabelClassifier, PairLoss
+from model.prpl import LabelClassifier, PairLoss, TransferLoss
 from model.residual_gcn import MulipleResidualGCN
 from utils.graphConstructionFromStandard import get_adj_from_standard
 
 
 class Saber(nn.Module):
-    def __init__(self, num_electrodes=62, in_features=5, num_classes=3, num_layers=2, single_branch=False):
+    def __init__(self, num_electrodes=62, in_features=5, num_classes=3, num_layers=2, max_iter=1000):
         super().__init__()
 
         self.num_electrodes = num_electrodes
@@ -17,16 +17,14 @@ class Saber(nn.Module):
         self.num_classes = num_classes
         self.hidden_2 = 64
 
-        # Force single-branch mode for PRPL-style Saber training.
-        self.single_branch = True
-        self.max_iter = 1000
+        # SABER now always uses the single graph feature extractor branch.
+        self.max_iter = max_iter
 
         self.feature_extractor = FeatureExtractor(
             num_electrodes=num_electrodes,
             num_feature=in_features,
             layers=num_layers,
             hidden_2=self.hidden_2,
-            single_branch=True,
         )
 
         self.prpl_classifier = LabelClassifier(
@@ -34,10 +32,16 @@ class Saber(nn.Module):
             max_iter=self.max_iter,
         )
         self.pair_loss = PairLoss(max_iter=self.max_iter)
+        self.transfer_loss = TransferLoss(
+            loss_type='dann',
+            max_iter=self.max_iter,
+            hidden_1=self.hidden_2,
+        )
 
     def forward(self, source, target, source_label):
         source_feat = self.feature_extractor(source)
         target_feat = self.feature_extractor(target)
+        batch_size = source_feat.size(0)
 
         self.prpl_classifier.update_P(source_feat, source_label)
 
@@ -50,7 +54,11 @@ class Saber(nn.Module):
             - torch.eye(self.hidden_2, device=source.device),
             'fro',
         )
-        return clf_loss, cluster_loss, p_loss
+        trans_loss = self.transfer_loss(
+            source_feat + 0.005 * torch.randn((batch_size, self.hidden_2), device=source_feat.device),
+            target_feat + 0.005 * torch.randn((batch_size, self.hidden_2), device=target_feat.device),
+        )
+        return clf_loss, cluster_loss, p_loss, trans_loss
 
     def epoch_end_hook(self, epoch, source_features, source_labels):
         self.pair_loss.update_threshold(epoch)
@@ -63,7 +71,7 @@ class Saber(nn.Module):
 
 
 class FeatureExtractor(nn.Module):
-    def __init__(self, num_electrodes, num_feature, layers=2, hidden_2=64, single_branch=False):
+    def __init__(self, num_electrodes, num_feature, layers=2, hidden_2=64):
         super().__init__()
         self.chan_num = num_electrodes
         self.band_num = num_feature

@@ -4,6 +4,7 @@ from einops import rearrange
 import numpy as np
 import torch
 from loguru import logger
+from sklearn.preprocessing import MinMaxScaler
 from torch import nn
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LambdaLR
@@ -16,6 +17,15 @@ from utils.metric import Metric
 def _to_one_hot(labels: np.ndarray, num_classes: int) -> np.ndarray:
     labels = labels.astype(np.int64)
     return np.eye(num_classes, dtype=np.float32)[labels]
+
+
+def _normalize_for_prpl(train_data: np.ndarray, test_data: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Use separate source/target scalers to match PRPL normalization behavior."""
+    src_scaler = MinMaxScaler(feature_range=(-1, 1))
+    tgt_scaler = MinMaxScaler(feature_range=(-1, 1))
+    train_norm = src_scaler.fit_transform(train_data)
+    test_norm = tgt_scaler.fit_transform(test_data)
+    return train_norm.astype(np.float32), test_norm.astype(np.float32)
 
 
 def train(
@@ -35,12 +45,24 @@ def train(
     learning_rate: float,
     early_stop_patience: int = 15,
     cluster_weight: float = 2.0,
+    transfer_loss_weight: float = 1.0,
 ):
 
     logger.info('len of train data: {}, len of test data: {}', len(train_data), len(test_data))
 
-    train_data = rearrange(train_data, 'sample chan feature -> sample feature chan', chan=62, feature=5)
-    test_data = rearrange(test_data, 'sample chan feature -> sample feature chan', chan=62, feature=5)
+    train_data = train_data.astype(np.float32)
+    test_data = test_data.astype(np.float32)
+
+    train_shape = train_data.shape
+    test_shape = test_data.shape
+    train_flat = train_data.reshape(train_shape[0], -1)
+    test_flat = test_data.reshape(test_shape[0], -1)
+    train_flat, test_flat = _normalize_for_prpl(train_flat, test_flat)
+    train_data = train_flat.reshape(train_shape)
+    test_data = test_flat.reshape(test_shape)
+
+    train_data = rearrange(train_data, 'sample chan feature -> sample feature chan')
+    test_data  = rearrange(test_data, 'sample chan feature -> sample feature chan')
 
     train_label_oh = _to_one_hot(train_labels, num_classes)
     test_labels = test_labels.astype(np.int64)
@@ -87,6 +109,7 @@ def train(
         clf_loss_total = 0.0
         cluster_loss_total = 0.0
         p_loss_total = 0.0
+        transfer_loss_total = 0.0
 
         num_batches = min(len(train_loader), len(test_loader))
 
@@ -100,9 +123,14 @@ def train(
             source_label_oh = source_label_oh.to(device)
             target_data = target_data.to(device)
 
-            clf_loss, cluster_loss, p_loss = model(data, target_data, source_label_oh)
+            clf_loss, cluster_loss, p_loss, trans_loss = model(data, target_data, source_label_oh)
 
-            loss = clf_loss + 0.01 * p_loss + boost_factor * cluster_loss
+            loss = (
+                clf_loss
+                + transfer_loss_weight * trans_loss
+                + 0.01 * p_loss
+                + boost_factor * cluster_loss
+            )
 
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
@@ -112,6 +140,7 @@ def train(
             clf_loss_total += clf_loss.item()
             cluster_loss_total += cluster_loss.item()
             p_loss_total += p_loss.item()
+            transfer_loss_total += trans_loss.item()
 
         scheduler.step()
 
@@ -161,14 +190,16 @@ def train(
         clf_loss_avg = clf_loss_total / num_batches
         cluster_loss_avg = cluster_loss_total / num_batches
         p_loss_avg = p_loss_total / num_batches
+        transfer_loss_avg = transfer_loss_total / num_batches
 
-        if epoch % 5 == 0:
+        if epoch % 50 == 0:
             logger.info(
-                'Epoch {}/{} | Total Loss: {:.4f}, Clf: {:.4f}, Cluster: {:.4f}, P: {:.4f}',
+                'Epoch {}/{} | Total Loss: {:.4f}, Clf: {:.4f}, Transfer: {:.4f}, Cluster: {:.4f}, P: {:.4f}',
                 epoch,
                 epochs,
                 total_loss,
                 clf_loss_avg,
+                transfer_loss_avg,
                 cluster_loss_avg,
                 p_loss_avg,
             )
