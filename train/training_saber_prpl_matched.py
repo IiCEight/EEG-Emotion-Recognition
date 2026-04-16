@@ -6,6 +6,7 @@ from sklearn.preprocessing import MinMaxScaler
 from torch.utils.data import DataLoader, RandomSampler, TensorDataset
 
 from model.saber import Saber
+from utils.failure_sample import record_failures
 from utils.metric import Metric
 
 
@@ -32,7 +33,7 @@ def _normalize_for_prpl(train_data: np.ndarray, test_data: np.ndarray) -> tuple[
 
 
 @torch.no_grad()
-def _evaluate(model: Saber, dataloader: DataLoader, device: str) -> float:
+def _evaluate(model: Saber, dataloader: DataLoader, device: str, return_preds: bool = False):
     model.eval()
     features, labels = dataloader.dataset.get_data()
     if labels.dim() > 1:
@@ -42,6 +43,8 @@ def _evaluate(model: Saber, dataloader: DataLoader, device: str) -> float:
 
     y_preds = model.predict(features.to(device)).cpu().numpy()
     acc = np.sum(y_preds == labels_np) / len(labels_np)
+    if return_preds:
+        return acc * 100.0, y_preds, labels_np
     return acc * 100.0
 
 
@@ -64,6 +67,8 @@ def train(
     transfer_loss_weight: float = 1.0,
     cluster_weight: float = 2.0,
     weight_decay: float = 1e-5,
+    test_metadata: list | None = None,
+    failure_log_path: str | None = None,
 ):
     logger.info("len of train data: {}, len of test data: {}", len(train_data), len(test_data))
 
@@ -177,6 +182,9 @@ def train(
         if target_acc > best_acc:
             best_acc = target_acc
             stop = 0
+            if test_metadata is not None and failure_log_path is not None:
+                _, y_preds, y_true = _evaluate(model, target_loader, device, return_preds=True)
+                record_failures(y_true, y_preds, test_metadata, subject_id, session_id, failure_log_path)
         else:
             stop += 1
 

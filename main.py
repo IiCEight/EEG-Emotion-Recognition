@@ -15,6 +15,7 @@ from train.training_saber_prpl_matched import train as train_saber_prpl_matched
 
 from utils.metric import Metric
 from utils.random_seed import setup_seed
+from utils.failure_sample import build_test_metadata
 
 app = typer.Typer(
     pretty_exceptions_show_locals=False,
@@ -61,6 +62,7 @@ def main(
     random_seed: Annotated[int | None, typer.Option(help='random seed for reproducibility, None for no seed (i.e., random)')] = 42,
     learning_rate: Annotated[float, typer.Option(help='learning rate for training')] = 0.001,
     early_stop_patience: Annotated[int, typer.Option(help='early stop after N epochs without test acc improvement (0 = disabled)')] = 0,
+    failure_log: Annotated[str | None, typer.Option(help='path to CSV file for logging misclassified samples (disabled if not set)')] = None,
 
     level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
@@ -103,6 +105,13 @@ def main(
         for subject_id in subject_ids:
             setup_seed(random_seed)
 
+            # Build per-sample metadata before merging discards trial indices.
+            # For LOSO subject-independent, the test subject's raw trials are at
+            # data[session_id][subject_id].
+            test_metadata = None
+            if failure_log is not None and task_type == cli_enum.TaskTypeName.SUBJECT_INDEPENDENT:
+                test_metadata = build_test_metadata(data[session_id][subject_id])
+
             train_data, train_labels, test_data, test_labels = merge_and_split(
                 data, labels, task_type, session_id, subject_id, split_ratio, data_random
             )
@@ -114,7 +123,8 @@ def main(
 
             train_saber_prpl_matched(model, metric, train_data, train_labels, test_data, test_labels,
                               batch_size, num_classes, device, epochs, task_type, subject_id,
-                              session_id, learning_rate, early_stop_patience)
+                              session_id, learning_rate, early_stop_patience,
+                              test_metadata=test_metadata, failure_log_path=failure_log)
 
 
             logger.info("\n--------------> Finished training w.r.t. subject {} session {} acc {:<.4f}",
