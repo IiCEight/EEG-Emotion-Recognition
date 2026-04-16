@@ -89,7 +89,17 @@ class ADANN(nn.Module):
         with torch.no_grad():
             f = self.feature_extractor(x)
             phi_f = self.projector(f)
-            phi_mu = self.projector(self.mu_t)
+            phi_mu_t = self.projector(self.mu_t)
+            phi_mu_s = self.projector(self.mu_s)
+
+            if self.num_classes > 1:
+                phi_mu_t_norm = F.normalize(phi_mu_t, p=2, dim=1)
+                sim = torch.mm(phi_mu_t_norm, phi_mu_t_norm.t())
+                off_diag_mask = ~torch.eye(self.num_classes, device=sim.device, dtype=torch.bool)
+                collapse_score = sim[off_diag_mask].mean().item()
+                phi_mu = phi_mu_s if collapse_score > 0.98 else phi_mu_t
+            else:
+                phi_mu = phi_mu_t
 
             phi_f = F.normalize(phi_f, p=2, dim=1)
             phi_mu = F.normalize(phi_mu, p=2, dim=1)

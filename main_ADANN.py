@@ -19,22 +19,38 @@ app = typer.Typer(pretty_exceptions_show_locals=False)
 
 @app.command()
 def main(
-    dataset: Annotated[cli_enum.DatasetName, typer.Option(help='dataset name')] = cli_enum.DatasetName.SEED,
-    dataset_path: Annotated[str, typer.Option(help='path to the dataset')] = '../data/SEED',
-    cache_dir: Annotated[str | None, typer.Option(help='cache directory for loaded dataset (disabled if not set)')] = './cache',
-    device: Annotated[str, typer.Option(help='device to run the model on')] = 'cuda',
-    task_type: Annotated[cli_enum.TaskTypeName, typer.Option(help='type of experimental task (subject-dependent, subject-independent)')] = cli_enum.TaskTypeName.SUBJECT_INDEPENDENT,
-    split_type: Annotated[cli_enum.SplitTypeName, typer.Option(help='type of data split (kfold, leave-one-subject-out)')] = cli_enum.SplitTypeName.LEAVE_ONE_SUBJECT_OUT,
-    split_ratio: Annotated[float, typer.Option(help='ratio for train data size')] = 0.6,
-    batch_size: Annotated[int, typer.Option(help='batch size for training')] = 128,
-    epochs: Annotated[int, typer.Option(help='number of epochs for training')] = 60,
-    data_random: Annotated[bool, typer.Option(help='whether to shuffle the data')] = False,
-    only_one_experiment: Annotated[bool, typer.Option(help='whether to run only one experiment for debugging')] = False,
-    only_one_session: Annotated[bool, typer.Option(help='whether to run only one session for debugging')] = True,
-    random_seed: Annotated[int | None, typer.Option(help='random seed for reproducibility, None for no seed')] = 42,
-    learning_rate: Annotated[float, typer.Option(help='learning rate for training')] = 0.001,
-    early_stop_patience: Annotated[int, typer.Option(help='early stop after N epochs without test acc improvement (0=disabled)')] = 0,
-    level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
+    dataset: Annotated[cli_enum.DatasetName, typer.Option(
+        help='dataset name')] = cli_enum.DatasetName.SEED,
+    dataset_path: Annotated[str, typer.Option(
+        help='path to the dataset')] = '../data/SEED',
+    cache_dir: Annotated[str | None, typer.Option(
+        help='cache directory for loaded dataset (disabled if not set)')] = './cache',
+    device: Annotated[str, typer.Option(
+        help='device to run the model on')] = 'cuda',
+    task_type: Annotated[cli_enum.TaskTypeName, typer.Option(
+        help='type of experimental task (subject-dependent, subject-independent)')] = cli_enum.TaskTypeName.SUBJECT_INDEPENDENT,
+    split_type: Annotated[cli_enum.SplitTypeName, typer.Option(
+        help='type of data split (kfold, leave-one-subject-out)')] = cli_enum.SplitTypeName.LEAVE_ONE_SUBJECT_OUT,
+    split_ratio: Annotated[float, typer.Option(
+        help='ratio for train data size')] = 0.6,
+    batch_size: Annotated[int, typer.Option(
+        help='batch size for training')] = 128,
+    epochs: Annotated[int, typer.Option(
+        help='number of epochs for training')] = 1000,
+    data_random: Annotated[bool, typer.Option(
+        help='whether to shuffle the data')] = False,
+    only_one_experiment: Annotated[bool, typer.Option(
+        help='whether to run only one experiment for debugging')] = False,
+    only_one_session: Annotated[bool, typer.Option(
+        help='whether to run only one session for debugging')] = True,
+    random_seed: Annotated[int | None, typer.Option(
+        help='random seed for reproducibility, None for no seed')] = 42,
+    learning_rate: Annotated[float, typer.Option(
+        help='learning rate for training')] = 0.001,
+    early_stop_patience: Annotated[int, typer.Option(
+        help='early stop after N epochs without test acc improvement (0=disabled)')] = 0,
+    level: Annotated[cli_enum.LevelName, typer.Option(
+        '-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
     setUpLogger(level=level)
     setup_seed(random_seed)
