@@ -8,15 +8,15 @@ def get_domain_general_adj(
     threshold: float = 0.1,
 ) -> np.ndarray:
     """
-    Domain-general graph connectivity based on unit-sphere projection of electrode positions.
+    Domain-general graph connectivity via arccos correlation on a shared sphere of radius r.
 
-    Each electrode's 3D (x,y,z) position is projected onto a unit sphere, then the
-    pairwise connectivity is computed as:
+    All electrodes are placed on a sphere of radius r (the mean norm of all electrode
+    positions). The pairwise connectivity follows equation (2) from the paper:
 
-        A[i,j] = arccos( dot(u_i, u_j) )   (angle between unit vectors, in radians)
+        A[i,j] = arccos( (x_i*x_j + y_i*y_j + z_i*z_j) / r^2 )
 
-    Edges with value <= threshold are zeroed out (considered non-significant).
-    Ref: standard 10-20 electrode positions mapped to unit sphere, arccos correlation.
+    i.e., arccos of the dot product of the r-normalized position vectors.
+    Edges with value <= threshold are zeroed out (paper: threshold = 0.1).
 
     Args:
         channel_list: Ordered list of electrode names.
@@ -27,18 +27,23 @@ def get_domain_general_adj(
         adj: (N, N) numpy array of connectivity values.
     """
     n = len(channel_list)
-    # Build unit vectors for each channel
-    unit_vecs = []
+
+    # Collect valid positions and compute shared radius r
+    positions = []
     valid = []
     for name in channel_list:
         if name in location_dict:
-            pos = np.array(location_dict[name], dtype=np.float64)
-            norm = np.linalg.norm(pos)
-            unit_vecs.append(pos / (norm + 1e-8))
+            positions.append(np.array(location_dict[name], dtype=np.float64))
             valid.append(True)
         else:
-            unit_vecs.append(None)
+            positions.append(None)
             valid.append(False)
+
+    valid_norms = [np.linalg.norm(p) for p, v in zip(positions, valid) if v]
+    r = np.mean(valid_norms)
+
+    # Scale all positions by shared radius r
+    scaled = [p / r if v else None for p, v in zip(positions, valid)]
 
     adj = np.zeros((n, n), dtype=np.float64)
     for i in range(n):
@@ -47,8 +52,8 @@ def get_domain_general_adj(
         for j in range(n):
             if not valid[j]:
                 continue
-            # Clamp dot product to [-1, 1] to avoid arccos domain errors
-            dot = np.clip(np.dot(unit_vecs[i], unit_vecs[j]), -1.0, 1.0)
+            # dot(pos_i/r, pos_j/r) = dot(pos_i, pos_j) / r^2
+            dot = np.clip(np.dot(scaled[i], scaled[j]), -1.0, 1.0)
             connectivity = np.arccos(dot)
             adj[i, j] = connectivity if connectivity > threshold else 0.0
 
