@@ -1,10 +1,11 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from pathlib import Path
 
 from model.prpl import LabelClassifier, PairLoss, TransferLoss
 from model.residual_gcn import MulipleResidualGCN
-from utils.graph_construction import get_domain_general_adj
+from utils.graph_construction import get_domain_general_adj, get_weighted_adj
 
 
 
@@ -79,7 +80,12 @@ class FeatureExtractor(nn.Module):
         self.hidden_2 = hidden_2
         self.layers = layers
 
-        self.adj = nn.Parameter(torch.tensor(get_domain_general_adj()).float(), requires_grad=True)
+        _weights_path = Path("cache/electrode_weights.npy")
+        if _weights_path.exists():
+            _adj_init = get_weighted_adj(str(_weights_path))
+        else:
+            _adj_init = get_domain_general_adj()
+        self.adj = nn.Parameter(torch.tensor(_adj_init).float(), requires_grad=True)
 
         self.data_bn = nn.BatchNorm1d(num_feature)
         self.mrgcn = MulipleResidualGCN(layers, self.chan_num, self.band_num)
