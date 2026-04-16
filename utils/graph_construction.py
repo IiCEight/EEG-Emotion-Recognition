@@ -62,7 +62,7 @@ def get_domain_general_adj(
 
 def get_weighted_adj(weights_path: str) -> np.ndarray:
     """
-    Apply per-electrode softmax weights to the domain-general adjacency matrix.
+    Apply pre-computed per-electrode weights to the domain-general adjacency matrix.
 
     A'[i,j] = w[i] * w[j] * A[i,j]   (outer product scaling)
 
@@ -72,8 +72,8 @@ def get_weighted_adj(weights_path: str) -> np.ndarray:
     Returns:
         adj: (62, 62) numpy array.
     """
-    w = np.load(weights_path)          # shape (62,)
-    A = get_domain_general_adj()       # shape (62, 62)
+    w = np.load(weights_path).flatten()  # shape (62,)
+    A = get_domain_general_adj()         # shape (62, 62)
     return np.outer(w, w) * A
 
 
