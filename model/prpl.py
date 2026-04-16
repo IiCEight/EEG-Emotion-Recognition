@@ -19,6 +19,8 @@ class PairLoss(nn.Module):
         sim_matrix_target = self.get_cos_similarity_distance(target_logits)
 
         estimated_sim_truth = self.get_cos_similarity_distance(source_label)
+        # Since target labels are not available, 
+        # we use source labels that is larger than the upper threshold.
         estimated_sim_truth_target = self.get_cos_similarity_by_threshold(sim_matrix_target)
 
         bce_loss = (
@@ -173,6 +175,7 @@ class FeatureExtractor(nn.Module):
 
 
 class LabelClassifier(nn.Module):
+    """Bilinear transformation-based label classifier for PRPL"""
     def __init__(
         self,
         num_classes=3,

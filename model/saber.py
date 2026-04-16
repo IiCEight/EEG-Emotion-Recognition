@@ -4,7 +4,8 @@ import torch.nn.functional as F
 
 from model.prpl import LabelClassifier, PairLoss, TransferLoss
 from model.residual_gcn import MulipleResidualGCN
-from utils.graphConstructionFromStandard import get_adj_from_standard
+from utils.graph_construction import get_domain_general_adj
+
 
 
 class Saber(nn.Module):
@@ -78,7 +79,7 @@ class FeatureExtractor(nn.Module):
         self.hidden_2 = hidden_2
         self.layers = layers
 
-        self.adj = nn.Parameter(torch.tensor(get_adj_from_standard()).float(), requires_grad=True)
+        self.adj = nn.Parameter(torch.tensor(get_domain_general_adj()).float(), requires_grad=True)
 
         self.data_bn = nn.BatchNorm1d(num_feature)
         self.mrgcn = MulipleResidualGCN(layers, self.chan_num, self.band_num)
