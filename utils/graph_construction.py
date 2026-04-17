@@ -60,21 +60,25 @@ def get_domain_general_adj(
     return adj
 
 
-def get_weighted_adj(weights_path: str) -> np.ndarray:
+def get_weighted_adj(weights_path: str, threshold: float = 0.0003) -> np.ndarray:
     """
-    Apply pre-computed per-electrode weights to the domain-general adjacency matrix.
+    Apply pre-computed per-electrode weights to the domain-general adjacency matrix,
+    then zero out weak edges below threshold.
 
-    A'[i,j] = w[i] * w[j] * A[i,j]   (outer product scaling)
+    A'[i,j] = w[i] * w[j] * A[i,j],  set to 0 if A'[i,j] < threshold
 
     Args:
         weights_path: Path to .npy file containing weight vector of shape (62,).
+        threshold: Minimum edge value to retain (default: 0.0003).
 
     Returns:
         adj: (62, 62) numpy array.
     """
     w = np.load(weights_path).flatten()  # shape (62,)
     A = get_domain_general_adj()         # shape (62, 62)
-    return np.outer(w, w) * A
+    weighted = np.outer(w, w) * A
+    weighted[weighted < threshold] = 0.0
+    return weighted
 
 
 if __name__ == '__main__':
