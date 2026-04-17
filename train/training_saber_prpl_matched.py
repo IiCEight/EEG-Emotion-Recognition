@@ -175,20 +175,21 @@ def train(
         boost_factor = cluster_weight * ((epoch + 1) / max(1, epochs))
         model.epoch_end_hook(epoch, source_features.to(device), source_labels.to(device))
 
-        source_acc = _evaluate(model, source_loader, device)
         target_acc = _evaluate(model, target_loader, device)
         metric.update(subject_id, session_id, target_acc / 100.0)
 
-        if target_acc > best_acc:
+        if target_acc > best_acc and target_acc > 0.70:
             best_acc = target_acc
             stop = 0
             if test_metadata is not None and failure_log_path is not None:
                 _, y_preds, y_true = _evaluate(model, target_loader, device, return_preds=True)
                 record_failures(y_true, y_preds, test_metadata, subject_id, session_id, failure_log_path)
         else:
-            stop += 1
+           stop += 1
 
         if (epoch + 1) % 50 == 0 or epoch == 0:
+            source_acc = _evaluate(model, source_loader, device)
+
             logger.info(
                 "Epoch {}/{} | loss_clf: {:.4f}, loss_transfer: {:.4f}, loss_cluster: {:.4f}, loss_p: {:.4f}, source_acc: {:.4f}, target_acc: {:.4f}, best_acc: {:.4f}",
                 epoch + 1,
