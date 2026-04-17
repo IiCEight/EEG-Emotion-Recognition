@@ -15,7 +15,7 @@ from train.training_saber_prpl_matched import train as train_saber_prpl_matched
 
 from utils.metric import Metric
 from utils.random_seed import setup_seed
-from utils.failure_sample import build_test_metadata
+from utils.failure_sample import build_test_metadata, init_failure_log
 
 app = typer.Typer(
     pretty_exceptions_show_locals=False,
@@ -98,6 +98,9 @@ def main(
         shuffle(subject_ids)
 
     metric = Metric(num_subjects, num_sessions)
+
+    if failure_log is not None:
+        init_failure_log(failure_log)
 
     logger.debug('num_sessions {} num_subjects {}', num_sessions, num_subjects)
 

@@ -33,6 +33,25 @@ def build_test_metadata(test_data_raw: list) -> list[dict]:
     return metadata
 
 
+_CSV_HEADER = ["subject", "session", "trial", "sample_in_trial",
+               "trial_length", "position_pct", "true_label", "pred_label"]
+
+
+def init_failure_log(out_path: str) -> None:
+    """
+    Create (or overwrite) the failure CSV with just the header row.
+
+    Call once before the LOSO loop so that each experiment run starts clean.
+
+    Parameters
+    ----------
+    out_path : path to the output CSV file
+    """
+    os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
+    with open(out_path, "w", newline="") as f:
+        csv.writer(f).writerow(_CSV_HEADER)
+
+
 def record_failures(
     y_true: np.ndarray,
     y_pred: np.ndarray,
@@ -42,12 +61,13 @@ def record_failures(
     out_path: str,
 ) -> None:
     """
-    Append one CSV row for each misclassified sample.
+    Append one CSV row per misclassified sample for one subject/session fold.
 
-    Columns: subject, session, trial, sample_in_trial, true_label, pred_label
+    Call this ONCE per fold (after training ends) with the predictions from
+    the best epoch, not on every new best — otherwise stale rows accumulate.
 
-    The file is created with a header row if it does not yet exist; otherwise
-    rows are appended so that results from all LOSO folds accumulate in one file.
+    The file must already exist (created by init_failure_log); rows are
+    appended so results from all LOSO folds accumulate in one file.
 
     Parameters
     ----------
@@ -58,13 +78,8 @@ def record_failures(
     session_id   : session index
     out_path     : path to the output CSV file
     """
-    write_header = not os.path.exists(out_path)
-
     with open(out_path, "a", newline="") as f:
         writer = csv.writer(f)
-        if write_header:
-            writer.writerow(["subject", "session", "trial", "sample_in_trial", "trial_length", "position_pct", "true_label", "pred_label"])
-
         for i, (yt, yp) in enumerate(zip(y_true, y_pred)):
             if yt != yp:
                 meta = metadata[i]

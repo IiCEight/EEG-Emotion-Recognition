@@ -117,6 +117,7 @@ def train(
     best_acc = 0.0
     stop = 0
     boost_factor = 0.0
+    best_preds: tuple | None = None  # (y_true, y_preds) from best epoch
 
     for epoch in range(epochs):
         model.train()
@@ -183,7 +184,7 @@ def train(
             stop = 0
             if test_metadata is not None and failure_log_path is not None:
                 _, y_preds, y_true = _evaluate(model, target_loader, device, return_preds=True)
-                record_failures(y_true, y_preds, test_metadata, subject_id, session_id, failure_log_path)
+                best_preds = (y_true, y_preds)
         else:
            stop += 1
 
@@ -206,3 +207,7 @@ def train(
         if early_stop_patience > 0 and stop >= early_stop_patience:
             logger.info("Early stop at epoch {} with best target acc {:.4f}", epoch + 1, best_acc)
             break
+
+    # Flush best-epoch failures once, after training ends
+    if best_preds is not None and test_metadata is not None and failure_log_path is not None:
+        record_failures(best_preds[0], best_preds[1], test_metadata, subject_id, session_id, failure_log_path)
