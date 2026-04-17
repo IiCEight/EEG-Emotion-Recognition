@@ -62,7 +62,7 @@ def main(
     random_seed: Annotated[int | None, typer.Option(help='random seed for reproducibility, None for no seed (i.e., random)')] = 42,
     learning_rate: Annotated[float, typer.Option(help='learning rate for training')] = 0.001,
     early_stop_patience: Annotated[int, typer.Option(help='early stop after N epochs without test acc improvement (0 = disabled)')] = 0,
-    failure_log: Annotated[str | None, typer.Option(help='path to CSV file for logging misclassified samples (disabled if not set)')] = None,
+    failure_log: Annotated[str | None, typer.Option(help='path to CSV file for logging misclassified samples (disabled if not set)')] = "./cache/failure_log.csv",
 
     level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
