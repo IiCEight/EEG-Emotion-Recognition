@@ -1,4 +1,7 @@
 import numpy as np
+import os
+import shutil
+import subprocess
 import torch
 from einops import rearrange
 from loguru import logger
@@ -30,6 +33,90 @@ def _normalize_for_prpl(train_data: np.ndarray, test_data: np.ndarray) -> tuple[
     train_norm = src_scaler.fit_transform(train_data)
     test_norm = tgt_scaler.fit_transform(test_data)
     return train_norm.astype(np.float32), test_norm.astype(np.float32)
+
+
+def _bytes_to_gib(num_bytes: int) -> float:
+    return float(num_bytes) / (1024.0 ** 3)
+
+
+def _classify_cuda_failure(error_text: str) -> str:
+    text = error_text.lower()
+    if "out of memory" in text:
+        return "oom_or_memory_pressure"
+    # Match hard kernel/indexing signatures only; avoid matching generic hint text.
+    if (
+        "device-side assert triggered" in text
+        or "illegal memory access" in text
+        or "misaligned address" in text
+        or "an illegal memory access was encountered" in text
+    ):
+        return "kernel_or_indexing_bug"
+    if "unknown error" in text or "unspecified launch failure" in text or "driver shutting down" in text:
+        return "likely_gpu_reset_or_contention"
+    return "unknown_cuda_failure"
+
+
+def _collect_cuda_diagnostics(device: str) -> dict:
+    diagnostics = {"device_arg": str(device), "cuda_available": torch.cuda.is_available()}
+    if not torch.cuda.is_available():
+        return diagnostics
+
+    dev = torch.device(device)
+    dev_idx = dev.index if dev.index is not None else torch.cuda.current_device()
+    diagnostics["device_index"] = dev_idx
+    diagnostics["device_name"] = torch.cuda.get_device_name(dev_idx)
+    diagnostics["device_count"] = torch.cuda.device_count()
+
+    try:
+        free_b, total_b = torch.cuda.mem_get_info(dev_idx)
+        diagnostics["free_gib"] = round(_bytes_to_gib(free_b), 3)
+        diagnostics["total_gib"] = round(_bytes_to_gib(total_b), 3)
+    except RuntimeError as exc:
+        diagnostics["mem_get_info_error"] = str(exc)
+
+    try:
+        diagnostics["allocated_gib"] = round(_bytes_to_gib(torch.cuda.memory_allocated(dev_idx)), 3)
+        diagnostics["reserved_gib"] = round(_bytes_to_gib(torch.cuda.memory_reserved(dev_idx)), 3)
+        diagnostics["max_allocated_gib"] = round(_bytes_to_gib(torch.cuda.max_memory_allocated(dev_idx)), 3)
+        diagnostics["max_reserved_gib"] = round(_bytes_to_gib(torch.cuda.max_memory_reserved(dev_idx)), 3)
+    except RuntimeError as exc:
+        diagnostics["memory_stats_error"] = str(exc)
+
+    return diagnostics
+
+
+def _query_nvidia_compute_apps() -> str | None:
+    """Best-effort process snapshot to detect cross-process GPU contention."""
+    nvidia_smi_cmd = shutil.which("nvidia-smi")
+    if nvidia_smi_cmd is None and os.path.exists("/usr/lib/wsl/lib/nvidia-smi"):
+        # WSL2 commonly exposes NVIDIA tools here without PATH symlinks.
+        nvidia_smi_cmd = "/usr/lib/wsl/lib/nvidia-smi"
+    if nvidia_smi_cmd is None:
+        return "[nvidia-smi unavailable in PATH and /usr/lib/wsl/lib]"
+
+    try:
+        result = subprocess.run(
+            [
+                nvidia_smi_cmd,
+                "--query-compute-apps=pid,process_name,used_memory,gpu_uuid",
+                "--format=csv,noheader,nounits",
+            ],
+            capture_output=True,
+            text=True,
+            timeout=3,
+            check=False,
+        )
+    except FileNotFoundError:
+        return f"[nvidia-smi binary not found at runtime: {nvidia_smi_cmd}]"
+    except subprocess.SubprocessError as exc:
+        return f"[nvidia-smi query raised error] {exc}"
+
+    if result.returncode != 0:
+        stderr = result.stderr.strip()
+        return f"[nvidia-smi query failed rc={result.returncode}] {stderr}" if stderr else None
+
+    output = result.stdout.strip()
+    return output if output else None
 
 
 @torch.no_grad()
@@ -138,8 +225,9 @@ def train(
         loss_transfer = 0.0
         loss_cluster = 0.0
         loss_p = 0.0
+        effective_batches = 0
 
-        for _ in range(n_batch):
+        for batch_idx in range(n_batch):
             try:
                 src_data, src_label = next(source_iter)
             except StopIteration:
@@ -155,22 +243,105 @@ def train(
             src_data, src_label = src_data.to(device), src_label.to(device)
             tgt_data = tgt_data.to(device)
 
-            cls_loss, cluster_loss, p_loss, transfer_loss = model(src_data, tgt_data, src_label)
-            total_loss = (
-                cls_loss
-                + transfer_loss_weight * transfer_loss
-                + 0.01 * p_loss
-                + boost_factor * cluster_loss
+            try:
+                cls_loss, cluster_loss, p_loss, transfer_loss = model(src_data, tgt_data, src_label)
+                total_loss = (
+                    cls_loss
+                    + transfer_loss_weight * transfer_loss
+                    + 0.01 * p_loss
+                    + boost_factor * cluster_loss
+                )
+
+                if not torch.isfinite(total_loss):
+                    logger.warning(
+                        "Skip non-finite loss at epoch {}/{} batch {}/{} (subject {} session {}) | cls={} transfer={} cluster={} p={}",
+                        epoch + 1,
+                        epochs,
+                        batch_idx + 1,
+                        n_batch,
+                        subject_id,
+                        session_id,
+                        float(cls_loss.detach().cpu()),
+                        float(transfer_loss.detach().cpu()),
+                        float(cluster_loss.detach().cpu()),
+                        float(p_loss.detach().cpu()),
+                    )
+                    optimizer.zero_grad(set_to_none=True)
+                    continue
+
+                optimizer.zero_grad()
+                total_loss.backward()
+                optimizer.step()
+
+                loss_clf += cls_loss.detach().item()
+                loss_transfer += transfer_loss.detach().item()
+                loss_cluster += cluster_loss.detach().item()
+                loss_p += p_loss.detach().item()
+                effective_batches += 1
+            except RuntimeError as exc:
+                error_text = str(exc)
+                if "cuda" not in error_text.lower():
+                    raise
+
+                failure_type = _classify_cuda_failure(error_text)
+                if torch.cuda.is_available():
+                    try:
+                        torch.cuda.synchronize()
+                    except RuntimeError:
+                        # Sync can fail once context is already unhealthy.
+                        pass
+
+                diagnostics = _collect_cuda_diagnostics(device)
+                compute_apps = _query_nvidia_compute_apps()
+
+                # If CUDA runtime is already unhealthy, "unknown error" is often a reset/contention signature.
+                mem_info_error = str(diagnostics.get("mem_get_info_error", "")).lower()
+                if failure_type == "kernel_or_indexing_bug" and "unknown error" in error_text.lower():
+                    failure_type = "likely_gpu_reset_or_contention"
+                if "unknown error" in mem_info_error and "device-side assert triggered" not in error_text.lower():
+                    failure_type = "likely_gpu_reset_or_contention"
+
+                logger.exception(
+                    "CUDA failure at epoch {}/{} batch {}/{} while training subject {} session {}",
+                    epoch + 1,
+                    epochs,
+                    batch_idx + 1,
+                    n_batch,
+                    subject_id,
+                    session_id,
+                )
+                logger.error("CUDA failure class: {}", failure_type)
+                logger.error("CUDA diagnostics: {}", diagnostics)
+                if compute_apps is not None:
+                    logger.error("Active GPU compute processes at failure:\n{}", compute_apps)
+
+                if failure_type == "likely_gpu_reset_or_contention":
+                    logger.error(
+                        "Likely cross-process GPU contention/reset. If vLLM is running on the same GPU, isolate workloads by GPU or reduce memory pressure."
+                    )
+                elif failure_type == "kernel_or_indexing_bug":
+                    logger.error(
+                        "Likely model/kernel issue. Re-run with CUDA_LAUNCH_BLOCKING=1 to identify the exact failing operation."
+                    )
+                else:
+                    logger.error(
+                        "Unclassified CUDA failure. Re-run with CUDA_LAUNCH_BLOCKING=1 and inspect the per-process GPU snapshot above."
+                    )
+
+                raise RuntimeError(
+                    f"CUDA training failure ({failure_type}) at epoch {epoch + 1} batch {batch_idx + 1}. "
+                    "See logs for diagnostics and process snapshot."
+                ) from exc
+
+        if effective_batches == 0:
+            logger.error(
+                "No valid SABER updates in epoch {}/{} (all batches non-finite) for subject {} session {}. Stopping training.",
+                epoch + 1,
+                epochs,
+                subject_id,
+                session_id,
             )
-
-            optimizer.zero_grad()
-            total_loss.backward()
-            optimizer.step()
-
-            loss_clf += cls_loss.detach().item()
-            loss_transfer += transfer_loss.detach().item()
-            loss_cluster += cluster_loss.detach().item()
-            loss_p += p_loss.detach().item()
+            break
 
         source_features, source_labels = source_loader.dataset.get_data()
         boost_factor = cluster_weight * ((epoch + 1) / max(1, epochs))
@@ -190,15 +361,16 @@ def train(
 
         if (epoch + 1) % 50 == 0 or epoch == 0:
             source_acc = _evaluate(model, source_loader, device)
+            avg_den = max(1, effective_batches)
 
             logger.info(
                 "Epoch {}/{} | loss_clf: {:.4f}, loss_transfer: {:.4f}, loss_cluster: {:.4f}, loss_p: {:.4f}, source_acc: {:.4f}, target_acc: {:.4f}, best_acc: {:.4f}",
                 epoch + 1,
                 epochs,
-                loss_clf / n_batch,
-                loss_transfer / n_batch,
-                loss_cluster / n_batch,
-                loss_p / n_batch,
+                loss_clf / avg_den,
+                loss_transfer / avg_den,
+                loss_cluster / avg_den,
+                loss_p / avg_den,
                 source_acc,
                 target_acc,
                 best_acc,
