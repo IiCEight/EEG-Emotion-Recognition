@@ -10,6 +10,7 @@ from loguru import logger
 from constant.model_map import MODEL
 from data.dataloder import load_data
 from data.utils import merge_and_split
+from model.saber import Saber
 from train.training import train as train_default
 from train.training_saber_prpl_matched import train as train_saber_prpl_matched
 
@@ -63,7 +64,7 @@ def main(
     learning_rate: Annotated[float, typer.Option(help='learning rate for training')] = 0.001,
     early_stop_patience: Annotated[int, typer.Option(help='early stop after N epochs without test acc improvement (0 = disabled)')] = 0,
     failure_log: Annotated[str | None, typer.Option(help='path to CSV file for logging misclassified samples (disabled if not set)')] = "./cache/failure_log.csv",
-
+    use_gcn: Annotated[bool, typer.Option(help='use GCN feature extractor for SABER (False = flat MLP, faster)')] = False,
     level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
     """Welcome! Use --help option to see usage information."""
@@ -84,6 +85,7 @@ def main(
         + f'\ndata random: {data_random}\nrandom seed: {random_seed}'
         + f'\nonly one experiment: {only_one_experiment}\nonly one session: {only_one_session}'
         + f'\nlearning rate: {learning_rate}\nearly stop patience: {early_stop_patience}'
+        + f'\nuse_gcn: {use_gcn}'
     )
 
     data, labels, num_subjects, num_electrodes, num_features, num_classes = load_data(
@@ -123,8 +125,8 @@ def main(
                 data, labels, task_type, session_id, subject_id, split_ratio, data_random
             )
 
-            model = MODEL[model_name](
-                num_electrodes, num_features, num_classes,
+            model = Saber(
+                num_electrodes, num_features, num_classes, use_gcn,
             ).to(device)
 
 

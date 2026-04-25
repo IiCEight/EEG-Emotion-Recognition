@@ -4,13 +4,14 @@ import torch.nn.functional as F
 from pathlib import Path
 
 from model.prpl import LabelClassifier, PairLoss, TransferLoss
+from model.prpl import FeatureExtractor as MlpFeatureExtractor
 from model.residual_gcn import MulipleResidualGCN
 from utils.graph_construction import get_domain_general_adj, get_weighted_adj
 
 
 
 class Saber(nn.Module):
-    def __init__(self, num_electrodes=62, in_features=5, num_classes=3, num_layers=2, max_iter=1000):
+    def __init__(self, num_electrodes=62, in_features=5, num_classes=3, num_layers=2, max_iter=1000, use_gcn=True):
         super().__init__()
 
         self.num_electrodes = num_electrodes
@@ -18,16 +19,22 @@ class Saber(nn.Module):
         self.num_layers = num_layers
         self.num_classes = num_classes
         self.hidden_2 = 64
-
-        # SABER now always uses the single graph feature extractor branch.
+        self.use_gcn = use_gcn
         self.max_iter = max_iter
 
-        self.feature_extractor = FeatureExtractor(
-            num_electrodes=num_electrodes,
-            num_feature=in_features,
-            layers=num_layers,
-            hidden_2=self.hidden_2,
-        )
+        if use_gcn:
+            self.feature_extractor = FeatureExtractor(
+                num_electrodes=num_electrodes,
+                num_feature=in_features,
+                layers=num_layers,
+                hidden_2=self.hidden_2,
+            )
+        else:
+            self.feature_extractor = MlpFeatureExtractor(
+                input_dim=num_electrodes * in_features,
+                hidden_1=self.hidden_2,
+                hidden_2=self.hidden_2,
+            )
 
         self.prpl_classifier = LabelClassifier(
             num_classes=num_classes,

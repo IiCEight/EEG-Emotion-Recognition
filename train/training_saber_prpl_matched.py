@@ -170,8 +170,12 @@ def train(
     train_data = train_flat.reshape(train_shape)
     test_data = test_flat.reshape(test_shape)
 
-    train_data = rearrange(train_data, "sample chan feature -> sample feature chan")
-    test_data = rearrange(test_data, "sample chan feature -> sample feature chan")
+    if model.use_gcn:
+        train_data = rearrange(train_data, "sample chan feature -> sample feature chan")
+        test_data = rearrange(test_data, "sample chan feature -> sample feature chan")
+    else:
+        train_data = train_data.reshape(train_data.shape[0], -1)
+        test_data = test_data.reshape(test_data.shape[0], -1)
 
     train_label_oh = _to_one_hot(train_labels, num_classes)
     test_labels = test_labels.astype(np.int64)
