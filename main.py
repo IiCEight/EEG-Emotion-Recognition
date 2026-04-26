@@ -106,7 +106,7 @@ def main(
 
     logger.debug('num_sessions {} num_subjects {}', num_sessions, num_subjects)
 
-    skip = 2
+    skip = 0
 
     for session_id in range(num_sessions):
         for subject_id in subject_ids:
