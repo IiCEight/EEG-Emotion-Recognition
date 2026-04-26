@@ -1,17 +1,24 @@
-from typing import Optional
-
-from einops import rearrange
 import numpy as np
+import os
+import shutil
+import subprocess
 import torch
+from einops import rearrange
 from loguru import logger
 from sklearn.preprocessing import MinMaxScaler
-from torch import nn
-from torch.optim import Optimizer
-from torch.optim.lr_scheduler import LambdaLR
-from torch.utils.data import DataLoader, RandomSampler, SequentialSampler, TensorDataset
+from torch.utils.data import DataLoader, RandomSampler, TensorDataset
 
 from model.saber import Saber
+from utils.failure_sample import record_failures
 from utils.metric import Metric
+
+
+class SimpleDataset(TensorDataset):
+    def __init__(self, *tensors):
+        super().__init__(*tensors)
+
+    def get_data(self):
+        return self.tensors
 
 
 def _to_one_hot(labels: np.ndarray, num_classes: int) -> np.ndarray:
@@ -20,12 +27,112 @@ def _to_one_hot(labels: np.ndarray, num_classes: int) -> np.ndarray:
 
 
 def _normalize_for_prpl(train_data: np.ndarray, test_data: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """Use separate source/target scalers to match PRPL normalization behavior."""
+    """Mirror PRPL normalization with separate source/target scalers."""
     src_scaler = MinMaxScaler(feature_range=(-1, 1))
     tgt_scaler = MinMaxScaler(feature_range=(-1, 1))
     train_norm = src_scaler.fit_transform(train_data)
     test_norm = tgt_scaler.fit_transform(test_data)
     return train_norm.astype(np.float32), test_norm.astype(np.float32)
+
+
+def _bytes_to_gib(num_bytes: int) -> float:
+    return float(num_bytes) / (1024.0 ** 3)
+
+
+def _classify_cuda_failure(error_text: str) -> str:
+    text = error_text.lower()
+    if "out of memory" in text:
+        return "oom_or_memory_pressure"
+    # Match hard kernel/indexing signatures only; avoid matching generic hint text.
+    if (
+        "device-side assert triggered" in text
+        or "illegal memory access" in text
+        or "misaligned address" in text
+        or "an illegal memory access was encountered" in text
+    ):
+        return "kernel_or_indexing_bug"
+    if "unknown error" in text or "unspecified launch failure" in text or "driver shutting down" in text:
+        return "likely_gpu_reset_or_contention"
+    return "unknown_cuda_failure"
+
+
+def _collect_cuda_diagnostics(device: str) -> dict:
+    diagnostics = {"device_arg": str(device), "cuda_available": torch.cuda.is_available()}
+    if not torch.cuda.is_available():
+        return diagnostics
+
+    dev = torch.device(device)
+    dev_idx = dev.index if dev.index is not None else torch.cuda.current_device()
+    diagnostics["device_index"] = dev_idx
+    diagnostics["device_name"] = torch.cuda.get_device_name(dev_idx)
+    diagnostics["device_count"] = torch.cuda.device_count()
+
+    try:
+        free_b, total_b = torch.cuda.mem_get_info(dev_idx)
+        diagnostics["free_gib"] = round(_bytes_to_gib(free_b), 3)
+        diagnostics["total_gib"] = round(_bytes_to_gib(total_b), 3)
+    except RuntimeError as exc:
+        diagnostics["mem_get_info_error"] = str(exc)
+
+    try:
+        diagnostics["allocated_gib"] = round(_bytes_to_gib(torch.cuda.memory_allocated(dev_idx)), 3)
+        diagnostics["reserved_gib"] = round(_bytes_to_gib(torch.cuda.memory_reserved(dev_idx)), 3)
+        diagnostics["max_allocated_gib"] = round(_bytes_to_gib(torch.cuda.max_memory_allocated(dev_idx)), 3)
+        diagnostics["max_reserved_gib"] = round(_bytes_to_gib(torch.cuda.max_memory_reserved(dev_idx)), 3)
+    except RuntimeError as exc:
+        diagnostics["memory_stats_error"] = str(exc)
+
+    return diagnostics
+
+
+def _query_nvidia_compute_apps() -> str | None:
+    """Best-effort process snapshot to detect cross-process GPU contention."""
+    nvidia_smi_cmd = shutil.which("nvidia-smi")
+    if nvidia_smi_cmd is None and os.path.exists("/usr/lib/wsl/lib/nvidia-smi"):
+        # WSL2 commonly exposes NVIDIA tools here without PATH symlinks.
+        nvidia_smi_cmd = "/usr/lib/wsl/lib/nvidia-smi"
+    if nvidia_smi_cmd is None:
+        return "[nvidia-smi unavailable in PATH and /usr/lib/wsl/lib]"
+
+    try:
+        result = subprocess.run(
+            [
+                nvidia_smi_cmd,
+                "--query-compute-apps=pid,process_name,used_memory,gpu_uuid",
+                "--format=csv,noheader,nounits",
+            ],
+            capture_output=True,
+            text=True,
+            timeout=3,
+            check=False,
+        )
+    except FileNotFoundError:
+        return f"[nvidia-smi binary not found at runtime: {nvidia_smi_cmd}]"
+    except subprocess.SubprocessError as exc:
+        return f"[nvidia-smi query raised error] {exc}"
+
+    if result.returncode != 0:
+        stderr = result.stderr.strip()
+        return f"[nvidia-smi query failed rc={result.returncode}] {stderr}" if stderr else None
+
+    output = result.stdout.strip()
+    return output if output else None
+
+
+@torch.no_grad()
+def _evaluate(model: Saber, dataloader: DataLoader, device: str, return_preds: bool = False):
+    model.eval()
+    features, labels = dataloader.dataset.get_data()
+    if labels.dim() > 1:
+        labels_np = np.argmax(labels.numpy(), axis=1)
+    else:
+        labels_np = labels.numpy()
+
+    y_preds = model.predict(features.to(device)).cpu().numpy()
+    acc = np.sum(y_preds == labels_np) / len(labels_np)
+    if return_preds:
+        return acc * 100.0, y_preds, labels_np
+    return acc * 100.0
 
 
 def train(
@@ -43,12 +150,14 @@ def train(
     subject_id: int,
     session_id: int,
     learning_rate: float,
-    early_stop_patience: int = 15,
-    cluster_weight: float = 2.0,
+    early_stop_patience: int = 0,
     transfer_loss_weight: float = 1.0,
+    cluster_weight: float = 2.0,
+    weight_decay: float = 1e-5,
+    test_metadata: list | None = None,
+    failure_log_path: str | None = None,
 ):
-
-    logger.info('len of train data: {}, len of test data: {}', len(train_data), len(test_data))
+    logger.info("len of train data: {}, len of test data: {}", len(train_data), len(test_data))
 
     train_data = train_data.astype(np.float32)
     test_data = test_data.astype(np.float32)
@@ -61,199 +170,190 @@ def train(
     train_data = train_flat.reshape(train_shape)
     test_data = test_flat.reshape(test_shape)
 
-    train_data = rearrange(train_data, 'sample chan feature -> sample feature chan')
-    test_data  = rearrange(test_data, 'sample chan feature -> sample feature chan')
+    if model.use_gcn:
+        train_data = rearrange(train_data, "sample chan feature -> sample feature chan")
+        test_data = rearrange(test_data, "sample chan feature -> sample feature chan")
+    else:
+        train_data = train_data.reshape(train_data.shape[0], -1)
+        test_data = test_data.reshape(test_data.shape[0], -1)
 
     train_label_oh = _to_one_hot(train_labels, num_classes)
     test_labels = test_labels.astype(np.int64)
 
-    dataset_train = TensorDataset(torch.Tensor(train_data), torch.Tensor(train_label_oh))
-    dataset_test = TensorDataset(torch.Tensor(test_data), torch.LongTensor(test_labels))
+    source_dataset = SimpleDataset(torch.from_numpy(train_data), torch.from_numpy(train_label_oh))
+    target_dataset = SimpleDataset(torch.from_numpy(test_data), torch.from_numpy(test_labels))
 
-    sampler_train = RandomSampler(dataset_train)
-    sampler_test = SequentialSampler(dataset_test)
-
-    train_loader = DataLoader(
-        dataset_train, sampler=sampler_train, batch_size=batch_size, num_workers=4, drop_last=True
+    source_loader = DataLoader(
+        source_dataset,
+        sampler=RandomSampler(source_dataset),
+        batch_size=batch_size,
+        num_workers=4,
+        drop_last=True,
     )
-    test_loader = DataLoader(
-        dataset_test, sampler=sampler_test, batch_size=batch_size, num_workers=4, drop_last=True
+    target_loader = DataLoader(
+        target_dataset,
+        sampler=RandomSampler(target_dataset),
+        batch_size=batch_size,
+        num_workers=4,
+        drop_last=True,
     )
 
-    source_loader_inf_iter = pytorch_safe_cycle(train_loader)
-    target_loader_inf_iter = pytorch_safe_cycle(test_loader)
-
-    optimizer = torch.optim.AdamW(
-        model.parameters(),
+    optimizer_params = model.get_parameters() if hasattr(model, "get_parameters") else model.parameters()
+    optimizer = torch.optim.RMSprop(
+        optimizer_params,
         lr=learning_rate,
-        weight_decay=0.001,
+        weight_decay=weight_decay,
     )
 
-    decay_math = lambda epoch: 1.0 / (1.0 + 10 * (epoch / max(1, epochs))) ** 0.75
-    scheduler = LambdaLR(optimizer, lr_lambda=decay_math)
-
-    train_data_tensor = torch.tensor(train_data).float()
-    train_labels_oh_tensor = torch.tensor(train_label_oh).float()
-    test_data_tensor = torch.tensor(test_data).float()
-    test_labels_tensor = torch.tensor(test_labels).long()
-
-    patience = early_stop_patience
     best_acc = 0.0
-    epochs_without_improvement = 0
+    stop = 0
     boost_factor = 0.0
+    best_preds: tuple | None = None  # (y_true, y_preds) from best epoch
 
-    for epoch in range(1, epochs + 1):
+    for epoch in range(epochs):
         model.train()
 
-        total_loss = 0.0
-        clf_loss_total = 0.0
-        cluster_loss_total = 0.0
-        p_loss_total = 0.0
-        transfer_loss_total = 0.0
-
-        num_batches = min(len(train_loader), len(test_loader))
-
-        for _ in range(num_batches):
-            optimizer.zero_grad()
-
-            data, source_label_oh = next(source_loader_inf_iter)
-            target_data, _ = next(target_loader_inf_iter)
-
-            data = data.to(device)
-            source_label_oh = source_label_oh.to(device)
-            target_data = target_data.to(device)
-
-            clf_loss, cluster_loss, p_loss, trans_loss = model(data, target_data, source_label_oh)
-
-            loss = (
-                clf_loss
-                + transfer_loss_weight * trans_loss
-                + 0.01 * p_loss
-                + boost_factor * cluster_loss
+        n_batch = min(len(source_loader), len(target_loader))
+        if n_batch <= 0:
+            logger.warning(
+                "No valid SABER batch in epoch {}. Check batch_size={} with train/test sizes.",
+                epoch + 1,
+                batch_size,
             )
-
-            loss.backward()
-            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
-            optimizer.step()
-
-            total_loss += loss.item()
-            clf_loss_total += clf_loss.item()
-            cluster_loss_total += cluster_loss.item()
-            p_loss_total += p_loss.item()
-            transfer_loss_total += trans_loss.item()
-
-        scheduler.step()
-
-        boost_factor = cluster_weight * (epoch / max(1, epochs))
-        model.epoch_end_hook(
-            epoch - 1,
-            train_data_tensor.to(device),
-            train_labels_oh_tensor.to(device),
-        )
-
-        source_acc = evaluate_all(
-            model,
-            train_data_tensor,
-            torch.argmax(train_labels_oh_tensor, dim=1),
-            device,
-        )
-        target_acc = evaluate_all(
-            model,
-            test_data_tensor,
-            test_labels_tensor,
-            device,
-        )
-        metric.update(subject_id, session_id, target_acc)
-
-        current_acc = metric.accuracy[subject_id, session_id]
-
-        if current_acc >= 1.0 - 1e-6:
-            logger.info('Early stop at epoch {} — perfect accuracy reached ({:.4f})', epoch, current_acc)
             break
 
-        if current_acc > best_acc + 1e-6:
-            best_acc = current_acc
-            epochs_without_improvement = 0
-        else:
-            epochs_without_improvement += 1
+        source_iter = iter(source_loader)
+        target_iter = iter(target_loader)
 
-        if patience > 0 and epochs_without_improvement >= patience:
+        loss_clf = 0.0
+        loss_transfer = 0.0
+        loss_cluster = 0.0
+        loss_p = 0.0
+
+        for batch_idx in range(n_batch):
+            try:
+                src_data, src_label = next(source_iter)
+            except StopIteration:
+                source_iter = iter(source_loader)
+                src_data, src_label = next(source_iter)
+
+            try:
+                tgt_data, _ = next(target_iter)
+            except StopIteration:
+                target_iter = iter(target_loader)
+                tgt_data, _ = next(target_iter)
+
+            src_data, src_label = src_data.to(device), src_label.to(device)
+            tgt_data = tgt_data.to(device)
+
+            try:
+                cls_loss, cluster_loss, p_loss, transfer_loss = model(src_data, tgt_data, src_label)
+                total_loss = (
+                    cls_loss
+                    + transfer_loss_weight * transfer_loss
+                    + 0.01 * p_loss
+                    + boost_factor * cluster_loss
+                )
+
+                optimizer.zero_grad()
+                total_loss.backward()
+                optimizer.step()
+
+                loss_clf += cls_loss.detach().item()
+                loss_transfer += transfer_loss.detach().item()
+                loss_cluster += cluster_loss.detach().item()
+                loss_p += p_loss.detach().item()
+            except RuntimeError as exc:
+                error_text = str(exc)
+                if "cuda" not in error_text.lower():
+                    raise
+
+                failure_type = _classify_cuda_failure(error_text)
+                if torch.cuda.is_available():
+                    try:
+                        torch.cuda.synchronize()
+                    except RuntimeError:
+                        # Sync can fail once context is already unhealthy.
+                        pass
+
+                diagnostics = _collect_cuda_diagnostics(device)
+                compute_apps = _query_nvidia_compute_apps()
+
+                # If CUDA runtime is already unhealthy, "unknown error" is often a reset/contention signature.
+                mem_info_error = str(diagnostics.get("mem_get_info_error", "")).lower()
+                if failure_type == "kernel_or_indexing_bug" and "unknown error" in error_text.lower():
+                    failure_type = "likely_gpu_reset_or_contention"
+                if "unknown error" in mem_info_error and "device-side assert triggered" not in error_text.lower():
+                    failure_type = "likely_gpu_reset_or_contention"
+
+                logger.exception(
+                    "CUDA failure at epoch {}/{} batch {}/{} while training subject {} session {}",
+                    epoch + 1,
+                    epochs,
+                    batch_idx + 1,
+                    n_batch,
+                    subject_id,
+                    session_id,
+                )
+                logger.error("CUDA failure class: {}", failure_type)
+                logger.error("CUDA diagnostics: {}", diagnostics)
+                if compute_apps is not None:
+                    logger.error("Active GPU compute processes at failure:\n{}", compute_apps)
+
+                if failure_type == "likely_gpu_reset_or_contention":
+                    logger.error(
+                        "Likely cross-process GPU contention/reset. If vLLM is running on the same GPU, isolate workloads by GPU or reduce memory pressure."
+                    )
+                elif failure_type == "kernel_or_indexing_bug":
+                    logger.error(
+                        "Likely model/kernel issue. Re-run with CUDA_LAUNCH_BLOCKING=1 to identify the exact failing operation."
+                    )
+                else:
+                    logger.error(
+                        "Unclassified CUDA failure. Re-run with CUDA_LAUNCH_BLOCKING=1 and inspect the per-process GPU snapshot above."
+                    )
+
+                raise RuntimeError(
+                    f"CUDA training failure ({failure_type}) at epoch {epoch + 1} batch {batch_idx + 1}. "
+                    "See logs for diagnostics and process snapshot."
+                ) from exc
+
+        source_features, source_labels = source_loader.dataset.get_data()
+        boost_factor = cluster_weight * ((epoch + 1) / max(1, epochs))
+        model.epoch_end_hook(epoch, source_features.to(device), source_labels.to(device))
+
+        target_acc = _evaluate(model, target_loader, device)
+        metric.update(subject_id, session_id, target_acc / 100.0)
+
+        if target_acc > best_acc and target_acc > 0.73:
+            best_acc = target_acc
+            stop = 0
+            if test_metadata is not None and failure_log_path is not None:
+                _, y_preds, y_true = _evaluate(model, target_loader, device, return_preds=True)
+                best_preds = (y_true, y_preds)
+        else:
+           stop += 1
+
+        if (epoch + 1) % 50 == 0 or epoch == 0:
+            source_acc = _evaluate(model, source_loader, device)
+
             logger.info(
-                'Early stop at epoch {} — no improvement for {} epochs (best={:.4f})',
-                epoch,
-                patience,
+                "Epoch {}/{} | loss_clf: {:.4f}, loss_transfer: {:.4f}, loss_cluster: {:.4f}, loss_p: {:.4f}, source_acc: {:.4f}, target_acc: {:.4f}, best_acc: {:.4f}",
+                epoch + 1,
+                epochs,
+                loss_clf / n_batch,
+                loss_transfer / n_batch,
+                loss_cluster / n_batch,
+                loss_p / n_batch,
+                source_acc,
+                target_acc,
                 best_acc,
             )
+
+        if  best_acc >= (1.0 - 1e-4) or (early_stop_patience > 0 and stop >= early_stop_patience) :
+            logger.info("Early stop at epoch {} with best target acc {:.4f}", epoch + 1, best_acc)
             break
 
-        total_loss /= num_batches
-        clf_loss_avg = clf_loss_total / num_batches
-        cluster_loss_avg = cluster_loss_total / num_batches
-        p_loss_avg = p_loss_total / num_batches
-        transfer_loss_avg = transfer_loss_total / num_batches
-
-        if epoch % 50 == 0:
-            logger.info(
-                'Epoch {}/{} | Total Loss: {:.4f}, Clf: {:.4f}, Transfer: {:.4f}, Cluster: {:.4f}, P: {:.4f}',
-                epoch,
-                epochs,
-                total_loss,
-                clf_loss_avg,
-                transfer_loss_avg,
-                cluster_loss_avg,
-                p_loss_avg,
-            )
-            logger.info('cluster loss weight: {:.4f}', boost_factor)
-            logger.info('Current lr = {:.6f}', scheduler.get_last_lr()[0])
-            logger.info('Source Accuracy: {:.4f}, Target Accuracy: {:.4f}', source_acc, target_acc)
-
-
-class StepwiseLR_GRL:
-    def __init__(self, optimizer: Optimizer, init_lr: Optional[float] = 0.01,
-                 gamma: Optional[float] = 0.001, decay_rate: Optional[float] = 0.75, max_iter: Optional[float] = 1000):
-        self.init_lr = init_lr
-        self.gamma = gamma
-        self.decay_rate = decay_rate
-        self.optimizer = optimizer
-        self.iter_num = 0
-        self.max_iter = max_iter
-
-    def get_lr(self) -> float:
-        lr = self.init_lr / (1.0 + self.gamma * (self.iter_num / self.max_iter)) ** (self.decay_rate)
-        return lr
-
-    def step(self):
-        """Increase iteration number `i` by 1 and update learning rate in `optimizer`"""
-        lr = self.get_lr()
-        for param_group in self.optimizer.param_groups:
-            if 'lr_mult' not in param_group:
-                param_group['lr_mult'] = 1.
-            param_group['lr'] = lr * param_group['lr_mult']
-
-        self.iter_num += 1
-
-
-@torch.no_grad()
-def evaluate_all(
-    model: nn.Module,
-    data: torch.Tensor,
-    labels: torch.Tensor,
-    device: str,
-):
-    model.eval()
-
-    data = data.to(device)
-    labels = labels.to(device)
-
-    outputs = model.predict(data)
-    predictions = outputs.long() if outputs.ndim == 1 else torch.argmax(outputs, dim=1)
-
-    correct_in_batch = (predictions == labels).sum().item()
-    acc = correct_in_batch / labels.size(0)
-    return acc
-
-
-def pytorch_safe_cycle(iterable):
-    while True:
-        for x in iterable:
-            yield x
+    # Flush best-epoch failures once, after training ends
+    if best_preds is not None and test_metadata is not None and failure_log_path is not None:
+        record_failures(best_preds[0], best_preds[1], test_metadata, subject_id, session_id, failure_log_path)

@@ -11,8 +11,7 @@ from constant.model_map import MODEL
 from data.dataloder import load_data
 from data.utils import merge_and_split
 from model.saber import Saber
-from train.training import train as train_default
-from train.training_saber_prpl_matched import train as train_saber_prpl_matched
+from train.training import train
 
 from utils.metric import Metric
 from utils.random_seed import setup_seed
@@ -130,7 +129,7 @@ def main(
             ).to(device)
 
 
-            train_saber_prpl_matched(model, metric, train_data, train_labels, test_data, test_labels,
+            train(model, metric, train_data, train_labels, test_data, test_labels,
                               batch_size, num_classes, device, epochs, task_type, subject_id,
                               session_id, learning_rate, early_stop_patience,
                               test_metadata=test_metadata, failure_log_path=failure_log)
@@ -146,16 +145,10 @@ def main(
             break
 
     logger.info('\n-----------> Finished training for all subjects!!!!')
-    all_mean, all_std = metric.all_sessions_mean_acc()
-    two_mean, two_std = metric.two_best_sessions_mean_acc()
     one_mean, one_std = metric.one_best_session_mean_acc()
 
     logger.info(
-        '\nall: mean {:<.4f} std {:<.4f}\ntwo: mean {:<.4f} std {:<.4f}\none: mean {:<.4f} std {:<.4f}\n',
-        all_mean,
-        all_std,
-        two_mean,
-        two_std,
+        'One best session acc: mean {:<.4f} std {:<.4f}\n',
         one_mean,
         one_std,
     )
