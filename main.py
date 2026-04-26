@@ -11,7 +11,9 @@ from constant.model_map import MODEL
 from data.dataloder import load_data
 from data.utils import merge_and_split
 from model.saber import Saber
+from model.saber_t import SaberT
 from train.training import train
+import train.training_saber_t as training_saber_t
 
 from utils.metric import Metric
 from utils.random_seed import setup_seed
@@ -64,6 +66,7 @@ def main(
     early_stop_patience: Annotated[int, typer.Option(help='early stop after N epochs without test acc improvement (0 = disabled)')] = 0,
     failure_log: Annotated[str | None, typer.Option(help='path to CSV file for logging misclassified samples (disabled if not set)')] = "./cache/failure_log.csv",
     use_gcn: Annotated[bool, typer.Option(help='use GCN feature extractor for SABER (False = flat MLP, faster)')] = False,
+    time_steps: Annotated[int, typer.Option(help='number of consecutive DE windows per sample for SABER_T (requires --sample-length N)')] = 8,
     level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
     """Welcome! Use --help option to see usage information."""
@@ -124,15 +127,25 @@ def main(
                 data, labels, task_type, session_id, subject_id, split_ratio, data_random
             )
 
-            model = Saber(
-                num_electrodes, num_features, num_classes, use_gcn,
-            ).to(device)
+            if model_name == cli_enum.ModelName.SABER_T:
+                model = SaberT(
+                    num_electrodes, num_features, time_steps, num_classes,
+                ).to(device)
+                training_saber_t.train(
+                    model, metric, train_data, train_labels, test_data, test_labels,
+                    batch_size, num_classes, device, epochs, task_type, subject_id,
+                    session_id, learning_rate, early_stop_patience,
+                    test_metadata=test_metadata, failure_log_path=failure_log,
+                )
+            else:
+                model = Saber(
+                    num_electrodes, num_features, num_classes, use_gcn,
+                ).to(device)
 
-
-            train(model, metric, train_data, train_labels, test_data, test_labels,
-                              batch_size, num_classes, device, epochs, task_type, subject_id,
-                              session_id, learning_rate, early_stop_patience,
-                              test_metadata=test_metadata, failure_log_path=failure_log)
+                train(model, metric, train_data, train_labels, test_data, test_labels,
+                                  batch_size, num_classes, device, epochs, task_type, subject_id,
+                                  session_id, learning_rate, early_stop_patience,
+                                  test_metadata=test_metadata, failure_log_path=failure_log)
 
 
             logger.info("\n--------------> Finished training w.r.t. subject {} session {} acc {:<.4f}",

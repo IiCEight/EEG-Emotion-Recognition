@@ -103,7 +103,7 @@ def train(
     for epoch in range(epochs):
         model.train()
 
-        n_batch = min(len(source_loader), len(target_loader)) - 1
+        n_batch = min(len(source_loader), len(target_loader))
         if n_batch <= 0:
             logger.warning(
                 "No valid PRPL batch in epoch {}. Check batch_size={} with train/test sizes.",
@@ -181,6 +181,6 @@ def train(
                 best_acc,
             )
 
-        if early_stop_patience > 0 and stop >= early_stop_patience:
+        if  best_acc >= (1.0 - 1e-4) or (early_stop_patience > 0 and stop >= early_stop_patience) :
             logger.info("Early stop at epoch {} with best target acc {:.4f}", epoch + 1, best_acc)
             break

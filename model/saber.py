@@ -11,7 +11,7 @@ from utils.graph_construction import get_domain_general_adj, get_weighted_adj
 
 
 class Saber(nn.Module):
-    def __init__(self, num_electrodes=62, in_features=5, num_classes=3, num_layers=2, max_iter=1000, use_gcn=True):
+    def __init__(self, num_electrodes=62, in_features=5, num_classes=3, num_layers=2, max_iter=1000, use_gcn=False):
         super().__init__()
 
         self.num_electrodes = num_electrodes

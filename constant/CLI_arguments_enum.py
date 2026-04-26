@@ -13,6 +13,7 @@ class ModelName(str, Enum):
     NSAL_DGAT = "NSAL_DGAT"
     PRPL = "PRPL"
     ADANN = "ADANN"
+    SABER_T = "SABER_T"
 
 class DatasetName(str, Enum):
     DEAP = "DEAP"
