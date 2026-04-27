@@ -10,8 +10,9 @@ from utils.graph_construction import get_domain_general_adj, get_weighted_adj
 
 class SaberT(nn.Module):
     """
-    Temporal SABER: GRU per electrode to encode T consecutive DE windows,
-    then residual GCN over the 62-electrode graph, then PRPL + DANN.
+    Temporal SABER: GRU encodes T consecutive DE windows, then either:
+      - use_gcn=True  → per-electrode GRU → residual GCN (TemporalGCNExtractor)
+      - use_gcn=False → flat GRU over whole frame → MLP (TemporalMLPExtractor)
 
     Input shape: [B, T, E, F]
         B = batch size
@@ -28,19 +29,27 @@ class SaberT(nn.Module):
         num_classes: int = 3,
         num_layers: int = 2,
         max_iter: int = 1000,
+        use_gcn: bool = True,
     ):
         super().__init__()
-        self.use_gcn = True  # always uses graph path; consumed by training.py check
+        self.use_gcn = use_gcn
         self.hidden_2 = 64
         self.max_iter = max_iter
 
-        self.feature_extractor = TemporalGCNExtractor(
-            num_electrodes=num_electrodes,
-            in_features=in_features,
-            time_steps=time_steps,
-            num_layers=num_layers,
-            hidden_2=self.hidden_2,
-        )
+        if use_gcn:
+            self.feature_extractor = TemporalGCNExtractor(
+                num_electrodes=num_electrodes,
+                in_features=in_features,
+                time_steps=time_steps,
+                num_layers=num_layers,
+                hidden_2=self.hidden_2,
+            )
+        else:
+            self.feature_extractor = TemporalMLPExtractor(
+                num_electrodes=num_electrodes,
+                in_features=in_features,
+                hidden_2=self.hidden_2,
+            )
 
         self.prpl_classifier = LabelClassifier(
             num_classes=num_classes,
@@ -146,3 +155,31 @@ class TemporalGCNExtractor(nn.Module):
         out = self.fc2(out)
         out = F.relu(out)
         return out                              # [B, 64]
+
+
+class TemporalMLPExtractor(nn.Module):
+    """
+    GRU reads T frames of flattened EEG (E*F each), final hidden state → MLP.
+
+    Input:  [B, T, E, F]
+    Output: [B, 64]
+    """
+
+    GRU_HIDDEN = 128
+
+    def __init__(self, num_electrodes, in_features, hidden_2=64):
+        super().__init__()
+        frame_dim = num_electrodes * in_features
+        self.gru = nn.GRU(input_size=frame_dim, hidden_size=self.GRU_HIDDEN, batch_first=True)
+        self.fc1 = nn.Linear(self.GRU_HIDDEN, hidden_2)
+        self.fc2 = nn.Linear(hidden_2, hidden_2)
+
+    def forward(self, x):
+        # x: [B, T, E, F]
+        B, T, E, n_bands = x.shape
+        x = x.reshape(B, T, E * n_bands)    # [B, T, E*F]
+        _, h = self.gru(x)                  # h: [1, B, GRU_HIDDEN]
+        h = h.squeeze(0)                    # [B, GRU_HIDDEN]
+        out = F.relu(self.fc1(h))           # [B, hidden_2]
+        out = F.relu(self.fc2(out))         # [B, hidden_2]
+        return out                          # [B, 64]

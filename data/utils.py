@@ -10,19 +10,20 @@ from torch.utils.data import DataLoader, TensorDataset
 from constant import CLI_arguments_enum
 
 
-def merge_and_split(data:list, labels:list, task_type, session_id, subject_id, split_ratio, data_random
+def merge_and_split(data:list, labels:list, task_type, session_id, subject_id, split_ratio, data_random,
+                    time_steps: int = 1,
                     )-> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     if task_type == CLI_arguments_enum.TaskTypeName.SUBJECT_DEPENDENT:
         train_data, train_labels, test_data, test_labels = (
             split_data_wrt_trials(
-                data[session_id][subject_id], 
+                data[session_id][subject_id],
                 labels[session_id][subject_id], split_ratio, data_random)
         )
         # merge train data and labels
-        train_data, train_labels = merge_for_one_subject(train_data, train_labels)
-        # We keep session dimension for test data, 
+        train_data, train_labels = merge_for_one_subject(train_data, train_labels, time_steps)
+        # We keep session dimension for test data,
         # since we want to test on all sessions separately.
-        test_data, test_labels = merge_for_one_subject(test_data, test_labels)
+        test_data, test_labels = merge_for_one_subject(test_data, test_labels, time_steps)
 
     else:
         # For subject-independent setting, we leave current subject out as test data
@@ -32,24 +33,33 @@ def merge_and_split(data:list, labels:list, task_type, session_id, subject_id, s
                 data[session_id], labels[session_id], subject_id)
         )
 
-        train_data, train_labels = merge_for_all_subjects(train_data, train_labels)
+        train_data, train_labels = merge_for_all_subjects(train_data, train_labels, time_steps=time_steps)
 
-        test_data, test_labels = merge_for_one_subject(test_data, test_labels)
+        test_data, test_labels = merge_for_one_subject(test_data, test_labels, time_steps)
 
     return train_data, train_labels, test_data, test_labels
 
+
+def _group_into_windows(trial_data: np.ndarray, time_steps: int) -> np.ndarray:
+    """Group (N, ...) → (N//T, T, ...), dropping remainder. No-op when time_steps=1."""
+    if time_steps == 1:
+        return trial_data
+    n_win = len(trial_data) // time_steps
+    arr = ak.Array(trial_data[:n_win * time_steps])
+    return np.array(ak.unflatten(arr, time_steps, axis=0))  # (n_win, T, ...)
 
 
 def merge_for_all_subjects(
     data: list,
     labels: list,
-    merge_subject_dim = True
+    merge_subject_dim = True,
+    time_steps: int = 1,
 )-> tuple[np.ndarray, np.ndarray]:
     """
     input:
         data:  list, shape (subject, trial, sample, electrode, feature)
         label: list, shape (subject, trial, sample)
-    
+
     return:
         if not merge_subject_dim:
             data:  np.ndarray, shape (subject, new_sample (trial * sample), electrode, feature)
@@ -61,23 +71,27 @@ def merge_for_all_subjects(
     """
     logger.info(f"Merging data and labels....")
 
-    data = ak.Array(data)
-    labels = ak.Array(labels)
-
-    # 1. flatten the sample dimension, since it is different for each trial.
-    data = ak.flatten(data, axis=2)
-    labels = ak.flatten(labels, axis=2)
-
-    # 2. Now the shape is perfect the same.
-    data = np.array(data)
-    labels = np.array(labels)
+    grouped, grouped_labels = [], []
+    for sub_trials, sub_labels in zip(data, labels):
+        sub_grouped, sub_gl = [], []
+        for trial, tlabels in zip(sub_trials, sub_labels):
+            t = np.array(trial)       # (N, E, F)
+            l = np.array(tlabels)     # (N,)
+            t = _group_into_windows(t, time_steps)      # (n_win, T, E, F) or (N, E, F)
+            n_win = len(t)
+            sub_grouped.append(t)
+            sub_gl.append(l[:n_win * time_steps:time_steps])
+        grouped.append(np.concatenate(sub_grouped, axis=0))
+        grouped_labels.append(np.concatenate(sub_gl, axis=0))
+    data = np.stack(grouped, axis=0)
+    labels = np.stack(grouped_labels, axis=0)
 
     if not merge_subject_dim:
         logger.info("Finish merging! data shape: {}, label shape: {}", data.shape, labels.shape)
         return data, labels
 
     if merge_subject_dim:
-        data = rearrange(data, "subject samples electrode feature -> (subject samples) electrode feature")
+        data = rearrange(data, "subject samples ... -> (subject samples) ...")
         labels = rearrange(labels, "subject samples -> (subject samples)")
 
     logger.info("Finish merging! data shape: {}, label shape: {}", data.shape, labels.shape)
@@ -86,29 +100,30 @@ def merge_for_all_subjects(
 
 def merge_for_one_subject(
     data: list,
-    labels: list
+    labels: list,
+    time_steps: int = 1,
 )-> tuple[np.ndarray, np.ndarray]:
     """
     input:
         data: list, shape (trial, sample(may different), electrode, feature)
         label: list, shape (trial, sample)
-    
+
     return:
         data: np.ndarray, shape (new_sample (trial * sample), electrode, feature)
         label: np.ndarray, shape (new_sample (trial * sample))
     """
     logger.info(f"Merging data and labels....")
 
-    data = ak.Array(data)
-    labels = ak.Array(labels)
-
-    # 1. flatten the sample dimension, since it is different for each trial.
-    data = ak.flatten(data, axis=1)
-    labels = ak.flatten(labels, axis=1)
-
-    # 2. Now the shape is perfect the same.
-    data = np.array(data)
-    labels = np.array(labels)
+    grouped, grouped_labels = [], []
+    for trial, tlabels in zip(data, labels):
+        t = np.array(trial)       # (N, E, F)
+        l = np.array(tlabels)     # (N,)
+        t = _group_into_windows(t, time_steps)      # (n_win, T, E, F) or (N, E, F)
+        n_win = len(t)
+        grouped.append(t)
+        grouped_labels.append(l[:n_win * time_steps:time_steps])
+    data = np.concatenate(grouped, axis=0)
+    labels = np.concatenate(grouped_labels, axis=0)
 
     logger.info("Finish merging! data shape: {}, label shape: {}", data.shape, labels.shape)
 

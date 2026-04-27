@@ -124,12 +124,13 @@ def main(
                 test_metadata = build_test_metadata(data[session_id][subject_id])
 
             train_data, train_labels, test_data, test_labels = merge_and_split(
-                data, labels, task_type, session_id, subject_id, split_ratio, data_random
+                data, labels, task_type, session_id, subject_id, split_ratio, data_random,
+                time_steps=time_steps if model_name == cli_enum.ModelName.SABER_T else 1,
             )
 
             if model_name == cli_enum.ModelName.SABER_T:
                 model = SaberT(
-                    num_electrodes, num_features, time_steps, num_classes,
+                    num_electrodes, num_features, time_steps, num_classes, use_gcn=use_gcn,
                 ).to(device)
                 training_saber_t.train(
                     model, metric, train_data, train_labels, test_data, test_labels,
