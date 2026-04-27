@@ -350,7 +350,7 @@ def train(
                 best_acc,
             )
 
-        if  best_acc >= (1.0 - 1e-4) or (early_stop_patience > 0 and stop >= early_stop_patience) :
+        if  best_acc >= (100.0 - 1e-1) or (early_stop_patience > 0 and stop >= early_stop_patience) :
             logger.info("Early stop at epoch {} with best target acc {:.4f}", epoch + 1, best_acc)
             break
 
