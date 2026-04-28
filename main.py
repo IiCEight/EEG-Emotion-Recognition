@@ -28,7 +28,7 @@ app = typer.Typer(
 def main(
     model_name: Annotated[
         cli_enum.ModelName, typer.Option('-m', help='model name')
-    ] = cli_enum.ModelName.SABER,
+    ] = cli_enum.ModelName.SABER_T,
     dataset: Annotated[
         cli_enum.DatasetName, typer.Option(help='dataset name')
     ] = cli_enum.DatasetName.SEED,
@@ -56,7 +56,7 @@ def main(
         typer.Option(help='type of data split (kfold, leave-one-subject-out)'),
     ] = cli_enum.SplitTypeName.LEAVE_ONE_SUBJECT_OUT,
     split_ratio: Annotated[float, typer.Option(help='ratio for train data size')] = 0.6,
-    batch_size: Annotated[int, typer.Option(help='batch size for training')] = 96,
+    batch_size: Annotated[int, typer.Option(help='batch size for training')] = 48,
     epochs: Annotated[int, typer.Option(help='number of epochs for training')] = 1000,
     data_random: Annotated[bool, typer.Option(help='whether to shuffle the data')] = False,
     only_one_experiment: Annotated[bool, typer.Option(help='whether to run only one experiment for debugging')] = False,
@@ -66,7 +66,7 @@ def main(
     early_stop_patience: Annotated[int, typer.Option(help='early stop after N epochs without test acc improvement (0 = disabled)')] = 0,
     failure_log: Annotated[str | None, typer.Option(help='path to CSV file for logging misclassified samples (disabled if not set)')] = "./cache/failure_log.csv",
     use_gcn: Annotated[bool, typer.Option(help='use GCN feature extractor for SABER (False = flat MLP, faster)')] = False,
-    time_steps: Annotated[int, typer.Option(help='number of consecutive DE windows per sample for SABER_T (requires --sample-length N)')] = 8,
+    time_steps: Annotated[int, typer.Option(help='number of consecutive DE windows per sample for SABER_T (requires --sample-length N)')] = 2,
     level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
     """Welcome! Use --help option to see usage information."""
@@ -87,7 +87,7 @@ def main(
         + f'\ndata random: {data_random}\nrandom seed: {random_seed}'
         + f'\nonly one experiment: {only_one_experiment}\nonly one session: {only_one_session}'
         + f'\nlearning rate: {learning_rate}\nearly stop patience: {early_stop_patience}'
-        + f'\nuse_gcn: {use_gcn}'
+        + f'\nuse_gcn: {use_gcn}\ntime_steps: {time_steps}'
     )
 
     data, labels, num_subjects, num_electrodes, num_features, num_classes = load_data(
