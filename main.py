@@ -94,6 +94,8 @@ def main(
         dataset_name=dataset,
         dataset_path=dataset_path,
         cache_dir=cache_dir,
+        sample_length=sample_length,
+        stride=stride,
     )
 
     num_sessions = len(labels)

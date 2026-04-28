@@ -7,13 +7,14 @@ from loguru import logger
 
 from data.load.load_deap import load_deap
 from data.load.load_seed import load_seed
+from data.load.load_seed_raw import load_seed_raw
 from data.merge_and_split import merge_and_split_deap, merge_and_split_seed
 from data.preprocess.preprocess_deap import preprocess_deap
 from data.preprocess.preprocess_seed import preprocess_seed
 import awkward as ak
 
 
-_CACHE_VERSION = "v1"
+_CACHE_VERSION = "v2"
 
 
 def _to_plain_str(value) -> str:
@@ -24,11 +25,15 @@ def _build_cache_path(
     cache_dir: str,
     dataset_name: str,
     dataset_path: str,
+    sample_length: int = 1,
+    stride: int | None = None,
 ) -> Path:
     cache_key_payload = {
         "cache_version": _CACHE_VERSION,
         "dataset_name": dataset_name,
         "dataset_path": str(Path(dataset_path).expanduser().resolve()),
+        "sample_length": sample_length,
+        "stride": stride if stride is not None else sample_length,
     }
     cache_key = hashlib.md5(
         json.dumps(cache_key_payload, sort_keys=True).encode("utf-8")
@@ -41,6 +46,8 @@ def load_data(
     dataset_name: str,
     dataset_path: str,
     cache_dir: str | None = None,
+    sample_length: int = 1,
+    stride: int | None = None,
 ) -> tuple[ak.Array, ak.Array, int, int, int, int]:
     """
     return:
@@ -58,7 +65,7 @@ def load_data(
         "SEED": load_seed,
     }
 
-    if dataset_name not in function_map:
+    if _to_plain_str(dataset_name) not in function_map:
         raise ValueError(f"Unsupported dataset: {dataset_name}")
 
     cache_path = None
@@ -67,6 +74,8 @@ def load_data(
             cache_dir=cache_dir,
             dataset_name=dataset_name,
             dataset_path=dataset_path,
+            sample_length=sample_length,
+            stride=stride,
         )
         if cache_path.exists():
             try:
@@ -80,7 +89,10 @@ def load_data(
                 logger.warning("Failed to load dataset cache {} ({})", cache_path, exc)
 
     # Load the data and labels
-    result = function_map[dataset_name](dataset_path)
+    if _to_plain_str(dataset_name) == "SEED" and sample_length > 1:
+        result = load_seed_raw(dataset_path, sample_length=sample_length, stride=stride)
+    else:
+        result = function_map[_to_plain_str(dataset_name)](dataset_path)
 
     if cache_path is not None:
         try:
