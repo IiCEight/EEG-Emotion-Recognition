@@ -12,6 +12,7 @@ from constant import CLI_arguments_enum
 
 def merge_and_split(data:list, labels:list, task_type, session_id, subject_id, split_ratio, data_random,
                     time_steps: int = 1,
+                    jsd_threshold: float | None = None,
                     )-> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     if task_type == CLI_arguments_enum.TaskTypeName.SUBJECT_DEPENDENT:
         train_data, train_labels, test_data, test_labels = (
@@ -28,9 +29,25 @@ def merge_and_split(data:list, labels:list, task_type, session_id, subject_id, s
     else:
         # For subject-independent setting, we leave current subject out as test data
         # and merge the rest subjects' data as train data.
+        if jsd_threshold is not None:
+            # 0.0 = auto-scale (per-subject median); any other float = fixed threshold
+            effective_threshold = None if jsd_threshold == 0.0 else jsd_threshold
+            selected_source_ids = select_sources_by_jsd(
+                data[session_id], labels[session_id], subject_id,
+                threshold=effective_threshold,
+            )
+            logger.info(
+                "JSD source selection: keeping {}/{} sources for subject {}",
+                len(selected_source_ids), len(data[session_id]) - 1, subject_id,
+            )
+        else:
+            selected_source_ids = None
+
         train_data, train_labels, test_data, test_labels = (
             split_data_wrt_subjects(
-                data[session_id], labels[session_id], subject_id)
+                data[session_id], labels[session_id], subject_id,
+                source_ids=selected_source_ids,
+            )
         )
 
         train_data, train_labels = merge_for_all_subjects(train_data, train_labels, time_steps=time_steps)
@@ -170,11 +187,15 @@ def split_data_wrt_trials(data:list, labels:list, split_ratio:float, random = Fa
     return train_data, train_labels, test_data, test_labels
 
 
-def split_data_wrt_subjects(data:list, labels:list, subject_id:int
+def split_data_wrt_subjects(data:list, labels:list, subject_id:int,
+                            source_ids: list[int] | None = None,
                           )->tuple[list, list, list, list]:
     """
     leave one subject(subject_id:int) as test set.
-            
+
+    If source_ids is provided, only those subjects are used as training data.
+    Otherwise, all subjects except subject_id are used.
+
     input:
         data:  list, shape (subject, trial, sample, electrode, feature)
         label: list, shape (subject, trial, sample)
@@ -191,16 +212,91 @@ def split_data_wrt_subjects(data:list, labels:list, subject_id:int
     # number for each subject,
     num_subjects = len(labels)
 
-    mask = np.ones(num_subjects, dtype=bool)
-    mask[subject_id] = False
+    if source_ids is not None:
+        train_data = [data[i].to_list() for i in source_ids]
+        train_labels = [labels[i].to_list() for i in source_ids]
+    else:
+        mask = np.ones(num_subjects, dtype=bool)
+        mask[subject_id] = False
+        train_data = data[mask].to_list()
+        train_labels = labels[mask].to_list()
 
-    # convert back to list
-    train_data = data[mask].to_list()
-    train_labels = labels[mask].to_list()
     test_data = data[subject_id].to_list()
     test_labels = labels[subject_id].to_list()
-    
+
     return train_data, train_labels, test_data, test_labels
+
+
+def select_sources_by_jsd(
+    data: list,
+    labels: list,
+    subject_id: int,
+    threshold: float | None = None,
+    fallback_k: int = 7,
+) -> list[int]:
+    """
+    Return indices of source subjects to keep based on JSD similarity to target.
+
+    Computes per-column entropy of each subject's flattened feature matrix,
+    then measures Jensen-Shannon divergence between source and target entropy vectors.
+    Sources with JSD < threshold are selected.
+
+    If threshold is None, the median JSD across all candidate sources is used
+    (auto-scaling to the data's JSD range).
+
+    Falls back to top-K closest if none qualify after thresholding.
+
+    input:
+        data:       list, shape (subject, trial, sample, electrode, feature)
+        labels:     list, shape (subject, trial, sample)  [unused, kept for API symmetry]
+        subject_id: index of the target subject
+        threshold:  JSD threshold for inclusion; None = use per-subject median
+        fallback_k: number of closest sources to use if none pass threshold
+    return:
+        list of selected source subject indices
+    """
+    import math
+    from scipy.spatial.distance import jensenshannon
+    from scipy.stats import entropy
+
+    num_subjects = len(data)
+    source_ids = [i for i in range(num_subjects) if i != subject_id]
+
+    # Flatten target subject's data to (N, E*F)
+    target_samples = []
+    for trial in data[subject_id]:
+        target_samples.extend(trial)
+    target_flat = np.array(target_samples).reshape(len(target_samples), -1).astype(np.float64)
+    target_pdf = entropy(target_flat, base=math.e)  # (E*F,)
+
+    js_scores = []
+    for src_id in source_ids:
+        src_samples = []
+        for trial in data[src_id]:
+            src_samples.extend(trial)
+        src_flat = np.array(src_samples).reshape(len(src_samples), -1).astype(np.float64)
+        src_pdf = entropy(src_flat, base=math.e)  # (E*F,)
+        js = float(jensenshannon(src_pdf, target_pdf))
+        js_scores.append((js, src_id))
+
+    if threshold is None:
+        threshold = float(np.median([js for js, _ in js_scores]))
+        logger.info(
+            "JSD source selection: auto threshold (median) = {:.6f} for subject {}",
+            threshold, subject_id,
+        )
+
+    selected = [(js, sid) for js, sid in js_scores if js < threshold]
+
+    if not selected:
+        logger.warning(
+            "JSD source selection: no sources below threshold {:.6f} for subject {}, "
+            "falling back to top-{} closest",
+            threshold, subject_id, fallback_k,
+        )
+        selected = sorted(js_scores, key=lambda x: x[0])[:fallback_k]
+
+    return [sid for _, sid in selected]
 
 
 def normalization_wrt_trial(data:list, type = 'min_max'):

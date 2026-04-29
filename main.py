@@ -67,6 +67,7 @@ def main(
     failure_log: Annotated[str | None, typer.Option(help='path to CSV file for logging misclassified samples (disabled if not set)')] = "./cache/failure_log.csv",
     use_gcn: Annotated[bool, typer.Option(help='use GCN feature extractor for SABER (False = flat MLP, faster)')] = False,
     time_steps: Annotated[int, typer.Option(help='number of consecutive DE windows per sample for SABER_T (requires --sample-length N)')] = 2,
+    jsd_threshold: Annotated[float | None, typer.Option(help='JSD threshold for source selection: 0.0 = auto (per-subject median), None = disabled (use all sources)')] = 0.0,
     level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
     """Welcome! Use --help option to see usage information."""
@@ -128,6 +129,7 @@ def main(
             train_data, train_labels, test_data, test_labels = merge_and_split(
                 data, labels, task_type, session_id, subject_id, split_ratio, data_random,
                 time_steps=time_steps if model_name == cli_enum.ModelName.SABER_T else 1,
+                jsd_threshold=jsd_threshold,
             )
 
             if model_name == cli_enum.ModelName.SABER_T:
