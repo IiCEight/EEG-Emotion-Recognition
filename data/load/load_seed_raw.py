@@ -13,7 +13,7 @@ from functools import partial
 import numpy as np
 from loguru import logger
 from scipy.io import loadmat
-from scipy.signal import butter, sosfiltfilt
+from scipy.signal import butter, filtfilt
 
 # --- constants ---------------------------------------------------------------
 
@@ -28,7 +28,7 @@ _BANDS = [
     (31, 50),  # gamma
 ]
 
-_FILTER_ORDER = 4
+_FILTER_ORDER = 3
 _LDS_ALPHA = 0.5  # exponential smoothing weight (SEED convention)
 
 # Same session/subject file mapping as load_seed.py
@@ -52,14 +52,14 @@ _EEG_FILES = [
 
 # --- internal helpers --------------------------------------------------------
 
-def _bandpass_sos(low: float, high: float, fs: int, order: int = _FILTER_ORDER):
+def _bandpass_ba(low: float, high: float, fs: int, order: int = _FILTER_ORDER):
     nyq = fs / 2.0
-    return butter(order, [low / nyq, high / nyq], btype='band', output='sos')
+    return butter(order, [low / nyq, high / nyq], btype='bandpass')
 
 
 def _compute_de(signal: np.ndarray) -> float:
-    """DE of a 1-D signal: 0.5 * log(2πe * var)."""
-    return 0.5 * np.log(2 * np.pi * np.e * np.var(signal) + 1e-10)
+    """DE of a 1-D signal: 0.5 * log2(2πe * var), matching preprocess.py."""
+    return 0.5 * np.log2(2 * np.pi * np.e * np.var(signal, ddof=1))
 
 
 def _apply_lds(de_seq: np.ndarray, alpha: float = _LDS_ALPHA) -> np.ndarray:
@@ -78,7 +78,7 @@ def _process_trial(
     raw: np.ndarray,          # (62, T_raw)
     window_samples: int,
     stride_samples: int,
-    sos_filters: list,
+    ba_filters: list,
 ) -> np.ndarray:
     """
     For one trial: bandpass → segment → DE → LDS.
@@ -92,8 +92,8 @@ def _process_trial(
 
     de_windows = np.zeros((n_windows, n_electrodes, len(_BANDS)), dtype=np.float32)
 
-    for band_idx, sos in enumerate(sos_filters):
-        filtered = sosfiltfilt(sos, raw, axis=1)  # (62, T)
+    for band_idx, (b, a) in enumerate(ba_filters):
+        filtered = filtfilt(b, a, raw, axis=1)  # (62, T)
         for w in range(n_windows):
             start = w * stride_samples
             seg = filtered[:, start: start + window_samples]  # (62, window_samples)
@@ -108,12 +108,12 @@ def _read_subject(dir_path: str, window_samples: int, stride_samples: int, file:
     subject_data = loadmat(f"{dir_path}/{file}")
     keys = list(subject_data.keys())[3:]  # skip __header__, __version__, __globals__
 
-    sos_filters = [_bandpass_sos(lo, hi, SAMPLING_RATE) for lo, hi in _BANDS]
+    ba_filters = [_bandpass_ba(lo, hi, SAMPLING_RATE) for lo, hi in _BANDS]
 
     trials = []
     for i in range(15):
         raw = subject_data[keys[i]][:, 1:]  # (62, T_raw) — drop dummy first column
-        trial_de = _process_trial(raw, window_samples, stride_samples, sos_filters)
+        trial_de = _process_trial(raw, window_samples, stride_samples, ba_filters)
         trials.append(trial_de.tolist())
     return trials
 

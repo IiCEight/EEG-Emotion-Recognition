@@ -43,7 +43,7 @@ def main(
         int, typer.Option(help='length of data points in each sample')
     ] = 1,
     stride: Annotated[int, typer.Option(
-        help='stride for segmenting data')] = 128,
+        help='stride for segmenting data')] = 1,
     label_type: Annotated[
         str, typer.Option(help='type of label to use (valence, arousal)')
     ] = 'valence',
