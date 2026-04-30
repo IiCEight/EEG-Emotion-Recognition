@@ -1,0 +1,680 @@
+10:18:26 | INFO     __main__ main     77  CUDA Available: True
+10:18:26 | INFO     __main__ main     78  Device Count: 1
+10:18:26 | INFO     __main__ main     80  GPU Name: NVIDIA GeForce RTX 4090
+10:18:26 | INFO     __main__ main     82  Launching....
+model_name: ModelName.SABER
+dataset: DatasetName.SEED
+dataset_path: ../data/SEED
+cache_dir: ./cache
+device: cuda
+logging level: LevelName.INFO
+task type: TaskTypeName.SUBJECT_INDEPENDENT
+split type: SplitTypeName.LEAVE_ONE_SUBJECT_OUT
+batch_size: 32
+epochs: 1000
+data random: False
+random seed: 42
+only one experiment: False
+only one session: True
+learning rate: 0.001
+early stop patience: 0
+use_gcn: False
+time_steps: 2
+10:18:26 | INFO     data.dataloder load_data 61  Loading dataset DatasetName.SEED from path ../data/SEED
+10:18:26 | INFO     data.load.load_seed_raw load_seed_raw 140 load_seed_raw: sample_length=2s  stride=2s  window_samples=400  stride_samples=400
+10:19:40 | INFO     data.dataloder load_data 102 Dataset cache saved: cache/seed_9ccd5e95b348e698c1db31f56f3200fe.pkl
+10:19:43 | INFO     data.utils merge_for_all_subjects 72  Merging data and labels....
+10:19:44 | INFO     data.utils merge_for_all_subjects 97  Finish merging! data shape: (23688, 62, 5), label shape: (23688,)
+10:19:44 | INFO     data.utils merge_for_one_subject 115 Merging data and labels....
+10:19:44 | INFO     data.utils merge_for_one_subject 128 Finish merging! data shape: (1692, 62, 5), label shape: (1692,)
+10:19:44 | INFO     train.training train    160 len of train data: 23688, len of test data: 1692
+10:19:45 | INFO     utils.metric update   25  --> A new better acc 0.3475 on subject 0 session 0
+10:19:45 | INFO     train.training train    340 Epoch 1/1000 | loss_clf: 3.9849, loss_transfer: 0.5875, loss_cluster: 0.0713, loss_p: 19.7035, source_acc: 40.6915, target_acc: 34.7518, best_acc: 34.7518
+10:19:48 | INFO     utils.metric update   25  --> A new better acc 0.4663 on subject 0 session 0
+10:19:49 | INFO     utils.metric update   25  --> A new better acc 0.5479 on subject 0 session 0
+10:19:53 | INFO     utils.metric update   25  --> A new better acc 0.5496 on subject 0 session 0
+10:19:54 | INFO     utils.metric update   25  --> A new better acc 0.5780 on subject 0 session 0
+10:19:56 | INFO     utils.metric update   25  --> A new better acc 0.5922 on subject 0 session 0
+10:19:59 | INFO     utils.metric update   25  --> A new better acc 0.6064 on subject 0 session 0
+10:20:03 | INFO     utils.metric update   25  --> A new better acc 0.6271 on subject 0 session 0
+10:20:04 | INFO     utils.metric update   25  --> A new better acc 0.6495 on subject 0 session 0
+10:20:05 | INFO     utils.metric update   25  --> A new better acc 0.6507 on subject 0 session 0
+10:20:08 | INFO     utils.metric update   25  --> A new better acc 0.6525 on subject 0 session 0
+10:20:10 | INFO     utils.metric update   25  --> A new better acc 0.6608 on subject 0 session 0
+10:20:11 | INFO     utils.metric update   25  --> A new better acc 0.6755 on subject 0 session 0
+10:20:16 | INFO     utils.metric update   25  --> A new better acc 0.6814 on subject 0 session 0
+10:20:19 | INFO     utils.metric update   25  --> A new better acc 0.6850 on subject 0 session 0
+10:20:20 | INFO     utils.metric update   25  --> A new better acc 0.6998 on subject 0 session 0
+10:20:23 | INFO     train.training train    340 Epoch 50/1000 | loss_clf: 0.7216, loss_transfer: 0.6830, loss_cluster: 0.1122, loss_p: 7.9165, source_acc: 68.8999, target_acc: 59.8109, best_acc: 69.9764
+10:20:24 | INFO     utils.metric update   25  --> A new better acc 0.7080 on subject 0 session 0
+10:21:00 | INFO     train.training train    340 Epoch 100/1000 | loss_clf: 0.5616, loss_transfer: 0.6805, loss_cluster: 0.0983, loss_p: 7.9092, source_acc: 76.8448, target_acc: 66.0165, best_acc: 70.8038
+10:21:35 | INFO     train.training train    340 Epoch 150/1000 | loss_clf: 0.4977, loss_transfer: 0.6868, loss_cluster: 0.0908, loss_p: 7.9348, source_acc: 79.1329, target_acc: 65.7801, best_acc: 70.8038
+10:21:46 | INFO     utils.metric update   25  --> A new better acc 0.7187 on subject 0 session 0
+10:21:47 | INFO     utils.metric update   25  --> A new better acc 0.7400 on subject 0 session 0
+10:22:11 | INFO     train.training train    340 Epoch 200/1000 | loss_clf: 0.4859, loss_transfer: 0.6657, loss_cluster: 0.0558, loss_p: 7.9638, source_acc: 78.4912, target_acc: 68.0260, best_acc: 73.9953
+10:22:47 | INFO     train.training train    340 Epoch 250/1000 | loss_clf: 0.4323, loss_transfer: 0.6782, loss_cluster: 0.0581, loss_p: 7.9505, source_acc: 79.9688, target_acc: 68.6170, best_acc: 73.9953
+10:23:23 | INFO     train.training train    340 Epoch 300/1000 | loss_clf: 0.3940, loss_transfer: 0.6668, loss_cluster: 0.0560, loss_p: 7.9004, source_acc: 88.4161, target_acc: 67.5532, best_acc: 73.9953
+10:23:58 | INFO     train.training train    340 Epoch 350/1000 | loss_clf: 0.3443, loss_transfer: 0.6779, loss_cluster: 0.0453, loss_p: 7.9550, source_acc: 86.0182, target_acc: 64.0071, best_acc: 73.9953
+10:24:34 | INFO     train.training train    340 Epoch 400/1000 | loss_clf: 0.2974, loss_transfer: 0.6742, loss_cluster: 0.0343, loss_p: 7.9086, source_acc: 90.4889, target_acc: 66.9622, best_acc: 73.9953
+10:25:10 | INFO     train.training train    340 Epoch 450/1000 | loss_clf: 0.2824, loss_transfer: 0.6737, loss_cluster: 0.0404, loss_p: 7.9011, source_acc: 88.7580, target_acc: 63.2388, best_acc: 73.9953
+10:25:46 | INFO     train.training train    340 Epoch 500/1000 | loss_clf: 0.3159, loss_transfer: 0.6747, loss_cluster: 0.0368, loss_p: 7.9293, source_acc: 88.5723, target_acc: 64.5981, best_acc: 73.9953
+10:26:24 | INFO     train.training train    340 Epoch 550/1000 | loss_clf: 0.2685, loss_transfer: 0.6775, loss_cluster: 0.0365, loss_p: 7.9159, source_acc: 87.3311, target_acc: 69.4444, best_acc: 73.9953
+10:27:00 | INFO     train.training train    340 Epoch 600/1000 | loss_clf: 0.2531, loss_transfer: 0.6650, loss_cluster: 0.0334, loss_p: 7.8822, source_acc: 89.9316, target_acc: 64.5390, best_acc: 73.9953
+10:27:35 | INFO     train.training train    340 Epoch 650/1000 | loss_clf: 0.2422, loss_transfer: 0.6662, loss_cluster: 0.0298, loss_p: 7.8875, source_acc: 87.2045, target_acc: 68.0260, best_acc: 73.9953
+10:28:12 | INFO     train.training train    340 Epoch 700/1000 | loss_clf: 0.2573, loss_transfer: 0.6833, loss_cluster: 0.0380, loss_p: 7.8733, source_acc: 93.0302, target_acc: 64.5981, best_acc: 73.9953
+10:28:49 | INFO     train.training train    340 Epoch 750/1000 | loss_clf: 0.2434, loss_transfer: 0.6662, loss_cluster: 0.0291, loss_p: 7.9347, source_acc: 91.0081, target_acc: 65.4846, best_acc: 73.9953
+10:29:26 | INFO     train.training train    340 Epoch 800/1000 | loss_clf: 0.2677, loss_transfer: 0.6557, loss_cluster: 0.0272, loss_p: 7.8960, source_acc: 92.9036, target_acc: 62.9433, best_acc: 73.9953
+10:30:02 | INFO     train.training train    340 Epoch 850/1000 | loss_clf: 0.2043, loss_transfer: 0.6540, loss_cluster: 0.0288, loss_p: 7.9195, source_acc: 93.7352, target_acc: 64.8936, best_acc: 73.9953
+10:30:39 | INFO     train.training train    340 Epoch 900/1000 | loss_clf: 0.2227, loss_transfer: 0.6486, loss_cluster: 0.0408, loss_p: 7.9979, source_acc: 90.8730, target_acc: 62.7069, best_acc: 73.9953
+10:31:16 | INFO     train.training train    340 Epoch 950/1000 | loss_clf: 0.2347, loss_transfer: 0.6472, loss_cluster: 0.0275, loss_p: 8.1114, source_acc: 89.4715, target_acc: 61.5839, best_acc: 73.9953
+10:31:52 | INFO     train.training train    340 Epoch 1000/1000 | loss_clf: 0.2268, loss_transfer: 0.6829, loss_cluster: 0.0339, loss_p: 8.0838, source_acc: 90.9870, target_acc: 66.0757, best_acc: 73.9953
+10:31:52 | INFO     __main__ main     154 
+--------------> Finished training w.r.t. subject 0 session 0 acc 0.7400
+10:31:55 | INFO     data.utils merge_for_all_subjects 72  Merging data and labels....
+10:31:56 | INFO     data.utils merge_for_all_subjects 97  Finish merging! data shape: (23688, 62, 5), label shape: (23688,)
+10:31:56 | INFO     data.utils merge_for_one_subject 115 Merging data and labels....
+10:31:56 | INFO     data.utils merge_for_one_subject 128 Finish merging! data shape: (1692, 62, 5), label shape: (1692,)
+10:31:56 | INFO     train.training train    160 len of train data: 23688, len of test data: 1692
+10:31:56 | INFO     utils.metric update   25  --> A new better acc 0.2790 on subject 1 session 0
+10:31:56 | INFO     train.training train    340 Epoch 1/1000 | loss_clf: 4.9907, loss_transfer: 0.5638, loss_cluster: 0.0243, loss_p: 22.8981, source_acc: 39.7965, target_acc: 27.8960, best_acc: 27.8960
+10:31:57 | INFO     utils.metric update   25  --> A new better acc 0.3493 on subject 1 session 0
+10:31:58 | INFO     utils.metric update   25  --> A new better acc 0.3528 on subject 1 session 0
+10:31:59 | INFO     utils.metric update   25  --> A new better acc 0.3623 on subject 1 session 0
+10:32:00 | INFO     utils.metric update   25  --> A new better acc 0.4178 on subject 1 session 0
+10:32:02 | INFO     utils.metric update   25  --> A new better acc 0.4775 on subject 1 session 0
+10:32:03 | INFO     utils.metric update   25  --> A new better acc 0.4976 on subject 1 session 0
+10:32:06 | INFO     utils.metric update   25  --> A new better acc 0.5006 on subject 1 session 0
+10:32:07 | INFO     utils.metric update   25  --> A new better acc 0.5065 on subject 1 session 0
+10:32:09 | INFO     utils.metric update   25  --> A new better acc 0.5171 on subject 1 session 0
+10:32:10 | INFO     utils.metric update   25  --> A new better acc 0.5467 on subject 1 session 0
+10:32:19 | INFO     utils.metric update   25  --> A new better acc 0.6478 on subject 1 session 0
+10:32:31 | INFO     train.training train    340 Epoch 50/1000 | loss_clf: 0.6805, loss_transfer: 0.6839, loss_cluster: 0.1104, loss_p: 7.9166, source_acc: 71.3399, target_acc: 53.7234, best_acc: 64.7754
+10:33:09 | INFO     train.training train    340 Epoch 100/1000 | loss_clf: 0.5434, loss_transfer: 0.6902, loss_cluster: 0.0904, loss_p: 7.9103, source_acc: 79.1033, target_acc: 53.9598, best_acc: 64.7754
+10:33:44 | INFO     train.training train    340 Epoch 150/1000 | loss_clf: 0.4835, loss_transfer: 0.6882, loss_cluster: 0.0909, loss_p: 7.9523, source_acc: 79.8294, target_acc: 54.5508, best_acc: 64.7754
+10:34:23 | INFO     train.training train    340 Epoch 200/1000 | loss_clf: 0.4432, loss_transfer: 0.6770, loss_cluster: 0.0690, loss_p: 7.9563, source_acc: 80.5471, target_acc: 54.1962, best_acc: 64.7754
+10:34:59 | INFO     train.training train    340 Epoch 250/1000 | loss_clf: 0.4130, loss_transfer: 0.6771, loss_cluster: 0.0642, loss_p: 7.9485, source_acc: 83.6246, target_acc: 60.1655, best_acc: 64.7754
+10:35:38 | INFO     train.training train    340 Epoch 300/1000 | loss_clf: 0.3396, loss_transfer: 0.6791, loss_cluster: 0.0519, loss_p: 7.9060, source_acc: 87.9770, target_acc: 56.2648, best_acc: 64.7754
+10:36:15 | INFO     train.training train    340 Epoch 350/1000 | loss_clf: 0.3096, loss_transfer: 0.6731, loss_cluster: 0.0438, loss_p: 7.9387, source_acc: 89.0071, target_acc: 55.2600, best_acc: 64.7754
+10:36:52 | INFO     train.training train    340 Epoch 400/1000 | loss_clf: 0.2817, loss_transfer: 0.6919, loss_cluster: 0.0447, loss_p: 7.9424, source_acc: 85.7438, target_acc: 56.5603, best_acc: 64.7754
+10:37:29 | INFO     train.training train    340 Epoch 450/1000 | loss_clf: 0.2903, loss_transfer: 0.6722, loss_cluster: 0.0508, loss_p: 7.9732, source_acc: 87.0356, target_acc: 56.0875, best_acc: 64.7754
+10:38:08 | INFO     train.training train    340 Epoch 500/1000 | loss_clf: 0.2728, loss_transfer: 0.6689, loss_cluster: 0.0441, loss_p: 7.9558, source_acc: 91.3501, target_acc: 57.1513, best_acc: 64.7754
+10:38:47 | INFO     train.training train    340 Epoch 550/1000 | loss_clf: 0.2575, loss_transfer: 0.6509, loss_cluster: 0.0381, loss_p: 7.9453, source_acc: 91.4851, target_acc: 55.9693, best_acc: 64.7754
+10:39:24 | INFO     train.training train    340 Epoch 600/1000 | loss_clf: 0.2549, loss_transfer: 0.6644, loss_cluster: 0.0364, loss_p: 7.9095, source_acc: 85.2668, target_acc: 56.3830, best_acc: 64.7754
+10:40:02 | INFO     train.training train    340 Epoch 650/1000 | loss_clf: 0.2809, loss_transfer: 0.6991, loss_cluster: 0.0373, loss_p: 7.9395, source_acc: 88.0193, target_acc: 53.9598, best_acc: 64.7754
+10:40:42 | INFO     train.training train    340 Epoch 700/1000 | loss_clf: 0.3024, loss_transfer: 0.7123, loss_cluster: 0.0306, loss_p: 8.5153, source_acc: 90.6788, target_acc: 57.3877, best_acc: 64.7754
+10:41:18 | INFO     train.training train    340 Epoch 750/1000 | loss_clf: 0.2975, loss_transfer: 0.6874, loss_cluster: 0.0366, loss_p: 9.1561, source_acc: 92.5616, target_acc: 58.9835, best_acc: 64.7754
+10:41:56 | INFO     train.training train    340 Epoch 800/1000 | loss_clf: 0.2685, loss_transfer: 0.6738, loss_cluster: 0.0299, loss_p: 8.3758, source_acc: 90.7886, target_acc: 57.3286, best_acc: 64.7754
+10:42:33 | INFO     train.training train    340 Epoch 850/1000 | loss_clf: 0.2898, loss_transfer: 0.6227, loss_cluster: 0.0343, loss_p: 8.0158, source_acc: 92.8360, target_acc: 58.0969, best_acc: 64.7754
+10:43:10 | INFO     train.training train    340 Epoch 900/1000 | loss_clf: 0.2748, loss_transfer: 0.6667, loss_cluster: 0.0298, loss_p: 9.0807, source_acc: 94.4107, target_acc: 57.3286, best_acc: 64.7754
+10:43:46 | INFO     train.training train    340 Epoch 950/1000 | loss_clf: 0.1991, loss_transfer: 0.6926, loss_cluster: 0.0306, loss_p: 8.2222, source_acc: 92.8951, target_acc: 58.3333, best_acc: 64.7754
+10:44:23 | INFO     train.training train    340 Epoch 1000/1000 | loss_clf: 0.2702, loss_transfer: 0.7941, loss_cluster: 0.0305, loss_p: 8.8796, source_acc: 89.0704, target_acc: 53.3688, best_acc: 64.7754
+10:44:23 | INFO     __main__ main     154 
+--------------> Finished training w.r.t. subject 1 session 0 acc 0.6478
+10:44:25 | INFO     data.utils merge_for_all_subjects 72  Merging data and labels....
+10:44:26 | INFO     data.utils merge_for_all_subjects 97  Finish merging! data shape: (23688, 62, 5), label shape: (23688,)
+10:44:26 | INFO     data.utils merge_for_one_subject 115 Merging data and labels....
+10:44:26 | INFO     data.utils merge_for_one_subject 128 Finish merging! data shape: (1692, 62, 5), label shape: (1692,)
+10:44:26 | INFO     train.training train    160 len of train data: 23688, len of test data: 1692
+10:44:26 | INFO     utils.metric update   25  --> A new better acc 0.3765 on subject 2 session 0
+10:44:26 | INFO     train.training train    340 Epoch 1/1000 | loss_clf: 6.2434, loss_transfer: 0.4931, loss_cluster: 0.0155, loss_p: 29.5924, source_acc: 44.2165, target_acc: 37.6478, best_acc: 37.6478
+10:44:28 | INFO     utils.metric update   25  --> A new better acc 0.3853 on subject 2 session 0
+10:44:29 | INFO     utils.metric update   25  --> A new better acc 0.4155 on subject 2 session 0
+10:44:32 | INFO     utils.metric update   25  --> A new better acc 0.4220 on subject 2 session 0
+10:44:32 | INFO     utils.metric update   25  --> A new better acc 0.4557 on subject 2 session 0
+10:44:35 | INFO     utils.metric update   25  --> A new better acc 0.4740 on subject 2 session 0
+10:44:38 | INFO     utils.metric update   25  --> A new better acc 0.4941 on subject 2 session 0
+10:44:38 | INFO     utils.metric update   25  --> A new better acc 0.5041 on subject 2 session 0
+10:44:42 | INFO     utils.metric update   25  --> A new better acc 0.5514 on subject 2 session 0
+10:44:46 | INFO     utils.metric update   25  --> A new better acc 0.5532 on subject 2 session 0
+10:44:48 | INFO     utils.metric update   25  --> A new better acc 0.5780 on subject 2 session 0
+10:45:02 | INFO     train.training train    340 Epoch 50/1000 | loss_clf: 0.6953, loss_transfer: 0.6834, loss_cluster: 0.1206, loss_p: 7.9220, source_acc: 74.8607, target_acc: 48.9953, best_acc: 57.8014
+10:45:38 | INFO     train.training train    340 Epoch 100/1000 | loss_clf: 0.5724, loss_transfer: 0.6849, loss_cluster: 0.0979, loss_p: 7.9335, source_acc: 74.5905, target_acc: 54.9054, best_acc: 57.8014
+10:46:15 | INFO     train.training train    340 Epoch 150/1000 | loss_clf: 0.4644, loss_transfer: 0.6886, loss_cluster: 0.0986, loss_p: 7.9026, source_acc: 78.1873, target_acc: 48.9362, best_acc: 57.8014
+10:46:51 | INFO     train.training train    340 Epoch 200/1000 | loss_clf: 0.4663, loss_transfer: 0.6827, loss_cluster: 0.0790, loss_p: 7.9273, source_acc: 78.7318, target_acc: 49.5863, best_acc: 57.8014
+10:47:28 | INFO     train.training train    340 Epoch 250/1000 | loss_clf: 0.4008, loss_transfer: 0.6706, loss_cluster: 0.0727, loss_p: 7.9131, source_acc: 81.9951, target_acc: 48.2861, best_acc: 57.8014
+10:48:04 | INFO     train.training train    340 Epoch 300/1000 | loss_clf: 0.4004, loss_transfer: 0.6756, loss_cluster: 0.0574, loss_p: 7.9196, source_acc: 84.2325, target_acc: 46.8085, best_acc: 57.8014
+10:48:40 | INFO     train.training train    340 Epoch 350/1000 | loss_clf: 0.2912, loss_transfer: 0.6804, loss_cluster: 0.0500, loss_p: 7.9185, source_acc: 82.3961, target_acc: 49.5863, best_acc: 57.8014
+10:49:16 | INFO     train.training train    340 Epoch 400/1000 | loss_clf: 0.2811, loss_transfer: 0.6791, loss_cluster: 0.0566, loss_p: 7.9030, source_acc: 88.5427, target_acc: 47.6359, best_acc: 57.8014
+10:49:51 | INFO     train.training train    340 Epoch 450/1000 | loss_clf: 0.2872, loss_transfer: 0.6622, loss_cluster: 0.0433, loss_p: 7.9297, source_acc: 88.3528, target_acc: 47.5768, best_acc: 57.8014
+10:50:29 | INFO     train.training train    340 Epoch 500/1000 | loss_clf: 0.3058, loss_transfer: 0.6706, loss_cluster: 0.0368, loss_p: 7.9228, source_acc: 81.5561, target_acc: 47.2222, best_acc: 57.8014
+10:51:07 | INFO     train.training train    340 Epoch 550/1000 | loss_clf: 0.2888, loss_transfer: 0.6722, loss_cluster: 0.0376, loss_p: 7.9138, source_acc: 88.5723, target_acc: 46.6312, best_acc: 57.8014
+10:51:44 | INFO     train.training train    340 Epoch 600/1000 | loss_clf: 0.2630, loss_transfer: 0.6691, loss_cluster: 0.0397, loss_p: 7.9440, source_acc: 86.0858, target_acc: 47.5177, best_acc: 57.8014
+10:52:19 | INFO     train.training train    340 Epoch 650/1000 | loss_clf: 0.2090, loss_transfer: 0.6647, loss_cluster: 0.0443, loss_p: 7.8887, source_acc: 91.1136, target_acc: 46.6312, best_acc: 57.8014
+10:52:56 | INFO     train.training train    340 Epoch 700/1000 | loss_clf: 0.2669, loss_transfer: 0.6764, loss_cluster: 0.0394, loss_p: 7.9090, source_acc: 88.3865, target_acc: 47.2813, best_acc: 57.8014
+10:53:33 | INFO     train.training train    340 Epoch 750/1000 | loss_clf: 0.2459, loss_transfer: 0.6633, loss_cluster: 0.0296, loss_p: 7.8928, source_acc: 91.2065, target_acc: 48.4043, best_acc: 57.8014
+10:54:10 | INFO     train.training train    340 Epoch 800/1000 | loss_clf: 0.2760, loss_transfer: 0.6664, loss_cluster: 0.0356, loss_p: 7.8970, source_acc: 91.3458, target_acc: 46.9858, best_acc: 57.8014
+10:54:47 | INFO     train.training train    340 Epoch 850/1000 | loss_clf: 0.2098, loss_transfer: 0.6706, loss_cluster: 0.0303, loss_p: 7.9845, source_acc: 86.2082, target_acc: 48.9953, best_acc: 57.8014
+10:55:23 | INFO     train.training train    340 Epoch 900/1000 | loss_clf: 0.2529, loss_transfer: 0.6552, loss_cluster: 0.0273, loss_p: 7.9167, source_acc: 90.1469, target_acc: 47.9314, best_acc: 57.8014
+10:55:59 | INFO     train.training train    340 Epoch 950/1000 | loss_clf: 0.2696, loss_transfer: 0.6792, loss_cluster: 0.0266, loss_p: 8.0118, source_acc: 90.7295, target_acc: 45.9220, best_acc: 57.8014
+10:56:35 | INFO     train.training train    340 Epoch 1000/1000 | loss_clf: 0.2401, loss_transfer: 0.6705, loss_cluster: 0.0292, loss_p: 7.9025, source_acc: 91.8524, target_acc: 46.5130, best_acc: 57.8014
+10:56:35 | INFO     __main__ main     154 
+--------------> Finished training w.r.t. subject 2 session 0 acc 0.5780
+10:56:38 | INFO     data.utils merge_for_all_subjects 72  Merging data and labels....
+10:56:38 | INFO     data.utils merge_for_all_subjects 97  Finish merging! data shape: (23688, 62, 5), label shape: (23688,)
+10:56:38 | INFO     data.utils merge_for_one_subject 115 Merging data and labels....
+10:56:38 | INFO     data.utils merge_for_one_subject 128 Finish merging! data shape: (1692, 62, 5), label shape: (1692,)
+10:56:38 | INFO     train.training train    160 len of train data: 23688, len of test data: 1692
+10:56:39 | INFO     utils.metric update   25  --> A new better acc 0.3901 on subject 3 session 0
+10:56:39 | INFO     train.training train    340 Epoch 1/1000 | loss_clf: 5.8102, loss_transfer: 0.6346, loss_cluster: 0.0188, loss_p: 34.1106, source_acc: 40.7295, target_acc: 39.0071, best_acc: 39.0071
+10:56:40 | INFO     utils.metric update   25  --> A new better acc 0.3936 on subject 3 session 0
+10:56:42 | INFO     utils.metric update   25  --> A new better acc 0.4208 on subject 3 session 0
+10:56:44 | INFO     utils.metric update   25  --> A new better acc 0.4864 on subject 3 session 0
+10:56:45 | INFO     utils.metric update   25  --> A new better acc 0.5006 on subject 3 session 0
+10:56:52 | INFO     utils.metric update   25  --> A new better acc 0.5254 on subject 3 session 0
+10:56:52 | INFO     utils.metric update   25  --> A new better acc 0.5538 on subject 3 session 0
+10:56:54 | INFO     utils.metric update   25  --> A new better acc 0.5621 on subject 3 session 0
+10:56:56 | INFO     utils.metric update   25  --> A new better acc 0.6022 on subject 3 session 0
+10:56:58 | INFO     utils.metric update   25  --> A new better acc 0.6135 on subject 3 session 0
+10:57:01 | INFO     utils.metric update   25  --> A new better acc 0.6235 on subject 3 session 0
+10:57:05 | INFO     utils.metric update   25  --> A new better acc 0.6424 on subject 3 session 0
+10:57:05 | INFO     utils.metric update   25  --> A new better acc 0.6501 on subject 3 session 0
+10:57:09 | INFO     utils.metric update   25  --> A new better acc 0.6566 on subject 3 session 0
+10:57:10 | INFO     utils.metric update   25  --> A new better acc 0.6743 on subject 3 session 0
+10:57:15 | INFO     train.training train    340 Epoch 50/1000 | loss_clf: 0.7710, loss_transfer: 0.6878, loss_cluster: 0.1228, loss_p: 7.9104, source_acc: 72.9019, target_acc: 65.3664, best_acc: 67.4350
+10:57:16 | INFO     utils.metric update   25  --> A new better acc 0.6874 on subject 3 session 0
+10:57:20 | INFO     utils.metric update   25  --> A new better acc 0.6897 on subject 3 session 0
+10:57:26 | INFO     utils.metric update   25  --> A new better acc 0.6968 on subject 3 session 0
+10:57:38 | INFO     utils.metric update   25  --> A new better acc 0.6974 on subject 3 session 0
+10:57:42 | INFO     utils.metric update   25  --> A new better acc 0.6986 on subject 3 session 0
+10:57:44 | INFO     utils.metric update   25  --> A new better acc 0.7004 on subject 3 session 0
+10:57:52 | INFO     train.training train    340 Epoch 100/1000 | loss_clf: 0.6112, loss_transfer: 0.6814, loss_cluster: 0.1071, loss_p: 7.9083, source_acc: 82.3793, target_acc: 64.0071, best_acc: 70.0355
+10:57:55 | INFO     utils.metric update   25  --> A new better acc 0.7063 on subject 3 session 0
+10:58:01 | INFO     utils.metric update   25  --> A new better acc 0.7069 on subject 3 session 0
+10:58:03 | INFO     utils.metric update   25  --> A new better acc 0.7086 on subject 3 session 0
+10:58:05 | INFO     utils.metric update   25  --> A new better acc 0.7092 on subject 3 session 0
+10:58:10 | INFO     utils.metric update   25  --> A new better acc 0.7139 on subject 3 session 0
+10:58:14 | INFO     utils.metric update   25  --> A new better acc 0.7163 on subject 3 session 0
+10:58:28 | INFO     train.training train    340 Epoch 150/1000 | loss_clf: 0.5020, loss_transfer: 0.6891, loss_cluster: 0.0773, loss_p: 8.0134, source_acc: 85.0346, target_acc: 70.3310, best_acc: 71.6312
+10:58:37 | INFO     utils.metric update   25  --> A new better acc 0.7169 on subject 3 session 0
+10:58:45 | INFO     utils.metric update   25  --> A new better acc 0.7181 on subject 3 session 0
+10:58:46 | INFO     utils.metric update   25  --> A new better acc 0.7193 on subject 3 session 0
+10:59:07 | INFO     train.training train    340 Epoch 200/1000 | loss_clf: 0.4673, loss_transfer: 0.6860, loss_cluster: 0.0770, loss_p: 7.8968, source_acc: 83.9201, target_acc: 69.9764, best_acc: 71.9267
+10:59:10 | INFO     utils.metric update   25  --> A new better acc 0.7305 on subject 3 session 0
+10:59:44 | INFO     train.training train    340 Epoch 250/1000 | loss_clf: 0.4125, loss_transfer: 0.6741, loss_cluster: 0.0592, loss_p: 7.8905, source_acc: 85.9254, target_acc: 70.0355, best_acc: 73.0496
+11:00:18 | INFO     train.training train    340 Epoch 300/1000 | loss_clf: 0.4165, loss_transfer: 0.6672, loss_cluster: 0.0611, loss_p: 7.8939, source_acc: 88.8002, target_acc: 71.8085, best_acc: 73.0496
+11:00:54 | INFO     train.training train    340 Epoch 350/1000 | loss_clf: 0.3809, loss_transfer: 0.6782, loss_cluster: 0.0588, loss_p: 7.8900, source_acc: 89.2773, target_acc: 68.1442, best_acc: 73.0496
+11:01:32 | INFO     train.training train    340 Epoch 400/1000 | loss_clf: 0.3429, loss_transfer: 0.6615, loss_cluster: 0.0491, loss_p: 7.9115, source_acc: 84.5576, target_acc: 65.7210, best_acc: 73.0496
+11:02:08 | INFO     train.training train    340 Epoch 450/1000 | loss_clf: 0.3861, loss_transfer: 0.6899, loss_cluster: 0.0478, loss_p: 7.8875, source_acc: 90.6788, target_acc: 69.3853, best_acc: 73.0496
+11:02:46 | INFO     train.training train    340 Epoch 500/1000 | loss_clf: 0.3152, loss_transfer: 0.6706, loss_cluster: 0.0421, loss_p: 7.9087, source_acc: 90.2187, target_acc: 70.2128, best_acc: 73.0496
+11:03:22 | INFO     train.training train    340 Epoch 550/1000 | loss_clf: 0.3309, loss_transfer: 0.6626, loss_cluster: 0.0348, loss_p: 7.9102, source_acc: 89.4039, target_acc: 61.4066, best_acc: 73.0496
+11:03:57 | INFO     train.training train    340 Epoch 600/1000 | loss_clf: 0.3598, loss_transfer: 0.6643, loss_cluster: 0.0431, loss_p: 8.1144, source_acc: 88.7074, target_acc: 69.5626, best_acc: 73.0496
+11:04:33 | INFO     train.training train    340 Epoch 650/1000 | loss_clf: 0.3567, loss_transfer: 0.6672, loss_cluster: 0.0463, loss_p: 8.2157, source_acc: 88.1459, target_acc: 66.4303, best_acc: 73.0496
+11:05:11 | INFO     train.training train    340 Epoch 700/1000 | loss_clf: 0.3046, loss_transfer: 0.6571, loss_cluster: 0.0267, loss_p: 7.9973, source_acc: 92.5236, target_acc: 70.1537, best_acc: 73.0496
+11:05:48 | INFO     train.training train    340 Epoch 750/1000 | loss_clf: 0.3237, loss_transfer: 0.7240, loss_cluster: 0.0338, loss_p: 8.1623, source_acc: 63.0657, target_acc: 66.0757, best_acc: 73.0496
+11:06:25 | INFO     train.training train    340 Epoch 800/1000 | loss_clf: 0.3311, loss_transfer: 0.6769, loss_cluster: 0.0373, loss_p: 7.9933, source_acc: 92.0930, target_acc: 71.2766, best_acc: 73.0496
+11:07:03 | INFO     train.training train    340 Epoch 850/1000 | loss_clf: 0.2532, loss_transfer: 0.6462, loss_cluster: 0.0356, loss_p: 7.8797, source_acc: 93.0556, target_acc: 67.9078, best_acc: 73.0496
+11:07:40 | INFO     train.training train    340 Epoch 900/1000 | loss_clf: 0.3084, loss_transfer: 0.6490, loss_cluster: 0.0354, loss_p: 7.9008, source_acc: 91.1263, target_acc: 59.2790, best_acc: 73.0496
+11:08:16 | INFO     train.training train    340 Epoch 950/1000 | loss_clf: 0.3736, loss_transfer: 0.6705, loss_cluster: 0.0302, loss_p: 8.2395, source_acc: 88.9353, target_acc: 68.1442, best_acc: 73.0496
+11:08:53 | INFO     train.training train    340 Epoch 1000/1000 | loss_clf: 0.3539, loss_transfer: 0.7353, loss_cluster: 0.0331, loss_p: 9.3667, source_acc: 91.5569, target_acc: 69.7991, best_acc: 73.0496
+11:08:53 | INFO     __main__ main     154 
+--------------> Finished training w.r.t. subject 3 session 0 acc 0.7305
+11:08:55 | INFO     data.utils merge_for_all_subjects 72  Merging data and labels....
+11:08:55 | INFO     data.utils merge_for_all_subjects 97  Finish merging! data shape: (23688, 62, 5), label shape: (23688,)
+11:08:55 | INFO     data.utils merge_for_one_subject 115 Merging data and labels....
+11:08:55 | INFO     data.utils merge_for_one_subject 128 Finish merging! data shape: (1692, 62, 5), label shape: (1692,)
+11:08:55 | INFO     train.training train    160 len of train data: 23688, len of test data: 1692
+11:08:56 | INFO     utils.metric update   25  --> A new better acc 0.4433 on subject 4 session 0
+11:08:56 | INFO     train.training train    340 Epoch 1/1000 | loss_clf: 5.4113, loss_transfer: 0.5929, loss_cluster: 0.0452, loss_p: 23.6895, source_acc: 37.3902, target_acc: 44.3262, best_acc: 44.3262
+11:08:57 | INFO     utils.metric update   25  --> A new better acc 0.4551 on subject 4 session 0
+11:08:58 | INFO     utils.metric update   25  --> A new better acc 0.5496 on subject 4 session 0
+11:09:06 | INFO     utils.metric update   25  --> A new better acc 0.6028 on subject 4 session 0
+11:09:32 | INFO     train.training train    340 Epoch 50/1000 | loss_clf: 0.8796, loss_transfer: 0.6921, loss_cluster: 0.1544, loss_p: 7.9110, source_acc: 69.6555, target_acc: 48.5225, best_acc: 60.2837
+11:10:08 | INFO     train.training train    340 Epoch 100/1000 | loss_clf: 0.6377, loss_transfer: 0.6893, loss_cluster: 0.1198, loss_p: 7.8989, source_acc: 81.4421, target_acc: 54.4326, best_acc: 60.2837
+11:10:45 | INFO     train.training train    340 Epoch 150/1000 | loss_clf: 0.5356, loss_transfer: 0.6901, loss_cluster: 0.0791, loss_p: 7.8945, source_acc: 84.7644, target_acc: 53.7234, best_acc: 60.2837
+11:11:20 | INFO     train.training train    340 Epoch 200/1000 | loss_clf: 0.4544, loss_transfer: 0.6788, loss_cluster: 0.0636, loss_p: 7.8873, source_acc: 87.3860, target_acc: 52.0686, best_acc: 60.2837
+11:11:57 | INFO     train.training train    340 Epoch 250/1000 | loss_clf: 0.4275, loss_transfer: 0.6777, loss_cluster: 0.0606, loss_p: 7.8974, source_acc: 86.9976, target_acc: 52.1277, best_acc: 60.2837
+11:12:34 | INFO     train.training train    340 Epoch 300/1000 | loss_clf: 0.4347, loss_transfer: 0.6704, loss_cluster: 0.0447, loss_p: 7.8857, source_acc: 87.7280, target_acc: 52.7187, best_acc: 60.2837
+11:13:12 | INFO     train.training train    340 Epoch 350/1000 | loss_clf: 0.3684, loss_transfer: 0.6743, loss_cluster: 0.0375, loss_p: 7.8797, source_acc: 90.1047, target_acc: 52.6596, best_acc: 60.2837
+11:13:49 | INFO     train.training train    340 Epoch 400/1000 | loss_clf: 0.3569, loss_transfer: 0.6896, loss_cluster: 0.0385, loss_p: 7.9040, source_acc: 89.9527, target_acc: 52.3050, best_acc: 60.2837
+11:14:27 | INFO     train.training train    340 Epoch 450/1000 | loss_clf: 0.3529, loss_transfer: 0.6758, loss_cluster: 0.0367, loss_p: 7.8767, source_acc: 91.3712, target_acc: 55.4374, best_acc: 60.2837
+11:15:05 | INFO     train.training train    340 Epoch 500/1000 | loss_clf: 0.2692, loss_transfer: 0.6634, loss_cluster: 0.0263, loss_p: 7.8734, source_acc: 90.5226, target_acc: 54.9645, best_acc: 60.2837
+11:15:42 | INFO     train.training train    340 Epoch 550/1000 | loss_clf: 0.2810, loss_transfer: 0.6751, loss_cluster: 0.0202, loss_p: 7.8811, source_acc: 91.0672, target_acc: 54.0189, best_acc: 60.2837
+11:16:20 | INFO     train.training train    340 Epoch 600/1000 | loss_clf: 0.3365, loss_transfer: 0.6608, loss_cluster: 0.0220, loss_p: 7.8811, source_acc: 90.1385, target_acc: 57.1513, best_acc: 60.2837
+11:16:59 | INFO     train.training train    340 Epoch 650/1000 | loss_clf: 0.4491, loss_transfer: 0.5791, loss_cluster: 0.0312, loss_p: 7.9273, source_acc: 86.5586, target_acc: 45.9220, best_acc: 60.2837
+11:17:35 | INFO     train.training train    340 Epoch 700/1000 | loss_clf: 0.3555, loss_transfer: 0.7470, loss_cluster: 0.0445, loss_p: 10.1906, source_acc: 91.9242, target_acc: 48.9953, best_acc: 60.2837
+11:18:11 | INFO     train.training train    340 Epoch 750/1000 | loss_clf: 0.3039, loss_transfer: 0.6649, loss_cluster: 0.0348, loss_p: 7.9435, source_acc: 92.5194, target_acc: 56.5603, best_acc: 60.2837
+11:18:47 | INFO     train.training train    340 Epoch 800/1000 | loss_clf: 0.3248, loss_transfer: 0.6754, loss_cluster: 0.0232, loss_p: 7.9896, source_acc: 92.8360, target_acc: 56.1466, best_acc: 60.2837
+11:19:23 | INFO     train.training train    340 Epoch 850/1000 | loss_clf: 0.2791, loss_transfer: 0.6690, loss_cluster: 0.0288, loss_p: 7.9606, source_acc: 93.5917, target_acc: 52.8369, best_acc: 60.2837
+11:19:59 | INFO     train.training train    340 Epoch 900/1000 | loss_clf: 0.2437, loss_transfer: 0.6660, loss_cluster: 0.0173, loss_p: 7.8930, source_acc: 92.0382, target_acc: 55.7920, best_acc: 60.2837
+11:20:35 | INFO     train.training train    340 Epoch 950/1000 | loss_clf: 0.2427, loss_transfer: 0.6739, loss_cluster: 0.0229, loss_p: 8.0678, source_acc: 94.1405, target_acc: 54.1371, best_acc: 60.2837
+11:21:12 | INFO     train.training train    340 Epoch 1000/1000 | loss_clf: 0.3272, loss_transfer: 0.6532, loss_cluster: 0.0267, loss_p: 7.9313, source_acc: 94.2629, target_acc: 50.6501, best_acc: 60.2837
+11:21:12 | INFO     __main__ main     154 
+--------------> Finished training w.r.t. subject 4 session 0 acc 0.6028
+11:21:16 | INFO     data.utils merge_for_all_subjects 72  Merging data and labels....
+11:21:16 | INFO     data.utils merge_for_all_subjects 97  Finish merging! data shape: (23688, 62, 5), label shape: (23688,)
+11:21:17 | INFO     data.utils merge_for_one_subject 115 Merging data and labels....
+11:21:17 | INFO     data.utils merge_for_one_subject 128 Finish merging! data shape: (1692, 62, 5), label shape: (1692,)
+11:21:17 | INFO     train.training train    160 len of train data: 23688, len of test data: 1692
+11:21:17 | INFO     utils.metric update   25  --> A new better acc 0.5325 on subject 5 session 0
+11:21:17 | INFO     train.training train    340 Epoch 1/1000 | loss_clf: 4.2780, loss_transfer: 0.6343, loss_cluster: 0.0382, loss_p: 23.6548, source_acc: 40.8646, target_acc: 53.2506, best_acc: 53.2506
+11:21:18 | INFO     utils.metric update   25  --> A new better acc 0.6495 on subject 5 session 0
+11:21:19 | INFO     utils.metric update   25  --> A new better acc 0.7275 on subject 5 session 0
+11:21:19 | INFO     utils.metric update   25  --> A new better acc 0.7340 on subject 5 session 0
+11:21:25 | INFO     utils.metric update   25  --> A new better acc 0.7719 on subject 5 session 0
+11:21:55 | INFO     train.training train    340 Epoch 50/1000 | loss_clf: 0.7419, loss_transfer: 0.6787, loss_cluster: 0.1215, loss_p: 7.9184, source_acc: 73.4718, target_acc: 66.9031, best_acc: 77.1868
+11:22:30 | INFO     train.training train    340 Epoch 100/1000 | loss_clf: 0.6046, loss_transfer: 0.6861, loss_cluster: 0.0928, loss_p: 7.9275, source_acc: 77.2163, target_acc: 59.6927, best_acc: 77.1868
+11:23:07 | INFO     train.training train    340 Epoch 150/1000 | loss_clf: 0.4544, loss_transfer: 0.6836, loss_cluster: 0.0692, loss_p: 7.9269, source_acc: 79.2891, target_acc: 64.4799, best_acc: 77.1868
+11:23:42 | INFO     train.training train    340 Epoch 200/1000 | loss_clf: 0.4335, loss_transfer: 0.6805, loss_cluster: 0.0632, loss_p: 7.9541, source_acc: 80.0025, target_acc: 63.0615, best_acc: 77.1868
+11:24:18 | INFO     train.training train    340 Epoch 250/1000 | loss_clf: 0.4191, loss_transfer: 0.6720, loss_cluster: 0.0547, loss_p: 7.9394, source_acc: 81.0621, target_acc: 64.3617, best_acc: 77.1868
+11:24:55 | INFO     train.training train    340 Epoch 300/1000 | loss_clf: 0.4315, loss_transfer: 0.6909, loss_cluster: 0.0572, loss_p: 8.0136, source_acc: 84.4014, target_acc: 64.0662, best_acc: 77.1868
+11:25:33 | INFO     train.training train    340 Epoch 350/1000 | loss_clf: 0.3547, loss_transfer: 0.6832, loss_cluster: 0.0443, loss_p: 7.9397, source_acc: 84.4225, target_acc: 64.5981, best_acc: 77.1868
+11:26:09 | INFO     train.training train    340 Epoch 400/1000 | loss_clf: 0.3451, loss_transfer: 0.6695, loss_cluster: 0.0426, loss_p: 7.8918, source_acc: 86.1998, target_acc: 70.7447, best_acc: 77.1868
+11:26:46 | INFO     train.training train    340 Epoch 450/1000 | loss_clf: 0.3271, loss_transfer: 0.6734, loss_cluster: 0.0403, loss_p: 7.9052, source_acc: 86.1491, target_acc: 67.3168, best_acc: 77.1868
+11:27:23 | INFO     train.training train    340 Epoch 500/1000 | loss_clf: 0.3216, loss_transfer: 0.6788, loss_cluster: 0.0379, loss_p: 7.9325, source_acc: 84.8193, target_acc: 70.0946, best_acc: 77.1868
+11:27:58 | INFO     train.training train    340 Epoch 550/1000 | loss_clf: 0.2773, loss_transfer: 0.6632, loss_cluster: 0.0316, loss_p: 7.8810, source_acc: 87.9686, target_acc: 68.8534, best_acc: 77.1868
+11:28:36 | INFO     train.training train    340 Epoch 600/1000 | loss_clf: 0.2846, loss_transfer: 0.6355, loss_cluster: 0.0257, loss_p: 7.9093, source_acc: 86.6093, target_acc: 70.2719, best_acc: 77.1868
+11:29:12 | INFO     train.training train    340 Epoch 650/1000 | loss_clf: 0.2718, loss_transfer: 0.6781, loss_cluster: 0.0217, loss_p: 7.8814, source_acc: 86.9892, target_acc: 71.9267, best_acc: 77.1868
+11:29:51 | INFO     train.training train    340 Epoch 700/1000 | loss_clf: 0.3668, loss_transfer: 0.6584, loss_cluster: 0.0220, loss_p: 7.9389, source_acc: 85.9296, target_acc: 70.3310, best_acc: 77.1868
+11:30:29 | INFO     train.training train    340 Epoch 750/1000 | loss_clf: 0.3079, loss_transfer: 0.6471, loss_cluster: 0.0284, loss_p: 7.9274, source_acc: 88.5976, target_acc: 71.7494, best_acc: 77.1868
+11:31:06 | INFO     train.training train    340 Epoch 800/1000 | loss_clf: 0.2853, loss_transfer: 0.6519, loss_cluster: 0.0198, loss_p: 7.9724, source_acc: 89.7163, target_acc: 70.0946, best_acc: 77.1868
+11:31:43 | INFO     train.training train    340 Epoch 850/1000 | loss_clf: 0.2695, loss_transfer: 0.6723, loss_cluster: 0.0228, loss_p: 7.9152, source_acc: 88.5512, target_acc: 70.0946, best_acc: 77.1868
+11:32:18 | INFO     train.training train    340 Epoch 900/1000 | loss_clf: 0.2694, loss_transfer: 0.6790, loss_cluster: 0.0223, loss_p: 7.9603, source_acc: 89.8978, target_acc: 69.3262, best_acc: 77.1868
+11:32:55 | INFO     train.training train    340 Epoch 950/1000 | loss_clf: 0.2346, loss_transfer: 0.6773, loss_cluster: 0.0177, loss_p: 7.9513, source_acc: 90.8561, target_acc: 73.4043, best_acc: 77.1868
+11:33:32 | INFO     train.training train    340 Epoch 1000/1000 | loss_clf: 0.2618, loss_transfer: 0.6470, loss_cluster: 0.0304, loss_p: 8.0374, source_acc: 89.2013, target_acc: 68.4397, best_acc: 77.1868
+11:33:32 | INFO     __main__ main     154 
+--------------> Finished training w.r.t. subject 5 session 0 acc 0.7719
+11:33:34 | INFO     data.utils merge_for_all_subjects 72  Merging data and labels....
+11:33:34 | INFO     data.utils merge_for_all_subjects 97  Finish merging! data shape: (23688, 62, 5), label shape: (23688,)
+11:33:35 | INFO     data.utils merge_for_one_subject 115 Merging data and labels....
+11:33:35 | INFO     data.utils merge_for_one_subject 128 Finish merging! data shape: (1692, 62, 5), label shape: (1692,)
+11:33:35 | INFO     train.training train    160 len of train data: 23688, len of test data: 1692
+11:33:35 | INFO     utils.metric update   25  --> A new better acc 0.3682 on subject 6 session 0
+11:33:35 | INFO     train.training train    340 Epoch 1/1000 | loss_clf: 3.4658, loss_transfer: 0.5120, loss_cluster: 0.0467, loss_p: 12.2681, source_acc: 42.4139, target_acc: 36.8203, best_acc: 36.8203
+11:33:38 | INFO     utils.metric update   25  --> A new better acc 0.4397 on subject 6 session 0
+11:33:46 | INFO     utils.metric update   25  --> A new better acc 0.4675 on subject 6 session 0
+11:33:52 | INFO     utils.metric update   25  --> A new better acc 0.5408 on subject 6 session 0
+11:34:11 | INFO     train.training train    340 Epoch 50/1000 | loss_clf: 0.7291, loss_transfer: 0.6964, loss_cluster: 0.1215, loss_p: 7.9178, source_acc: 71.8465, target_acc: 37.5887, best_acc: 54.0780
+11:34:47 | INFO     train.training train    340 Epoch 100/1000 | loss_clf: 0.5800, loss_transfer: 0.6812, loss_cluster: 0.0912, loss_p: 7.9429, source_acc: 73.6871, target_acc: 29.4326, best_acc: 54.0780
+11:35:25 | INFO     train.training train    340 Epoch 150/1000 | loss_clf: 0.5099, loss_transfer: 0.6809, loss_cluster: 0.0770, loss_p: 7.9505, source_acc: 78.4743, target_acc: 27.9551, best_acc: 54.0780
+11:36:02 | INFO     train.training train    340 Epoch 200/1000 | loss_clf: 0.4578, loss_transfer: 0.6753, loss_cluster: 0.0572, loss_p: 7.9591, source_acc: 79.7028, target_acc: 30.2009, best_acc: 54.0780
+11:36:37 | INFO     train.training train    340 Epoch 250/1000 | loss_clf: 0.3969, loss_transfer: 0.6645, loss_cluster: 0.0434, loss_p: 8.0277, source_acc: 79.8843, target_acc: 27.4232, best_acc: 54.0780
+11:37:13 | INFO     train.training train    340 Epoch 300/1000 | loss_clf: 0.4202, loss_transfer: 0.6738, loss_cluster: 0.0439, loss_p: 7.9407, source_acc: 83.7766, target_acc: 27.0686, best_acc: 54.0780
+11:37:51 | INFO     train.training train    340 Epoch 350/1000 | loss_clf: 0.3522, loss_transfer: 0.6706, loss_cluster: 0.0388, loss_p: 7.9088, source_acc: 87.2509, target_acc: 26.1229, best_acc: 54.0780
+11:38:30 | INFO     train.training train    340 Epoch 400/1000 | loss_clf: 0.3197, loss_transfer: 0.6758, loss_cluster: 0.0377, loss_p: 7.9641, source_acc: 87.2467, target_acc: 27.4823, best_acc: 54.0780
+11:39:08 | INFO     train.training train    340 Epoch 450/1000 | loss_clf: 0.3503, loss_transfer: 0.6758, loss_cluster: 0.0406, loss_p: 7.9022, source_acc: 87.5338, target_acc: 30.7920, best_acc: 54.0780
+11:39:45 | INFO     train.training train    340 Epoch 500/1000 | loss_clf: 0.3144, loss_transfer: 0.6778, loss_cluster: 0.0314, loss_p: 7.8846, source_acc: 87.3734, target_acc: 25.7092, best_acc: 54.0780
+11:40:22 | INFO     train.training train    340 Epoch 550/1000 | loss_clf: 0.3021, loss_transfer: 0.6979, loss_cluster: 0.0301, loss_p: 7.9407, source_acc: 89.1084, target_acc: 24.8227, best_acc: 54.0780
+11:40:59 | INFO     train.training train    340 Epoch 600/1000 | loss_clf: 0.2896, loss_transfer: 0.6590, loss_cluster: 0.0336, loss_p: 7.9243, source_acc: 87.2594, target_acc: 28.1915, best_acc: 54.0780
+11:41:36 | INFO     train.training train    340 Epoch 650/1000 | loss_clf: 0.2202, loss_transfer: 0.6851, loss_cluster: 0.0284, loss_p: 7.8956, source_acc: 80.9271, target_acc: 26.8913, best_acc: 54.0780
+11:42:12 | INFO     train.training train    340 Epoch 700/1000 | loss_clf: 0.2589, loss_transfer: 0.6440, loss_cluster: 0.0260, loss_p: 8.0083, source_acc: 89.9147, target_acc: 27.3641, best_acc: 54.0780
+11:42:48 | INFO     train.training train    340 Epoch 750/1000 | loss_clf: 0.3238, loss_transfer: 0.6749, loss_cluster: 0.0272, loss_p: 7.9776, source_acc: 86.5713, target_acc: 30.2600, best_acc: 54.0780
+11:43:24 | INFO     train.training train    340 Epoch 800/1000 | loss_clf: 0.2496, loss_transfer: 0.6350, loss_cluster: 0.0212, loss_p: 7.9719, source_acc: 88.9775, target_acc: 30.7329, best_acc: 54.0780
+11:43:59 | INFO     train.training train    340 Epoch 850/1000 | loss_clf: 0.2516, loss_transfer: 0.6143, loss_cluster: 0.0333, loss_p: 8.0065, source_acc: 87.2847, target_acc: 28.4279, best_acc: 54.0780
+11:44:36 | INFO     train.training train    340 Epoch 900/1000 | loss_clf: 0.2681, loss_transfer: 0.6240, loss_cluster: 0.0194, loss_p: 7.9984, source_acc: 93.0007, target_acc: 28.7234, best_acc: 54.0780
+11:45:13 | INFO     train.training train    340 Epoch 950/1000 | loss_clf: 0.2961, loss_transfer: 0.6798, loss_cluster: 0.0215, loss_p: 8.3265, source_acc: 91.1094, target_acc: 38.9480, best_acc: 54.0780
+11:45:50 | INFO     train.training train    340 Epoch 1000/1000 | loss_clf: 0.2698, loss_transfer: 0.6503, loss_cluster: 0.0178, loss_p: 8.0525, source_acc: 90.7295, target_acc: 32.7423, best_acc: 54.0780
+11:45:50 | INFO     __main__ main     154 
+--------------> Finished training w.r.t. subject 6 session 0 acc 0.5408
+11:45:53 | INFO     data.utils merge_for_all_subjects 72  Merging data and labels....
+11:45:53 | INFO     data.utils merge_for_all_subjects 97  Finish merging! data shape: (23688, 62, 5), label shape: (23688,)
+11:45:53 | INFO     data.utils merge_for_one_subject 115 Merging data and labels....
+11:45:53 | INFO     data.utils merge_for_one_subject 128 Finish merging! data shape: (1692, 62, 5), label shape: (1692,)
+11:45:53 | INFO     train.training train    160 len of train data: 23688, len of test data: 1692
+11:45:54 | INFO     utils.metric update   25  --> A new better acc 0.3901 on subject 7 session 0
+11:45:54 | INFO     train.training train    340 Epoch 1/1000 | loss_clf: 5.6181, loss_transfer: 0.6061, loss_cluster: 0.0472, loss_p: 21.6874, source_acc: 38.7960, target_acc: 39.0071, best_acc: 39.0071
+11:45:55 | INFO     utils.metric update   25  --> A new better acc 0.5083 on subject 7 session 0
+11:45:56 | INFO     utils.metric update   25  --> A new better acc 0.5946 on subject 7 session 0
+11:45:57 | INFO     utils.metric update   25  --> A new better acc 0.6223 on subject 7 session 0
+11:46:01 | INFO     utils.metric update   25  --> A new better acc 0.6779 on subject 7 session 0
+11:46:05 | INFO     utils.metric update   25  --> A new better acc 0.6874 on subject 7 session 0
+11:46:10 | INFO     utils.metric update   25  --> A new better acc 0.7500 on subject 7 session 0
+11:46:23 | INFO     utils.metric update   25  --> A new better acc 0.7618 on subject 7 session 0
+11:46:25 | INFO     utils.metric update   25  --> A new better acc 0.7866 on subject 7 session 0
+11:46:31 | INFO     train.training train    340 Epoch 50/1000 | loss_clf: 0.7764, loss_transfer: 0.6870, loss_cluster: 0.1146, loss_p: 7.9229, source_acc: 72.9821, target_acc: 74.5272, best_acc: 78.6643
+11:47:06 | INFO     train.training train    340 Epoch 100/1000 | loss_clf: 0.5948, loss_transfer: 0.6797, loss_cluster: 0.0784, loss_p: 7.9123, source_acc: 69.8835, target_acc: 71.3948, best_acc: 78.6643
+11:47:44 | INFO     train.training train    340 Epoch 150/1000 | loss_clf: 0.4824, loss_transfer: 0.6828, loss_cluster: 0.0888, loss_p: 7.9236, source_acc: 81.6785, target_acc: 74.4090, best_acc: 78.6643
+11:48:22 | INFO     train.training train    340 Epoch 200/1000 | loss_clf: 0.4473, loss_transfer: 0.6866, loss_cluster: 0.0787, loss_p: 7.9650, source_acc: 83.4853, target_acc: 75.2364, best_acc: 78.6643
+11:48:24 | INFO     utils.metric update   25  --> A new better acc 0.7902 on subject 7 session 0
+11:48:57 | INFO     train.training train    340 Epoch 250/1000 | loss_clf: 0.4174, loss_transfer: 0.6741, loss_cluster: 0.0672, loss_p: 7.9759, source_acc: 71.7494, target_acc: 74.8227, best_acc: 79.0189
+11:49:26 | INFO     utils.metric update   25  --> A new better acc 0.7967 on subject 7 session 0
+11:49:34 | INFO     train.training train    340 Epoch 300/1000 | loss_clf: 0.4436, loss_transfer: 0.6811, loss_cluster: 0.0582, loss_p: 7.9190, source_acc: 85.5243, target_acc: 74.7045, best_acc: 79.6690
+11:49:48 | INFO     utils.metric update   25  --> A new better acc 0.8020 on subject 7 session 0
+11:50:11 | INFO     train.training train    340 Epoch 350/1000 | loss_clf: 0.3213, loss_transfer: 0.6771, loss_cluster: 0.0387, loss_p: 7.9065, source_acc: 88.6229, target_acc: 78.1915, best_acc: 80.2009
+11:50:31 | INFO     utils.metric update   25  --> A new better acc 0.8050 on subject 7 session 0
+11:50:37 | INFO     utils.metric update   25  --> A new better acc 0.8138 on subject 7 session 0
+11:50:38 | INFO     utils.metric update   25  --> A new better acc 0.8144 on subject 7 session 0
+11:50:46 | INFO     train.training train    340 Epoch 400/1000 | loss_clf: 0.2997, loss_transfer: 0.6815, loss_cluster: 0.0460, loss_p: 7.9265, source_acc: 86.9048, target_acc: 77.9551, best_acc: 81.4421
+11:51:03 | INFO     utils.metric update   25  --> A new better acc 0.8215 on subject 7 session 0
+11:51:22 | INFO     train.training train    340 Epoch 450/1000 | loss_clf: 0.3006, loss_transfer: 0.6779, loss_cluster: 0.0540, loss_p: 8.0269, source_acc: 90.8055, target_acc: 80.2600, best_acc: 82.1513
+11:51:57 | INFO     train.training train    340 Epoch 500/1000 | loss_clf: 0.2570, loss_transfer: 0.6796, loss_cluster: 0.0314, loss_p: 7.9791, source_acc: 88.3992, target_acc: 77.0095, best_acc: 82.1513
+11:52:34 | INFO     train.training train    340 Epoch 550/1000 | loss_clf: 0.2538, loss_transfer: 0.6630, loss_cluster: 0.0280, loss_p: 7.9620, source_acc: 86.6557, target_acc: 76.7139, best_acc: 82.1513
+11:53:11 | INFO     train.training train    340 Epoch 600/1000 | loss_clf: 0.2935, loss_transfer: 0.6658, loss_cluster: 0.0334, loss_p: 7.9183, source_acc: 86.9765, target_acc: 73.8771, best_acc: 82.1513
+11:53:50 | INFO     train.training train    340 Epoch 650/1000 | loss_clf: 0.2499, loss_transfer: 0.6834, loss_cluster: 0.0312, loss_p: 7.9221, source_acc: 85.9591, target_acc: 75.8274, best_acc: 82.1513
+11:54:26 | INFO     train.training train    340 Epoch 700/1000 | loss_clf: 0.2917, loss_transfer: 0.6706, loss_cluster: 0.0279, loss_p: 7.9589, source_acc: 89.1633, target_acc: 70.9811, best_acc: 82.1513
+11:55:04 | INFO     train.training train    340 Epoch 750/1000 | loss_clf: 0.2862, loss_transfer: 0.6647, loss_cluster: 0.0284, loss_p: 7.9597, source_acc: 90.6408, target_acc: 74.4090, best_acc: 82.1513
+11:55:40 | INFO     train.training train    340 Epoch 800/1000 | loss_clf: 0.2463, loss_transfer: 0.6586, loss_cluster: 0.0242, loss_p: 7.9528, source_acc: 86.6135, target_acc: 75.4728, best_acc: 82.1513
+11:56:17 | INFO     train.training train    340 Epoch 850/1000 | loss_clf: 0.2449, loss_transfer: 0.6610, loss_cluster: 0.0306, loss_p: 7.9402, source_acc: 91.9453, target_acc: 72.4586, best_acc: 82.1513
+11:56:53 | INFO     train.training train    340 Epoch 900/1000 | loss_clf: 0.2672, loss_transfer: 0.6661, loss_cluster: 0.0259, loss_p: 7.9362, source_acc: 92.4941, target_acc: 73.7589, best_acc: 82.1513
+11:57:30 | INFO     train.training train    340 Epoch 950/1000 | loss_clf: 0.2116, loss_transfer: 0.6654, loss_cluster: 0.0217, loss_p: 7.9630, source_acc: 91.7764, target_acc: 70.4492, best_acc: 82.1513
+11:58:06 | INFO     train.training train    340 Epoch 1000/1000 | loss_clf: 0.2291, loss_transfer: 0.6642, loss_cluster: 0.0283, loss_p: 7.9280, source_acc: 91.5822, target_acc: 71.4539, best_acc: 82.1513
+11:58:06 | INFO     __main__ main     154 
+--------------> Finished training w.r.t. subject 7 session 0 acc 0.8215
+11:58:09 | INFO     data.utils merge_for_all_subjects 72  Merging data and labels....
+11:58:09 | INFO     data.utils merge_for_all_subjects 97  Finish merging! data shape: (23688, 62, 5), label shape: (23688,)
+11:58:09 | INFO     data.utils merge_for_one_subject 115 Merging data and labels....
+11:58:09 | INFO     data.utils merge_for_one_subject 128 Finish merging! data shape: (1692, 62, 5), label shape: (1692,)
+11:58:09 | INFO     train.training train    160 len of train data: 23688, len of test data: 1692
+11:58:10 | INFO     utils.metric update   25  --> A new better acc 0.4427 on subject 8 session 0
+11:58:10 | INFO     train.training train    340 Epoch 1/1000 | loss_clf: 4.4153, loss_transfer: 0.5832, loss_cluster: 0.0509, loss_p: 14.3899, source_acc: 38.0952, target_acc: 44.2671, best_acc: 44.2671
+11:58:12 | INFO     utils.metric update   25  --> A new better acc 0.5502 on subject 8 session 0
+11:58:16 | INFO     utils.metric update   25  --> A new better acc 0.5975 on subject 8 session 0
+11:58:19 | INFO     utils.metric update   25  --> A new better acc 0.6655 on subject 8 session 0
+11:58:47 | INFO     train.training train    340 Epoch 50/1000 | loss_clf: 0.8300, loss_transfer: 0.6821, loss_cluster: 0.1455, loss_p: 7.9248, source_acc: 73.7293, target_acc: 62.8251, best_acc: 66.5485
+11:59:25 | INFO     train.training train    340 Epoch 100/1000 | loss_clf: 0.6715, loss_transfer: 0.6817, loss_cluster: 0.1145, loss_p: 7.9083, source_acc: 81.5350, target_acc: 62.5296, best_acc: 66.5485
+12:00:02 | INFO     train.training train    340 Epoch 150/1000 | loss_clf: 0.5608, loss_transfer: 0.6820, loss_cluster: 0.0889, loss_p: 7.9007, source_acc: 83.1814, target_acc: 62.8842, best_acc: 66.5485
+12:00:39 | INFO     train.training train    340 Epoch 200/1000 | loss_clf: 0.4487, loss_transfer: 0.6780, loss_cluster: 0.0710, loss_p: 7.9093, source_acc: 86.8246, target_acc: 61.3475, best_acc: 66.5485
+12:01:16 | INFO     train.training train    340 Epoch 250/1000 | loss_clf: 0.4426, loss_transfer: 0.6722, loss_cluster: 0.0483, loss_p: 7.9112, source_acc: 86.3011, target_acc: 61.1702, best_acc: 66.5485
+12:01:54 | INFO     train.training train    340 Epoch 300/1000 | loss_clf: 0.4216, loss_transfer: 0.6751, loss_cluster: 0.0474, loss_p: 7.8965, source_acc: 87.4493, target_acc: 60.9338, best_acc: 66.5485
+12:02:31 | INFO     train.training train    340 Epoch 350/1000 | loss_clf: 0.3660, loss_transfer: 0.6827, loss_cluster: 0.0435, loss_p: 7.8866, source_acc: 90.0625, target_acc: 60.6974, best_acc: 66.5485
+12:03:06 | INFO     train.training train    340 Epoch 400/1000 | loss_clf: 0.3452, loss_transfer: 0.6820, loss_cluster: 0.0347, loss_p: 7.8753, source_acc: 90.1807, target_acc: 61.3475, best_acc: 66.5485
+12:03:43 | INFO     train.training train    340 Epoch 450/1000 | loss_clf: 0.3406, loss_transfer: 0.6635, loss_cluster: 0.0275, loss_p: 7.8785, source_acc: 89.6277, target_acc: 62.2931, best_acc: 66.5485
+12:04:20 | INFO     train.training train    340 Epoch 500/1000 | loss_clf: 0.3247, loss_transfer: 0.6603, loss_cluster: 0.0305, loss_p: 7.8736, source_acc: 91.3205, target_acc: 63.2388, best_acc: 66.5485
+12:04:56 | INFO     train.training train    340 Epoch 550/1000 | loss_clf: 0.2881, loss_transfer: 0.6759, loss_cluster: 0.0304, loss_p: 7.8803, source_acc: 92.8614, target_acc: 61.2293, best_acc: 66.5485
+12:05:32 | INFO     train.training train    340 Epoch 600/1000 | loss_clf: 0.2985, loss_transfer: 0.6619, loss_cluster: 0.0268, loss_p: 7.8719, source_acc: 91.8524, target_acc: 60.5201, best_acc: 66.5485
+12:06:08 | INFO     train.training train    340 Epoch 650/1000 | loss_clf: 0.3318, loss_transfer: 0.6788, loss_cluster: 0.0182, loss_p: 7.8735, source_acc: 92.4561, target_acc: 60.4610, best_acc: 66.5485
+12:06:45 | INFO     train.training train    340 Epoch 700/1000 | loss_clf: 0.2825, loss_transfer: 0.6684, loss_cluster: 0.0217, loss_p: 7.8672, source_acc: 92.7685, target_acc: 61.1111, best_acc: 66.5485
+12:07:23 | INFO     train.training train    340 Epoch 750/1000 | loss_clf: 0.2756, loss_transfer: 0.6662, loss_cluster: 0.0184, loss_p: 7.8993, source_acc: 93.4819, target_acc: 60.9929, best_acc: 66.5485
+12:08:02 | INFO     train.training train    340 Epoch 800/1000 | loss_clf: 0.3034, loss_transfer: 0.6677, loss_cluster: 0.0213, loss_p: 7.8641, source_acc: 91.5822, target_acc: 59.5154, best_acc: 66.5485
+12:08:38 | INFO     train.training train    340 Epoch 850/1000 | loss_clf: 0.2432, loss_transfer: 0.6752, loss_cluster: 0.0169, loss_p: 7.8655, source_acc: 93.1231, target_acc: 60.5201, best_acc: 66.5485
+12:09:14 | INFO     train.training train    340 Epoch 900/1000 | loss_clf: 0.2371, loss_transfer: 0.6723, loss_cluster: 0.0161, loss_p: 7.8689, source_acc: 92.3886, target_acc: 60.5201, best_acc: 66.5485
+12:09:52 | INFO     train.training train    340 Epoch 950/1000 | loss_clf: 0.2822, loss_transfer: 0.6802, loss_cluster: 0.0254, loss_p: 7.9568, source_acc: 93.1484, target_acc: 60.4019, best_acc: 66.5485
+12:10:32 | INFO     train.training train    340 Epoch 1000/1000 | loss_clf: 0.2540, loss_transfer: 0.6526, loss_cluster: 0.0195, loss_p: 7.8950, source_acc: 92.4941, target_acc: 59.8700, best_acc: 66.5485
+12:10:32 | INFO     __main__ main     154 
+--------------> Finished training w.r.t. subject 8 session 0 acc 0.6655
+12:10:35 | INFO     data.utils merge_for_all_subjects 72  Merging data and labels....
+12:10:35 | INFO     data.utils merge_for_all_subjects 97  Finish merging! data shape: (23688, 62, 5), label shape: (23688,)
+12:10:35 | INFO     data.utils merge_for_one_subject 115 Merging data and labels....
+12:10:35 | INFO     data.utils merge_for_one_subject 128 Finish merging! data shape: (1692, 62, 5), label shape: (1692,)
+12:10:35 | INFO     train.training train    160 len of train data: 23688, len of test data: 1692
+12:10:36 | INFO     utils.metric update   25  --> A new better acc 0.3593 on subject 9 session 0
+12:10:36 | INFO     train.training train    340 Epoch 1/1000 | loss_clf: 2.8897, loss_transfer: 0.5480, loss_cluster: 0.0137, loss_p: 11.2627, source_acc: 38.3063, target_acc: 35.9338, best_acc: 35.9338
+12:10:37 | INFO     utils.metric update   25  --> A new better acc 0.4019 on subject 9 session 0
+12:10:37 | INFO     utils.metric update   25  --> A new better acc 0.5538 on subject 9 session 0
+12:10:41 | INFO     utils.metric update   25  --> A new better acc 0.6389 on subject 9 session 0
+12:10:46 | INFO     utils.metric update   25  --> A new better acc 0.6649 on subject 9 session 0
+12:11:04 | INFO     utils.metric update   25  --> A new better acc 0.6755 on subject 9 session 0
+12:11:08 | INFO     train.training train    340 Epoch 50/1000 | loss_clf: 0.6600, loss_transfer: 0.6800, loss_cluster: 0.1120, loss_p: 7.9112, source_acc: 76.6464, target_acc: 65.8392, best_acc: 67.5532
+12:11:08 | INFO     utils.metric update   25  --> A new better acc 0.6773 on subject 9 session 0
+12:11:19 | INFO     utils.metric update   25  --> A new better acc 0.6779 on subject 9 session 0
+12:11:21 | INFO     utils.metric update   25  --> A new better acc 0.6826 on subject 9 session 0
+12:11:24 | INFO     utils.metric update   25  --> A new better acc 0.6974 on subject 9 session 0
+12:11:25 | INFO     utils.metric update   25  --> A new better acc 0.7246 on subject 9 session 0
+12:11:37 | INFO     train.training train    340 Epoch 100/1000 | loss_clf: 0.5382, loss_transfer: 0.6704, loss_cluster: 0.0820, loss_p: 7.9261, source_acc: 75.8907, target_acc: 60.2246, best_acc: 72.4586
+12:12:07 | INFO     train.training train    340 Epoch 150/1000 | loss_clf: 0.4705, loss_transfer: 0.6854, loss_cluster: 0.0879, loss_p: 7.9886, source_acc: 81.4843, target_acc: 65.2482, best_acc: 72.4586
+12:12:13 | INFO     utils.metric update   25  --> A new better acc 0.7311 on subject 9 session 0
+12:12:37 | INFO     train.training train    340 Epoch 200/1000 | loss_clf: 0.4314, loss_transfer: 0.6779, loss_cluster: 0.0674, loss_p: 7.9233, source_acc: 81.5729, target_acc: 71.4539, best_acc: 73.1087
+12:12:39 | INFO     utils.metric update   25  --> A new better acc 0.7364 on subject 9 session 0
+12:12:56 | INFO     utils.metric update   25  --> A new better acc 0.7417 on subject 9 session 0
+12:13:06 | INFO     train.training train    340 Epoch 250/1000 | loss_clf: 0.3585, loss_transfer: 0.6842, loss_cluster: 0.0667, loss_p: 7.9383, source_acc: 79.8041, target_acc: 63.0024, best_acc: 74.1726
+12:13:08 | INFO     utils.metric update   25  --> A new better acc 0.7459 on subject 9 session 0
+12:13:16 | INFO     utils.metric update   25  --> A new better acc 0.7524 on subject 9 session 0
+12:13:35 | INFO     utils.metric update   25  --> A new better acc 0.7600 on subject 9 session 0
+12:13:35 | INFO     train.training train    340 Epoch 300/1000 | loss_clf: 0.3675, loss_transfer: 0.6845, loss_cluster: 0.0643, loss_p: 7.9272, source_acc: 86.7866, target_acc: 67.0213, best_acc: 76.0047
+12:14:00 | INFO     utils.metric update   25  --> A new better acc 0.7677 on subject 9 session 0
+12:14:04 | INFO     train.training train    340 Epoch 350/1000 | loss_clf: 0.2949, loss_transfer: 0.6622, loss_cluster: 0.0534, loss_p: 7.9129, source_acc: 89.2646, target_acc: 75.6501, best_acc: 76.7730
+12:14:35 | INFO     train.training train    340 Epoch 400/1000 | loss_clf: 0.3111, loss_transfer: 0.6794, loss_cluster: 0.0504, loss_p: 7.9306, source_acc: 88.0657, target_acc: 73.7589, best_acc: 76.7730
+12:14:39 | INFO     utils.metric update   25  --> A new better acc 0.7689 on subject 9 session 0
+12:15:01 | INFO     utils.metric update   25  --> A new better acc 0.7807 on subject 9 session 0
+12:15:05 | INFO     train.training train    340 Epoch 450/1000 | loss_clf: 0.3228, loss_transfer: 0.6293, loss_cluster: 0.0412, loss_p: 7.9096, source_acc: 89.2055, target_acc: 73.9362, best_acc: 78.0733
+12:15:37 | INFO     train.training train    340 Epoch 500/1000 | loss_clf: 0.3266, loss_transfer: 0.6746, loss_cluster: 0.0466, loss_p: 7.9337, source_acc: 89.2942, target_acc: 77.0686, best_acc: 78.0733
+12:16:07 | INFO     train.training train    340 Epoch 550/1000 | loss_clf: 0.2693, loss_transfer: 0.6574, loss_cluster: 0.0481, loss_p: 7.9540, source_acc: 91.1939, target_acc: 75.5910, best_acc: 78.0733
+12:16:12 | INFO     utils.metric update   25  --> A new better acc 0.7855 on subject 9 session 0
+12:16:36 | INFO     train.training train    340 Epoch 600/1000 | loss_clf: 0.2525, loss_transfer: 0.7173, loss_cluster: 0.0365, loss_p: 7.9646, source_acc: 88.1163, target_acc: 71.6903, best_acc: 78.5461
+12:17:06 | INFO     train.training train    340 Epoch 650/1000 | loss_clf: 0.2989, loss_transfer: 0.6642, loss_cluster: 0.0416, loss_p: 7.9163, source_acc: 89.0451, target_acc: 70.6856, best_acc: 78.5461
+12:17:18 | INFO     utils.metric update   25  --> A new better acc 0.7878 on subject 9 session 0
+12:17:23 | INFO     utils.metric update   25  --> A new better acc 0.7884 on subject 9 session 0
+12:17:28 | INFO     utils.metric update   25  --> A new better acc 0.7890 on subject 9 session 0
+12:17:35 | INFO     train.training train    340 Epoch 700/1000 | loss_clf: 0.2644, loss_transfer: 0.6926, loss_cluster: 0.0378, loss_p: 7.9993, source_acc: 91.9284, target_acc: 75.2955, best_acc: 78.9007
+12:17:38 | INFO     utils.metric update   25  --> A new better acc 0.7949 on subject 9 session 0
+12:17:55 | INFO     utils.metric update   25  --> A new better acc 0.8020 on subject 9 session 0
+12:18:05 | INFO     train.training train    340 Epoch 750/1000 | loss_clf: 0.3545, loss_transfer: 0.6396, loss_cluster: 0.0383, loss_p: 8.0427, source_acc: 88.4667, target_acc: 77.7778, best_acc: 80.2009
+12:18:35 | INFO     train.training train    340 Epoch 800/1000 | loss_clf: 0.2477, loss_transfer: 0.6748, loss_cluster: 0.0382, loss_p: 7.9639, source_acc: 90.4171, target_acc: 77.1868, best_acc: 80.2009
+12:19:05 | INFO     train.training train    340 Epoch 850/1000 | loss_clf: 0.2436, loss_transfer: 0.6906, loss_cluster: 0.0272, loss_p: 7.9499, source_acc: 88.4836, target_acc: 77.6596, best_acc: 80.2009
+12:19:34 | INFO     train.training train    340 Epoch 900/1000 | loss_clf: 0.2762, loss_transfer: 0.6518, loss_cluster: 0.0268, loss_p: 8.0292, source_acc: 89.0029, target_acc: 75.8865, best_acc: 80.2009
+12:19:47 | INFO     utils.metric update   25  --> A new better acc 0.8067 on subject 9 session 0
+12:20:03 | INFO     train.training train    340 Epoch 950/1000 | loss_clf: 0.2410, loss_transfer: 0.6866, loss_cluster: 0.0276, loss_p: 8.0494, source_acc: 88.9986, target_acc: 79.0189, best_acc: 80.6738
+12:20:32 | INFO     train.training train    340 Epoch 1000/1000 | loss_clf: 0.2701, loss_transfer: 0.6654, loss_cluster: 0.0217, loss_p: 7.9653, source_acc: 91.1094, target_acc: 77.4823, best_acc: 80.6738
+12:20:32 | INFO     __main__ main     154 
+--------------> Finished training w.r.t. subject 9 session 0 acc 0.8067
+12:20:34 | INFO     data.utils merge_for_all_subjects 72  Merging data and labels....
+12:20:35 | INFO     data.utils merge_for_all_subjects 97  Finish merging! data shape: (23688, 62, 5), label shape: (23688,)
+12:20:35 | INFO     data.utils merge_for_one_subject 115 Merging data and labels....
+12:20:35 | INFO     data.utils merge_for_one_subject 128 Finish merging! data shape: (1692, 62, 5), label shape: (1692,)
+12:20:35 | INFO     train.training train    160 len of train data: 23688, len of test data: 1692
+12:20:35 | INFO     utils.metric update   25  --> A new better acc 0.4628 on subject 10 session 0
+12:20:35 | INFO     train.training train    340 Epoch 1/1000 | loss_clf: 3.3347, loss_transfer: 0.5670, loss_cluster: 0.0717, loss_p: 11.5534, source_acc: 37.7955, target_acc: 46.2766, best_acc: 46.2766
+12:20:36 | INFO     utils.metric update   25  --> A new better acc 0.5319 on subject 10 session 0
+12:20:39 | INFO     utils.metric update   25  --> A new better acc 0.5638 on subject 10 session 0
+12:20:40 | INFO     utils.metric update   25  --> A new better acc 0.6732 on subject 10 session 0
+12:20:43 | INFO     utils.metric update   25  --> A new better acc 0.6749 on subject 10 session 0
+12:20:43 | INFO     utils.metric update   25  --> A new better acc 0.6956 on subject 10 session 0
+12:20:44 | INFO     utils.metric update   25  --> A new better acc 0.7063 on subject 10 session 0
+12:20:46 | INFO     utils.metric update   25  --> A new better acc 0.7110 on subject 10 session 0
+12:20:48 | INFO     utils.metric update   25  --> A new better acc 0.7305 on subject 10 session 0
+12:20:50 | INFO     utils.metric update   25  --> A new better acc 0.7677 on subject 10 session 0
+12:21:00 | INFO     utils.metric update   25  --> A new better acc 0.7730 on subject 10 session 0
+12:21:04 | INFO     train.training train    340 Epoch 50/1000 | loss_clf: 0.8672, loss_transfer: 0.7056, loss_cluster: 0.1224, loss_p: 7.9223, source_acc: 71.5932, target_acc: 75.2364, best_acc: 77.3050
+12:21:08 | INFO     utils.metric update   25  --> A new better acc 0.7748 on subject 10 session 0
+12:21:09 | INFO     utils.metric update   25  --> A new better acc 0.7837 on subject 10 session 0
+12:21:15 | INFO     utils.metric update   25  --> A new better acc 0.7855 on subject 10 session 0
+12:21:16 | INFO     utils.metric update   25  --> A new better acc 0.7861 on subject 10 session 0
+12:21:18 | INFO     utils.metric update   25  --> A new better acc 0.7914 on subject 10 session 0
+12:21:21 | INFO     utils.metric update   25  --> A new better acc 0.7991 on subject 10 session 0
+12:21:28 | INFO     utils.metric update   25  --> A new better acc 0.7996 on subject 10 session 0
+12:21:33 | INFO     utils.metric update   25  --> A new better acc 0.8038 on subject 10 session 0
+12:21:33 | INFO     train.training train    340 Epoch 100/1000 | loss_clf: 0.7088, loss_transfer: 0.6833, loss_cluster: 0.1143, loss_p: 7.9046, source_acc: 78.8374, target_acc: 80.3783, best_acc: 80.3783
+12:21:34 | INFO     utils.metric update   25  --> A new better acc 0.8085 on subject 10 session 0
+12:21:39 | INFO     utils.metric update   25  --> A new better acc 0.8091 on subject 10 session 0
+12:21:43 | INFO     utils.metric update   25  --> A new better acc 0.8144 on subject 10 session 0
+12:21:58 | INFO     utils.metric update   25  --> A new better acc 0.8150 on subject 10 session 0
+12:21:59 | INFO     utils.metric update   25  --> A new better acc 0.8186 on subject 10 session 0
+12:22:02 | INFO     utils.metric update   25  --> A new better acc 0.8233 on subject 10 session 0
+12:22:03 | INFO     train.training train    340 Epoch 150/1000 | loss_clf: 0.5194, loss_transfer: 0.6834, loss_cluster: 0.0821, loss_p: 7.8957, source_acc: 82.8225, target_acc: 80.9693, best_acc: 82.3286
+12:22:05 | INFO     utils.metric update   25  --> A new better acc 0.8239 on subject 10 session 0
+12:22:33 | INFO     train.training train    340 Epoch 200/1000 | loss_clf: 0.5146, loss_transfer: 0.6841, loss_cluster: 0.0879, loss_p: 7.9052, source_acc: 84.8320, target_acc: 80.4374, best_acc: 82.3877
+12:23:03 | INFO     utils.metric update   25  --> A new better acc 0.8262 on subject 10 session 0
+12:23:03 | INFO     train.training train    340 Epoch 250/1000 | loss_clf: 0.4697, loss_transfer: 0.6747, loss_cluster: 0.0583, loss_p: 7.8942, source_acc: 82.9070, target_acc: 82.6241, best_acc: 82.6241
+12:23:07 | INFO     utils.metric update   25  --> A new better acc 0.8286 on subject 10 session 0
+12:23:33 | INFO     train.training train    340 Epoch 300/1000 | loss_clf: 0.4989, loss_transfer: 0.6656, loss_cluster: 0.0636, loss_p: 7.8911, source_acc: 87.9348, target_acc: 81.7376, best_acc: 82.8605
+12:24:02 | INFO     train.training train    340 Epoch 350/1000 | loss_clf: 0.3804, loss_transfer: 0.6801, loss_cluster: 0.0442, loss_p: 7.8933, source_acc: 88.6905, target_acc: 81.0284, best_acc: 82.8605
+12:24:32 | INFO     train.training train    340 Epoch 400/1000 | loss_clf: 0.4350, loss_transfer: 0.6756, loss_cluster: 0.0378, loss_p: 7.8881, source_acc: 89.1717, target_acc: 80.2600, best_acc: 82.8605
+12:25:02 | INFO     train.training train    340 Epoch 450/1000 | loss_clf: 0.3783, loss_transfer: 0.6733, loss_cluster: 0.0391, loss_p: 7.8954, source_acc: 90.9828, target_acc: 80.3191, best_acc: 82.8605
+12:25:33 | INFO     train.training train    340 Epoch 500/1000 | loss_clf: 0.3399, loss_transfer: 0.6877, loss_cluster: 0.0393, loss_p: 7.8722, source_acc: 88.3443, target_acc: 80.3783, best_acc: 82.8605
+12:26:01 | INFO     train.training train    340 Epoch 550/1000 | loss_clf: 0.3003, loss_transfer: 0.6726, loss_cluster: 0.0206, loss_p: 8.0865, source_acc: 92.6545, target_acc: 79.6099, best_acc: 82.8605
+12:26:30 | INFO     train.training train    340 Epoch 600/1000 | loss_clf: 0.3311, loss_transfer: 0.6585, loss_cluster: 0.0203, loss_p: 7.8932, source_acc: 92.6798, target_acc: 79.3144, best_acc: 82.8605
+12:26:59 | INFO     train.training train    340 Epoch 650/1000 | loss_clf: 0.3392, loss_transfer: 0.6741, loss_cluster: 0.0246, loss_p: 7.8755, source_acc: 83.5149, target_acc: 77.0686, best_acc: 82.8605
+12:27:28 | INFO     train.training train    340 Epoch 700/1000 | loss_clf: 0.3411, loss_transfer: 0.6739, loss_cluster: 0.0269, loss_p: 7.8826, source_acc: 91.4767, target_acc: 78.7234, best_acc: 82.8605
+12:27:57 | INFO     train.training train    340 Epoch 750/1000 | loss_clf: 0.2861, loss_transfer: 0.6652, loss_cluster: 0.0215, loss_p: 7.9067, source_acc: 90.0498, target_acc: 79.0189, best_acc: 82.8605
+12:28:26 | INFO     train.training train    340 Epoch 800/1000 | loss_clf: 0.2900, loss_transfer: 0.6650, loss_cluster: 0.0210, loss_p: 7.8839, source_acc: 91.4851, target_acc: 79.1371, best_acc: 82.8605
+12:28:56 | INFO     train.training train    340 Epoch 850/1000 | loss_clf: 0.2556, loss_transfer: 0.6627, loss_cluster: 0.0153, loss_p: 7.8950, source_acc: 93.4059, target_acc: 79.3735, best_acc: 82.8605
+12:29:25 | INFO     train.training train    340 Epoch 900/1000 | loss_clf: 0.2392, loss_transfer: 0.6589, loss_cluster: 0.0157, loss_p: 7.8839, source_acc: 94.5247, target_acc: 79.0189, best_acc: 82.8605
+12:29:58 | INFO     train.training train    340 Epoch 950/1000 | loss_clf: 0.2655, loss_transfer: 0.6666, loss_cluster: 0.0193, loss_p: 7.9610, source_acc: 92.3083, target_acc: 79.0189, best_acc: 82.8605
+12:30:28 | INFO     train.training train    340 Epoch 1000/1000 | loss_clf: 0.2852, loss_transfer: 0.6638, loss_cluster: 0.0209, loss_p: 7.9456, source_acc: 94.7779, target_acc: 79.1962, best_acc: 82.8605
+12:30:28 | INFO     __main__ main     154 
+--------------> Finished training w.r.t. subject 10 session 0 acc 0.8286
+12:30:30 | INFO     data.utils merge_for_all_subjects 72  Merging data and labels....
+12:30:30 | INFO     data.utils merge_for_all_subjects 97  Finish merging! data shape: (23688, 62, 5), label shape: (23688,)
+12:30:30 | INFO     data.utils merge_for_one_subject 115 Merging data and labels....
+12:30:30 | INFO     data.utils merge_for_one_subject 128 Finish merging! data shape: (1692, 62, 5), label shape: (1692,)
+12:30:30 | INFO     train.training train    160 len of train data: 23688, len of test data: 1692
+12:30:31 | INFO     utils.metric update   25  --> A new better acc 0.3446 on subject 11 session 0
+12:30:31 | INFO     train.training train    340 Epoch 1/1000 | loss_clf: 5.5374, loss_transfer: 0.5500, loss_cluster: 0.0477, loss_p: 24.2110, source_acc: 34.4563, target_acc: 34.4563, best_acc: 34.4563
+12:30:31 | INFO     utils.metric update   25  --> A new better acc 0.4397 on subject 11 session 0
+12:30:32 | INFO     utils.metric update   25  --> A new better acc 0.4586 on subject 11 session 0
+12:30:34 | INFO     utils.metric update   25  --> A new better acc 0.5024 on subject 11 session 0
+12:30:38 | INFO     utils.metric update   25  --> A new better acc 0.5307 on subject 11 session 0
+12:30:40 | INFO     utils.metric update   25  --> A new better acc 0.5325 on subject 11 session 0
+12:31:00 | INFO     train.training train    340 Epoch 50/1000 | loss_clf: 0.8671, loss_transfer: 0.6796, loss_cluster: 0.1418, loss_p: 7.9216, source_acc: 72.3024, target_acc: 48.3452, best_acc: 53.2506
+12:31:10 | INFO     utils.metric update   25  --> A new better acc 0.5396 on subject 11 session 0
+12:31:11 | INFO     utils.metric update   25  --> A new better acc 0.5420 on subject 11 session 0
+12:31:17 | INFO     utils.metric update   25  --> A new better acc 0.5473 on subject 11 session 0
+12:31:20 | INFO     utils.metric update   25  --> A new better acc 0.5526 on subject 11 session 0
+12:31:24 | INFO     utils.metric update   25  --> A new better acc 0.5762 on subject 11 session 0
+12:31:29 | INFO     train.training train    340 Epoch 100/1000 | loss_clf: 0.7605, loss_transfer: 0.6922, loss_cluster: 0.1291, loss_p: 7.9144, source_acc: 76.1947, target_acc: 54.5508, best_acc: 57.6241
+12:31:30 | INFO     utils.metric update   25  --> A new better acc 0.5892 on subject 11 session 0
+12:31:58 | INFO     train.training train    340 Epoch 150/1000 | loss_clf: 0.5784, loss_transfer: 0.6758, loss_cluster: 0.0895, loss_p: 7.8994, source_acc: 83.5951, target_acc: 54.2553, best_acc: 58.9243
+12:32:03 | INFO     utils.metric update   25  --> A new better acc 0.5940 on subject 11 session 0
+12:32:28 | INFO     train.training train    340 Epoch 200/1000 | loss_clf: 0.5178, loss_transfer: 0.6774, loss_cluster: 0.0740, loss_p: 7.9196, source_acc: 85.4948, target_acc: 55.6147, best_acc: 59.3972
+12:32:58 | INFO     train.training train    340 Epoch 250/1000 | loss_clf: 0.4772, loss_transfer: 0.6772, loss_cluster: 0.0501, loss_p: 7.9114, source_acc: 83.1476, target_acc: 55.3191, best_acc: 59.3972
+12:33:29 | INFO     train.training train    340 Epoch 300/1000 | loss_clf: 0.4701, loss_transfer: 0.8796, loss_cluster: 0.0671, loss_p: 7.8894, source_acc: 85.4188, target_acc: 46.6903, best_acc: 59.3972
+12:33:30 | INFO     utils.metric update   25  --> A new better acc 0.5999 on subject 11 session 0
+12:33:58 | INFO     train.training train    340 Epoch 350/1000 | loss_clf: 0.3659, loss_transfer: 0.6843, loss_cluster: 0.0529, loss_p: 8.1319, source_acc: 89.3786, target_acc: 51.2411, best_acc: 59.9882
+12:34:27 | INFO     train.training train    340 Epoch 400/1000 | loss_clf: 0.3948, loss_transfer: 0.6769, loss_cluster: 0.0448, loss_p: 7.8785, source_acc: 90.0836, target_acc: 59.5745, best_acc: 59.9882
+12:34:50 | INFO     utils.metric update   25  --> A new better acc 0.6064 on subject 11 session 0
+12:34:57 | INFO     train.training train    340 Epoch 450/1000 | loss_clf: 0.4132, loss_transfer: 0.6867, loss_cluster: 0.0397, loss_p: 7.8888, source_acc: 87.1158, target_acc: 56.5012, best_acc: 60.6383
+12:35:25 | INFO     utils.metric update   25  --> A new better acc 0.6111 on subject 11 session 0
+12:35:26 | INFO     train.training train    340 Epoch 500/1000 | loss_clf: 0.3536, loss_transfer: 0.7029, loss_cluster: 0.0340, loss_p: 8.4979, source_acc: 90.6324, target_acc: 54.0780, best_acc: 61.1111
+12:35:56 | INFO     train.training train    340 Epoch 550/1000 | loss_clf: 0.3432, loss_transfer: 0.6802, loss_cluster: 0.0296, loss_p: 7.9872, source_acc: 93.0091, target_acc: 54.9054, best_acc: 61.1111
+12:36:26 | INFO     train.training train    340 Epoch 600/1000 | loss_clf: 0.3637, loss_transfer: 0.6713, loss_cluster: 0.0311, loss_p: 8.0077, source_acc: 91.4092, target_acc: 53.9007, best_acc: 61.1111
+12:36:56 | INFO     utils.metric update   25  --> A new better acc 0.6229 on subject 11 session 0
+12:36:56 | INFO     train.training train    340 Epoch 650/1000 | loss_clf: 0.3474, loss_transfer: 0.6663, loss_cluster: 0.0316, loss_p: 7.9071, source_acc: 88.5892, target_acc: 62.2931, best_acc: 62.2931
+12:37:01 | INFO     utils.metric update   25  --> A new better acc 0.6247 on subject 11 session 0
+12:37:26 | INFO     train.training train    340 Epoch 700/1000 | loss_clf: 0.3324, loss_transfer: 0.6715, loss_cluster: 0.0328, loss_p: 7.8908, source_acc: 91.3121, target_acc: 56.3830, best_acc: 62.4704
+12:37:33 | INFO     utils.metric update   25  --> A new better acc 0.6259 on subject 11 session 0
+12:37:55 | INFO     train.training train    340 Epoch 750/1000 | loss_clf: 0.3221, loss_transfer: 0.6545, loss_cluster: 0.0327, loss_p: 7.9339, source_acc: 92.8571, target_acc: 57.1513, best_acc: 62.5887
+12:37:57 | INFO     utils.metric update   25  --> A new better acc 0.6401 on subject 11 session 0
+12:38:24 | INFO     train.training train    340 Epoch 800/1000 | loss_clf: 0.3386, loss_transfer: 0.6563, loss_cluster: 0.0362, loss_p: 7.9501, source_acc: 92.7094, target_acc: 63.6525, best_acc: 64.0071
+12:38:54 | INFO     train.training train    340 Epoch 850/1000 | loss_clf: 0.3544, loss_transfer: 0.6873, loss_cluster: 0.0279, loss_p: 8.8626, source_acc: 88.9522, target_acc: 56.3239, best_acc: 64.0071
+12:39:24 | INFO     train.training train    340 Epoch 900/1000 | loss_clf: 0.2833, loss_transfer: 0.6506, loss_cluster: 0.0247, loss_p: 7.9994, source_acc: 93.6972, target_acc: 55.4965, best_acc: 64.0071
+12:39:53 | INFO     train.training train    340 Epoch 950/1000 | loss_clf: 0.2673, loss_transfer: 0.6588, loss_cluster: 0.0176, loss_p: 8.0140, source_acc: 92.6081, target_acc: 55.4374, best_acc: 64.0071
+12:40:24 | INFO     train.training train    340 Epoch 1000/1000 | loss_clf: 0.3592, loss_transfer: 0.6665, loss_cluster: 0.0225, loss_p: 8.0122, source_acc: 94.1363, target_acc: 58.6288, best_acc: 64.0071
+12:40:24 | INFO     __main__ main     154 
+--------------> Finished training w.r.t. subject 11 session 0 acc 0.6401
+12:40:27 | INFO     data.utils merge_for_all_subjects 72  Merging data and labels....
+12:40:27 | INFO     data.utils merge_for_all_subjects 97  Finish merging! data shape: (23688, 62, 5), label shape: (23688,)
+12:40:27 | INFO     data.utils merge_for_one_subject 115 Merging data and labels....
+12:40:27 | INFO     data.utils merge_for_one_subject 128 Finish merging! data shape: (1692, 62, 5), label shape: (1692,)
+12:40:27 | INFO     train.training train    160 len of train data: 23688, len of test data: 1692
+12:40:28 | INFO     utils.metric update   25  --> A new better acc 0.3948 on subject 12 session 0
+12:40:28 | INFO     train.training train    340 Epoch 1/1000 | loss_clf: 3.4629, loss_transfer: 0.6109, loss_cluster: 0.0441, loss_p: 12.4277, source_acc: 41.2065, target_acc: 39.4799, best_acc: 39.4799
+12:40:28 | INFO     utils.metric update   25  --> A new better acc 0.4551 on subject 12 session 0
+12:40:29 | INFO     utils.metric update   25  --> A new better acc 0.5106 on subject 12 session 0
+12:40:30 | INFO     utils.metric update   25  --> A new better acc 0.5496 on subject 12 session 0
+12:40:31 | INFO     utils.metric update   25  --> A new better acc 0.5573 on subject 12 session 0
+12:40:32 | INFO     utils.metric update   25  --> A new better acc 0.6696 on subject 12 session 0
+12:40:33 | INFO     utils.metric update   25  --> A new better acc 0.6879 on subject 12 session 0
+12:40:40 | INFO     utils.metric update   25  --> A new better acc 0.6903 on subject 12 session 0
+12:40:42 | INFO     utils.metric update   25  --> A new better acc 0.6927 on subject 12 session 0
+12:40:44 | INFO     utils.metric update   25  --> A new better acc 0.7057 on subject 12 session 0
+12:40:54 | INFO     utils.metric update   25  --> A new better acc 0.7128 on subject 12 session 0
+12:40:56 | INFO     utils.metric update   25  --> A new better acc 0.7222 on subject 12 session 0
+12:40:58 | INFO     train.training train    340 Epoch 50/1000 | loss_clf: 0.7122, loss_transfer: 0.6884, loss_cluster: 0.1086, loss_p: 7.9440, source_acc: 73.6618, target_acc: 68.3806, best_acc: 72.2222
+12:41:10 | INFO     utils.metric update   25  --> A new better acc 0.7258 on subject 12 session 0
+12:41:30 | INFO     train.training train    340 Epoch 100/1000 | loss_clf: 0.6024, loss_transfer: 0.6908, loss_cluster: 0.1023, loss_p: 8.0295, source_acc: 74.9240, target_acc: 68.7352, best_acc: 72.5768
+12:41:42 | INFO     utils.metric update   25  --> A new better acc 0.7335 on subject 12 session 0
+12:42:06 | INFO     train.training train    340 Epoch 150/1000 | loss_clf: 0.4877, loss_transfer: 0.6817, loss_cluster: 0.0952, loss_p: 7.9830, source_acc: 82.5861, target_acc: 71.9858, best_acc: 73.3452
+12:42:42 | INFO     train.training train    340 Epoch 200/1000 | loss_clf: 0.4224, loss_transfer: 0.6818, loss_cluster: 0.0760, loss_p: 8.0064, source_acc: 81.7798, target_acc: 70.9811, best_acc: 73.3452
+12:43:17 | INFO     train.training train    340 Epoch 250/1000 | loss_clf: 0.3986, loss_transfer: 0.6833, loss_cluster: 0.0715, loss_p: 8.0327, source_acc: 84.7898, target_acc: 68.2033, best_acc: 73.3452
+12:43:54 | INFO     train.training train    340 Epoch 300/1000 | loss_clf: 0.4171, loss_transfer: 0.6629, loss_cluster: 0.0574, loss_p: 7.9149, source_acc: 82.7001, target_acc: 67.3168, best_acc: 73.3452
+12:44:31 | INFO     train.training train    340 Epoch 350/1000 | loss_clf: 0.3482, loss_transfer: 0.6745, loss_cluster: 0.0452, loss_p: 7.9106, source_acc: 85.7523, target_acc: 67.0213, best_acc: 73.3452
+12:45:08 | INFO     train.training train    340 Epoch 400/1000 | loss_clf: 0.3648, loss_transfer: 0.6794, loss_cluster: 0.0467, loss_p: 7.8916, source_acc: 85.3259, target_acc: 65.7801, best_acc: 73.3452
+12:45:44 | INFO     train.training train    340 Epoch 450/1000 | loss_clf: 0.3199, loss_transfer: 0.6497, loss_cluster: 0.0446, loss_p: 7.9142, source_acc: 87.0019, target_acc: 65.3664, best_acc: 73.3452
+12:46:23 | INFO     train.training train    340 Epoch 500/1000 | loss_clf: 0.2954, loss_transfer: 0.6527, loss_cluster: 0.0447, loss_p: 7.8973, source_acc: 87.9813, target_acc: 67.2577, best_acc: 73.3452
+12:46:58 | INFO     train.training train    340 Epoch 550/1000 | loss_clf: 0.2970, loss_transfer: 0.6661, loss_cluster: 0.0383, loss_p: 7.8957, source_acc: 88.9100, target_acc: 68.2033, best_acc: 73.3452
+12:47:34 | INFO     train.training train    340 Epoch 600/1000 | loss_clf: 0.2877, loss_transfer: 0.6647, loss_cluster: 0.0392, loss_p: 7.9240, source_acc: 88.8593, target_acc: 65.8392, best_acc: 73.3452
+12:48:11 | INFO     train.training train    340 Epoch 650/1000 | loss_clf: 0.3001, loss_transfer: 0.6498, loss_cluster: 0.0538, loss_p: 7.9140, source_acc: 86.7570, target_acc: 66.8440, best_acc: 73.3452
+12:48:49 | INFO     train.training train    340 Epoch 700/1000 | loss_clf: 0.3000, loss_transfer: 0.6549, loss_cluster: 0.0337, loss_p: 7.9344, source_acc: 88.8129, target_acc: 66.6667, best_acc: 73.3452
+12:49:26 | INFO     train.training train    340 Epoch 750/1000 | loss_clf: 0.2929, loss_transfer: 0.6565, loss_cluster: 0.0343, loss_p: 7.9245, source_acc: 87.4662, target_acc: 67.0804, best_acc: 73.3452
+12:50:04 | INFO     train.training train    340 Epoch 800/1000 | loss_clf: 0.2891, loss_transfer: 0.6827, loss_cluster: 0.0323, loss_p: 7.9286, source_acc: 91.4851, target_acc: 68.6170, best_acc: 73.3452
+12:50:40 | INFO     train.training train    340 Epoch 850/1000 | loss_clf: 0.2690, loss_transfer: 0.6667, loss_cluster: 0.0275, loss_p: 8.0938, source_acc: 89.8134, target_acc: 70.0355, best_acc: 73.3452
+12:51:16 | INFO     train.training train    340 Epoch 900/1000 | loss_clf: 0.2124, loss_transfer: 0.6325, loss_cluster: 0.0286, loss_p: 7.9812, source_acc: 91.9791, target_acc: 69.7400, best_acc: 73.3452
+12:51:52 | INFO     train.training train    340 Epoch 950/1000 | loss_clf: 0.2635, loss_transfer: 0.6588, loss_cluster: 0.0242, loss_p: 7.9292, source_acc: 87.0905, target_acc: 65.2482, best_acc: 73.3452
+12:52:29 | INFO     train.training train    340 Epoch 1000/1000 | loss_clf: 0.2991, loss_transfer: 0.6462, loss_cluster: 0.0267, loss_p: 8.0217, source_acc: 90.1131, target_acc: 68.8534, best_acc: 73.3452
+12:52:29 | INFO     __main__ main     154 
+--------------> Finished training w.r.t. subject 12 session 0 acc 0.7335
+12:52:32 | INFO     data.utils merge_for_all_subjects 72  Merging data and labels....
+12:52:32 | INFO     data.utils merge_for_all_subjects 97  Finish merging! data shape: (23688, 62, 5), label shape: (23688,)
+12:52:33 | INFO     data.utils merge_for_one_subject 115 Merging data and labels....
+12:52:33 | INFO     data.utils merge_for_one_subject 128 Finish merging! data shape: (1692, 62, 5), label shape: (1692,)
+12:52:33 | INFO     train.training train    160 len of train data: 23688, len of test data: 1692
+12:52:33 | INFO     utils.metric update   25  --> A new better acc 0.5236 on subject 13 session 0
+12:52:33 | INFO     train.training train    340 Epoch 1/1000 | loss_clf: 3.8105, loss_transfer: 0.6173, loss_cluster: 0.0320, loss_p: 15.6029, source_acc: 42.9627, target_acc: 52.3641, best_acc: 52.3641
+12:52:35 | INFO     utils.metric update   25  --> A new better acc 0.6330 on subject 13 session 0
+12:52:44 | INFO     utils.metric update   25  --> A new better acc 0.6478 on subject 13 session 0
+12:52:46 | INFO     utils.metric update   25  --> A new better acc 0.6879 on subject 13 session 0
+12:53:02 | INFO     utils.metric update   25  --> A new better acc 0.6944 on subject 13 session 0
+12:53:04 | INFO     utils.metric update   25  --> A new better acc 0.7098 on subject 13 session 0
+12:53:05 | INFO     utils.metric update   25  --> A new better acc 0.7145 on subject 13 session 0
+12:53:07 | INFO     utils.metric update   25  --> A new better acc 0.7358 on subject 13 session 0
+12:53:09 | INFO     train.training train    340 Epoch 50/1000 | loss_clf: 0.7297, loss_transfer: 0.6917, loss_cluster: 0.1002, loss_p: 7.9110, source_acc: 72.4164, target_acc: 71.1584, best_acc: 73.5816
+12:53:15 | INFO     utils.metric update   25  --> A new better acc 0.7417 on subject 13 session 0
+12:53:22 | INFO     utils.metric update   25  --> A new better acc 0.7429 on subject 13 session 0
+12:53:30 | INFO     utils.metric update   25  --> A new better acc 0.7488 on subject 13 session 0
+12:53:47 | INFO     train.training train    340 Epoch 100/1000 | loss_clf: 0.6100, loss_transfer: 0.6839, loss_cluster: 0.0958, loss_p: 7.9327, source_acc: 75.8443, target_acc: 63.1797, best_acc: 74.8818
+12:53:49 | INFO     utils.metric update   25  --> A new better acc 0.7583 on subject 13 session 0
+12:54:08 | INFO     utils.metric update   25  --> A new better acc 0.7630 on subject 13 session 0
+12:54:10 | INFO     utils.metric update   25  --> A new better acc 0.7713 on subject 13 session 0
+12:54:11 | INFO     utils.metric update   25  --> A new better acc 0.7736 on subject 13 session 0
+12:54:17 | INFO     utils.metric update   25  --> A new better acc 0.7760 on subject 13 session 0
+12:54:23 | INFO     train.training train    340 Epoch 150/1000 | loss_clf: 0.4727, loss_transfer: 0.6776, loss_cluster: 0.0793, loss_p: 7.9407, source_acc: 82.3582, target_acc: 75.9456, best_acc: 77.6005
+12:54:29 | INFO     utils.metric update   25  --> A new better acc 0.7778 on subject 13 session 0
+12:54:33 | INFO     utils.metric update   25  --> A new better acc 0.7819 on subject 13 session 0
+12:54:56 | INFO     utils.metric update   25  --> A new better acc 0.7825 on subject 13 session 0
+12:55:02 | INFO     train.training train    340 Epoch 200/1000 | loss_clf: 0.4055, loss_transfer: 0.6832, loss_cluster: 0.0655, loss_p: 8.0960, source_acc: 80.8848, target_acc: 76.9504, best_acc: 78.2506
+12:55:06 | INFO     utils.metric update   25  --> A new better acc 0.7872 on subject 13 session 0
+12:55:15 | INFO     utils.metric update   25  --> A new better acc 0.7908 on subject 13 session 0
+12:55:23 | INFO     utils.metric update   25  --> A new better acc 0.7926 on subject 13 session 0
+12:55:23 | INFO     utils.metric update   25  --> A new better acc 0.7955 on subject 13 session 0
+12:55:26 | INFO     utils.metric update   25  --> A new better acc 0.8079 on subject 13 session 0
+12:55:29 | INFO     utils.metric update   25  --> A new better acc 0.8197 on subject 13 session 0
+12:55:38 | INFO     train.training train    340 Epoch 250/1000 | loss_clf: 0.3876, loss_transfer: 0.6605, loss_cluster: 0.0464, loss_p: 7.9072, source_acc: 84.5280, target_acc: 78.7234, best_acc: 81.9740
+12:56:17 | INFO     train.training train    340 Epoch 300/1000 | loss_clf: 0.4061, loss_transfer: 0.6719, loss_cluster: 0.0515, loss_p: 7.9308, source_acc: 87.3649, target_acc: 80.5556, best_acc: 81.9740
+12:56:56 | INFO     train.training train    340 Epoch 350/1000 | loss_clf: 0.3293, loss_transfer: 0.6683, loss_cluster: 0.0402, loss_p: 7.9384, source_acc: 87.4325, target_acc: 76.5957, best_acc: 81.9740
+12:57:34 | INFO     train.training train    340 Epoch 400/1000 | loss_clf: 0.3639, loss_transfer: 0.6569, loss_cluster: 0.0365, loss_p: 7.9296, source_acc: 87.7364, target_acc: 79.3144, best_acc: 81.9740
+12:58:11 | INFO     train.training train    340 Epoch 450/1000 | loss_clf: 0.3336, loss_transfer: 0.6602, loss_cluster: 0.0427, loss_p: 7.9489, source_acc: 85.2077, target_acc: 77.6596, best_acc: 81.9740
+12:58:48 | INFO     train.training train    340 Epoch 500/1000 | loss_clf: 0.3038, loss_transfer: 0.6614, loss_cluster: 0.0334, loss_p: 7.9305, source_acc: 89.3533, target_acc: 80.2600, best_acc: 81.9740
+12:59:25 | INFO     train.training train    340 Epoch 550/1000 | loss_clf: 0.2801, loss_transfer: 0.6675, loss_cluster: 0.0330, loss_p: 7.9557, source_acc: 88.0615, target_acc: 78.5461, best_acc: 81.9740
+13:00:01 | INFO     train.training train    340 Epoch 600/1000 | loss_clf: 0.2425, loss_transfer: 0.6615, loss_cluster: 0.0227, loss_p: 7.9337, source_acc: 88.7496, target_acc: 77.8960, best_acc: 81.9740
+13:00:36 | INFO     utils.metric update   25  --> A new better acc 0.8215 on subject 13 session 0
+13:00:37 | INFO     train.training train    340 Epoch 650/1000 | loss_clf: 0.2876, loss_transfer: 0.6690, loss_cluster: 0.0287, loss_p: 7.9408, source_acc: 87.7153, target_acc: 79.4917, best_acc: 82.1513
+13:01:13 | INFO     train.training train    340 Epoch 700/1000 | loss_clf: 0.2576, loss_transfer: 0.6680, loss_cluster: 0.0287, loss_p: 7.9495, source_acc: 90.8477, target_acc: 79.9645, best_acc: 82.1513
+13:01:24 | INFO     utils.metric update   25  --> A new better acc 0.8239 on subject 13 session 0
+13:01:50 | INFO     train.training train    340 Epoch 750/1000 | loss_clf: 0.3091, loss_transfer: 0.6245, loss_cluster: 0.0391, loss_p: 7.9894, source_acc: 87.2045, target_acc: 78.6643, best_acc: 82.3877
+13:02:26 | INFO     train.training train    340 Epoch 800/1000 | loss_clf: 0.2277, loss_transfer: 0.6806, loss_cluster: 0.0200, loss_p: 7.9496, source_acc: 90.5353, target_acc: 81.0284, best_acc: 82.3877
+13:03:02 | INFO     train.training train    340 Epoch 850/1000 | loss_clf: 0.2362, loss_transfer: 0.6615, loss_cluster: 0.0183, loss_p: 7.9646, source_acc: 90.6662, target_acc: 80.8511, best_acc: 82.3877
+13:03:38 | INFO     train.training train    340 Epoch 900/1000 | loss_clf: 0.2060, loss_transfer: 0.6531, loss_cluster: 0.0139, loss_p: 7.9696, source_acc: 92.6123, target_acc: 80.7329, best_acc: 82.3877
+13:03:46 | INFO     utils.metric update   25  --> A new better acc 0.8428 on subject 13 session 0
+13:04:13 | INFO     train.training train    340 Epoch 950/1000 | loss_clf: 0.2285, loss_transfer: 0.6829, loss_cluster: 0.0183, loss_p: 7.9949, source_acc: 87.1792, target_acc: 77.4232, best_acc: 84.2790
+13:04:49 | INFO     train.training train    340 Epoch 1000/1000 | loss_clf: 0.2692, loss_transfer: 0.6626, loss_cluster: 0.0148, loss_p: 8.1375, source_acc: 90.5606, target_acc: 81.3239, best_acc: 84.2790
+13:04:49 | INFO     __main__ main     154 
+--------------> Finished training w.r.t. subject 13 session 0 acc 0.8428
+13:04:52 | INFO     data.utils merge_for_all_subjects 72  Merging data and labels....
+13:04:52 | INFO     data.utils merge_for_all_subjects 97  Finish merging! data shape: (23688, 62, 5), label shape: (23688,)
+13:04:52 | INFO     data.utils merge_for_one_subject 115 Merging data and labels....
+13:04:52 | INFO     data.utils merge_for_one_subject 128 Finish merging! data shape: (1692, 62, 5), label shape: (1692,)
+13:04:52 | INFO     train.training train    160 len of train data: 23688, len of test data: 1692
+13:04:53 | INFO     utils.metric update   25  --> A new better acc 0.5798 on subject 14 session 0
+13:04:53 | INFO     train.training train    340 Epoch 1/1000 | loss_clf: 4.6460, loss_transfer: 0.6140, loss_cluster: 0.0429, loss_p: 15.6562, source_acc: 42.8023, target_acc: 57.9787, best_acc: 57.9787
+13:04:54 | INFO     utils.metric update   25  --> A new better acc 0.6466 on subject 14 session 0
+13:05:02 | INFO     utils.metric update   25  --> A new better acc 0.6554 on subject 14 session 0
+13:05:10 | INFO     utils.metric update   25  --> A new better acc 0.6832 on subject 14 session 0
+13:05:28 | INFO     train.training train    340 Epoch 50/1000 | loss_clf: 0.7452, loss_transfer: 0.6911, loss_cluster: 0.1115, loss_p: 7.9267, source_acc: 73.9953, target_acc: 55.6738, best_acc: 68.3215
+13:05:49 | INFO     utils.metric update   25  --> A new better acc 0.7069 on subject 14 session 0
+13:06:04 | INFO     utils.metric update   25  --> A new better acc 0.7116 on subject 14 session 0
+13:06:04 | INFO     train.training train    340 Epoch 100/1000 | loss_clf: 0.5701, loss_transfer: 0.6858, loss_cluster: 0.0896, loss_p: 7.9126, source_acc: 78.9598, target_acc: 71.1584, best_acc: 71.1584
+13:06:25 | INFO     utils.metric update   25  --> A new better acc 0.7128 on subject 14 session 0
+13:06:38 | INFO     train.training train    340 Epoch 150/1000 | loss_clf: 0.4581, loss_transfer: 0.6824, loss_cluster: 0.0733, loss_p: 7.9282, source_acc: 84.3127, target_acc: 62.1749, best_acc: 71.2766
+13:07:00 | INFO     utils.metric update   25  --> A new better acc 0.7465 on subject 14 session 0
+13:07:15 | INFO     train.training train    340 Epoch 200/1000 | loss_clf: 0.3580, loss_transfer: 0.6814, loss_cluster: 0.0601, loss_p: 7.9166, source_acc: 84.2705, target_acc: 56.5603, best_acc: 74.6454
+13:07:52 | INFO     train.training train    340 Epoch 250/1000 | loss_clf: 0.3309, loss_transfer: 0.6819, loss_cluster: 0.0463, loss_p: 7.9784, source_acc: 85.6510, target_acc: 59.8109, best_acc: 74.6454
+13:08:30 | INFO     train.training train    340 Epoch 300/1000 | loss_clf: 0.3314, loss_transfer: 0.6707, loss_cluster: 0.0356, loss_p: 7.8998, source_acc: 87.3902, target_acc: 60.8747, best_acc: 74.6454
+13:09:07 | INFO     train.training train    340 Epoch 350/1000 | loss_clf: 0.3123, loss_transfer: 0.6842, loss_cluster: 0.0342, loss_p: 7.9348, source_acc: 84.5111, target_acc: 56.7376, best_acc: 74.6454
+13:09:42 | INFO     train.training train    340 Epoch 400/1000 | loss_clf: 0.2654, loss_transfer: 0.6825, loss_cluster: 0.0321, loss_p: 7.8910, source_acc: 88.2092, target_acc: 56.6194, best_acc: 74.6454
+13:10:18 | INFO     train.training train    340 Epoch 450/1000 | loss_clf: 0.2658, loss_transfer: 0.6657, loss_cluster: 0.0341, loss_p: 7.9203, source_acc: 89.3955, target_acc: 60.4019, best_acc: 74.6454
+13:10:56 | INFO     train.training train    340 Epoch 500/1000 | loss_clf: 0.2386, loss_transfer: 0.6808, loss_cluster: 0.0222, loss_p: 7.9116, source_acc: 86.7148, target_acc: 59.6336, best_acc: 74.6454
+13:11:34 | INFO     train.training train    340 Epoch 550/1000 | loss_clf: 0.2073, loss_transfer: 0.6750, loss_cluster: 0.0170, loss_p: 7.9490, source_acc: 91.0757, target_acc: 60.5201, best_acc: 74.6454
+13:12:11 | INFO     train.training train    340 Epoch 600/1000 | loss_clf: 0.2609, loss_transfer: 0.6706, loss_cluster: 0.0184, loss_p: 8.0064, source_acc: 90.4171, target_acc: 59.9882, best_acc: 74.6454
+13:12:48 | INFO     train.training train    340 Epoch 650/1000 | loss_clf: 0.2074, loss_transfer: 0.6389, loss_cluster: 0.0278, loss_p: 7.9159, source_acc: 86.1913, target_acc: 52.0095, best_acc: 74.6454
+13:13:26 | INFO     train.training train    340 Epoch 700/1000 | loss_clf: 0.2047, loss_transfer: 0.6615, loss_cluster: 0.0165, loss_p: 7.9113, source_acc: 90.7928, target_acc: 58.0969, best_acc: 74.6454
+13:14:05 | INFO     train.training train    340 Epoch 750/1000 | loss_clf: 0.2501, loss_transfer: 0.6623, loss_cluster: 0.0188, loss_p: 7.9393, source_acc: 88.2430, target_acc: 62.1158, best_acc: 74.6454
+13:14:41 | INFO     train.training train    340 Epoch 800/1000 | loss_clf: 0.1696, loss_transfer: 0.6559, loss_cluster: 0.0137, loss_p: 7.9912, source_acc: 92.2746, target_acc: 57.0331, best_acc: 74.6454
+13:15:16 | INFO     train.training train    340 Epoch 850/1000 | loss_clf: 0.2174, loss_transfer: 0.6455, loss_cluster: 0.0170, loss_p: 8.0720, source_acc: 90.2609, target_acc: 57.9196, best_acc: 74.6454
+13:15:55 | INFO     train.training train    340 Epoch 900/1000 | loss_clf: 0.1846, loss_transfer: 0.6794, loss_cluster: 0.0172, loss_p: 7.9937, source_acc: 93.7141, target_acc: 56.2057, best_acc: 74.6454
+13:16:32 | INFO     train.training train    340 Epoch 950/1000 | loss_clf: 0.2393, loss_transfer: 0.6594, loss_cluster: 0.0112, loss_p: 7.9911, source_acc: 92.2155, target_acc: 56.3830, best_acc: 74.6454
+13:17:10 | INFO     train.training train    340 Epoch 1000/1000 | loss_clf: 0.2489, loss_transfer: 0.6797, loss_cluster: 0.0165, loss_p: 7.9447, source_acc: 91.4809, target_acc: 58.0969, best_acc: 74.6454
+13:17:10 | INFO     __main__ main     154 
+--------------> Finished training w.r.t. subject 14 session 0 acc 0.7465
+13:17:10 | INFO     __main__ main     163 
+-----------> Finished training for all subjects!!!!
+13:17:10 | INFO     __main__ main     166 One best session acc: mean 0.7131 std 0.0926
+
