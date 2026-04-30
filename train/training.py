@@ -229,6 +229,7 @@ def train(
         loss_transfer = 0.0
         loss_cluster = 0.0
         loss_p = 0.0
+        loss_cb = 0.0
 
         for batch_idx in range(n_batch):
             try:
@@ -247,12 +248,13 @@ def train(
             tgt_data = tgt_data.to(device)
 
             try:
-                cls_loss, cluster_loss, p_loss, transfer_loss = model(src_data, tgt_data, src_label)
+                cls_loss, cluster_loss, p_loss, transfer_loss, cb_loss = model(src_data, tgt_data, src_label)
                 total_loss = (
                     cls_loss
                     + transfer_loss_weight * transfer_loss
                     + 0.01 * p_loss
                     + boost_factor * cluster_loss
+                    + 0.2 * cb_loss
                 )
 
                 optimizer.zero_grad()
@@ -263,6 +265,7 @@ def train(
                 loss_transfer += transfer_loss.detach().item()
                 loss_cluster += cluster_loss.detach().item()
                 loss_p += p_loss.detach().item()
+                loss_cb += cb_loss.detach().item()
             except RuntimeError as exc:
                 error_text = str(exc)
                 if "cuda" not in error_text.lower():
@@ -338,13 +341,14 @@ def train(
             source_acc = _evaluate(model, source_loader, device)
 
             logger.info(
-                "Epoch {}/{} | loss_clf: {:.4f}, loss_transfer: {:.4f}, loss_cluster: {:.4f}, loss_p: {:.4f}, source_acc: {:.4f}, target_acc: {:.4f}, best_acc: {:.4f}",
+                "Epoch {}/{} | loss_clf: {:.4f}, loss_transfer: {:.4f}, loss_cluster: {:.4f}, loss_p: {:.4f}, loss_cb: {:.4f}, source_acc: {:.4f}, target_acc: {:.4f}, best_acc: {:.4f}",
                 epoch + 1,
                 epochs,
                 loss_clf / n_batch,
                 loss_transfer / n_batch,
                 loss_cluster / n_batch,
                 loss_p / n_batch,
+                loss_cb / n_batch,
                 source_acc,
                 target_acc,
                 best_acc,

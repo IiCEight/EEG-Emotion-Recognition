@@ -5,7 +5,7 @@ from pathlib import Path
 
 from model.prpl import LabelClassifier, PairLoss, TransferLoss
 from model.prpl import FeatureExtractor as MlpFeatureExtractor
-from model.residual_gcn import MulipleResidualGCN
+from model.residual_gcn import AdjacencyCodebook, MulipleResidualGCN
 from utils.graph_construction import get_domain_general_adj, get_weighted_adj
 
 
@@ -48,8 +48,9 @@ class Saber(nn.Module):
         )
 
     def forward(self, source, target, source_label):
-        source_feat = self.feature_extractor(source)
-        target_feat = self.feature_extractor(target)
+        source_feat, cb_loss_src = self.feature_extractor(source)
+        target_feat, cb_loss_tgt = self.feature_extractor(target)
+        cb_loss = (cb_loss_src + cb_loss_tgt) * 0.5
         batch_size = source_feat.size(0)
 
         self.prpl_classifier.update_P(source_feat, source_label)
@@ -67,15 +68,15 @@ class Saber(nn.Module):
             source_feat + 0.005 * torch.randn((batch_size, self.hidden_2), device=source_feat.device),
             target_feat + 0.005 * torch.randn((batch_size, self.hidden_2), device=target_feat.device),
         )
-        return clf_loss, cluster_loss, p_loss, trans_loss
+        return clf_loss, cluster_loss, p_loss, trans_loss, cb_loss
 
     def epoch_end_hook(self, epoch, source_features, source_labels):
         self.pair_loss.update_threshold(epoch)
-        features = self.feature_extractor(source_features)
+        features, _ = self.feature_extractor(source_features)
         self.prpl_classifier.update_cluster_label(features, source_labels)
 
     def predict(self, x):
-        feature = self.feature_extractor(x)
+        feature, _ = self.feature_extractor(x)
         return self.prpl_classifier.predict(feature)
 
 
@@ -103,15 +104,20 @@ class FeatureExtractor(nn.Module):
         self.fc1 = nn.Linear(flatten_dim, hidden_2)
         self.fc2 = nn.Linear(hidden_2, hidden_2)
 
+        # Discrete codebook for adjacency quantization (MIND-EEG Eq. 5-6)
+        adj_dim = num_electrodes * num_electrodes
+        self.adj_codebook = AdjacencyCodebook(adj_dim=adj_dim, num_codes=64, commit_weight=0.25)
+
     def forward(self, x):
         x = x.reshape(x.size(0), self.band_num, self.chan_num)
         x = self.data_bn(x)
         x = x.unsqueeze(2)
 
-        g_feat, _ = self.mrgcn(x, self.adj)
+        adj_q, cb_loss = self.adj_codebook(self.adj)
+        g_feat, _ = self.mrgcn(x, adj_q)
 
         out = self.fc1(g_feat.reshape(g_feat.size(0), -1))
         out = F.relu(out)
         out = self.fc2(out)
         out = F.relu(out)
-        return out
+        return out, cb_loss

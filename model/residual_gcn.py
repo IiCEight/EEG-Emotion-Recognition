@@ -45,6 +45,51 @@ class SampleAdaptiveAdj(nn.Module):
         return torch.relu(adj)                  # [B, N, N] non-negative
 
 
+class AdjacencyCodebook(nn.Module):
+    """
+    Discrete codebook for graph adjacency matrices (MIND-EEG Eq. 5-6).
+
+    Quantizes a flattened adjacency matrix to the nearest codebook entry.
+    Uses straight-through gradient for the encoder update and a commitment
+    loss to pull encoder outputs toward codebook entries.
+
+    Args:
+        adj_dim:       size of flattened adjacency (n_electrodes^2)
+        num_codes:     number of codebook entries K (default 64, best on SEED-IV)
+        commit_weight: λ in the commitment loss term (default 0.25)
+    """
+    def __init__(self, adj_dim: int, num_codes: int = 64, commit_weight: float = 0.25):
+        super().__init__()
+        self.commit_weight = commit_weight
+        self.codebook = nn.Parameter(torch.randn(num_codes, adj_dim))
+
+    def forward(self, adj: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+        """
+        Args:
+            adj: [N, N] adjacency matrix (the learnable self.adj)
+        Returns:
+            adj_q:   [N, N] quantized adjacency (straight-through in backward)
+            cb_loss: scalar codebook + commitment loss
+        """
+        N = adj.shape[0]
+        a_flat = adj.reshape(1, -1)                      # [1, N*N]
+
+        # Eq. 5: find nearest codebook entry
+        dists = torch.cdist(a_flat, self.codebook)       # [1, K]
+        idx = dists.argmin(dim=1)                        # [1]
+        v_z = self.codebook[idx]                         # [1, N*N]
+
+        # Eq. 6: codebook loss + commitment loss
+        cb_loss = (
+            (a_flat.detach() - v_z).pow(2).mean()
+            + self.commit_weight * (a_flat - v_z.detach()).pow(2).mean()
+        )
+
+        # Straight-through estimator: forward uses v_z, backward flows through a_flat
+        adj_q = a_flat + (v_z - a_flat).detach()        # [1, N*N]
+        return adj_q.reshape(N, N), cb_loss
+
+
 class MulipleResidualGCN(nn.Module):
     def __init__(self, layers, chan_num, feature_num):
         super().__init__()

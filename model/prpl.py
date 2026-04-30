@@ -165,7 +165,7 @@ class FeatureExtractor(nn.Module):
         x = F.relu(x)
         x = self.fc2(x)
         x = F.relu(x)
-        return x
+        return x, torch.tensor(0.0, device=x.device)
 
     def get_parameters(self):
         return [
@@ -272,10 +272,10 @@ class PRPL(nn.Module):
 
     def forward(self, source, target, source_label):
         batch_size = source.size(0)
-        source_feature = self.feature_extractor(source)
-        target_feature = self.feature_extractor(target)
+        source_feature, _ = self.feature_extractor(source)
+        target_feature, _ = self.feature_extractor(target)
 
-        self.classifier.update_P(self.feature_extractor(source), source_label)
+        self.classifier.update_P(self.feature_extractor(source)[0], source_label)
 
         source_logits = self.classifier(source_feature)
         target_logits = self.classifier(target_feature)
@@ -296,14 +296,14 @@ class PRPL(nn.Module):
     def predict(self, x):
         self.eval()
         with torch.no_grad():
-            feature = self.feature_extractor(x)
+            feature, _ = self.feature_extractor(x)
             preds = self.classifier.predict(feature)
         return preds
 
     def predict_prob(self, x):
         self.eval()
         with torch.no_grad():
-            logits = self.classifier(self.feature_extractor(x)).cpu().numpy()
+            logits = self.classifier(self.feature_extractor(x)[0]).cpu().numpy()
             cluster_label = self.classifier.cluster_label.astype(np.int8)
             logits[:, cluster_label] = logits[:, [0, 1, 2]]
         return logits
@@ -317,7 +317,7 @@ class PRPL(nn.Module):
 
     def epoch_end_hook(self, epoch, source_features, source_labels):
         self.pair_loss.update_threshold(epoch)
-        self.classifier.update_cluster_label(self.feature_extractor(source_features), source_labels)
+        self.classifier.update_cluster_label(self.feature_extractor(source_features)[0], source_labels)
 
     def get_state(self):
         return {
