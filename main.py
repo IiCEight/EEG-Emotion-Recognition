@@ -28,7 +28,7 @@ app = typer.Typer(
 def main(
     model_name: Annotated[
         cli_enum.ModelName, typer.Option('-m', help='model name')
-    ] = cli_enum.ModelName.SABER_T,
+    ] = cli_enum.ModelName.SABER,
     dataset: Annotated[
         cli_enum.DatasetName, typer.Option(help='dataset name')
     ] = cli_enum.DatasetName.SEED,
@@ -56,7 +56,7 @@ def main(
         typer.Option(help='type of data split (kfold, leave-one-subject-out)'),
     ] = cli_enum.SplitTypeName.LEAVE_ONE_SUBJECT_OUT,
     split_ratio: Annotated[float, typer.Option(help='ratio for train data size')] = 0.6,
-    batch_size: Annotated[int, typer.Option(help='batch size for training')] = 48,
+    batch_size: Annotated[int, typer.Option(help='batch size for training')] = 64,
     epochs: Annotated[int, typer.Option(help='number of epochs for training')] = 1000,
     data_random: Annotated[bool, typer.Option(help='whether to shuffle the data')] = False,
     only_one_experiment: Annotated[bool, typer.Option(help='whether to run only one experiment for debugging')] = False,
