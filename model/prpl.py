@@ -210,6 +210,31 @@ class LabelClassifier(nn.Module):
         )
         self.stored_mat = torch.matmul(self.V, self.P.T)
 
+    def update_P_with_prototypes(self, prototypes):
+        """Set P directly from externally-computed adapted prototypes."""
+        self.P = prototypes
+        self.stored_mat = torch.matmul(self.V, self.P.T)
+
+    def update_P_blended(self, adapted_protos, source_feature, source_label):
+        """
+        Blend original source-based P with adapted prototypes.
+        Computes P from source features (as original update_P does),
+        then blends: P_final = (1 - gamma) * P_source + gamma * adapted_protos
+        where gamma is derived from the prototype module's beta schedule.
+        """
+        # Compute original source-based P
+        eye = torch.eye(self.num_classes, device=source_feature.device)
+        P_source = torch.matmul(
+            torch.inverse(torch.diag(source_label.sum(axis=0)) + eye),
+            torch.matmul(source_label.T, source_feature),
+        )
+
+        # Blend: 70% source P, 30% adapted prototypes
+        # This keeps the classifier stable while incorporating prototype guidance
+        gamma = 0.3
+        self.P = (1 - gamma) * P_source + gamma * adapted_protos
+        self.stored_mat = torch.matmul(self.V, self.P.T)
+
     def update_cluster_label(self, source_feature, source_label):
         self.eval()
         with torch.no_grad():

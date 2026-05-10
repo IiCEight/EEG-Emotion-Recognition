@@ -5,6 +5,7 @@ from pathlib import Path
 
 from model.prpl import LabelClassifier, PairLoss, TransferLoss
 from model.prpl import FeatureExtractor as MlpFeatureExtractor
+from model.prototype_adaptation import PrototypeAdaptation
 from model.residual_gcn import MulipleResidualGCN
 from utils.graph_construction import get_domain_general_adj, get_weighted_adj
 
@@ -46,13 +47,22 @@ class Saber(nn.Module):
             max_iter=self.max_iter,
             hidden_1=self.hidden_2,
         )
+        self.prototype_adaptation = PrototypeAdaptation(
+            num_classes=num_classes,
+            feature_dim=self.hidden_2,
+            max_iter=max_iter,
+        )
+        self.current_epoch = 0
 
     def forward(self, source, target, source_label):
         source_feat = self.feature_extractor(source)
         target_feat = self.feature_extractor(target)
         batch_size = source_feat.size(0)
 
-        self.prpl_classifier.update_P(source_feat, source_label)
+        adapted_protos = self.prototype_adaptation(
+            source_feat, source_label, target_feat, self.current_epoch,
+        )
+        self.prpl_classifier.update_P_blended(adapted_protos, source_feat, source_label)
 
         source_logits = self.prpl_classifier(source_feat)
         target_logits = self.prpl_classifier(target_feat)
@@ -70,6 +80,7 @@ class Saber(nn.Module):
         return clf_loss, cluster_loss, p_loss, trans_loss
 
     def epoch_end_hook(self, epoch, source_features, source_labels):
+        self.current_epoch = epoch
         self.pair_loss.update_threshold(epoch)
         features = self.feature_extractor(source_features)
         self.prpl_classifier.update_cluster_label(features, source_labels)
