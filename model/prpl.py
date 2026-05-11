@@ -231,7 +231,7 @@ class LabelClassifier(nn.Module):
 
         # Blend: 70% source P, 30% adapted prototypes
         # This keeps the classifier stable while incorporating prototype guidance
-        gamma = 0.3
+        gamma = 0
         self.P = (1 - gamma) * P_source + gamma * adapted_protos
         self.stored_mat = torch.matmul(self.V, self.P.T)
 
