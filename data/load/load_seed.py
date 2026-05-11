@@ -29,7 +29,8 @@ feature_index = {
     "rasm": 6, "rasm_lds": 7, "asm": 8, "asm_lds": 9, "dcau": 10, "dcau_lds": 11
 }
 
-def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[list, list, int, int, int, int]:
+def load_seed(dataset_path: str, feature_type: str = "de_lds",
+              trim_trial_start_pct: float = 0.0) -> tuple[list, list, int, int, int, int]:
     """
     feature_type: "raw", "de_lds"...
 
@@ -125,14 +126,14 @@ def load_seed(dataset_path: str, feature_type: str = "de_lds")-> tuple[list, lis
                     [current_lable] * len(eeg_data[session_id][subject_id][trial_id])
                 )
 
-    # Turn it to the awkward array for easier processing later, 
-    # since the shape of each trial is different
-
-    # eeg_data = ak.Array(eeg_data)
-    # label = ak.Array(label)
-
-    # logger.debug(f"Final label shape: {label.type}")
-    # logger.debug(f"Final data shape: {eeg_data.type}")
+    if trim_trial_start_pct > 0.0:
+        for session_id in range(3):
+            for subject_id in range(15):
+                for trial_id in range(15):
+                    t = eeg_data[session_id][subject_id][trial_id]
+                    skip = int(len(t) * trim_trial_start_pct / 100.0)
+                    eeg_data[session_id][subject_id][trial_id] = t[skip:]
+                    label[session_id][subject_id][trial_id] = label[session_id][subject_id][trial_id][skip:]
 
     # No sampling rate for the extracted features, since SEED did it already.
     return eeg_data, label, 15, 62, 5, num_classes
