@@ -1,3 +1,4 @@
+from loguru import logger
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -6,6 +7,7 @@ from pathlib import Path
 from model.prpl import LabelClassifier, PairLoss, TransferLoss
 from model.prpl import FeatureExtractor as MlpFeatureExtractor
 from model.residual_gcn import MulipleResidualGCN
+from utils.graphConstructionFromStandard import get_adj_from_standard
 from utils.graph_construction import get_domain_general_adj, get_weighted_adj
 
 
@@ -88,10 +90,13 @@ class FeatureExtractor(nn.Module):
         self.layers = layers
 
         _weights_path = Path("cache/electrode_weights.npy")
-        if _weights_path.exists():
-            _adj_init = get_weighted_adj(str(_weights_path))
-        else:
-            _adj_init = get_domain_general_adj()
+        # if _weights_path.exists():
+        #     _adj_init = get_weighted_adj(str(_weights_path))
+        # else:
+        #     _adj_init = get_domain_general_adj()
+        logger.info("Use direct distance as adjeceny matrix for GCN.")
+        _adj_init = get_adj_from_standard()
+
         self.adj = nn.Parameter(torch.tensor(_adj_init).float(), requires_grad=True)
 
         self.data_bn = nn.BatchNorm1d(num_feature)
