@@ -144,7 +144,7 @@ def main(
                 )
             else:
                 model = Saber(
-                    num_electrodes, num_features, num_classes, use_gcn,
+                    num_electrodes, num_features, num_classes, use_gcn=use_gcn,
                 ).to(device)
 
                 train(model, metric, train_data, train_labels, test_data, test_labels,
