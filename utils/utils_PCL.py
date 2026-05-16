@@ -247,9 +247,9 @@ def get_data_label_frommat(mat_path, dataset_name, session_id):
     # we will have a preprocessing here
     one_sub_data = one_sub_data.astype(np.float32)
     one_sub_label = one_sub_label.astype(np.int64)
-    # one_sub_data = norminy(one_sub_data)
-    min_max_scaler = preprocessing.MinMaxScaler(feature_range=(-1, 1))
-    one_sub_data = min_max_scaler.fit_transform(one_sub_data).astype(np.float32)
+    one_sub_data = norminy(one_sub_data).astype(np.float32)
+    # min_max_scaler = preprocessing.MinMaxScaler(feature_range=(-1, 1))
+    # one_sub_data = min_max_scaler.fit_transform(one_sub_data).astype(np.float32)
     return one_sub_data, one_sub_label
 
 

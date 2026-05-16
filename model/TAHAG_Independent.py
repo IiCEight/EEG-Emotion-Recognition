@@ -5,7 +5,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch.autograd import Variable, Function
-from utils.utils import get_adj_from_standard, mmd
+from utils import get_adj_from_standard, mmd
 
 class ReverseLayerF(Function):
     @staticmethod
