@@ -9,7 +9,7 @@ from loguru import logger
 
 from constant.model_map import MODEL
 from data.dataloder import load_data
-from data.utils import merge_and_split
+from data.utils import merge_and_split, normalization_wrt_subject
 from model.saber import Saber
 from model.saber_t import SaberT
 from train.training import train
@@ -97,6 +97,9 @@ def main(
         sample_length=sample_length,
         stride=stride,
     )
+
+    # This help a lot.
+    normalization_wrt_subject(data)
 
     num_sessions = len(labels)
     subject_ids = list(range(num_subjects))
