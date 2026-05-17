@@ -67,6 +67,7 @@ def main(
     failure_log: Annotated[str | None, typer.Option(help='path to CSV file for logging misclassified samples (disabled if not set)')] = "./cache/failure_log.csv",
     use_gcn: Annotated[bool, typer.Option(help='use GCN feature extractor for SABER (False = flat MLP, faster)')] = False,
     time_steps: Annotated[int, typer.Option(help='number of consecutive DE windows per sample for SABER_T (requires --sample-length N)')] = 2,
+    trim_trial_start_pct: Annotated[float, typer.Option(help='discard the first X%% of each trial at load time (0 = disabled)')] = 0.0,
     level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
     """Welcome! Use --help option to see usage information."""
@@ -87,7 +88,7 @@ def main(
         + f'\ndata random: {data_random}\nrandom seed: {random_seed}'
         + f'\nonly one experiment: {only_one_experiment}\nonly one session: {only_one_session}'
         + f'\nlearning rate: {learning_rate}\nearly stop patience: {early_stop_patience}'
-        + f'\nuse_gcn: {use_gcn}\ntime_steps: {time_steps}'
+        + f'\nuse_gcn: {use_gcn}\ntime_steps: {time_steps}\ntrim_trial_start_pct: {trim_trial_start_pct}'
     )
 
     data, labels, num_subjects, num_electrodes, num_features, num_classes = load_data(
@@ -96,6 +97,7 @@ def main(
         cache_dir=cache_dir,
         sample_length=sample_length,
         stride=stride,
+        trim_trial_start_pct=trim_trial_start_pct,
     )
 
     # This help a lot.
@@ -145,7 +147,7 @@ def main(
                 )
             else:
                 model = Saber(
-                    num_electrodes, num_features, num_classes, use_gcn,
+                    num_electrodes, num_features, num_classes, use_gcn=use_gcn,
                 ).to(device)
 
                 train(model, metric, train_data, train_labels, test_data, test_labels,

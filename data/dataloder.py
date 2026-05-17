@@ -27,6 +27,7 @@ def _build_cache_path(
     dataset_path: str,
     sample_length: int = 1,
     stride: int | None = None,
+    trim_trial_start_pct: float = 0.0,
 ) -> Path:
     cache_key_payload = {
         "cache_version": _CACHE_VERSION,
@@ -34,6 +35,7 @@ def _build_cache_path(
         "dataset_path": str(Path(dataset_path).expanduser().resolve()),
         "sample_length": sample_length,
         "stride": stride if stride is not None else sample_length,
+        "trim_trial_start_pct": trim_trial_start_pct,
     }
     cache_key = hashlib.md5(
         json.dumps(cache_key_payload, sort_keys=True).encode("utf-8")
@@ -48,6 +50,7 @@ def load_data(
     cache_dir: str | None = None,
     sample_length: int = 1,
     stride: int | None = None,
+    trim_trial_start_pct: float = 0.0,
 ) -> tuple[ak.Array, ak.Array, int, int, int, int]:
     """
     return:
@@ -76,6 +79,7 @@ def load_data(
             dataset_path=dataset_path,
             sample_length=sample_length,
             stride=stride,
+            trim_trial_start_pct=trim_trial_start_pct,
         )
         if cache_path.exists():
             try:
@@ -92,7 +96,7 @@ def load_data(
     if _to_plain_str(dataset_name) == "SEED" and sample_length > 1:
         result = load_seed_raw(dataset_path, sample_length=sample_length, stride=stride)
     else:
-        result = function_map[_to_plain_str(dataset_name)](dataset_path)
+        result = function_map[_to_plain_str(dataset_name)](dataset_path, trim_trial_start_pct=trim_trial_start_pct)
 
     if cache_path is not None:
         try:
