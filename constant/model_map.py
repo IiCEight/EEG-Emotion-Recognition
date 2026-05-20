@@ -7,6 +7,7 @@ from model.NSAL_DGAT import Domain_adaption_model
 from model.prpl import PRPL
 from model.adann import ADANN
 from model.saber_t import SaberT
+from model.PCL_TDGCN import PCL
 
 
 MODEL = {
@@ -18,7 +19,7 @@ MODEL = {
     CLI_arguments_enum.ModelName.PRPL: PRPL,
     CLI_arguments_enum.ModelName.ADANN: ADANN,
     CLI_arguments_enum.ModelName.SABER_T: SaberT,
-
+    CLI_arguments_enum.ModelName.PCL: PCL,
 }
 
 IS_GRAPH_MODEL = {
@@ -29,4 +30,5 @@ IS_GRAPH_MODEL = {
     CLI_arguments_enum.ModelName.PRPL: False,
     CLI_arguments_enum.ModelName.ADANN: False,
     CLI_arguments_enum.ModelName.SABER_T: True,
+    CLI_arguments_enum.ModelName.PCL: True,
 }
