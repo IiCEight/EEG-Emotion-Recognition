@@ -505,15 +505,6 @@ class PCL(nn.Module):
         self.tem = 1
         self.device = device
 
-        # debug gate (set True externally for ep=0 b=0 only)
-        self._dbg = False
-
-    @staticmethod
-    def _dbg_t(name, t):
-        t = t.detach().float().cpu()
-        return (f"{name}: shape={tuple(t.shape)} sum={t.sum().item():.6f} "
-                f"norm={t.norm().item():.6f} mean={t.mean().item():.6f} std={t.std().item():.6f}")
-
     def forward(self, source, target, source_label,
                 source_index, target_index, current_epoch, max_epochs):
         """
@@ -534,18 +525,6 @@ class PCL(nn.Module):
         source_f, [self.src_adj, self.src_sa, self.src_ca] = self.encoder(source)
         target_f, [self.tar_adj, self.tar_sa, self.tar_ca] = self.encoder(target)
 
-        if self._dbg:
-            print(f"[DBG-E] {self._dbg_t('source_in', source)}")
-            print(f"[DBG-E] {self._dbg_t('target_in', target)}")
-            print(f"[DBG-E] source_in[0,:8]={source[0,:8].detach().cpu().tolist()}")
-            print(f"[DBG-E] target_in[0,:8]={target[0,:8].detach().cpu().tolist()}")
-            print(f"[DBG-E] {self._dbg_t('source_f_raw', source_f)}")
-            print(f"[DBG-E] {self._dbg_t('target_f_raw', target_f)}")
-            for i, a in enumerate(self.src_adj):
-                print(f"[DBG-E] {self._dbg_t(f'src_adj[{i}]', a)}")
-            for i, a in enumerate(self.tar_adj):
-                print(f"[DBG-E] {self._dbg_t(f'tar_adj[{i}]', a)}")
-
         # 分类预测
         source_predict = self.cls_classifier(source_f)
         target_predict = self.cls_classifier(target_f)
@@ -553,10 +532,6 @@ class PCL(nn.Module):
         # 获取概率分布
         source_label_feature = F.softmax(source_predict, dim=1)
         target_label_feature = F.softmax(target_predict, dim=1)
-
-        if self._dbg:
-            print(f"[DBG-E] {self._dbg_t('source_predict', source_predict)}")
-            print(f"[DBG-E] {self._dbg_t('target_predict', target_predict)}")
 
         # 相似性计算
         src_sim, src_prototype = self._get_source_similar(source_f,
@@ -568,24 +543,11 @@ class PCL(nn.Module):
             src_prototype, current_epoch, max_epochs
         )
 
-        if self._dbg:
-            print(f"[DBG-E] {self._dbg_t('src_prototype', src_prototype)}")
-            print(f"[DBG-E] {self._dbg_t('tgt_prototype', tgt_prototype)}")
-            print(f"[DBG-E] {self._dbg_t('src_sim', src_sim)}")
-            print(f"[DBG-E] {self._dbg_t('tgt_sim', tgt_sim)}")
-            print(f"[DBG-E] tat_cluster_label[:16]={tat_cluster_label[:16].cpu().tolist()}")
-
         # 跨域相似性
         s2t_pro = self._get_st_similar(source_f, tgt_prototype)
         t2s_pro = self._get_st_similar(target_f, src_prototype)
         s2s_pro = self._get_st_similar(source_f, src_prototype)
         t2t_pro = self._get_st_similar(target_f, tgt_prototype)
-
-        if self._dbg:
-            print(f"[DBG-E] {self._dbg_t('s2t_pro', s2t_pro)}")
-            print(f"[DBG-E] {self._dbg_t('t2s_pro', t2s_pro)}")
-            print(f"[DBG-E] {self._dbg_t('s2s_pro', s2s_pro)}")
-            print(f"[DBG-E] {self._dbg_t('t2t_pro', t2t_pro)}")
 
         return (source_predict, source_f, target_predict, target_f,
                 [self.src_adj, self.src_sa, self.src_ca],

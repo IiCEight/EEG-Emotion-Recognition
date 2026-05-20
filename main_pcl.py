@@ -1,7 +1,5 @@
 from typing import Annotated
 
-import argparse
-import pickle
 import random
 
 import numpy as np
@@ -18,10 +16,6 @@ from model.PCL_TDGCN import PCL
 from model.PCL_SABER import PCL_SABER
 from train import training_pcl
 from utils.metric import Metric
-
-# Original loader (read raw .mat per subject and band-major reshape)
-from main_PCL import prepare_data as _orig_prepare_data
-from main_PCL import create_data_loaders as _orig_create_data_loaders
 
 
 def _set_seed_pcl(seed: int) -> None:
@@ -58,8 +52,6 @@ def main(
     only_one_experiment: Annotated[bool, typer.Option(help="run one subject only (debug)")] = False,
     only_one_session: Annotated[bool, typer.Option(help="run one session only")] = True,
     use_saber_encoder: Annotated[bool, typer.Option(help="replace MHGCN encoder with Saber's FeatureExtractor")] = False,
-    direct_cache: Annotated[str | None, typer.Option(help="load dataset directly from this .pkl file (bypasses load_data)")] = None,
-    use_orig_loader: Annotated[bool, typer.Option(help="use main_PCL.prepare_data + create_data_loaders (raw .mat path)")] = False,
     level: Annotated[cli_enum.LevelName, typer.Option("-l", help="log level")] = cli_enum.LevelName.INFO,
 ):
     """PCL-TDGCN subject-independent training entry point."""
@@ -76,29 +68,13 @@ def main(
         + f'\nlearning rate: {lr}\nearly stop patience: {early_stop_patience}'
     )
 
-    if use_orig_loader:
-        # Original data path: read raw .mat per subject, band-major (N,310), per-subject MinMax in float32.
-        # Skips cache/load_data/normalization_wrt_subject entirely.
-        num_subjects = 15
-        num_electrodes = 62
-        num_features = 5
-        num_classes = 3
-        num_sessions = 1 if only_one_session or only_one_experiment else 3
-        labels = [None] * num_sessions  # placeholder; original loader produces labels per call
-        data = None
-    elif direct_cache is not None:
-        with open(direct_cache, "rb") as f:
-            data, labels, num_subjects, num_electrodes, num_features, num_classes = pickle.load(f)["result"]
-        normalization_wrt_subject(data, band_major=True)
-        num_sessions = len(labels)
-    else:
-        data, labels, num_subjects, num_electrodes, num_features, num_classes = load_data(
-            dataset_name=dataset,
-            dataset_path=dataset_path,
-            cache_dir=cache_dir,
-        )
-        normalization_wrt_subject(data, band_major=True)
-        num_sessions = len(labels)
+    data, labels, num_subjects, num_electrodes, num_features, num_classes = load_data(
+        dataset_name=dataset,
+        dataset_path=dataset_path,
+        cache_dir=cache_dir,
+    )
+    normalization_wrt_subject(data, band_major=True)
+    num_sessions = len(labels)
 
     metric = Metric(num_subjects, num_sessions)
 
@@ -106,37 +82,17 @@ def main(
         for subject_id in range(num_subjects):
             _set_seed_pcl(seed)
 
-            if use_orig_loader:
-                args_ns = argparse.Namespace(
-                    dataset="seed3",
-                    session=session_id,
-                    batch_size=batch_size,
-                    device=device,
-                )
-                target_set, source_set = _orig_prepare_data(args_ns, subject_id)
-                data_loaders, source_num, target_num = _orig_create_data_loaders(
-                    source_set, target_set, args_ns
-                )
-                # Pull underlying numpy arrays out of the TensorDatasets so we can
-                # feed training_pcl.train (which builds its own loaders).
-                src_ds = data_loaders["source_loader"].dataset
-                tgt_ds = data_loaders["target_loader"].dataset
-                train_data = src_ds.tensors[0].numpy()
-                train_labels = src_ds.tensors[2].numpy().reshape(-1)
-                test_data = tgt_ds.tensors[0].numpy()
-                test_labels = tgt_ds.tensors[2].numpy().reshape(-1)
-            else:
-                train_data, train_labels, test_data, test_labels = merge_and_split(
-                    data, labels,
-                    task_type=cli_enum.TaskTypeName.SUBJECT_INDEPENDENT,
-                    session_id=session_id,
-                    subject_id=subject_id,
-                    split_ratio=0.6,
-                    data_random=False,
-                )
-                # (N, 62, 5) → (N, 5, 62) → (N, 310) band-major (already normalized per subject)
-                train_data = rearrange(train_data, "s c f -> s f c").reshape(-1, 310).astype("float32")
-                test_data = rearrange(test_data, "s c f -> s f c").reshape(-1, 310).astype("float32")
+            train_data, train_labels, test_data, test_labels = merge_and_split(
+                data, labels,
+                task_type=cli_enum.TaskTypeName.SUBJECT_INDEPENDENT,
+                session_id=session_id,
+                subject_id=subject_id,
+                split_ratio=0.6,
+                data_random=False,
+            )
+            # (N, 62, 5) → (N, 5, 62) → (N, 310) band-major (already normalized per subject)
+            train_data = rearrange(train_data, "s c f -> s f c").reshape(-1, 310).astype("float32")
+            test_data = rearrange(test_data, "s c f -> s f c").reshape(-1, 310).astype("float32")
 
             source_num = train_data.shape[0]
             target_num = test_data.shape[0]
