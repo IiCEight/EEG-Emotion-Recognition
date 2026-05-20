@@ -181,7 +181,7 @@ def train(
             else:
                 patience_counter += 1
 
-            if epoch % (eval_interval * 50) == 0 :
+            if epoch % eval_interval == 0:
                 logger.info(
                     "Epoch {}/{} subj {} sess {} | acc={:.4f} best={:.4f}",
                     epoch, epochs, subject_id, session_id, accuracy, best_acc,
