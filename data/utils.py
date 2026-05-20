@@ -272,6 +272,9 @@ def normalize_one_subject(data, type: str = 'min_max', band_major: bool = False)
         else:
             flat_2d = flat_np.reshape(N, E * F)
 
+        # Cast to float32 BEFORE fit to match utils_PCL.get_data_label_frommat byte-for-byte.
+        # Fitting on float64 then downcasting drifts at the LSB and propagates into KMeans.
+        flat_2d = flat_2d.astype(np.float32)
         scaler = preprocessing.MinMaxScaler(feature_range=(-1, 1))
         flat_2d = scaler.fit_transform(flat_2d).astype(np.float32)
 
