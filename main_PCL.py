@@ -24,6 +24,24 @@ import utils.utils_PCL
 from utils.utils_PCL import create_logger
 
 
+def _dbg_tstat(name: str, t: torch.Tensor) -> str:
+    t = t.detach().float().cpu()
+    return (f"{name}: shape={tuple(t.shape)} sum={t.sum().item():.6f} "
+            f"norm={t.norm().item():.6f} mean={t.mean().item():.6f} std={t.std().item():.6f}")
+
+
+def _dbg_params(name: str, module: nn.Module) -> str:
+    s = 0.0
+    n = 0.0
+    cnt = 0
+    for p in module.parameters():
+        pf = p.detach().float().cpu()
+        s += pf.sum().item()
+        n += pf.pow(2).sum().item()
+        cnt += pf.numel()
+    return f"{name}_params: count={cnt} sum={s:.6f} norm={n**0.5:.6f}"
+
+
 def set_seed(seed: int = 20) -> None:
     """Set random seed for reproducibility across all random number generators."""
     torch.manual_seed(seed)
@@ -311,6 +329,17 @@ def train_epoch(model: nn.Module, domain_discriminator: nn.Module,
             tar_idx.to(args.device)
         )
 
+        # === DBG[C] per-batch (first 3 of each epoch) ===
+        if batch_idx < 3:
+            print(f"[DBG-C] ep={epoch} b={batch_idx} "
+                  f"src_idx[:8]={src_idx[:8].cpu().tolist()} "
+                  f"tar_idx[:8]={tar_idx[:8].cpu().tolist()} "
+                  f"src_label[:8]={src_label[:8].cpu().tolist()}")
+            print(f"[DBG-C] ep={epoch} b={batch_idx} "
+                  f"{_dbg_tstat('src_feat', src_data)}")
+            print(f"[DBG-C] ep={epoch} b={batch_idx} "
+                  f"{_dbg_tstat('tar_feat', tar_data)}")
+
         # Forward pass
         (src_output_cls, src_feature, tar_output_cls, tar_feature,
          source_att, target_att, src_sim, tgt_sim, tgt_cluster_label,
@@ -448,10 +477,22 @@ def main(test_id: int, args: argparse.Namespace) -> Tuple[float, List, List, np.
         max_iter=args.epochs
     )
 
+    # === DBG[A] post-init ===
+    print(f"[DBG-A] subj={test_id} sess={args.session} src_n={source_sample_num} tgt_n={target_sample_num}")
+    print(f"[DBG-A] {_dbg_params('model', model)}")
+    print(f"[DBG-A] {_dbg_params('disc', domain_discriminator)}")
+    print(f"[DBG-A] {_dbg_tstat('MHGCN.A', model.encoder.MHGCN.A)}")
+
     # Initialize feature memory banks
     model.eval()
     initialize_source_banks(data_loaders["source_loader"], model, args)
     initialize_target_banks(data_loaders["target_loader"], model, args)
+
+    # === DBG[B] post-bank-init ===
+    print(f"[DBG-B] {_dbg_tstat('source_f_bank', model.source_f_bank)}")
+    print(f"[DBG-B] {_dbg_tstat('target_f_bank', model.target_f_bank)}")
+    print(f"[DBG-B] {_dbg_tstat('source_score_bank', model.source_score_bank)}")
+    print(f"[DBG-B] {_dbg_tstat('target_score_bank', model.target_score_bank)}")
 
     # Training parameters
     best_acc = 0.0
@@ -509,6 +550,17 @@ def main(test_id: int, args: argparse.Namespace) -> Tuple[float, List, List, np.
 
         # for loss_name, loss_value in loss_dict.items():
             # writer.add_scalar(f"train/{loss_name}", loss_value, epoch)
+
+        # === DBG[D] end-of-epoch (only first 30 epochs to keep logs small) ===
+        if epoch < 30:
+            print(f"[DBG-D] ep={epoch} {_dbg_params('model', model)}")
+            print(f"[DBG-D] ep={epoch} {_dbg_params('disc', domain_discriminator)}")
+            print(f"[DBG-D] ep={epoch} {_dbg_tstat('source_f_bank', model.source_f_bank)}")
+            print(f"[DBG-D] ep={epoch} {_dbg_tstat('target_f_bank', model.target_f_bank)}")
+            print(f"[DBG-D] ep={epoch} {_dbg_tstat('source_score_bank', model.source_score_bank)}")
+            print(f"[DBG-D] ep={epoch} {_dbg_tstat('target_score_bank', model.target_score_bank)}")
+            print(f"[DBG-D] ep={epoch} lr={optimizer.param_groups[0]['lr']:.6e} "
+                  f"iter_num={lr_scheduler.iter_num}")
 
         # Learning rate adjustment
         lr_scheduler.step()

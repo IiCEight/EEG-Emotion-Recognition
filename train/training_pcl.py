@@ -11,6 +11,24 @@ from model.PCL_TDGCN import Discriminator, PCL
 from utils.metric import Metric
 
 
+def _dbg_tstat(name: str, t: torch.Tensor) -> str:
+    t = t.detach().float().cpu()
+    return (f"{name}: shape={tuple(t.shape)} sum={t.sum().item():.6f} "
+            f"norm={t.norm().item():.6f} mean={t.mean().item():.6f} std={t.std().item():.6f}")
+
+
+def _dbg_params(name: str, module: torch.nn.Module) -> str:
+    s = 0.0
+    n = 0.0
+    cnt = 0
+    for p in module.parameters():
+        pf = p.detach().float().cpu()
+        s += pf.sum().item()
+        n += pf.pow(2).sum().item()
+        cnt += pf.numel()
+    return f"{name}_params: count={cnt} sum={s:.6f} norm={n**0.5:.6f}"
+
+
 class _LabelSmoothingCE(torch.nn.Module):
     def __init__(self, classes: int, epsilon: float = 0.0005):
         super().__init__()
@@ -99,6 +117,12 @@ def train(
     lr_scheduler = _StepwiseLR(optimizer, init_lr=learning_rate,
                                 gamma=10, decay_rate=0.75, max_iter=epochs)
 
+    # === DBG[A] post-init ===
+    print(f"[DBG-A] subj={subject_id} sess={session_id} src_n={source_num} tgt_n={target_num}")
+    print(f"[DBG-A] {_dbg_params('model', model)}")
+    print(f"[DBG-A] {_dbg_params('disc', discriminator)}")
+    print(f"[DBG-A] {_dbg_tstat('MHGCN.A', model.encoder.MHGCN.A)}")
+
     # --- Initialize memory banks ---
     model.eval()
     with torch.no_grad():
@@ -106,6 +130,12 @@ def train(
             model.get_init_banks(src_feat.to(device), src_idx.to(device))
         for tgt_feat, tgt_idx, _ in target_loader:
             model.get_init_banks_tgt(tgt_feat.to(device), tgt_idx.to(device))
+
+    # === DBG[B] post-bank-init ===
+    print(f"[DBG-B] {_dbg_tstat('source_f_bank', model.source_f_bank)}")
+    print(f"[DBG-B] {_dbg_tstat('target_f_bank', model.target_f_bank)}")
+    print(f"[DBG-B] {_dbg_tstat('source_score_bank', model.source_score_bank)}")
+    print(f"[DBG-B] {_dbg_tstat('target_score_bank', model.target_score_bank)}")
 
     best_acc = 0.0
     patience_counter = 0
@@ -168,6 +198,17 @@ def train(
             src_label = src_label.to(device).view(-1)
             tar_feat = tar_feat.to(device)
             tar_idx = tar_idx.to(device)
+
+            # === DBG[C] per-batch (first 3 of each epoch) ===
+            if batch_idx < 3:
+                print(f"[DBG-C] ep={epoch} b={batch_idx} "
+                      f"src_idx[:8]={src_idx[:8].cpu().tolist()} "
+                      f"tar_idx[:8]={tar_idx[:8].cpu().tolist()} "
+                      f"src_label[:8]={src_label[:8].cpu().tolist()}")
+                print(f"[DBG-C] ep={epoch} b={batch_idx} "
+                      f"{_dbg_tstat('src_feat', src_feat)}")
+                print(f"[DBG-C] ep={epoch} b={batch_idx} "
+                      f"{_dbg_tstat('tar_feat', tar_feat)}")
 
             (src_out, src_f, tar_out, tar_f,
              _src_att, _tar_att,
@@ -233,5 +274,16 @@ def train(
                 total_source_loss,
                 total_target_loss
             )
+
+        # === DBG[D] end-of-epoch (only first 30 epochs to keep logs small) ===
+        if epoch < 30:
+            print(f"[DBG-D] ep={epoch} {_dbg_params('model', model)}")
+            print(f"[DBG-D] ep={epoch} {_dbg_params('disc', discriminator)}")
+            print(f"[DBG-D] ep={epoch} {_dbg_tstat('source_f_bank', model.source_f_bank)}")
+            print(f"[DBG-D] ep={epoch} {_dbg_tstat('target_f_bank', model.target_f_bank)}")
+            print(f"[DBG-D] ep={epoch} {_dbg_tstat('source_score_bank', model.source_score_bank)}")
+            print(f"[DBG-D] ep={epoch} {_dbg_tstat('target_score_bank', model.target_score_bank)}")
+            print(f"[DBG-D] ep={epoch} lr={optimizer.param_groups[0]['lr']:.6e} "
+                  f"iter_num={lr_scheduler.iter_num}")
 
         lr_scheduler.step()
