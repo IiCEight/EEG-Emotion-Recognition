@@ -25,7 +25,7 @@ class _LabelSmoothingCE(torch.nn.Module):
 
 
 class _StepwiseLR:
-    def __init__(self, optimizer, init_lr: float, gamma: float = 10.0,
+    def __init__(self, optimizer, init_lr: float, gamma: float = 0.001,
                  decay_rate: float = 0.75, max_iter: int = 1000):
         self.optimizer = optimizer
         self.init_lr = init_lr
@@ -97,7 +97,7 @@ def train(
         weight_decay=weight_decay,
     )
     lr_scheduler = _StepwiseLR(optimizer, init_lr=learning_rate,
-                                gamma=10, decay_rate=0.75, max_iter=epochs)
+                                gamma=0.001, decay_rate=0.75, max_iter=epochs)
 
     # --- Initialize memory banks ---
     model.eval()
