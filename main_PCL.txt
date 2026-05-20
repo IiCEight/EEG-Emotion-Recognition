@@ -1,0 +1,64 @@
+Training Configuration: Namespace(dataset='seed3', session=0, cls=3, in_planes=[5, 62], layers=2, hidden_1=256, hidden_2=64, k=0.9, batch_size=32, epochs=1000, lr=0.001, weight_decay=0.001, seed=200, device=device(type='cuda', index=0), output_log_dir='./train_log', output_model_dir='./model')
+Starting cross-subject domain adaptation training
+Training for target subject 0
+Source subjects: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], Target subject: 0
+number of source samples 47516
+number of target samples 3394
+Starting training for target subject 0
+Saved best model to ./model/seed3/independent_re/0/CrossSub_no_nsal_0.pth
+Epoch 0: Test Accuracy=0.3645, Best Accuracy=0.3645
+Training Loss: Total=271.3497, cls_loss=40.8126, Source=70.3301, Target=89.3358Global Transfer=69.0714, Cross-Domain=227.6444, In-Domain=228.0336
+Saved best model to ./model/seed3/independent_re/0/CrossSub_no_nsal_0.pth
+Epoch 1: Test Accuracy=0.7454, Best Accuracy=0.7454
+Training Loss: Total=234.3208, cls_loss=11.3903, Source=62.1047, Target=83.5214Global Transfer=70.3117, Cross-Domain=225.7660, In-Domain=226.3869
+Saved best model to ./model/seed3/independent_re/0/CrossSub_no_nsal_0.pth
+Epoch 2: Test Accuracy=0.7781, Best Accuracy=0.7781
+Training Loss: Total=227.3482, cls_loss=4.5661, Source=60.0052, Target=81.2863Global Transfer=72.5170, Cross-Domain=225.0318, In-Domain=225.4549
+Epoch 3: Test Accuracy=0.7746, Best Accuracy=0.7781
+Training Loss: Total=224.9648, cls_loss=2.0842, Source=59.1699, Target=76.9461Global Transfer=73.9384, Cross-Domain=223.7241, In-Domain=223.9838
+Saved best model to ./model/seed3/independent_re/0/CrossSub_no_nsal_0.pth
+Epoch 4: Test Accuracy=0.8273, Best Accuracy=0.8273
+Training Loss: Total=222.5683, cls_loss=1.4763, Source=58.9153, Target=70.5705Global Transfer=73.1865, Cross-Domain=221.8362, In-Domain=221.7031
+Saved best model to ./model/seed3/independent_re/0/CrossSub_no_nsal_0.pth
+Epoch 5: Test Accuracy=0.9602, Best Accuracy=0.9602
+Training Loss: Total=224.4934, cls_loss=3.1191, Source=59.3295, Target=69.5406Global Transfer=73.4201, Cross-Domain=220.6449, In-Domain=220.7402
+Epoch 6: Test Accuracy=0.8930, Best Accuracy=0.9602
+Training Loss: Total=221.9685, cls_loss=1.4389, Source=58.8545, Target=65.1969Global Transfer=73.6089, Cross-Domain=219.3746, In-Domain=219.0003
+Epoch 7: Test Accuracy=0.9240, Best Accuracy=0.9602
+Training Loss: Total=220.9046, cls_loss=1.0702, Source=58.7321, Target=62.3661Global Transfer=73.5776, Cross-Domain=217.9230, In-Domain=217.5172
+Saved best model to ./model/seed3/independent_re/0/CrossSub_no_nsal_0.pth
+Epoch 8: Test Accuracy=0.9705, Best Accuracy=0.9705
+Training Loss: Total=222.5309, cls_loss=2.8312, Source=59.0531, Target=62.3808Global Transfer=73.3536, Cross-Domain=217.0334, In-Domain=216.9362
+Epoch 9: Test Accuracy=0.9699, Best Accuracy=0.9705
+Training Loss: Total=220.3803, cls_loss=1.2159, Source=58.7261, Target=60.5675Global Transfer=73.5515, Cross-Domain=215.9957, In-Domain=215.7129
+Saved best model to ./model/seed3/independent_re/0/CrossSub_no_nsal_0.pth
+Epoch 10: Test Accuracy=0.9850, Best Accuracy=0.9850
+Training Loss: Total=221.8547, cls_loss=2.5159, Source=59.1567, Target=60.4083Global Transfer=73.4539, Cross-Domain=215.4325, In-Domain=215.1881
+Epoch 11: Test Accuracy=0.9688, Best Accuracy=0.9850
+Training Loss: Total=219.3623, cls_loss=0.7911, Source=58.5939, Target=59.3963Global Transfer=73.5596, Cross-Domain=214.5515, In-Domain=214.2703
+Epoch 12: Test Accuracy=0.9770, Best Accuracy=0.9850
+Training Loss: Total=221.4182, cls_loss=2.3599, Source=59.0209, Target=60.4896Global Transfer=73.5661, Cross-Domain=214.4086, In-Domain=214.3184
+Epoch 13: Test Accuracy=0.9620, Best Accuracy=0.9850
+Traceback (most recent call last):
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/main_PCL.py", line 584, in <module>
+    best_acc, source_att, target_att, conf_matrix = main(test_id, args)
+                                                    ^^^^^^^^^^^^^^^^^^^
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/main_PCL.py", line 501, in main
+    train_loss, train_acc, loss_dict = train_epoch(
+                                       ^^^^^^^^^^^^
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/main_PCL.py", line 317, in train_epoch
+    s2t_pro, t2s_pro, s2s_pro, t2t_pro) = model(
+                                          ^^^^^^
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/model/PCL_TDGCN.py", line 537, in forward
+    src_sim, src_prototype = self._get_source_similar(source_f,
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/model/PCL_TDGCN.py", line 585, in _get_source_similar
+    prototype = source_feature.mean(dim=0)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

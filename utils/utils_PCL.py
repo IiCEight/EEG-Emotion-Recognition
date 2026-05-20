@@ -15,14 +15,7 @@ import time
 
 # dataset_path = {'seed4': '/home/ubuntu-user/Desktop/seed iv', 'seed3': '/home/ubuntu-user/Desktop/seed', 'deafseed3':'/home/ubuntu-user/Desktop/deaf'}
 # dataset_path = {'seed4': 'G:\Database\seed_iv\eeg_feature_smooth', 'seed3': 'G:\Database\seed', 'deafseed3':'G:\Database\deaf'}
-import os
-dataset_root = os.path.join(os.path.dirname(__file__), '..', '..', 'data', 'SEED')
-dataset_path = {
-    'seed': os.path.join(dataset_root, 'ExtractedFeatures'),
-    'seed3': os.path.join(dataset_root, 'ExtractedFeatures'),
-    'seed4': os.path.join(dataset_root, 'SEED_IV'),
-    'deafseed3': os.path.join(dataset_root, 'deafseed'),
-}
+dataset_path = {'seed4': '/home/user_yy/Dataset/seed_iv', 'seed3': '../data/SEED/ExtractedFeatures','deafseed3':'/home/user_yy/Dataset/deafseed'}
 
 
 def norminx(data):
@@ -184,7 +177,7 @@ def get_number_of_label_n_trial(dataset_name):
     label_seed3 = [[2, 1, 0, 0, 1, 2, 0, 1, 2, 2, 1, 0, 1, 2, 0],
                    [2, 1, 0, 0, 1, 2, 0, 1, 2, 2, 1, 0, 1, 2, 0],
                    [2, 1, 0, 0, 1, 2, 0, 1, 2, 2, 1, 0, 1, 2, 0]]
-    if dataset_name in ('seed3', 'seed'):
+    if dataset_name == 'seed3':
         label = 3
         trial = 15
         return trial, label, label_seed3
@@ -247,7 +240,7 @@ def get_data_label_frommat(mat_path, dataset_name, session_id):
     # we will have a preprocessing here
     one_sub_data = one_sub_data.astype(np.float32)
     one_sub_label = one_sub_label.astype(np.int64)
-    # one_sub_data = norminy(one_sub_data).astype(np.float32)
+    # one_sub_data = norminy(one_sub_data)
     min_max_scaler = preprocessing.MinMaxScaler(feature_range=(-1, 1))
     one_sub_data = min_max_scaler.fit_transform(one_sub_data).astype(np.float32)
     return one_sub_data, one_sub_label
@@ -282,7 +275,17 @@ def get_allmats_name(dataset_name):
         allmats: list (3*15)
     '''
     path = dataset_path[dataset_name]
-    sessions = sorted([d for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))])
+    # Only directory is considered since my structure of SEED dataset is
+    # SEED/
+    # ├── ExtractedFeatures
+    # │   ├── 1 (session 1 folder)
+    # │   ├── 2 (session 2 folder)
+    # │   ├── 3 (session 3 folder)
+    # │   ├── label.mat
+    # │   └── readme.txt
+    # └── Preprocessed_EEG
+    sessions = [d for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]
+    sessions.sort()
     allmats = []
     if dataset_name == 'seed4':
         for session in sessions:
@@ -302,9 +305,10 @@ def get_allmats_name(dataset_name):
                 for mat in mats:
                     mats_list.append(mat)
                 allmats.append(mats_list)
-    elif dataset_name in ('seed3', 'seed'):
+    elif dataset_name == 'seed3':
         for session in sessions:
-            mats = sorted([f for f in os.listdir(path + '/' + session) if f[0].isdigit() and f.endswith('.mat')])
+            mats = os.listdir(path + '/' + session)
+            mats.sort()
             mats = mats[6:] + mats[:6]
             mats_list = []
             for mat in mats:
@@ -321,7 +325,7 @@ def load_data(dataset_name):
         data: list 3(sessions) * 15(subjects), each data is x * 310
         label: list 3*15, x*1
     '''
-    if dataset_name in ['seed', 'seed3', 'seed4']:
+    if dataset_name in ['seed3', 'seed4']:
         path, allmats = get_allmats_name(dataset_name)
         data = [([0] * 15) for i in range(3)]
         label = [([0] * 15) for i in range(3)]

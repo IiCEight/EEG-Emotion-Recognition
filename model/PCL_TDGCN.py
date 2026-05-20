@@ -636,14 +636,8 @@ class PCL(nn.Module):
         output_f = output[top_indices]
 
         # K-means聚类
-        pool = output_f.cpu().detach().numpy()
-        pool = np.unique(pool, axis=0)  # remove exact duplicates
-        if len(pool) < self.num_of_class:
-            rng = np.random.default_rng(0)
-            while len(pool) < self.num_of_class:
-                pool = np.vstack([pool, pool[rng.integers(len(pool))] + rng.standard_normal(pool.shape[1]) * 1e-4])
-        kmeans = KMeans(n_clusters=self.num_of_class, random_state=0, n_init="auto")
-        kmeans.fit(pool)
+        kmeans = KMeans(n_clusters=self.num_of_class, random_state=0)
+        kmeans.fit(output_f.cpu().detach().numpy())
         prototype = torch.tensor(kmeans.cluster_centers_, device=self.device)
 
         # 计算相似性

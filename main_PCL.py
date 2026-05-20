@@ -375,16 +375,16 @@ def train_epoch(model: nn.Module, domain_discriminator: nn.Module,
         total_loss += loss.item()
 
         # Record detailed losses (first batch only)
-        if batch_idx == 0:
-            loss_dict = {
-                'cls_loss': cls_loss.item(),
-                'source_loss': source_loss.item(),
-                'target_loss': target_loss.item(),
-                'global_transfer_loss': global_transfer_loss.item(),
-                'cross_domain_loss': cross_domain_loss.item(),
-                'in_domain_loss': in_domain_loss.item(),
-                'total_loss': loss.item()
-            }
+
+        loss_dict = {
+            'cls_loss': loss_dict.get('cls_loss', 0.0) + cls_loss.item(),
+            'source_loss': loss_dict.get('source_loss', 0.0) + source_loss.item(),
+            'target_loss': loss_dict.get('target_loss', 0.0) + target_loss.item(),
+            'global_transfer_loss': loss_dict.get('global_transfer_loss', 0.0) + global_transfer_loss.item(),
+            'cross_domain_loss': loss_dict.get('cross_domain_loss', 0.0) + cross_domain_loss.item(),
+            'in_domain_loss': loss_dict.get('in_domain_loss', 0.0) + in_domain_loss.item(),
+            'total_loss': loss_dict.get('total_loss', 0.0) + loss.item()
+        }
 
     avg_loss = total_loss / num_batches
     accuracy = total_correct / total_samples
@@ -513,12 +513,17 @@ def main(test_id: int, args: argparse.Namespace) -> Tuple[float, List, List, np.
         # Learning rate adjustment
         lr_scheduler.step()
 
+
         # Print training progress
         if epoch % eval_interval == 0 and loss_dict:
             logger.info(f"Training Loss: Total={loss_dict['total_loss']:.4f}, "
-                        f"Classification={loss_dict['cls_loss']:.4f}, "
+                        f"cls_loss={loss_dict['cls_loss']:.4f}, "
                         f"Source={loss_dict['source_loss']:.4f}, "
-                        f"Target={loss_dict['target_loss']:.4f}")
+                        f"Target={loss_dict['target_loss']:.4f}"
+                        f"Global Transfer={loss_dict['global_transfer_loss']:.4f}, "
+                        f"Cross-Domain={loss_dict['cross_domain_loss']:.4f}, "
+                        f"In-Domain={loss_dict['in_domain_loss']:.4f}"
+                        )
 
     # Final evaluation
     test_loss, final_acc, final_conf_matrix = test(data_loaders["test_loader"], model, criterion, args)
@@ -532,7 +537,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Transfer Learning')
 
     # Data parameters
-    parser.add_argument('--dataset', type=str, nargs='?', default='seed', help='select the dataset')
+    parser.add_argument('--dataset', type=str, nargs='?', default='seed3', help='select the dataset')
     parser.add_argument('--session', type=int, nargs='?', default='0', help='select the session')
     parser.add_argument('--cls', type=int, nargs='?', default=3, help="emotion classification")
     parser.add_argument('--in_planes', type=int, nargs='?', default=[5, 62], help="the size of input plane")
@@ -541,7 +546,7 @@ if __name__ == "__main__":
     parser.add_argument('--hidden_2', type=int, nargs='?', default=64, help="the size of hidden 2")
     parser.add_argument('--k', type=int, nargs='?', default=0.9, help="the size of k")
 
-    parser.add_argument('--batch_size', type=int, nargs='?', default='48', help="batch_size")
+    parser.add_argument('--batch_size', type=int, nargs='?', default='32', help="batch_size")
     parser.add_argument('--epochs', type=int, nargs='?', default='1000', help="epochs")
     parser.add_argument('--lr', type=float, nargs='?', default='0.001', help="learning rate")
     parser.add_argument('--weight_decay', type=float, nargs='?', default='0.001', help="weight decay")

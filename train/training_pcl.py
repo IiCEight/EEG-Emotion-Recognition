@@ -154,6 +154,11 @@ def train(
         tar_iter = iter(target_loader)
 
         total_loss_sum = 0.0
+        total_cls_loss = 0.0
+        total_transfer_loss = 0.0
+        total_source_loss = 0.0
+        total_target_loss = 0.0
+        total_domain_loss = 0.0
         for batch_idx in range(num_batches):
             src_feat, src_idx, src_label = next(src_iter)
             tar_feat, tar_idx, _ = next(tar_iter)
@@ -211,11 +216,22 @@ def train(
             optimizer.step()
 
             total_loss_sum += loss.item()
+            total_cls_loss += cls_loss.item()
+            total_transfer_loss += global_transfer_loss.item()
+            total_source_loss += source_loss.item()
+            total_target_loss += target_loss.item()
+            total_domain_loss += cross_domain_loss.item() + in_domain_loss.item()
 
-        if epoch % (eval_interval * 50) == 0:
+        if epoch % (eval_interval) == 0:
             logger.info(
-                "Epoch {}/{} | avg_loss={:.4f}",
-                epoch, epochs, total_loss_sum / max(num_batches, 1),
+                "Epoch {}/{} | total_loss_sum={:.4f} | total_cls_loss={:.4f} | "
+                "total_transfer_loss={:.4f}| total_domain_loss={:.4f} | total_source_loss={:.4f} | total_target_loss={:.4f}",
+                epoch, epochs, total_loss_sum,
+                total_cls_loss ,
+                total_transfer_loss ,
+                total_domain_loss,
+                total_source_loss,
+                total_target_loss
             )
 
         lr_scheduler.step()
