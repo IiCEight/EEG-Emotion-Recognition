@@ -5,12 +5,11 @@ import torch
 import typer
 from einops import rearrange
 from loguru import logger
-from sklearn.preprocessing import MinMaxScaler
 
 import constant.CLI_arguments_enum as cli_enum
 from config.logging import setUpLogger
 from data.dataloder import load_data
-from data.utils import merge_and_split
+from data.utils import merge_and_split, normalization_wrt_subject
 from model.PCL_TDGCN import PCL
 from model.PCL_SABER import PCL_SABER
 from train import training_pcl
@@ -30,7 +29,7 @@ def main(
     epochs: Annotated[int, typer.Option(help="epochs")] = 1000,
     lr: Annotated[float, typer.Option(help="learning rate")] = 0.001,
     weight_decay: Annotated[float, typer.Option(help="weight decay")] = 0.001,
-    seed: Annotated[int, typer.Option(help="random seed")] = 42,
+    seed: Annotated[int, typer.Option(help="random seed")] = 200,
     eval_interval: Annotated[int, typer.Option(help="evaluate every N epochs")] = 1,
     early_stop_patience: Annotated[int, typer.Option(help="early stop patience (0=disabled)")] = 1000,
     layers: Annotated[int, typer.Option(help="MHGCN layers")] = 2,
@@ -66,6 +65,8 @@ def main(
             cache_dir=cache_dir,
         )
 
+    normalization_wrt_subject(data, band_major=True)
+
     num_sessions = len(labels)
     metric = Metric(num_subjects, num_sessions)
 
@@ -82,15 +83,9 @@ def main(
                 data_random=False,
             )
 
-            # (N, 62, 5) → (N, 5, 62) → (N, 310) band-major
-            train_data = rearrange(train_data, "s c f -> s f c").reshape(-1, 310)
-            test_data = rearrange(test_data, "s c f -> s f c").reshape(-1, 310)
-
-            # Normalize per subject per feature column — matches original utils_PCL normalization
-            src_scaler = MinMaxScaler(feature_range=(-1, 1))
-            train_data = src_scaler.fit_transform(train_data).astype("float32")
-            tgt_scaler = MinMaxScaler(feature_range=(-1, 1))
-            test_data = tgt_scaler.fit_transform(test_data).astype("float32")
+            # (N, 62, 5) → (N, 5, 62) → (N, 310) band-major (already normalized per subject)
+            train_data = rearrange(train_data, "s c f -> s f c").reshape(-1, 310).astype("float32")
+            test_data = rearrange(test_data, "s c f -> s f c").reshape(-1, 310).astype("float32")
 
             source_num = train_data.shape[0]
             target_num = test_data.shape[0]

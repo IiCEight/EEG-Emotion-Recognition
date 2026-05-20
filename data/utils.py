@@ -225,11 +225,13 @@ def normalization_wrt_trial(data:list, type = 'min_max'):
 
     return data
 
-def normalization_wrt_subject(data:list, type = 'min_max'):
+def normalization_wrt_subject(data: list, type: str = 'min_max', band_major: bool = False):
     '''
     param {type}: min_max, z_score
-    
-    NOTE: Differet sessions are separatly normalized.
+    param band_major: if True, flatten in band-major order (N,5,62) before normalizing,
+        matching utils_PCL.get_data_label_frommat. Default False keeps electrode-major (N,62,5).
+
+    NOTE: Different sessions are separately normalized.
 
     input:
         data: list shape (session, subject, trial, sample, electrode, feature)
@@ -241,44 +243,53 @@ def normalization_wrt_subject(data:list, type = 'min_max'):
 
     for session_id in range(len(data)):
         for subject_id in range(len(data[session_id])):
-                data[session_id][subject_id]= normalize_one_subject(
-                    data[session_id][subject_id], type)
+            data[session_id][subject_id] = normalize_one_subject(
+                data[session_id][subject_id], type, band_major=band_major)
 
     return data
 
 
 
-def normalize_one_subject(data, type='min_max'):
+def normalize_one_subject(data, type: str = 'min_max', band_major: bool = False):
     '''
     description: Normalizes a jagged EEG array of shape (trials, var_samples, 62, 5)
     param {type}: 'min_max', 'z_score'
+    param band_major: if True, transpose to (N,5,62) before flattening to (N,310),
+        so each column corresponds to one (band, electrode) pair — matches utils_PCL ordering.
     return: list
     '''
     data = ak.Array(data)
-    
-    # 1. Temporarily flatten the trials and samples together
-    # This turns (trials, var_samples, 62, 5) into (total_samples_in_session, 62, 5)
+
+    # Flatten (trials, var_samples, 62, 5) → (N, 62, 5)
     flat_data = ak.flatten(data, axis=1)
-    
+    flat_np = ak.to_numpy(flat_data)   # (N, 62, 5)
+    N, E, F = flat_np.shape
+
     if type == 'min_max':
-        # Convert to numpy, normalize, then restore jagged shape
-        flat_np = ak.to_numpy(flat_data)              # (N, 62, 5)
-        N, E, F = flat_np.shape
-        flat_2d = flat_np.reshape(N, E * F)
+        if band_major:
+            # (N, 62, 5) → (N, 5, 62) → (N, 310): each column = one (band, electrode) pair
+            flat_2d = flat_np.transpose(0, 2, 1).reshape(N, E * F)
+        else:
+            flat_2d = flat_np.reshape(N, E * F)
 
         scaler = preprocessing.MinMaxScaler(feature_range=(-1, 1))
         flat_2d = scaler.fit_transform(flat_2d).astype(np.float32)
 
-        flat_3d = flat_2d.reshape(N, E, F)
+        if band_major:
+            flat_3d = flat_2d.reshape(N, F, E).transpose(0, 2, 1)  # back to (N, 62, 5)
+        else:
+            flat_3d = flat_2d.reshape(N, E, F)
+
         ret = ak.unflatten(flat_3d, ak.num(data, axis=1), axis=0)
 
     elif type == 'z_score':
-        flat_np = ak.to_numpy(flat_data)              # (N, 62, 5)
-        x_mean = flat_np.mean(axis=0)                  # (62, 5)
-        x_std = flat_np.std(axis=0)                    # (62, 5)
-
-        flat_np = (flat_np - x_mean) / (x_std + 1e-8)
-        ret = ak.unflatten(flat_np, ak.num(data, axis=1), axis=0)
+        flat_np_work = flat_np.transpose(0, 2, 1) if band_major else flat_np
+        x_mean = flat_np_work.mean(axis=0)
+        x_std = flat_np_work.std(axis=0)
+        flat_np_work = (flat_np_work - x_mean) / (x_std + 1e-8)
+        if band_major:
+            flat_np_work = flat_np_work.transpose(0, 2, 1)  # back to (N, 62, 5)
+        ret = ak.unflatten(flat_np_work.astype(np.float32), ak.num(data, axis=1), axis=0)
 
     return ret.to_list()
 def normalize_one_trial(data, type = 'min_max'):
