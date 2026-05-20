@@ -456,8 +456,8 @@ def main(test_id: int, args: argparse.Namespace) -> Tuple[float, List, List, np.
     # Training parameters
     best_acc = 0.0
     patience_counter = 0
-    patience_limit = 40
-    eval_interval = 10
+    patience_limit = 1000
+    eval_interval = 1
 
     logger.info(f"Starting training for target subject {test_id}")
 
