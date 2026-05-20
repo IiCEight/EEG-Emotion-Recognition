@@ -121,7 +121,25 @@ def train(
     print(f"[DBG-A] subj={subject_id} sess={session_id} src_n={source_num} tgt_n={target_num}")
     print(f"[DBG-A] {_dbg_params('model', model)}")
     print(f"[DBG-A] {_dbg_params('disc', discriminator)}")
-    print(f"[DBG-A] {_dbg_tstat('GGCN.A', model.encoder.GGCN.A)}")                      
+    print(f"[DBG-A] {_dbg_tstat('GGCN.A', model.encoder.GGCN.A)}")
+
+    # === DBG[A2] dataset[0] byte-fingerprint (BEFORE any DataLoader iteration) ===
+    s0_feat, s0_idx, s0_lbl = source_dataset[0]
+    t0_feat, t0_idx, t0_lbl = target_dataset[0]
+    s0_bytes = s0_feat.detach().cpu().contiguous().view(torch.uint8)
+    t0_bytes = t0_feat.detach().cpu().contiguous().view(torch.uint8)
+    print(f"[DBG-A2] src_dataset[0] idx={s0_idx.item()} lbl={s0_lbl.item()} "
+          f"bytes_sum={s0_bytes.sum().item()} first16={s0_bytes.flatten()[:16].tolist()} "
+          f"feat[:8]={s0_feat[:8].tolist()}")
+    print(f"[DBG-A2] tar_dataset[0] idx={t0_idx.item()} lbl={t0_lbl.item()} "
+          f"bytes_sum={t0_bytes.sum().item()} first16={t0_bytes.flatten()[:16].tolist()} "
+          f"feat[:8]={t0_feat[:8].tolist()}")
+    s_last = source_dataset[source_num - 1]
+    t_last = target_dataset[target_num - 1]
+    print(f"[DBG-A2] src_dataset[-1] idx={s_last[1].item()} lbl={s_last[2].item()} "
+          f"feat[:8]={s_last[0][:8].tolist()}")
+    print(f"[DBG-A2] tar_dataset[-1] idx={t_last[1].item()} lbl={t_last[2].item()} "
+          f"feat[:8]={t_last[0][:8].tolist()}")                      
 
     # --- Initialize memory banks ---
     model.eval()
@@ -210,6 +228,24 @@ def train(
                 print(f"[DBG-C] ep={epoch} b={batch_idx} "
                       f"{_dbg_tstat('tar_feat', tar_feat)}")
 
+            # === DBG[E] gate the model only at ep=0 b=0 ===
+            if epoch == 0 and batch_idx == 0:
+                model._dbg = True
+                # byte-level fingerprint of the very first input batch
+                src_bytes = src_feat.detach().cpu().contiguous().view(torch.uint8)
+                tar_bytes = tar_feat.detach().cpu().contiguous().view(torch.uint8)
+                print(f"[DBG-E0] src_feat bytes_sum={src_bytes.sum().item()} "
+                      f"first16={src_bytes.flatten()[:16].tolist()}")
+                print(f"[DBG-E0] tar_feat bytes_sum={tar_bytes.sum().item()} "
+                      f"first16={tar_bytes.flatten()[:16].tolist()}")
+                print(f"[DBG-E0] src_feat[0,:8]={src_feat[0,:8].detach().cpu().tolist()}")
+                print(f"[DBG-E0] tar_feat[0,:8]={tar_feat[0,:8].detach().cpu().tolist()}")
+                print(f"[DBG-E0] src_label[:8]={src_label[:8].detach().cpu().tolist()}")
+                print(f"[DBG-E0] src_idx[:8]={src_idx[:8].detach().cpu().tolist()}")
+                print(f"[DBG-E0] tar_idx[:8]={tar_idx[:8].detach().cpu().tolist()}")
+            else:
+                model._dbg = False
+
             (src_out, src_f, tar_out, tar_f,
              _src_att, _tar_att,
              src_sim, tgt_sim, tgt_cluster_label,
@@ -247,6 +283,17 @@ def train(
             loss = (cls_loss + global_transfer_loss + source_loss
                     + boost_factor * target_loss
                     + 0.2 * (cross_domain_loss + in_domain_loss))
+
+            if epoch == 0 and batch_idx == 0:
+                print(f"[DBG-E0] cls_loss={cls_loss.item():.8f} "
+                      f"source_loss={source_loss.item():.8f} "
+                      f"target_loss={target_loss.item():.8f}")
+                print(f"[DBG-E0] global_transfer_loss={global_transfer_loss.item():.8f} "
+                      f"cross_domain_loss={cross_domain_loss.item():.8f} "
+                      f"in_domain_loss={in_domain_loss.item():.8f}")
+                print(f"[DBG-E0] boost_factor={boost_factor:.8f} total_loss={loss.item():.8f}")
+                print(f"[DBG-E0] src_prob_max_mean={src_prob.max(dim=1).values.mean().item():.6f} "
+                      f"mask_count={mask.sum().item()}")
 
             if torch.isnan(loss):
                 logger.warning("NaN loss at epoch {} batch {}, skipping.", epoch, batch_idx)

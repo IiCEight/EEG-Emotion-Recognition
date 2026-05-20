@@ -340,6 +340,23 @@ def train_epoch(model: nn.Module, domain_discriminator: nn.Module,
             print(f"[DBG-C] ep={epoch} b={batch_idx} "
                   f"{_dbg_tstat('tar_feat', tar_data)}")
 
+        # === DBG[E] gate the model only at ep=0 b=0 ===
+        if epoch == 0 and batch_idx == 0:
+            model._dbg = True
+            src_bytes = src_data.detach().cpu().contiguous().view(torch.uint8)
+            tar_bytes = tar_data.detach().cpu().contiguous().view(torch.uint8)
+            print(f"[DBG-E0] src_feat bytes_sum={src_bytes.sum().item()} "
+                  f"first16={src_bytes.flatten()[:16].tolist()}")
+            print(f"[DBG-E0] tar_feat bytes_sum={tar_bytes.sum().item()} "
+                  f"first16={tar_bytes.flatten()[:16].tolist()}")
+            print(f"[DBG-E0] src_feat[0,:8]={src_data[0,:8].detach().cpu().tolist()}")
+            print(f"[DBG-E0] tar_feat[0,:8]={tar_data[0,:8].detach().cpu().tolist()}")
+            print(f"[DBG-E0] src_label[:8]={src_label[:8].detach().cpu().tolist()}")
+            print(f"[DBG-E0] src_idx[:8]={src_idx[:8].detach().cpu().tolist()}")
+            print(f"[DBG-E0] tar_idx[:8]={tar_idx[:8].detach().cpu().tolist()}")
+        else:
+            model._dbg = False
+
         # Forward pass
         (src_output_cls, src_feature, tar_output_cls, tar_feature,
          source_att, target_att, src_sim, tgt_sim, tgt_cluster_label,
@@ -386,6 +403,17 @@ def train_epoch(model: nn.Module, domain_discriminator: nn.Module,
         # Total loss
         loss = (cls_loss + global_transfer_loss + source_loss +
                 boost_factor * target_loss + 0.2 * (cross_domain_loss + in_domain_loss))
+
+        if epoch == 0 and batch_idx == 0:
+            print(f"[DBG-E0] cls_loss={cls_loss.item():.8f} "
+                  f"source_loss={source_loss.item():.8f} "
+                  f"target_loss={target_loss.item():.8f}")
+            print(f"[DBG-E0] global_transfer_loss={global_transfer_loss.item():.8f} "
+                  f"cross_domain_loss={cross_domain_loss.item():.8f} "
+                  f"in_domain_loss={in_domain_loss.item():.8f}")
+            print(f"[DBG-E0] boost_factor={boost_factor:.8f} total_loss={loss.item():.8f}")
+            print(f"[DBG-E0] src_prob_max_mean={src_prob.max(dim=1).values.mean().item():.6f} "
+                  f"mask_count={mask.sum().item()}")
 
         # Check for NaN values
         if torch.isnan(loss).any():
@@ -481,7 +509,27 @@ def main(test_id: int, args: argparse.Namespace) -> Tuple[float, List, List, np.
     print(f"[DBG-A] subj={test_id} sess={args.session} src_n={source_sample_num} tgt_n={target_sample_num}")
     print(f"[DBG-A] {_dbg_params('model', model)}")
     print(f"[DBG-A] {_dbg_params('disc', domain_discriminator)}")
-    print(f"[DBG-A] {_dbg_tstat('GGCN.A', model.encoder.GGCN.A)}")                      
+    print(f"[DBG-A] {_dbg_tstat('GGCN.A', model.encoder.GGCN.A)}")
+
+    # === DBG[A2] dataset[0] byte-fingerprint (BEFORE any DataLoader iteration) ===
+    _src_ds = data_loaders["source_loader"].dataset
+    _tar_ds = data_loaders["target_loader"].dataset
+    s0_feat, s0_idx, s0_lbl = _src_ds[0]
+    t0_feat, t0_idx, t0_lbl = _tar_ds[0]
+    s0_bytes = s0_feat.detach().cpu().contiguous().view(torch.uint8)
+    t0_bytes = t0_feat.detach().cpu().contiguous().view(torch.uint8)
+    print(f"[DBG-A2] src_dataset[0] idx={s0_idx.item()} lbl={s0_lbl.item()} "
+          f"bytes_sum={s0_bytes.sum().item()} first16={s0_bytes.flatten()[:16].tolist()} "
+          f"feat[:8]={s0_feat[:8].tolist()}")
+    print(f"[DBG-A2] tar_dataset[0] idx={t0_idx.item()} lbl={t0_lbl.item()} "
+          f"bytes_sum={t0_bytes.sum().item()} first16={t0_bytes.flatten()[:16].tolist()} "
+          f"feat[:8]={t0_feat[:8].tolist()}")
+    s_last = _src_ds[source_sample_num - 1]
+    t_last = _tar_ds[target_sample_num - 1]
+    print(f"[DBG-A2] src_dataset[-1] idx={s_last[1].item()} lbl={s_last[2].item()} "
+          f"feat[:8]={s_last[0][:8].tolist()}")
+    print(f"[DBG-A2] tar_dataset[-1] idx={t_last[1].item()} lbl={t_last[2].item()} "
+          f"feat[:8]={t_last[0][:8].tolist()}")                      
     # Initialize feature memory banks
     model.eval()
     initialize_source_banks(data_loaders["source_loader"], model, args)
