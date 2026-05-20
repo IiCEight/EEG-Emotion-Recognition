@@ -1,4 +1,4 @@
-22:26:57 | INFO     __main__ main     48  Launching....
+22:42:45 | INFO     __main__ main     63  Launching....
 model_name: PCL
 dataset: SEED
 dataset_path: ../data/SEED
@@ -12,42 +12,78 @@ only one experiment: False
 only one session: True
 learning rate: 0.001
 early stop patience: 1000
-22:26:57 | INFO     data.dataloder load_data 64  Loading dataset SEED from path ../data/SEED
-22:26:58 | INFO     data.dataloder load_data 89  Dataset cache hit: cache/seed_73fe27d0a09dc03b42c0f4e3e65ed43f.pkl
-22:27:21 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
-22:27:21 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
-22:27:21 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
-22:27:21 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+22:42:45 | INFO     data.dataloder load_data 64  Loading dataset SEED from path ../data/SEED
+22:42:46 | INFO     data.dataloder load_data 89  Dataset cache hit: cache/seed_73fe27d0a09dc03b42c0f4e3e65ed43f.pkl
+22:43:11 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+22:43:12 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+22:43:12 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+22:43:12 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
 number of source samples 47516
 number of target samples 3394
 [DBG-A] subj=0 sess=0 src_n=47516 tgt_n=3394
-[DBG-A] model_params: count=189414 sum=-8.728315 norm=14.346090
+[DBG-A] model_params: count=189414 sum=-8.728317 norm=14.346090
 [DBG-A] disc_params: count=4225 sum=3.970165 norm=4.712274
 [DBG-A] GGCN.A: shape=(1, 3844) sum=1921.440430 norm=35.777954 mean=0.499854 std=0.288392
-[DBG-B] source_f_bank: shape=(47516, 64) sum=235728.062500 norm=217.976898 mean=0.077516 std=0.098063
-[DBG-B] target_f_bank: shape=(3394, 64) sum=15885.036133 norm=58.257996 mean=0.073130 std=0.101376
-[DBG-B] source_score_bank: shape=(47516, 3) sum=47516.000000 norm=126.961143 mean=0.333333 std=0.044358
-[DBG-B] target_score_bank: shape=(3394, 3) sum=3394.000000 norm=33.990955 mean=0.333333 std=0.048604
-22:27:38 | INFO     utils.metric update   25  --> A new better acc 0.3645 on subject 0 session 0
-22:27:38 | INFO     train.training_pcl train    167 Epoch 0/1000 subj 0 sess 0 | acc=0.3645 best=0.3645
+[DBG-A2] src_dataset[0] idx=0 lbl=2 bytes_sum=162591 first16=[248, 91, 241, 190, 154, 123, 175, 190, 71, 160, 165, 190, 86, 216, 96, 190] feat[:8]=[-0.4714047908782959, -0.34273988008499146, -0.3234884440898895, -0.21957525610923767, -0.27666786313056946, -0.08599552512168884, -0.4080243408679962, -0.05897180736064911]
+[DBG-A2] tar_dataset[0] idx=0 lbl=2 bytes_sum=151593 first16=[52, 248, 79, 63, 74, 25, 153, 62, 1, 125, 118, 63, 187, 183, 155, 189] feat[:8]=[0.8123810291290283, 0.29902106523513794, 0.9628449082374573, -0.07603403180837631, 0.3190246522426605, 0.35698437690734863, 0.95185786485672, -0.09603320062160492]
+[DBG-A2] src_dataset[-1] idx=47515 lbl=0 feat[:8]=[0.2381121665239334, 0.22095887362957, 0.3009842336177826, 0.042305950075387955, -0.4517613351345062, -0.40500378608703613, -0.3973557949066162, -0.5398143529891968]
+[DBG-A2] tar_dataset[-1] idx=3393 lbl=0 feat[:8]=[-0.5065219402313232, -0.31615492701530457, 0.03612419590353966, -0.16493633389472961, 0.08896081894636154, -0.2093680500984192, -0.41456595063209534, 0.2166622430086136]
+[DBG-B] source_f_bank: shape=(47516, 64) sum=235728.078125 norm=217.976898 mean=0.077516 std=0.098063
+[DBG-B] target_f_bank: shape=(3394, 64) sum=15885.033203 norm=58.257999 mean=0.073130 std=0.101376
+[DBG-B] source_score_bank: shape=(47516, 3) sum=47516.000000 norm=126.961151 mean=0.333333 std=0.044358
+[DBG-B] target_score_bank: shape=(3394, 3) sum=3394.000244 norm=33.990955 mean=0.333333 std=0.048604
+22:43:21 | INFO     utils.metric update   25  --> A new better acc 0.3645 on subject 0 session 0
+22:43:21 | INFO     train.training_pcl train    185 Epoch 0/1000 subj 0 sess 0 | acc=0.3645 best=0.3645
 [DBG-C] ep=0 b=0 src_idx[:8]=[4049, 26760, 13183, 3355, 24262, 44890, 32648, 23202] tar_idx[:8]=[237, 35, 1825, 588, 1055, 2543, 896, 550] src_label[:8]=[0, 2, 2, 0, 0, 0, 2, 1]
 [DBG-C] ep=0 b=0 src_feat: shape=(32, 310) sum=-1234.673828 norm=52.120461 mean=-0.124463 std=0.508311
 [DBG-C] ep=0 b=0 tar_feat: shape=(32, 310) sum=-1258.201782 norm=50.140858 mean=-0.126835 std=0.487211
+[DBG-E0] src_feat bytes_sum=4997047 first16=[163, 17, 160, 190, 220, 237, 193, 190, 66, 91, 79, 189, 165, 55, 180, 190]
+[DBG-E0] tar_feat bytes_sum=5030727 first16=[67, 84, 125, 191, 222, 98, 108, 191, 107, 161, 98, 191, 25, 163, 27, 191]
+[DBG-E0] src_feat[0,:8]=[-0.31263455748558044, -0.37876784801483154, -0.05062413960695267, -0.3519870340824127, -0.15826129913330078, -0.534680962562561, -0.47343477606773376, -0.4897977411746979]
+[DBG-E0] tar_feat[0,:8]=[-0.98956698179245, -0.9233835935592651, -0.8852755427360535, -0.6079574227333069, -0.8411344289779663, -0.8903952240943909, -0.7572215795516968, -0.49176865816116333]
+[DBG-E0] src_label[:8]=[0, 2, 2, 0, 0, 0, 2, 1]
+[DBG-E0] src_idx[:8]=[4049, 26760, 13183, 3355, 24262, 44890, 32648, 23202]
+[DBG-E0] tar_idx[:8]=[237, 35, 1825, 588, 1055, 2543, 896, 550]
+[DBG-E] source_in: shape=(32, 310) sum=-1234.673828 norm=52.120461 mean=-0.124463 std=0.508311
+[DBG-E] target_in: shape=(32, 310) sum=-1258.201782 norm=50.140858 mean=-0.126835 std=0.487211
+[DBG-E] source_in[0,:8]=[-0.31263455748558044, -0.37876784801483154, -0.05062413960695267, -0.3519870340824127, -0.15826129913330078, -0.534680962562561, -0.47343477606773376, -0.4897977411746979]
+[DBG-E] target_in[0,:8]=[-0.98956698179245, -0.9233835935592651, -0.8852755427360535, -0.6079574227333069, -0.8411344289779663, -0.8903952240943909, -0.7572215795516968, -0.49176865816116333]
+[DBG-E] source_f_raw: shape=(32, 64) sum=242.378067 norm=10.245942 mean=0.118349 std=0.193058
+[DBG-E] target_f_raw: shape=(32, 64) sum=232.084656 norm=10.154913 mean=0.113323 std=0.193724
+[DBG-E] src_adj[0]: shape=(32, 62, 62) sum=1569.293701 norm=5.033103 mean=0.012758 std=0.006571
+[DBG-E] src_adj[1]: shape=(32, 62, 62) sum=1569.501709 norm=5.033863 mean=0.012759 std=0.006573
+[DBG-E] tar_adj[0]: shape=(32, 62, 62) sum=1569.287109 norm=5.033085 mean=0.012758 std=0.006571
+[DBG-E] tar_adj[1]: shape=(32, 62, 62) sum=1569.503540 norm=5.033929 mean=0.012759 std=0.006573
+[DBG-E] source_predict: shape=(32, 3) sum=-1.788662 norm=1.829695 mean=-0.018632 std=0.186786
+[DBG-E] target_predict: shape=(32, 3) sum=-2.328213 norm=1.922926 mean=-0.024252 std=0.195776
+[DBG-E] src_prototype: shape=(3, 64) sum=9.905648 norm=1.175519 mean=0.051592 std=0.067521
+[DBG-E] tgt_prototype: shape=(3, 64) sum=14.067047 norm=1.634589 mean=0.073266 std=0.092698
+[DBG-E] src_sim: shape=(32, 3) sum=41.983662 norm=5.282484 mean=0.437330 std=0.316958
+[DBG-E] tgt_sim: shape=(32, 3) sum=59.378319 norm=6.180856 mean=0.618524 std=0.124649
+[DBG-E] tat_cluster_label[:16]=[1, 0, 1, 0, 0, 1, 1, 0, 2, 1, 2, 0, 2, 0, 1, 2]
+[DBG-E] s2t_pro: shape=(32, 3) sum=32.000000 norm=3.277128 mean=0.333333 std=0.027702
+[DBG-E] t2s_pro: shape=(32, 3) sum=31.999998 norm=3.390852 mean=0.333333 std=0.093539
+[DBG-E] s2s_pro: shape=(32, 3) sum=32.000000 norm=3.384008 mean=0.333333 std=0.090893
+[DBG-E] t2t_pro: shape=(32, 3) sum=32.000000 norm=3.285560 mean=0.333333 std=0.036741
+[DBG-E0] cls_loss=1.16388595 source_loss=0.00000000 target_loss=0.97639972
+[DBG-E0] global_transfer_loss=0.72167641 cross_domain_loss=2.15130997 in_domain_loss=2.15128851
+[DBG-E0] boost_factor=0.00000000 total_loss=2.74608207
+[DBG-E0] src_prob_max_mean=0.388046 mask_count=0
 [DBG-C] ep=0 b=1 src_idx[:8]=[36062, 45838, 33516, 4845, 47140, 9536, 25098, 38987] tar_idx[:8]=[2948, 1155, 3199, 1697, 2394, 436, 47, 2223] src_label[:8]=[2, 1, 2, 0, 2, 1, 0, 1]
 [DBG-C] ep=0 b=1 src_feat: shape=(32, 310) sum=-1622.829346 norm=48.010284 mean=-0.163592 std=0.453449
 [DBG-C] ep=0 b=1 tar_feat: shape=(32, 310) sum=-1440.842896 norm=51.479568 mean=-0.145246 std=0.496065
 [DBG-C] ep=0 b=2 src_idx[:8]=[41088, 20798, 23339, 24669, 37102, 29719, 35582, 22426] tar_idx[:8]=[339, 3346, 1471, 1272, 2340, 1606, 682, 2140] src_label[:8]=[1, 1, 2, 0, 2, 0, 1, 2]
 [DBG-C] ep=0 b=2 src_feat: shape=(32, 310) sum=-1079.382568 norm=50.233250 mean=-0.108809 std=0.492502
 [DBG-C] ep=0 b=2 tar_feat: shape=(32, 310) sum=-1034.619019 norm=51.771709 mean=-0.104296 std=0.509255
-22:27:45 | INFO     train.training_pcl train    267 Epoch 0/1000 | total_loss_sum=270.1508 | total_cls_loss=40.4770 | total_transfer_loss=68.5582| total_domain_loss=455.6588 | total_source_loss=69.9838 | total_target_loss=89.4272
-[DBG-D] ep=0 model_params: count=189414 sum=15.957889 norm=14.559155
-[DBG-D] ep=0 disc_params: count=4225 sum=25.038823 norm=4.156257
-[DBG-D] ep=0 source_f_bank: shape=(47516, 64) sum=234312.812500 norm=217.976868 mean=0.077051 std=0.098429
-[DBG-D] ep=0 target_f_bank: shape=(3394, 64) sum=15132.183594 norm=58.258022 mean=0.069664 std=0.103788
-[DBG-D] ep=0 source_score_bank: shape=(47516, 3) sum=47515.996094 norm=132.786362 mean=0.333333 std=0.112171
-[DBG-D] ep=0 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=48.134743 mean=0.333333 std=0.341254
+22:43:25 | INFO     train.training_pcl train    314 Epoch 0/1000 | total_loss_sum=270.4878 | total_cls_loss=40.4914 | total_transfer_loss=68.8160| total_domain_loss=455.6813 | total_source_loss=70.0441 | total_target_loss=89.3441
+[DBG-D] ep=0 model_params: count=189414 sum=27.712000 norm=14.516494
+[DBG-D] ep=0 disc_params: count=4225 sum=25.011626 norm=4.102957
+[DBG-D] ep=0 source_f_bank: shape=(47516, 64) sum=234303.437500 norm=217.977005 mean=0.077048 std=0.098431
+[DBG-D] ep=0 target_f_bank: shape=(3394, 64) sum=15127.613281 norm=58.258007 mean=0.069643 std=0.103802
+[DBG-D] ep=0 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=132.777069 mean=0.333333 std=0.112094
+[DBG-D] ep=0 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=48.153442 mean=0.333333 std=0.341513
 [DBG-D] ep=0 lr=1.000000e-03 iter_num=0
-22:27:46 | INFO     utils.metric update   25  --> A new better acc 0.7266 on subject 0 session 0
+22:43:26 | INFO     utils.metric update   25  --> A new better acc 0.7251 on subject 0 session 0
 [DBG-C] ep=1 b=0 src_idx[:8]=[11978, 4559, 16685, 41522, 15226, 36586, 9474, 41670] tar_idx[:8]=[2465, 1579, 828, 137, 2911, 2707, 620, 3137] src_label[:8]=[2, 2, 2, 0, 1, 0, 0, 1]
 [DBG-C] ep=1 b=0 src_feat: shape=(32, 310) sum=-1306.576660 norm=50.256310 mean=-0.131711 std=0.487117
 [DBG-C] ep=1 b=0 tar_feat: shape=(32, 310) sum=-640.017639 norm=49.690422 mean=-0.064518 std=0.494739
@@ -57,15 +93,15 @@ number of target samples 3394
 [DBG-C] ep=1 b=2 src_idx[:8]=[39274, 30299, 34482, 20751, 28449, 41806, 39738, 170] tar_idx[:8]=[3201, 3014, 555, 1967, 922, 490, 941, 2765] src_label[:8]=[2, 2, 0, 1, 0, 1, 1, 2]
 [DBG-C] ep=1 b=2 src_feat: shape=(32, 310) sum=-1837.327759 norm=48.734341 mean=-0.185214 std=0.452919
 [DBG-C] ep=1 b=2 tar_feat: shape=(32, 310) sum=-654.378357 norm=52.878838 mean=-0.065966 std=0.526829
-22:27:52 | INFO     train.training_pcl train    267 Epoch 1/1000 | total_loss_sum=235.2912 | total_cls_loss=11.8341 | total_transfer_loss=70.7454| total_domain_loss=452.3465 | total_source_loss=62.1580 | total_target_loss=84.3599
-[DBG-D] ep=1 model_params: count=189414 sum=4.182212 norm=14.832881
-[DBG-D] ep=1 disc_params: count=4225 sum=16.495203 norm=4.269917
-[DBG-D] ep=1 source_f_bank: shape=(47516, 64) sum=233474.765625 norm=217.976776 mean=0.076775 std=0.098644
-[DBG-D] ep=1 target_f_bank: shape=(3394, 64) sum=15884.510742 norm=58.258030 mean=0.073128 std=0.101377
-[DBG-D] ep=1 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=139.566605 mean=0.333333 std=0.159803
-[DBG-D] ep=1 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=52.275284 mean=0.333333 std=0.396598
+22:43:30 | INFO     train.training_pcl train    314 Epoch 1/1000 | total_loss_sum=235.1336 | total_cls_loss=12.4072 | total_transfer_loss=69.5959| total_domain_loss=452.4188 | total_source_loss=62.5623 | total_target_loss=84.3555
+[DBG-D] ep=1 model_params: count=189414 sum=7.088029 norm=14.731059
+[DBG-D] ep=1 disc_params: count=4225 sum=17.806198 norm=4.246401
+[DBG-D] ep=1 source_f_bank: shape=(47516, 64) sum=233550.125000 norm=217.976929 mean=0.076800 std=0.098624
+[DBG-D] ep=1 target_f_bank: shape=(3394, 64) sum=15853.601562 norm=58.258060 mean=0.072985 std=0.101480
+[DBG-D] ep=1 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=139.538666 mean=0.333333 std=0.159632
+[DBG-D] ep=1 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=52.272236 mean=0.333333 std=0.396559
 [DBG-D] ep=1 lr=1.000000e-03 iter_num=1
-22:27:53 | INFO     utils.metric update   25  --> A new better acc 0.7537 on subject 0 session 0
+22:43:31 | INFO     utils.metric update   25  --> A new better acc 0.7602 on subject 0 session 0
 [DBG-C] ep=2 b=0 src_idx[:8]=[45633, 11341, 16910, 15222, 3502, 13920, 6194, 42272] tar_idx[:8]=[2836, 680, 2134, 1041, 2240, 3155, 247, 3187] src_label[:8]=[0, 2, 0, 1, 2, 1, 1, 1]
 [DBG-C] ep=2 b=0 src_feat: shape=(32, 310) sum=-1951.328369 norm=51.101212 mean=-0.196706 std=0.473887
 [DBG-C] ep=2 b=0 tar_feat: shape=(32, 310) sum=-374.487091 norm=50.139748 mean=-0.037751 std=0.502023
@@ -75,15 +111,14 @@ number of target samples 3394
 [DBG-C] ep=2 b=2 src_idx[:8]=[4996, 12410, 45266, 26678, 3407, 3805, 1489, 35034] tar_idx[:8]=[2020, 1830, 1800, 1093, 588, 2986, 745, 2601] src_label[:8]=[1, 2, 2, 1, 2, 1, 0, 1]
 [DBG-C] ep=2 b=2 src_feat: shape=(32, 310) sum=-1733.433350 norm=50.454098 mean=-0.174741 std=0.475503
 [DBG-C] ep=2 b=2 tar_feat: shape=(32, 310) sum=-730.503235 norm=52.086868 mean=-0.073639 std=0.517780
-22:28:00 | INFO     train.training_pcl train    267 Epoch 2/1000 | total_loss_sum=228.1119 | total_cls_loss=4.6303 | total_transfer_loss=73.3351| total_domain_loss=450.2334 | total_source_loss=59.9398 | total_target_loss=80.0340
-[DBG-D] ep=2 model_params: count=189414 sum=2.462852 norm=14.934666
-[DBG-D] ep=2 disc_params: count=4225 sum=9.743319 norm=4.087998
-[DBG-D] ep=2 source_f_bank: shape=(47516, 64) sum=232870.234375 norm=217.976501 mean=0.076576 std=0.098798
-[DBG-D] ep=2 target_f_bank: shape=(3394, 64) sum=15858.419922 norm=58.258018 mean=0.073008 std=0.101464
-[DBG-D] ep=2 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=146.107132 mean=0.333333 std=0.196582
-[DBG-D] ep=2 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=54.130566 mean=0.333333 std=0.420334
+22:43:35 | INFO     train.training_pcl train    314 Epoch 2/1000 | total_loss_sum=228.9851 | total_cls_loss=5.0356 | total_transfer_loss=73.5238| total_domain_loss=450.8353 | total_source_loss=60.0956 | total_target_loss=81.5078
+[DBG-D] ep=2 model_params: count=189414 sum=-1.080830 norm=14.851524
+[DBG-D] ep=2 disc_params: count=4225 sum=5.639211 norm=4.076506
+[DBG-D] ep=2 source_f_bank: shape=(47516, 64) sum=233062.281250 norm=217.976608 mean=0.076639 std=0.098749
+[DBG-D] ep=2 target_f_bank: shape=(3394, 64) sum=16132.808594 norm=58.257984 mean=0.074271 std=0.100543
+[DBG-D] ep=2 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=146.059204 mean=0.333333 std=0.196332
+[DBG-D] ep=2 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=53.603848 mean=0.333333 std=0.413651
 [DBG-D] ep=2 lr=9.925650e-04 iter_num=2
-22:28:02 | INFO     utils.metric update   25  --> A new better acc 0.7637 on subject 0 session 0
 [DBG-C] ep=3 b=0 src_idx[:8]=[12728, 17445, 33330, 40772, 27983, 43962, 36997, 45996] tar_idx[:8]=[621, 1089, 2093, 2318, 742, 3005, 246, 3219] src_label[:8]=[0, 0, 1, 2, 0, 0, 2, 2]
 [DBG-C] ep=3 b=0 src_feat: shape=(32, 310) sum=-1477.883057 norm=51.818047 mean=-0.148980 std=0.498504
 [DBG-C] ep=3 b=0 tar_feat: shape=(32, 310) sum=-1843.669800 norm=53.465134 mean=-0.185854 std=0.503628
@@ -93,15 +128,15 @@ number of target samples 3394
 [DBG-C] ep=3 b=2 src_idx[:8]=[2028, 40971, 6426, 26096, 26719, 21163, 42525, 34322] tar_idx[:8]=[2089, 995, 2904, 1394, 1250, 2616, 1825, 1822] src_label[:8]=[2, 1, 2, 1, 2, 0, 2, 1]
 [DBG-C] ep=3 b=2 src_feat: shape=(32, 310) sum=-819.809448 norm=47.944283 mean=-0.082642 std=0.474249
 [DBG-C] ep=3 b=2 tar_feat: shape=(32, 310) sum=-406.215149 norm=50.051289 mean=-0.040949 std=0.500881
-22:28:08 | INFO     train.training_pcl train    267 Epoch 3/1000 | total_loss_sum=225.1402 | total_cls_loss=2.4055 | total_transfer_loss=73.6664| total_domain_loss=447.6770 | total_source_loss=59.3035 | total_target_loss=76.4849
-[DBG-D] ep=3 model_params: count=189414 sum=-4.751313 norm=14.908406
-[DBG-D] ep=3 disc_params: count=4225 sum=15.021777 norm=3.841320
-[DBG-D] ep=3 source_f_bank: shape=(47516, 64) sum=232060.812500 norm=217.976379 mean=0.076310 std=0.099004
-[DBG-D] ep=3 target_f_bank: shape=(3394, 64) sum=15239.416016 norm=58.257973 mean=0.070158 std=0.103455
-[DBG-D] ep=3 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=152.171600 mean=0.333333 std=0.226571
-[DBG-D] ep=3 target_score_bank: shape=(3394, 3) sum=3394.000244 norm=54.802029 mean=0.333333 std=0.428795
+22:43:40 | INFO     train.training_pcl train    314 Epoch 3/1000 | total_loss_sum=225.3566 | total_cls_loss=2.4442 | total_transfer_loss=73.6818| total_domain_loss=448.6341 | total_source_loss=59.2683 | total_target_loss=78.4998
+[DBG-D] ep=3 model_params: count=189414 sum=-0.865359 norm=14.831942
+[DBG-D] ep=3 disc_params: count=4225 sum=8.715333 norm=3.759300
+[DBG-D] ep=3 source_f_bank: shape=(47516, 64) sum=232421.562500 norm=217.976425 mean=0.076429 std=0.098912
+[DBG-D] ep=3 target_f_bank: shape=(3394, 64) sum=15809.810547 norm=58.258045 mean=0.072784 std=0.101625
+[DBG-D] ep=3 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=152.131790 mean=0.333333 std=0.226383
+[DBG-D] ep=3 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=54.316059 mean=0.333333 std=0.422678
 [DBG-D] ep=3 lr=9.852578e-04 iter_num=3
-22:28:09 | INFO     utils.metric update   25  --> A new better acc 0.8008 on subject 0 session 0
+22:43:41 | INFO     utils.metric update   25  --> A new better acc 0.8300 on subject 0 session 0
 [DBG-C] ep=4 b=0 src_idx[:8]=[22015, 704, 8695, 35711, 20153, 14762, 35211, 13649] tar_idx[:8]=[580, 1396, 2540, 1084, 2696, 260, 3340, 3094] src_label[:8]=[1, 0, 2, 2, 2, 2, 2, 2]
 [DBG-C] ep=4 b=0 src_feat: shape=(32, 310) sum=-1640.121948 norm=49.405205 mean=-0.165335 std=0.467699
 [DBG-C] ep=4 b=0 tar_feat: shape=(32, 310) sum=-839.809448 norm=50.919937 mean=-0.084658 std=0.504216
@@ -111,13 +146,13 @@ number of target samples 3394
 [DBG-C] ep=4 b=2 src_idx[:8]=[28873, 9658, 2613, 1044, 43883, 32561, 15465, 1652] tar_idx[:8]=[3074, 1903, 1496, 3096, 2167, 838, 3049, 2469] src_label[:8]=[1, 1, 0, 1, 2, 2, 2, 1]
 [DBG-C] ep=4 b=2 src_feat: shape=(32, 310) sum=-1391.107788 norm=50.806271 mean=-0.140233 std=0.490478
 [DBG-C] ep=4 b=2 tar_feat: shape=(32, 310) sum=-490.280731 norm=51.970055 mean=-0.049423 std=0.519472
-22:28:15 | INFO     train.training_pcl train    267 Epoch 4/1000 | total_loss_sum=224.8410 | total_cls_loss=2.6202 | total_transfer_loss=73.5675| total_domain_loss=445.5448 | total_source_loss=59.2500 | total_target_loss=73.5895
-[DBG-D] ep=4 model_params: count=189414 sum=-0.786485 norm=14.908449
-[DBG-D] ep=4 disc_params: count=4225 sum=17.239660 norm=3.777174
-[DBG-D] ep=4 source_f_bank: shape=(47516, 64) sum=231032.421875 norm=217.976532 mean=0.075972 std=0.099264
-[DBG-D] ep=4 target_f_bank: shape=(3394, 64) sum=15097.635742 norm=58.258030 mean=0.069505 std=0.103895
-[DBG-D] ep=4 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=157.553879 mean=0.333333 std=0.251056
-[DBG-D] ep=4 target_score_bank: shape=(3394, 3) sum=3394.000244 norm=55.350288 mean=0.333333 std=0.435657
+22:43:45 | INFO     train.training_pcl train    314 Epoch 4/1000 | total_loss_sum=225.3692 | total_cls_loss=2.8938 | total_transfer_loss=73.6522| total_domain_loss=445.6680 | total_source_loss=59.3941 | total_target_loss=73.9007
+[DBG-D] ep=4 model_params: count=189414 sum=3.272531 norm=14.930348
+[DBG-D] ep=4 disc_params: count=4225 sum=14.453170 norm=3.778801
+[DBG-D] ep=4 source_f_bank: shape=(47516, 64) sum=231575.937500 norm=217.976654 mean=0.076151 std=0.099127
+[DBG-D] ep=4 target_f_bank: shape=(3394, 64) sum=15138.039062 norm=58.258038 mean=0.069691 std=0.103770
+[DBG-D] ep=4 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=157.497955 mean=0.333333 std=0.250810
+[DBG-D] ep=4 target_score_bank: shape=(3394, 3) sum=3393.999756 norm=54.958645 mean=0.333333 std=0.430759
 [DBG-D] ep=4 lr=9.780748e-04 iter_num=4
 [DBG-C] ep=5 b=0 src_idx[:8]=[21438, 38589, 17896, 14622, 23326, 36991, 360, 13020] tar_idx[:8]=[1656, 1121, 2755, 163, 477, 907, 2789, 2021] src_label[:8]=[1, 2, 1, 1, 2, 2, 1, 1]
 [DBG-C] ep=5 b=0 src_feat: shape=(32, 310) sum=-1948.759399 norm=52.047035 mean=-0.196448 std=0.484258
@@ -128,13 +163,13 @@ number of target samples 3394
 [DBG-C] ep=5 b=2 src_idx[:8]=[40670, 27297, 31300, 44717, 46033, 12107, 17320, 40340] tar_idx[:8]=[2566, 1147, 1718, 1386, 2301, 812, 3310, 178] src_label[:8]=[0, 2, 0, 0, 2, 2, 1, 2]
 [DBG-C] ep=5 b=2 src_feat: shape=(32, 310) sum=-1897.508545 norm=50.647659 mean=-0.191281 std=0.471191
 [DBG-C] ep=5 b=2 tar_feat: shape=(32, 310) sum=-1579.650146 norm=53.420654 mean=-0.159239 std=0.512199
-22:28:23 | INFO     train.training_pcl train    267 Epoch 5/1000 | total_loss_sum=223.4367 | total_cls_loss=1.9211 | total_transfer_loss=73.6361| total_domain_loss=442.6113 | total_source_loss=59.0090 | total_target_loss=69.6794
-[DBG-D] ep=5 model_params: count=189414 sum=-3.992871 norm=14.887041
-[DBG-D] ep=5 disc_params: count=4225 sum=19.903786 norm=3.633193
-[DBG-D] ep=5 source_f_bank: shape=(47516, 64) sum=229780.468750 norm=217.976776 mean=0.075560 std=0.099577
-[DBG-D] ep=5 target_f_bank: shape=(3394, 64) sum=14772.726562 norm=58.258007 mean=0.068009 std=0.104880
-[DBG-D] ep=5 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=162.459106 mean=0.333333 std=0.272105
-[DBG-D] ep=5 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=55.922989 mean=0.333333 std=0.442783
+22:43:50 | INFO     train.training_pcl train    314 Epoch 5/1000 | total_loss_sum=223.5018 | total_cls_loss=1.8665 | total_transfer_loss=73.6405| total_domain_loss=442.9745 | total_source_loss=59.0456 | total_target_loss=70.8753
+[DBG-D] ep=5 model_params: count=189414 sum=3.455475 norm=14.883764
+[DBG-D] ep=5 disc_params: count=4225 sum=19.718686 norm=3.697875
+[DBG-D] ep=5 source_f_bank: shape=(47516, 64) sum=230393.937500 norm=217.976654 mean=0.075762 std=0.099424
+[DBG-D] ep=5 target_f_bank: shape=(3394, 64) sum=14897.608398 norm=58.258060 mean=0.068584 std=0.104505
+[DBG-D] ep=5 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=162.416306 mean=0.333333 std=0.271926
+[DBG-D] ep=5 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=55.778683 mean=0.333333 std=0.440991
 [DBG-D] ep=5 lr=9.710129e-04 iter_num=5
 [DBG-C] ep=6 b=0 src_idx[:8]=[45762, 11661, 19216, 13544, 44065, 6777, 11108, 29903] tar_idx[:8]=[1162, 2311, 2891, 1300, 2679, 3089, 2242, 2982] src_label[:8]=[1, 0, 2, 0, 0, 0, 1, 1]
 [DBG-C] ep=6 b=0 src_feat: shape=(32, 310) sum=-2550.574219 norm=53.864899 mean=-0.257114 std=0.475813
@@ -145,15 +180,15 @@ number of target samples 3394
 [DBG-C] ep=6 b=2 src_idx[:8]=[38310, 38598, 17734, 3539, 35703, 4981, 1183, 11119] tar_idx[:8]=[2735, 2463, 2148, 133, 1183, 1941, 2162, 204] src_label[:8]=[1, 2, 0, 2, 2, 1, 2, 1]
 [DBG-C] ep=6 b=2 src_feat: shape=(32, 310) sum=-1633.159424 norm=51.408058 mean=-0.164633 std=0.489214
 [DBG-C] ep=6 b=2 tar_feat: shape=(32, 310) sum=-403.444641 norm=48.409008 mean=-0.040670 std=0.484358
-22:28:31 | INFO     train.training_pcl train    267 Epoch 6/1000 | total_loss_sum=222.1532 | total_cls_loss=1.6725 | total_transfer_loss=73.1355| total_domain_loss=439.9385 | total_source_loss=58.9533 | total_target_loss=67.3753
-[DBG-D] ep=6 model_params: count=189414 sum=15.587926 norm=14.845491
-[DBG-D] ep=6 disc_params: count=4225 sum=25.331233 norm=3.751504
-[DBG-D] ep=6 source_f_bank: shape=(47516, 64) sum=228344.312500 norm=217.976700 mean=0.075088 std=0.099934
-[DBG-D] ep=6 target_f_bank: shape=(3394, 64) sum=14826.793945 norm=58.258026 mean=0.068258 std=0.104718
-[DBG-D] ep=6 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=166.945496 mean=0.333333 std=0.290531
-[DBG-D] ep=6 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=56.160286 mean=0.333333 std=0.445723
+22:43:55 | INFO     train.training_pcl train    314 Epoch 6/1000 | total_loss_sum=222.1031 | total_cls_loss=1.5652 | total_transfer_loss=73.2168| total_domain_loss=440.2303 | total_source_loss=58.8684 | total_target_loss=67.7572
+[DBG-D] ep=6 model_params: count=189414 sum=10.816810 norm=14.822414
+[DBG-D] ep=6 disc_params: count=4225 sum=25.729556 norm=3.710835
+[DBG-D] ep=6 source_f_bank: shape=(47516, 64) sum=229009.312500 norm=217.976593 mean=0.075307 std=0.099769
+[DBG-D] ep=6 target_f_bank: shape=(3394, 64) sum=14811.347656 norm=58.258045 mean=0.068187 std=0.104764
+[DBG-D] ep=6 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=166.915710 mean=0.333333 std=0.290411
+[DBG-D] ep=6 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=55.731205 mean=0.333333 std=0.440401
 [DBG-D] ep=6 lr=9.640688e-04 iter_num=6
-22:28:32 | INFO     utils.metric update   25  --> A new better acc 0.8810 on subject 0 session 0
+22:43:56 | INFO     utils.metric update   25  --> A new better acc 0.9072 on subject 0 session 0
 [DBG-C] ep=7 b=0 src_idx[:8]=[30065, 39840, 17466, 7778, 15191, 43654, 38708, 34322] tar_idx[:8]=[1406, 1388, 1136, 2591, 1467, 323, 2918, 2441] src_label[:8]=[1, 0, 0, 1, 1, 1, 0, 1]
 [DBG-C] ep=7 b=0 src_feat: shape=(32, 310) sum=-1968.477295 norm=50.165020 mean=-0.198435 std=0.462955
 [DBG-C] ep=7 b=0 tar_feat: shape=(32, 310) sum=-1244.228760 norm=51.805183 mean=-0.125426 std=0.504813
@@ -163,13 +198,13 @@ number of target samples 3394
 [DBG-C] ep=7 b=2 src_idx[:8]=[928, 43273, 35129, 41715, 12434, 27921, 21513, 40390] tar_idx[:8]=[1827, 2766, 426, 2769, 959, 8, 474, 3359] src_label[:8]=[1, 0, 2, 1, 1, 0, 2, 2]
 [DBG-C] ep=7 b=2 src_feat: shape=(32, 310) sum=-1772.446045 norm=54.168152 mean=-0.178674 std=0.513700
 [DBG-C] ep=7 b=2 tar_feat: shape=(32, 310) sum=-2524.987305 norm=53.102200 mean=-0.254535 std=0.468500
-22:28:39 | INFO     train.training_pcl train    267 Epoch 7/1000 | total_loss_sum=221.3440 | total_cls_loss=1.2419 | total_transfer_loss=73.4628| total_domain_loss=436.9877 | total_source_loss=58.7845 | total_target_loss=65.3271
-[DBG-D] ep=7 model_params: count=189414 sum=2.991264 norm=14.742161
-[DBG-D] ep=7 disc_params: count=4225 sum=26.489556 norm=3.642407
-[DBG-D] ep=7 source_f_bank: shape=(47516, 64) sum=226568.062500 norm=217.976898 mean=0.074504 std=0.100370
-[DBG-D] ep=7 target_f_bank: shape=(3394, 64) sum=14753.634766 norm=58.258007 mean=0.067921 std=0.104937
-[DBG-D] ep=7 source_score_bank: shape=(47516, 3) sum=47515.996094 norm=171.045532 mean=0.333333 std=0.306806
-[DBG-D] ep=7 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=56.748055 mean=0.333333 std=0.452976
+22:44:00 | INFO     train.training_pcl train    314 Epoch 7/1000 | total_loss_sum=222.0371 | total_cls_loss=1.7705 | total_transfer_loss=73.5506| total_domain_loss=436.8280 | total_source_loss=58.8980 | total_target_loss=64.6192
+[DBG-D] ep=7 model_params: count=189414 sum=-7.839821 norm=14.783249
+[DBG-D] ep=7 disc_params: count=4225 sum=27.051901 norm=3.476547
+[DBG-D] ep=7 source_f_bank: shape=(47516, 64) sum=227263.093750 norm=217.976685 mean=0.074732 std=0.100200
+[DBG-D] ep=7 target_f_bank: shape=(3394, 64) sum=14561.823242 norm=58.258038 mean=0.067038 std=0.105503
+[DBG-D] ep=7 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=171.002853 mean=0.333333 std=0.306639
+[DBG-D] ep=7 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=56.586727 mean=0.333333 std=0.450989
 [DBG-D] ep=7 lr=9.572395e-04 iter_num=7
 [DBG-C] ep=8 b=0 src_idx[:8]=[3441, 32194, 38477, 22242, 23206, 34383, 40148, 34005] tar_idx[:8]=[3356, 1363, 2793, 1193, 547, 937, 349, 1771] src_label[:8]=[2, 1, 2, 2, 1, 1, 1, 2]
 [DBG-C] ep=8 b=0 src_feat: shape=(32, 310) sum=-1460.163818 norm=50.154171 mean=-0.147194 std=0.481591
@@ -180,13 +215,13 @@ number of target samples 3394
 [DBG-C] ep=8 b=2 src_idx[:8]=[17505, 46873, 37192, 5649, 36666, 23859, 29441, 34411] tar_idx[:8]=[2723, 1251, 2314, 2113, 3347, 3170, 2060, 728] src_label[:8]=[0, 1, 0, 1, 1, 2, 1, 0]
 [DBG-C] ep=8 b=2 src_feat: shape=(32, 310) sum=-702.941284 norm=51.482113 mean=-0.070861 std=0.512038
 [DBG-C] ep=8 b=2 tar_feat: shape=(32, 310) sum=-686.614197 norm=52.935322 mean=-0.069215 std=0.526984
-22:28:47 | INFO     train.training_pcl train    267 Epoch 8/1000 | total_loss_sum=222.6365 | total_cls_loss=2.9035 | total_transfer_loss=73.2289| total_domain_loss=434.6166 | total_source_loss=59.0760 | total_target_loss=63.0975
-[DBG-D] ep=8 model_params: count=189414 sum=15.705451 norm=14.689963
-[DBG-D] ep=8 disc_params: count=4225 sum=20.822466 norm=3.593897
-[DBG-D] ep=8 source_f_bank: shape=(47516, 64) sum=224553.703125 norm=217.976807 mean=0.073841 std=0.100859
-[DBG-D] ep=8 target_f_bank: shape=(3394, 64) sum=14264.846680 norm=58.258034 mean=0.065671 std=0.106359
-[DBG-D] ep=8 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=174.694824 mean=0.333333 std=0.320907
-[DBG-D] ep=8 target_score_bank: shape=(3394, 3) sum=3394.000244 norm=57.246029 mean=0.333333 std=0.459089
+22:44:05 | INFO     train.training_pcl train    314 Epoch 8/1000 | total_loss_sum=221.8747 | total_cls_loss=2.1696 | total_transfer_loss=73.2936| total_domain_loss=434.5931 | total_source_loss=58.9907 | total_target_loss=62.7766
+[DBG-D] ep=8 model_params: count=189414 sum=20.464620 norm=14.745825
+[DBG-D] ep=8 disc_params: count=4225 sum=31.679450 norm=3.447683
+[DBG-D] ep=8 source_f_bank: shape=(47516, 64) sum=225453.812500 norm=217.976746 mean=0.074137 std=0.100641
+[DBG-D] ep=8 target_f_bank: shape=(3394, 64) sum=14048.466797 norm=58.258022 mean=0.064675 std=0.106968
+[DBG-D] ep=8 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=174.675415 mean=0.333333 std=0.320833
+[DBG-D] ep=8 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=56.412285 mean=0.333333 std=0.448838
 [DBG-D] ep=8 lr=9.505220e-04 iter_num=8
 [DBG-C] ep=9 b=0 src_idx[:8]=[16589, 33215, 540, 38821, 44278, 34949, 28138, 19720] tar_idx[:8]=[1012, 2217, 1673, 1785, 1898, 1038, 415, 597] src_label[:8]=[2, 0, 0, 0, 2, 1, 1, 1]
 [DBG-C] ep=9 b=0 src_feat: shape=(32, 310) sum=-1823.855347 norm=51.784813 mean=-0.183856 std=0.486364
@@ -197,13 +232,13 @@ number of target samples 3394
 [DBG-C] ep=9 b=2 src_idx[:8]=[7294, 43382, 1488, 23763, 5643, 1469, 33573, 42983] tar_idx[:8]=[1384, 2325, 1378, 942, 2453, 2149, 2294, 3035] src_label[:8]=[0, 0, 0, 2, 1, 0, 2, 1]
 [DBG-C] ep=9 b=2 src_feat: shape=(32, 310) sum=-2130.134033 norm=51.026852 mean=-0.214731 std=0.465173
 [DBG-C] ep=9 b=2 tar_feat: shape=(32, 310) sum=-1369.037231 norm=50.436302 mean=-0.138008 std=0.487249
-22:28:54 | INFO     train.training_pcl train    267 Epoch 9/1000 | total_loss_sum=220.5670 | total_cls_loss=1.3068 | total_transfer_loss=73.4560| total_domain_loss=432.4193 | total_source_loss=58.7658 | total_target_loss=61.6137
-[DBG-D] ep=9 model_params: count=189414 sum=10.563079 norm=14.511833
-[DBG-D] ep=9 disc_params: count=4225 sum=22.655672 norm=3.423535
-[DBG-D] ep=9 source_f_bank: shape=(47516, 64) sum=222392.984375 norm=217.976974 mean=0.073131 std=0.101375
-[DBG-D] ep=9 target_f_bank: shape=(3394, 64) sum=14067.650391 norm=58.258015 mean=0.064763 std=0.106915
-[DBG-D] ep=9 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=178.166428 mean=0.333333 std=0.334028
-[DBG-D] ep=9 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=57.625832 mean=0.333333 std=0.463733
+22:44:09 | INFO     train.training_pcl train    314 Epoch 9/1000 | total_loss_sum=221.6147 | total_cls_loss=1.8380 | total_transfer_loss=73.4865| total_domain_loss=434.0439 | total_source_loss=58.9083 | total_target_loss=63.6882
+[DBG-D] ep=9 model_params: count=189414 sum=13.891888 norm=14.681443
+[DBG-D] ep=9 disc_params: count=4225 sum=31.617443 norm=3.270594
+[DBG-D] ep=9 source_f_bank: shape=(47516, 64) sum=223532.437500 norm=217.976837 mean=0.073506 std=0.101104
+[DBG-D] ep=9 target_f_bank: shape=(3394, 64) sum=14282.214844 norm=58.258034 mean=0.065751 std=0.106310
+[DBG-D] ep=9 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=178.121384 mean=0.333333 std=0.333859
+[DBG-D] ep=9 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=56.660446 mean=0.333333 std=0.451897
 [DBG-D] ep=9 lr=9.439135e-04 iter_num=9
 [DBG-C] ep=10 b=0 src_idx[:8]=[34433, 8406, 4924, 20598, 9394, 36416, 18300, 4607] tar_idx[:8]=[440, 566, 283, 973, 1798, 3021, 1023, 598] src_label[:8]=[0, 1, 1, 2, 0, 1, 0, 2]
 [DBG-C] ep=10 b=0 src_feat: shape=(32, 310) sum=-1252.573730 norm=49.994160 mean=-0.126268 std=0.485837
@@ -214,13 +249,13 @@ number of target samples 3394
 [DBG-C] ep=10 b=2 src_idx[:8]=[25178, 1580, 44945, 25732, 4098, 35114, 12705, 6573] tar_idx[:8]=[3006, 2238, 2321, 2423, 2837, 1260, 386, 12] src_label[:8]=[0, 1, 0, 2, 0, 2, 0, 2]
 [DBG-C] ep=10 b=2 src_feat: shape=(32, 310) sum=-1864.401611 norm=52.397480 mean=-0.187944 std=0.491391
 [DBG-C] ep=10 b=2 tar_feat: shape=(32, 310) sum=-1620.944824 norm=50.893307 mean=-0.163402 std=0.484175
-22:29:02 | INFO     train.training_pcl train    267 Epoch 10/1000 | total_loss_sum=221.9718 | total_cls_loss=2.6436 | total_transfer_loss=73.4842| total_domain_loss=431.1326 | total_source_loss=59.0046 | total_target_loss=61.2936
-[DBG-D] ep=10 model_params: count=189414 sum=-5.175342 norm=14.498540
-[DBG-D] ep=10 disc_params: count=4225 sum=22.294801 norm=3.269100
-[DBG-D] ep=10 source_f_bank: shape=(47516, 64) sum=220294.906250 norm=217.977188 mean=0.072441 std=0.101869
-[DBG-D] ep=10 target_f_bank: shape=(3394, 64) sum=13807.644531 norm=58.258030 mean=0.063566 std=0.107631
-[DBG-D] ep=10 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=181.221985 mean=0.333333 std=0.345367
-[DBG-D] ep=10 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=57.272556 mean=0.333333 std=0.459414
+22:44:14 | INFO     train.training_pcl train    314 Epoch 10/1000 | total_loss_sum=219.6204 | total_cls_loss=0.7501 | total_transfer_loss=73.5195| total_domain_loss=430.7286 | total_source_loss=58.6044 | total_target_loss=60.0629
+[DBG-D] ep=10 model_params: count=189414 sum=5.111712 norm=14.389884
+[DBG-D] ep=10 disc_params: count=4225 sum=29.982623 norm=3.097197
+[DBG-D] ep=10 source_f_bank: shape=(47516, 64) sum=221565.937500 norm=217.976944 mean=0.072859 std=0.101571
+[DBG-D] ep=10 target_f_bank: shape=(3394, 64) sum=13618.074219 norm=58.258026 mean=0.062694 std=0.108141
+[DBG-D] ep=10 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=181.232285 mean=0.333333 std=0.345405
+[DBG-D] ep=10 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=57.268753 mean=0.333333 std=0.459367
 [DBG-D] ep=10 lr=9.374112e-04 iter_num=10
 [DBG-C] ep=11 b=0 src_idx[:8]=[32457, 7977, 12038, 7640, 24669, 8824, 32440, 36139] tar_idx[:8]=[2100, 2924, 930, 371, 2054, 1878, 3371, 2031] src_label[:8]=[2, 2, 2, 0, 0, 2, 2, 2]
 [DBG-C] ep=11 b=0 src_feat: shape=(32, 310) sum=-1649.722534 norm=47.970802 mean=-0.166303 std=0.452039
@@ -231,13 +266,13 @@ number of target samples 3394
 [DBG-C] ep=11 b=2 src_idx[:8]=[32636, 45678, 31069, 7627, 32146, 45106, 28968, 38315] tar_idx[:8]=[1757, 1084, 1982, 49, 3078, 2941, 1085, 2191] src_label[:8]=[2, 1, 0, 0, 1, 1, 2, 1]
 [DBG-C] ep=11 b=2 src_feat: shape=(32, 310) sum=-1649.204712 norm=51.230927 mean=-0.166250 std=0.486787
 [DBG-C] ep=11 b=2 tar_feat: shape=(32, 310) sum=-704.428528 norm=52.055080 mean=-0.071011 std=0.517825
-22:29:10 | INFO     train.training_pcl train    267 Epoch 11/1000 | total_loss_sum=221.1257 | total_cls_loss=2.0915 | total_transfer_loss=73.4436| total_domain_loss=429.5980 | total_source_loss=59.0067 | total_target_loss=60.3826
-[DBG-D] ep=11 model_params: count=189414 sum=1.233721 norm=14.478252
-[DBG-D] ep=11 disc_params: count=4225 sum=25.761182 norm=3.157201
-[DBG-D] ep=11 source_f_bank: shape=(47516, 64) sum=218201.718750 norm=217.977448 mean=0.071753 std=0.102355
-[DBG-D] ep=11 target_f_bank: shape=(3394, 64) sum=13668.269531 norm=58.258030 mean=0.062925 std=0.108007
-[DBG-D] ep=11 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=184.035385 mean=0.333333 std=0.355650
-[DBG-D] ep=11 target_score_bank: shape=(3394, 3) sum=3393.999756 norm=57.575535 mean=0.333333 std=0.463119
+22:44:19 | INFO     train.training_pcl train    314 Epoch 11/1000 | total_loss_sum=224.5451 | total_cls_loss=4.8060 | total_transfer_loss=73.4623| total_domain_loss=430.8387 | total_source_loss=59.4353 | total_target_loss=61.2562
+[DBG-D] ep=11 model_params: count=189414 sum=-1.899509 norm=14.556018
+[DBG-D] ep=11 disc_params: count=4225 sum=30.550370 norm=3.036685
+[DBG-D] ep=11 source_f_bank: shape=(47516, 64) sum=219720.078125 norm=217.976990 mean=0.072252 std=0.102003
+[DBG-D] ep=11 target_f_bank: shape=(3394, 64) sum=13811.583984 norm=58.258026 mean=0.063585 std=0.107620
+[DBG-D] ep=11 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=184.021896 mean=0.333333 std=0.355601
+[DBG-D] ep=11 target_score_bank: shape=(3394, 3) sum=3394.000244 norm=56.980934 mean=0.333333 std=0.455838
 [DBG-D] ep=11 lr=9.310124e-04 iter_num=11
 [DBG-C] ep=12 b=0 src_idx[:8]=[13393, 46845, 2773, 28954, 22712, 4090, 17148, 15563] tar_idx[:8]=[52, 573, 594, 2916, 2250, 1810, 1181, 1586] src_label[:8]=[0, 1, 1, 2, 1, 0, 2, 2]
 [DBG-C] ep=12 b=0 src_feat: shape=(32, 310) sum=-1551.109863 norm=51.062191 mean=-0.156362 std=0.488275
@@ -248,13 +283,13 @@ number of target samples 3394
 [DBG-C] ep=12 b=2 src_idx[:8]=[37949, 35815, 23675, 19673, 16188, 22525, 6216, 44873] tar_idx[:8]=[3392, 3121, 1371, 2422, 1953, 873, 174, 3384] src_label[:8]=[0, 2, 0, 0, 0, 2, 1, 0]
 [DBG-C] ep=12 b=2 src_feat: shape=(32, 310) sum=-1415.061523 norm=51.449879 mean=-0.142647 std=0.496508
 [DBG-C] ep=12 b=2 tar_feat: shape=(32, 310) sum=-563.340881 norm=48.032101 mean=-0.056788 std=0.478923
-22:29:18 | INFO     train.training_pcl train    267 Epoch 12/1000 | total_loss_sum=219.3206 | total_cls_loss=0.8308 | total_transfer_loss=73.5494| total_domain_loss=428.0191 | total_source_loss=58.6214 | total_target_loss=59.5875
-[DBG-D] ep=12 model_params: count=189414 sum=-7.416367 norm=14.270533
-[DBG-D] ep=12 disc_params: count=4225 sum=27.368268 norm=2.970249
-[DBG-D] ep=12 source_f_bank: shape=(47516, 64) sum=216230.968750 norm=217.977539 mean=0.071105 std=0.102806
-[DBG-D] ep=12 target_f_bank: shape=(3394, 64) sum=13495.830078 norm=58.258057 mean=0.062131 std=0.108466
-[DBG-D] ep=12 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=186.673843 mean=0.333333 std=0.365169
-[DBG-D] ep=12 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=57.554382 mean=0.333333 std=0.462860
+22:44:23 | INFO     train.training_pcl train    314 Epoch 12/1000 | total_loss_sum=219.2824 | total_cls_loss=0.7355 | total_transfer_loss=73.5071| total_domain_loss=428.5873 | total_source_loss=58.6070 | total_target_loss=59.6147
+[DBG-D] ep=12 model_params: count=189414 sum=2.212805 norm=14.362122
+[DBG-D] ep=12 disc_params: count=4225 sum=29.474997 norm=2.889120
+[DBG-D] ep=12 source_f_bank: shape=(47516, 64) sum=217880.250000 norm=217.977173 mean=0.071647 std=0.102429
+[DBG-D] ep=12 target_f_bank: shape=(3394, 64) sum=13685.455078 norm=58.258049 mean=0.063004 std=0.107961
+[DBG-D] ep=12 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=186.666275 mean=0.333333 std=0.365142
+[DBG-D] ep=12 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=57.630867 mean=0.333333 std=0.463794
 [DBG-D] ep=12 lr=9.247147e-04 iter_num=12
 [DBG-C] ep=13 b=0 src_idx[:8]=[25955, 29511, 4140, 30948, 34564, 43068, 16032, 24540] tar_idx[:8]=[1177, 2931, 2162, 425, 2723, 1149, 2790, 2085] src_label[:8]=[2, 1, 0, 1, 0, 1, 1, 0]
 [DBG-C] ep=13 b=0 src_feat: shape=(32, 310) sum=-1740.996094 norm=52.556465 mean=-0.175504 std=0.497664
@@ -265,13 +300,13 @@ number of target samples 3394
 [DBG-C] ep=13 b=2 src_idx[:8]=[30630, 6191, 1226, 4751, 23616, 19940, 7029, 17040] tar_idx[:8]=[2800, 2266, 2377, 3099, 1930, 293, 2273, 2068] src_label[:8]=[2, 1, 2, 0, 0, 2, 1, 2]
 [DBG-C] ep=13 b=2 src_feat: shape=(32, 310) sum=-1686.737549 norm=50.642193 mean=-0.170034 std=0.479211
 [DBG-C] ep=13 b=2 tar_feat: shape=(32, 310) sum=-1877.239502 norm=53.856575 mean=-0.189238 std=0.506564
-22:29:26 | INFO     train.training_pcl train    267 Epoch 13/1000 | total_loss_sum=219.2938 | total_cls_loss=0.9534 | total_transfer_loss=73.5178| total_domain_loss=426.8818 | total_source_loss=58.6740 | total_target_loss=59.4166
-[DBG-D] ep=13 model_params: count=189414 sum=-17.071154 norm=14.039368
-[DBG-D] ep=13 disc_params: count=4225 sum=28.745781 norm=2.864787
-[DBG-D] ep=13 source_f_bank: shape=(47516, 64) sum=214402.609375 norm=217.977676 mean=0.070503 std=0.103220
-[DBG-D] ep=13 target_f_bank: shape=(3394, 64) sum=13514.436523 norm=58.258045 mean=0.062217 std=0.108417
-[DBG-D] ep=13 source_score_bank: shape=(47516, 3) sum=47516.003906 norm=189.074448 mean=0.333333 std=0.373733
-[DBG-D] ep=13 target_score_bank: shape=(3394, 3) sum=3393.999756 norm=57.586353 mean=0.333333 std=0.463251
+22:44:29 | INFO     train.training_pcl train    314 Epoch 13/1000 | total_loss_sum=220.7943 | total_cls_loss=2.0032 | total_transfer_loss=73.5028| total_domain_loss=427.8217 | total_source_loss=58.9477 | total_target_loss=59.7176
+[DBG-D] ep=13 model_params: count=189414 sum=12.157435 norm=14.326745
+[DBG-D] ep=13 disc_params: count=4225 sum=26.306122 norm=2.776788
+[DBG-D] ep=13 source_f_bank: shape=(47516, 64) sum=216173.781250 norm=217.977264 mean=0.071086 std=0.102819
+[DBG-D] ep=13 target_f_bank: shape=(3394, 64) sum=13726.481445 norm=58.258049 mean=0.063193 std=0.107850
+[DBG-D] ep=13 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=189.026550 mean=0.333333 std=0.373563
+[DBG-D] ep=13 target_score_bank: shape=(3394, 3) sum=3393.999756 norm=57.516972 mean=0.333333 std=0.462403
 [DBG-D] ep=13 lr=9.185155e-04 iter_num=13
 [DBG-C] ep=14 b=0 src_idx[:8]=[11916, 14438, 10270, 20865, 13067, 30183, 1972, 45119] tar_idx[:8]=[709, 3355, 833, 388, 1397, 2196, 2087, 2508] src_label[:8]=[1, 0, 2, 0, 1, 2, 2, 1]
 [DBG-C] ep=14 b=0 src_feat: shape=(32, 310) sum=-2384.794678 norm=53.979313 mean=-0.240403 std=0.485754
@@ -282,13 +317,13 @@ number of target samples 3394
 [DBG-C] ep=14 b=2 src_idx[:8]=[35084, 19236, 30480, 33877, 34730, 19413, 13913, 4640] tar_idx[:8]=[2738, 2060, 303, 2342, 356, 1794, 1164, 405] src_label[:8]=[2, 1, 0, 0, 0, 1, 1, 2]
 [DBG-C] ep=14 b=2 src_feat: shape=(32, 310) sum=-1479.195923 norm=48.697582 mean=-0.149112 std=0.465667
 [DBG-C] ep=14 b=2 tar_feat: shape=(32, 310) sum=-1587.772827 norm=53.670963 mean=-0.160058 std=0.514576
-22:29:34 | INFO     train.training_pcl train    267 Epoch 14/1000 | total_loss_sum=221.7442 | total_cls_loss=2.8378 | total_transfer_loss=73.5768| total_domain_loss=426.5876 | total_source_loss=59.1768 | total_target_loss=59.6636
-[DBG-D] ep=14 model_params: count=189414 sum=3.894346 norm=14.164531
-[DBG-D] ep=14 disc_params: count=4225 sum=30.182883 norm=2.752573
-[DBG-D] ep=14 source_f_bank: shape=(47516, 64) sum=212891.343750 norm=217.977844 mean=0.070006 std=0.103557
-[DBG-D] ep=14 target_f_bank: shape=(3394, 64) sum=13541.513672 norm=58.258034 mean=0.062341 std=0.108345
-[DBG-D] ep=14 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=191.180359 mean=0.333333 std=0.381174
-[DBG-D] ep=14 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=57.137520 mean=0.333333 std=0.457759
+22:44:33 | INFO     train.training_pcl train    314 Epoch 14/1000 | total_loss_sum=219.3686 | total_cls_loss=1.0241 | total_transfer_loss=73.5291| total_domain_loss=426.5400 | total_source_loss=58.6774 | total_target_loss=59.2909
+[DBG-D] ep=14 model_params: count=189414 sum=12.384755 norm=14.159831
+[DBG-D] ep=14 disc_params: count=4225 sum=31.669131 norm=2.669897
+[DBG-D] ep=14 source_f_bank: shape=(47516, 64) sum=214642.500000 norm=217.977325 mean=0.070582 std=0.103166
+[DBG-D] ep=14 target_f_bank: shape=(3394, 64) sum=13622.970703 norm=58.258015 mean=0.062716 std=0.108128
+[DBG-D] ep=14 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=191.183441 mean=0.333333 std=0.381185
+[DBG-D] ep=14 target_score_bank: shape=(3394, 3) sum=3393.999756 norm=57.370037 mean=0.333333 std=0.460607
 [DBG-D] ep=14 lr=9.124124e-04 iter_num=14
 [DBG-C] ep=15 b=0 src_idx[:8]=[20999, 23327, 2498, 39362, 1835, 11447, 11036, 8327] tar_idx[:8]=[1830, 2472, 2450, 1577, 1702, 2518, 3380, 620] src_label[:8]=[0, 2, 0, 2, 2, 2, 0, 1]
 [DBG-C] ep=15 b=0 src_feat: shape=(32, 310) sum=-1547.001465 norm=47.919964 mean=-0.155948 std=0.455176
@@ -299,13 +334,13 @@ number of target samples 3394
 [DBG-C] ep=15 b=2 src_idx[:8]=[10111, 23116, 36241, 17422, 18019, 34466, 44771, 10298] tar_idx[:8]=[1960, 1766, 1634, 209, 527, 2476, 3163, 1777] src_label[:8]=[0, 1, 1, 1, 1, 0, 0, 2]
 [DBG-C] ep=15 b=2 src_feat: shape=(32, 310) sum=-1528.529175 norm=50.821743 mean=-0.154086 std=0.486466
 [DBG-C] ep=15 b=2 tar_feat: shape=(32, 310) sum=-1243.486572 norm=51.171307 mean=-0.125351 std=0.498271
-22:29:42 | INFO     train.training_pcl train    267 Epoch 15/1000 | total_loss_sum=219.9184 | total_cls_loss=1.6311 | total_transfer_loss=73.5638| total_domain_loss=425.2425 | total_source_loss=58.7893 | total_target_loss=59.0543
-[DBG-D] ep=15 model_params: count=189414 sum=1.177336 norm=14.053607
-[DBG-D] ep=15 disc_params: count=4225 sum=28.445161 norm=2.658517
-[DBG-D] ep=15 source_f_bank: shape=(47516, 64) sum=211342.828125 norm=217.977921 mean=0.069497 std=0.103900
-[DBG-D] ep=15 target_f_bank: shape=(3394, 64) sum=13453.910156 norm=58.258045 mean=0.061938 std=0.108576
-[DBG-D] ep=15 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=193.259277 mean=0.333333 std=0.388459
-[DBG-D] ep=15 target_score_bank: shape=(3394, 3) sum=3393.999756 norm=57.455956 mean=0.333333 std=0.461658
+22:44:37 | INFO     train.training_pcl train    314 Epoch 15/1000 | total_loss_sum=219.0869 | total_cls_loss=0.9026 | total_transfer_loss=73.5617| total_domain_loss=425.5078 | total_source_loss=58.6358 | total_target_loss=59.0169
+[DBG-D] ep=15 model_params: count=189414 sum=4.523076 norm=13.918620
+[DBG-D] ep=15 disc_params: count=4225 sum=36.814302 norm=2.615780
+[DBG-D] ep=15 source_f_bank: shape=(47516, 64) sum=213166.343750 norm=217.977280 mean=0.070097 std=0.103496
+[DBG-D] ep=15 target_f_bank: shape=(3394, 64) sum=13565.916016 norm=58.258038 mean=0.062454 std=0.108280
+[DBG-D] ep=15 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=193.272263 mean=0.333333 std=0.388505
+[DBG-D] ep=15 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=57.129524 mean=0.333333 std=0.457662
 [DBG-D] ep=15 lr=9.064031e-04 iter_num=15
 [DBG-C] ep=16 b=0 src_idx[:8]=[30963, 8269, 30546, 29774, 24582, 19696, 30566, 35275] tar_idx[:8]=[3217, 2936, 1867, 581, 551, 1438, 3063, 2129] src_label[:8]=[1, 0, 2, 0, 0, 1, 2, 0]
 [DBG-C] ep=16 b=0 src_feat: shape=(32, 310) sum=-2166.389160 norm=52.247238 mean=-0.218386 std=0.476979
@@ -316,13 +351,13 @@ number of target samples 3394
 [DBG-C] ep=16 b=2 src_idx[:8]=[45929, 3475, 32526, 7633, 40327, 42725, 36142, 32753] tar_idx[:8]=[753, 1300, 3184, 1797, 1120, 1001, 2639, 2832] src_label[:8]=[2, 2, 2, 0, 2, 2, 2, 2]
 [DBG-C] ep=16 b=2 src_feat: shape=(32, 310) sum=-1365.088135 norm=48.706238 mean=-0.137610 std=0.469285
 [DBG-C] ep=16 b=2 tar_feat: shape=(32, 310) sum=-1536.766724 norm=51.068722 mean=-0.154916 std=0.488805
-22:29:50 | INFO     train.training_pcl train    267 Epoch 16/1000 | total_loss_sum=218.6783 | total_cls_loss=0.7289 | total_transfer_loss=73.5756| total_domain_loss=424.1531 | total_source_loss=58.6015 | total_target_loss=58.8525
-[DBG-D] ep=16 model_params: count=189414 sum=-0.766785 norm=13.832635
-[DBG-D] ep=16 disc_params: count=4225 sum=26.916395 norm=2.606009
-[DBG-D] ep=16 source_f_bank: shape=(47516, 64) sum=209889.156250 norm=217.978012 mean=0.069019 std=0.104218
-[DBG-D] ep=16 target_f_bank: shape=(3394, 64) sum=13466.656250 norm=58.258057 mean=0.061997 std=0.108543
-[DBG-D] ep=16 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=195.130066 mean=0.333333 std=0.394965
-[DBG-D] ep=16 target_score_bank: shape=(3394, 3) sum=3394.000244 norm=57.593372 mean=0.333333 std=0.463337
+22:44:42 | INFO     train.training_pcl train    314 Epoch 16/1000 | total_loss_sum=219.9849 | total_cls_loss=1.5497 | total_transfer_loss=73.5820| total_domain_loss=425.1985 | total_source_loss=58.8611 | total_target_loss=59.5342
+[DBG-D] ep=16 model_params: count=189414 sum=5.929976 norm=13.962947
+[DBG-D] ep=16 disc_params: count=4225 sum=40.629016 norm=2.631819
+[DBG-D] ep=16 source_f_bank: shape=(47516, 64) sum=211925.093750 norm=217.977295 mean=0.069689 std=0.103771
+[DBG-D] ep=16 target_f_bank: shape=(3394, 64) sum=13600.878906 norm=58.258034 mean=0.062615 std=0.108187
+[DBG-D] ep=16 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=195.096176 mean=0.333333 std=0.394848
+[DBG-D] ep=16 target_score_bank: shape=(3394, 3) sum=3393.999756 norm=56.113068 mean=0.333333 std=0.445138
 [DBG-D] ep=16 lr=9.004853e-04 iter_num=16
 [DBG-C] ep=17 b=0 src_idx[:8]=[28694, 38403, 15742, 11235, 43342, 7755, 1492, 23495] tar_idx[:8]=[2272, 2389, 3388, 328, 221, 3352, 2754, 1538] src_label[:8]=[1, 1, 2, 1, 0, 1, 0, 2]
 [DBG-C] ep=17 b=0 src_feat: shape=(32, 310) sum=-2016.663818 norm=50.616661 mean=-0.203293 std=0.465795
@@ -333,13 +368,13 @@ number of target samples 3394
 [DBG-C] ep=17 b=2 src_idx[:8]=[31436, 23052, 18476, 46951, 12762, 25043, 39699, 4655] tar_idx[:8]=[234, 763, 2049, 2581, 2357, 2309, 2249, 1732] src_label[:8]=[0, 0, 0, 1, 0, 2, 1, 2]
 [DBG-C] ep=17 b=2 src_feat: shape=(32, 310) sum=-1402.262573 norm=49.692974 mean=-0.141357 std=0.478510
 [DBG-C] ep=17 b=2 tar_feat: shape=(32, 310) sum=-1095.685791 norm=51.518829 mean=-0.110452 std=0.505357
-22:29:57 | INFO     train.training_pcl train    267 Epoch 17/1000 | total_loss_sum=220.3860 | total_cls_loss=2.0378 | total_transfer_loss=73.5834| total_domain_loss=424.1053 | total_source_loss=58.9306 | total_target_loss=59.6054
-[DBG-D] ep=17 model_params: count=189414 sum=-2.490980 norm=13.912039
-[DBG-D] ep=17 disc_params: count=4225 sum=31.928674 norm=2.591795
-[DBG-D] ep=17 source_f_bank: shape=(47516, 64) sum=208606.328125 norm=217.978134 mean=0.068597 std=0.104496
-[DBG-D] ep=17 target_f_bank: shape=(3394, 64) sum=13562.167969 norm=58.258049 mean=0.062436 std=0.108290
-[DBG-D] ep=17 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=196.856140 mean=0.333333 std=0.400929
-[DBG-D] ep=17 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=56.869576 mean=0.333333 std=0.454470
+22:44:47 | INFO     train.training_pcl train    314 Epoch 17/1000 | total_loss_sum=218.6262 | total_cls_loss=0.7055 | total_transfer_loss=73.5621| total_domain_loss=423.7656 | total_source_loss=58.6017 | total_target_loss=59.0507
+[DBG-D] ep=17 model_params: count=189414 sum=-2.850629 norm=13.708639
+[DBG-D] ep=17 disc_params: count=4225 sum=43.171992 norm=2.613745
+[DBG-D] ep=17 source_f_bank: shape=(47516, 64) sum=210632.109375 norm=217.977249 mean=0.069264 std=0.104056
+[DBG-D] ep=17 target_f_bank: shape=(3394, 64) sum=13503.792969 norm=58.249466 mean=0.062168 std=0.108423
+[DBG-D] ep=17 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=196.864136 mean=0.333333 std=0.400957
+[DBG-D] ep=17 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=55.949913 mean=0.333333 std=0.443116
 [DBG-D] ep=17 lr=8.946569e-04 iter_num=17
 [DBG-C] ep=18 b=0 src_idx[:8]=[37162, 1049, 2893, 34372, 31016, 32692, 12169, 31707] tar_idx[:8]=[1384, 3205, 2745, 1043, 1843, 2713, 1754, 3044] src_label[:8]=[0, 1, 1, 1, 0, 2, 2, 2]
 [DBG-C] ep=18 b=0 src_feat: shape=(32, 310) sum=-1819.108154 norm=51.087318 mean=-0.183378 std=0.479053
@@ -350,13 +385,13 @@ number of target samples 3394
 [DBG-C] ep=18 b=2 src_idx[:8]=[7999, 45176, 36818, 38037, 6887, 32389, 17313, 17121] tar_idx[:8]=[764, 496, 2793, 1556, 886, 2661, 2752, 1962] src_label[:8]=[2, 1, 1, 0, 2, 2, 1, 2]
 [DBG-C] ep=18 b=2 src_feat: shape=(32, 310) sum=-1035.381836 norm=48.342106 mean=-0.104373 std=0.474035
 [DBG-C] ep=18 b=2 tar_feat: shape=(32, 310) sum=-1914.655273 norm=50.146919 mean=-0.193010 std=0.465047
-22:30:05 | INFO     train.training_pcl train    267 Epoch 18/1000 | total_loss_sum=218.6529 | total_cls_loss=0.8292 | total_transfer_loss=73.5763| total_domain_loss=422.8116 | total_source_loss=58.6225 | total_target_loss=59.0327
-[DBG-D] ep=18 model_params: count=189414 sum=-8.599237 norm=13.751540
-[DBG-D] ep=18 disc_params: count=4225 sum=32.070057 norm=2.584131
-[DBG-D] ep=18 source_f_bank: shape=(47516, 64) sum=207348.734375 norm=217.978287 mean=0.068184 std=0.104766
-[DBG-D] ep=18 target_f_bank: shape=(3394, 64) sum=13443.506836 norm=58.258041 mean=0.061890 std=0.108603
-[DBG-D] ep=18 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=198.446793 mean=0.333333 std=0.406393
-[DBG-D] ep=18 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=56.744339 mean=0.333333 std=0.452930
+22:44:52 | INFO     train.training_pcl train    314 Epoch 18/1000 | total_loss_sum=221.4691 | total_cls_loss=2.8141 | total_transfer_loss=73.5623| total_domain_loss=424.0480 | total_source_loss=59.2052 | total_target_loss=59.8878
+[DBG-D] ep=18 model_params: count=189414 sum=24.339574 norm=13.971509
+[DBG-D] ep=18 disc_params: count=4225 sum=41.744554 norm=2.558985
+[DBG-D] ep=18 source_f_bank: shape=(47516, 64) sum=209506.125000 norm=217.977432 mean=0.068893 std=0.104301
+[DBG-D] ep=18 target_f_bank: shape=(3394, 64) sum=13429.384766 norm=58.154968 mean=0.061825 std=0.108386
+[DBG-D] ep=18 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=198.390961 mean=0.333333 std=0.406202
+[DBG-D] ep=18 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=55.514599 mean=0.333333 std=0.437706
 [DBG-D] ep=18 lr=8.889158e-04 iter_num=18
 [DBG-C] ep=19 b=0 src_idx[:8]=[39978, 15700, 879, 9915, 4782, 3211, 45052, 34826] tar_idx[:8]=[1842, 2235, 2174, 1356, 3366, 1359, 333, 1040] src_label[:8]=[0, 2, 0, 2, 0, 0, 1, 0]
 [DBG-C] ep=19 b=0 src_feat: shape=(32, 310) sum=-1559.174072 norm=48.745148 mean=-0.157175 std=0.463511
@@ -367,13 +402,13 @@ number of target samples 3394
 [DBG-C] ep=19 b=2 src_idx[:8]=[30599, 18665, 14477, 47220, 4522, 31101, 28175, 28390] tar_idx[:8]=[428, 1934, 465, 2307, 2341, 191, 730, 2006] src_label[:8]=[2, 1, 0, 2, 2, 0, 1, 2]
 [DBG-C] ep=19 b=2 src_feat: shape=(32, 310) sum=-2001.981201 norm=52.334297 mean=-0.201813 std=0.485172
 [DBG-C] ep=19 b=2 tar_feat: shape=(32, 310) sum=-838.794006 norm=54.241325 mean=-0.084556 std=0.538019
-22:30:13 | INFO     train.training_pcl train    267 Epoch 19/1000 | total_loss_sum=221.2913 | total_cls_loss=2.9146 | total_transfer_loss=73.5604| total_domain_loss=422.6119 | total_source_loss=59.1678 | total_target_loss=59.2729
-[DBG-D] ep=19 model_params: count=189414 sum=11.031051 norm=13.860950
-[DBG-D] ep=19 disc_params: count=4225 sum=34.348073 norm=2.518851
-[DBG-D] ep=19 source_f_bank: shape=(47516, 64) sum=206193.781250 norm=217.978256 mean=0.067804 std=0.105012
-[DBG-D] ep=19 target_f_bank: shape=(3394, 64) sum=13418.302734 norm=58.258060 mean=0.061774 std=0.108669
-[DBG-D] ep=19 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=199.822769 mean=0.333333 std=0.411096
-[DBG-D] ep=19 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=56.548420 mean=0.333333 std=0.450517
+22:44:56 | INFO     train.training_pcl train    314 Epoch 19/1000 | total_loss_sum=218.5311 | total_cls_loss=0.7399 | total_transfer_loss=73.5583| total_domain_loss=422.5555 | total_source_loss=58.5960 | total_target_loss=59.2603
+[DBG-D] ep=19 model_params: count=189414 sum=11.919424 norm=13.797600
+[DBG-D] ep=19 disc_params: count=4225 sum=42.349611 norm=2.530693
+[DBG-D] ep=19 source_f_bank: shape=(47516, 64) sum=208357.562500 norm=217.977524 mean=0.068516 std=0.104550
+[DBG-D] ep=19 target_f_bank: shape=(3394, 64) sum=13505.224609 norm=58.232273 mean=0.062174 std=0.108377
+[DBG-D] ep=19 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=199.812943 mean=0.333333 std=0.411062
+[DBG-D] ep=19 target_score_bank: shape=(3394, 3) sum=3393.999756 norm=55.426041 mean=0.333333 std=0.436602
 [DBG-D] ep=19 lr=8.832599e-04 iter_num=19
 [DBG-C] ep=20 b=0 src_idx[:8]=[23552, 8968, 30689, 31233, 30435, 40645, 15746, 33620] tar_idx[:8]=[1605, 1304, 1341, 1589, 2995, 476, 2455, 3148] src_label[:8]=[0, 2, 2, 0, 0, 0, 2, 2]
 [DBG-C] ep=20 b=0 src_feat: shape=(32, 310) sum=-1358.627319 norm=50.008369 mean=-0.136958 std=0.483080
@@ -384,13 +419,13 @@ number of target samples 3394
 [DBG-C] ep=20 b=2 src_idx[:8]=[38465, 40512, 40706, 16382, 22461, 9185, 11168, 36825] tar_idx[:8]=[2721, 1295, 2242, 2704, 2739, 104, 3265, 1546] src_label[:8]=[2, 2, 0, 1, 2, 1, 1, 1]
 [DBG-C] ep=20 b=2 src_feat: shape=(32, 310) sum=-1576.114258 norm=50.990768 mean=-0.158882 std=0.486706
 [DBG-C] ep=20 b=2 tar_feat: shape=(32, 310) sum=-1082.179077 norm=49.012035 mean=-0.109091 std=0.479873
-22:30:21 | INFO     train.training_pcl train    267 Epoch 20/1000 | total_loss_sum=218.6152 | total_cls_loss=0.9622 | total_transfer_loss=73.5559| total_domain_loss=421.4522 | total_source_loss=58.6294 | total_target_loss=58.8639
-[DBG-D] ep=20 model_params: count=189414 sum=-1.179916 norm=13.684639
-[DBG-D] ep=20 disc_params: count=4225 sum=38.239164 norm=2.475754
-[DBG-D] ep=20 source_f_bank: shape=(47516, 64) sum=205053.734375 norm=217.978424 mean=0.067429 std=0.105254
-[DBG-D] ep=20 target_f_bank: shape=(3394, 64) sum=13441.274414 norm=58.258057 mean=0.061880 std=0.108609
-[DBG-D] ep=20 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=201.180573 mean=0.333333 std=0.415715
-[DBG-D] ep=20 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=56.785797 mean=0.333333 std=0.453440
+22:45:02 | INFO     train.training_pcl train    314 Epoch 20/1000 | total_loss_sum=218.5701 | total_cls_loss=0.7974 | total_transfer_loss=73.5611| total_domain_loss=421.9021 | total_source_loss=58.6474 | total_target_loss=59.1907
+[DBG-D] ep=20 model_params: count=189414 sum=7.302203 norm=13.653204
+[DBG-D] ep=20 disc_params: count=4225 sum=38.646673 norm=2.491447
+[DBG-D] ep=20 source_f_bank: shape=(47516, 64) sum=207318.437500 norm=217.977509 mean=0.068174 std=0.104773
+[DBG-D] ep=20 target_f_bank: shape=(3394, 64) sum=13561.710938 norm=58.240864 mean=0.062434 std=0.108249
+[DBG-D] ep=20 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=201.167419 mean=0.333333 std=0.415671
+[DBG-D] ep=20 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=55.173470 mean=0.333333 std=0.433448
 [DBG-D] ep=20 lr=8.776872e-04 iter_num=20
 [DBG-C] ep=21 b=0 src_idx[:8]=[23176, 36352, 36992, 28035, 46831, 2901, 3553, 30875] tar_idx[:8]=[2830, 2125, 978, 3206, 2743, 3070, 169, 1957] src_label[:8]=[1, 1, 2, 0, 0, 1, 2, 1]
 [DBG-C] ep=21 b=0 src_feat: shape=(32, 310) sum=-1632.383057 norm=53.310257 mean=-0.164555 std=0.509351
@@ -401,13 +436,13 @@ number of target samples 3394
 [DBG-C] ep=21 b=2 src_idx[:8]=[40867, 14438, 32652, 46027, 26175, 5616, 34842, 37558] tar_idx[:8]=[1017, 2619, 630, 246, 2367, 5, 2124, 142] src_label[:8]=[2, 0, 2, 2, 1, 2, 0, 2]
 [DBG-C] ep=21 b=2 src_feat: shape=(32, 310) sum=-858.610168 norm=52.180367 mean=-0.086553 std=0.516730
 [DBG-C] ep=21 b=2 tar_feat: shape=(32, 310) sum=-842.251831 norm=52.804104 mean=-0.084904 std=0.523350
-22:30:28 | INFO     train.training_pcl train    267 Epoch 21/1000 | total_loss_sum=218.3867 | total_cls_loss=0.7939 | total_transfer_loss=73.5525| total_domain_loss=420.9848 | total_source_loss=58.6065 | total_target_loss=58.9033
-[DBG-D] ep=21 model_params: count=189414 sum=-3.769102 norm=13.529622
-[DBG-D] ep=21 disc_params: count=4225 sum=38.858754 norm=2.428579
-[DBG-D] ep=21 source_f_bank: shape=(47516, 64) sum=204046.203125 norm=217.978485 mean=0.067098 std=0.105465
-[DBG-D] ep=21 target_f_bank: shape=(3394, 64) sum=13420.309570 norm=58.249454 mean=0.061783 std=0.108643
-[DBG-D] ep=21 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=202.423599 mean=0.333333 std=0.419927
-[DBG-D] ep=21 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=56.444172 mean=0.333333 std=0.449231
+22:45:06 | INFO     train.training_pcl train    314 Epoch 21/1000 | total_loss_sum=219.3036 | total_cls_loss=1.4160 | total_transfer_loss=73.5586| total_domain_loss=421.5754 | total_source_loss=58.7680 | total_target_loss=59.3321
+[DBG-D] ep=21 model_params: count=189414 sum=13.757343 norm=13.616742
+[DBG-D] ep=21 disc_params: count=4225 sum=41.084763 norm=2.512029
+[DBG-D] ep=21 source_f_bank: shape=(47516, 64) sum=206437.812500 norm=217.977463 mean=0.067884 std=0.104961
+[DBG-D] ep=21 target_f_bank: shape=(3394, 64) sum=13652.884766 norm=58.249432 mean=0.062854 std=0.108027
+[DBG-D] ep=21 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=202.395294 mean=0.333333 std=0.419831
+[DBG-D] ep=21 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=55.515221 mean=0.333333 std=0.437713
 [DBG-D] ep=21 lr=8.721959e-04 iter_num=21
 [DBG-C] ep=22 b=0 src_idx[:8]=[42539, 37640, 22417, 45648, 4774, 27102, 34951, 591] tar_idx[:8]=[2127, 2977, 3178, 1099, 203, 1370, 315, 2004] src_label[:8]=[2, 1, 2, 0, 0, 0, 1, 0]
 [DBG-C] ep=22 b=0 src_feat: shape=(32, 310) sum=-1098.930298 norm=50.030270 mean=-0.110779 std=0.489973
@@ -418,13 +453,13 @@ number of target samples 3394
 [DBG-C] ep=22 b=2 src_idx[:8]=[1601, 9670, 17244, 19031, 781, 25864, 10840, 18115] tar_idx[:8]=[594, 1409, 2073, 2769, 2422, 2287, 171, 1915] src_label[:8]=[1, 1, 1, 2, 0, 2, 0, 2]
 [DBG-C] ep=22 b=2 src_feat: shape=(32, 310) sum=-1157.828003 norm=48.359261 mean=-0.116717 std=0.471325
 [DBG-C] ep=22 b=2 tar_feat: shape=(32, 310) sum=-1005.337891 norm=49.989967 mean=-0.101345 std=0.491598
-22:30:36 | INFO     train.training_pcl train    267 Epoch 22/1000 | total_loss_sum=218.1386 | total_cls_loss=0.6369 | total_transfer_loss=73.5587| total_domain_loss=420.3277 | total_source_loss=58.5811 | total_target_loss=58.9260
-[DBG-D] ep=22 model_params: count=189414 sum=-14.045903 norm=13.255110
-[DBG-D] ep=22 disc_params: count=4225 sum=44.131789 norm=2.499929
-[DBG-D] ep=22 source_f_bank: shape=(47516, 64) sum=203075.687500 norm=217.978699 mean=0.066779 std=0.105667
-[DBG-D] ep=22 target_f_bank: shape=(3394, 64) sum=13379.013672 norm=58.232265 mean=0.061593 std=0.108708
-[DBG-D] ep=22 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=203.594681 mean=0.333333 std=0.423880
-[DBG-D] ep=22 target_score_bank: shape=(3394, 3) sum=3393.999756 norm=55.875446 mean=0.333333 std=0.442192
+22:45:11 | INFO     train.training_pcl train    314 Epoch 22/1000 | total_loss_sum=218.3276 | total_cls_loss=0.7271 | total_transfer_loss=73.5554| total_domain_loss=420.6968 | total_source_loss=58.6053 | total_target_loss=59.1129
+[DBG-D] ep=22 model_params: count=189414 sum=4.096405 norm=13.429228
+[DBG-D] ep=22 disc_params: count=4225 sum=42.050434 norm=2.497427
+[DBG-D] ep=22 source_f_bank: shape=(47516, 64) sum=205534.375000 norm=217.977631 mean=0.067587 std=0.105152
+[DBG-D] ep=22 target_f_bank: shape=(3394, 64) sum=13597.873047 norm=58.249462 mean=0.062601 std=0.108174
+[DBG-D] ep=22 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=203.560669 mean=0.333333 std=0.423765
+[DBG-D] ep=22 target_score_bank: shape=(3394, 3) sum=3394.000244 norm=55.446075 mean=0.333333 std=0.436852
 [DBG-D] ep=22 lr=8.667842e-04 iter_num=22
 [DBG-C] ep=23 b=0 src_idx[:8]=[21915, 16063, 32816, 29358, 33439, 9388, 28352, 39656] tar_idx[:8]=[1549, 224, 3375, 2450, 3331, 1918, 404, 1615] src_label[:8]=[1, 0, 1, 2, 1, 0, 2, 1]
 [DBG-C] ep=23 b=0 src_feat: shape=(32, 310) sum=-2223.338379 norm=51.255280 mean=-0.224127 std=0.463269
@@ -435,15 +470,14 @@ number of target samples 3394
 [DBG-C] ep=23 b=2 src_idx[:8]=[20571, 8100, 9579, 10036, 43285, 10852, 39731, 30683] tar_idx[:8]=[1748, 2625, 417, 158, 93, 887, 283, 1029] src_label[:8]=[2, 0, 1, 0, 0, 0, 1, 2]
 [DBG-C] ep=23 b=2 src_feat: shape=(32, 310) sum=-1817.567139 norm=51.936890 mean=-0.183222 std=0.488234
 [DBG-C] ep=23 b=2 tar_feat: shape=(32, 310) sum=-1680.613281 norm=52.520275 mean=-0.169417 std=0.499385
-22:30:44 | INFO     train.training_pcl train    267 Epoch 23/1000 | total_loss_sum=222.5735 | total_cls_loss=4.1201 | total_transfer_loss=73.5586| total_domain_loss=420.8956 | total_source_loss=59.3427 | total_target_loss=59.6971
-[DBG-D] ep=23 model_params: count=189414 sum=4.366028 norm=13.515575
-[DBG-D] ep=23 disc_params: count=4225 sum=38.409135 norm=2.401753
-[DBG-D] ep=23 source_f_bank: shape=(47516, 64) sum=202242.406250 norm=217.978607 mean=0.066505 std=0.105840
-[DBG-D] ep=23 target_f_bank: shape=(3394, 64) sum=13395.456055 norm=58.240841 mean=0.061669 std=0.108687
-[DBG-D] ep=23 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=204.528702 mean=0.333333 std=0.427022
-[DBG-D] ep=23 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=55.783733 mean=0.333333 std=0.441054
+22:45:16 | INFO     train.training_pcl train    314 Epoch 23/1000 | total_loss_sum=219.5979 | total_cls_loss=1.7712 | total_transfer_loss=73.5651| total_domain_loss=420.4067 | total_source_loss=58.8182 | total_target_loss=59.2214
+[DBG-D] ep=23 model_params: count=189414 sum=0.890827 norm=13.437389
+[DBG-D] ep=23 disc_params: count=4225 sum=45.240635 norm=2.647883
+[DBG-D] ep=23 source_f_bank: shape=(47516, 64) sum=204705.703125 norm=217.977600 mean=0.067315 std=0.105327
+[DBG-D] ep=23 target_f_bank: shape=(3394, 64) sum=13536.068359 norm=58.249466 mean=0.062316 std=0.108338
+[DBG-D] ep=23 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=204.559052 mean=0.333333 std=0.427125
+[DBG-D] ep=23 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=54.752254 mean=0.333333 std=0.428170
 [DBG-D] ep=23 lr=8.614501e-04 iter_num=23
-22:30:45 | INFO     utils.metric update   25  --> A new better acc 0.9101 on subject 0 session 0
 [DBG-C] ep=24 b=0 src_idx[:8]=[11592, 19383, 23793, 41772, 43912, 37242, 40906, 6315] tar_idx[:8]=[478, 1366, 3132, 2620, 3179, 1198, 579, 2657] src_label[:8]=[0, 1, 2, 1, 2, 0, 2, 1]
 [DBG-C] ep=24 b=0 src_feat: shape=(32, 310) sum=-1195.191162 norm=53.880688 mean=-0.120483 std=0.527415
 [DBG-C] ep=24 b=0 tar_feat: shape=(32, 310) sum=-815.268982 norm=51.245754 mean=-0.082184 std=0.507939
@@ -453,13 +487,13 @@ number of target samples 3394
 [DBG-C] ep=24 b=2 src_idx[:8]=[35095, 4838, 40626, 7035, 24923, 31150, 4567, 21225] tar_idx[:8]=[2952, 3375, 2584, 1645, 874, 936, 19, 1828] src_label[:8]=[2, 0, 0, 1, 2, 0, 2, 0]
 [DBG-C] ep=24 b=2 src_feat: shape=(32, 310) sum=-2090.112061 norm=49.036011 mean=-0.210697 std=0.444993
 [DBG-C] ep=24 b=2 tar_feat: shape=(32, 310) sum=-1447.799316 norm=52.641090 mean=-0.145948 std=0.508004
-22:30:52 | INFO     train.training_pcl train    267 Epoch 24/1000 | total_loss_sum=218.1095 | total_cls_loss=0.6693 | total_transfer_loss=73.5525| total_domain_loss=419.4551 | total_source_loss=58.5843 | total_target_loss=58.8495
-[DBG-D] ep=24 model_params: count=189414 sum=-0.404578 norm=13.377725
-[DBG-D] ep=24 disc_params: count=4225 sum=41.036339 norm=2.395830
-[DBG-D] ep=24 source_f_bank: shape=(47516, 64) sum=201397.781250 norm=217.978653 mean=0.066227 std=0.106014
-[DBG-D] ep=24 target_f_bank: shape=(3394, 64) sum=13413.569336 norm=58.258053 mean=0.061752 std=0.108682
-[DBG-D] ep=24 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=205.485443 mean=0.333333 std=0.430232
-[DBG-D] ep=24 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=56.400074 mean=0.333333 std=0.448687
+22:45:21 | INFO     train.training_pcl train    314 Epoch 24/1000 | total_loss_sum=218.5845 | total_cls_loss=0.9302 | total_transfer_loss=73.5672| total_domain_loss=420.0210 | total_source_loss=58.6623 | total_target_loss=59.1935
+[DBG-D] ep=24 model_params: count=189414 sum=2.081768 norm=13.362964
+[DBG-D] ep=24 disc_params: count=4225 sum=40.499714 norm=2.657544
+[DBG-D] ep=24 source_f_bank: shape=(47516, 64) sum=203944.843750 norm=217.977722 mean=0.067065 std=0.105486
+[DBG-D] ep=24 target_f_bank: shape=(3394, 64) sum=13590.950195 norm=58.249454 mean=0.062569 std=0.108192
+[DBG-D] ep=24 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=205.498276 mean=0.333333 std=0.430275
+[DBG-D] ep=24 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=53.680122 mean=0.333333 std=0.414621
 [DBG-D] ep=24 lr=8.561920e-04 iter_num=24
 [DBG-C] ep=25 b=0 src_idx[:8]=[45413, 27080, 30790, 35101, 8467, 6954, 13249, 30795] tar_idx[:8]=[3041, 3088, 734, 1220, 897, 1942, 766, 2176] src_label[:8]=[2, 0, 1, 2, 1, 2, 2, 1]
 [DBG-C] ep=25 b=0 src_feat: shape=(32, 310) sum=-1777.493896 norm=50.823101 mean=-0.179183 std=0.477806
@@ -470,13 +504,13 @@ number of target samples 3394
 [DBG-C] ep=25 b=2 src_idx[:8]=[31055, 13871, 21831, 2764, 7100, 37256, 30233, 2083] tar_idx[:8]=[527, 2796, 201, 3344, 522, 1644, 671, 621] src_label[:8]=[0, 1, 0, 1, 1, 0, 2, 2]
 [DBG-C] ep=25 b=2 src_feat: shape=(32, 310) sum=-2227.513672 norm=50.651546 mean=-0.224548 std=0.456318
 [DBG-C] ep=25 b=2 tar_feat: shape=(32, 310) sum=-1143.749390 norm=51.803020 mean=-0.115297 std=0.507200
-22:31:01 | INFO     train.training_pcl train    267 Epoch 25/1000 | total_loss_sum=218.4769 | total_cls_loss=0.9174 | total_transfer_loss=73.5686| total_domain_loss=419.2736 | total_source_loss=58.6572 | total_target_loss=59.1651
-[DBG-D] ep=25 model_params: count=189414 sum=-4.162391 norm=13.263618
-[DBG-D] ep=25 disc_params: count=4225 sum=42.535452 norm=2.559863
-[DBG-D] ep=25 source_f_bank: shape=(47516, 64) sum=200660.750000 norm=217.978683 mean=0.065985 std=0.106165
-[DBG-D] ep=25 target_f_bank: shape=(3394, 64) sum=13357.715820 norm=58.146332 mean=0.061495 std=0.108552
-[DBG-D] ep=25 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=206.336746 mean=0.333333 std=0.433081
-[DBG-D] ep=25 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=55.498482 mean=0.333333 std=0.437505
+22:45:26 | INFO     train.training_pcl train    314 Epoch 25/1000 | total_loss_sum=221.5788 | total_cls_loss=3.3775 | total_transfer_loss=73.5623| total_domain_loss=419.8777 | total_source_loss=59.1763 | total_target_loss=59.4878
+[DBG-D] ep=25 model_params: count=189414 sum=10.008629 norm=13.488644
+[DBG-D] ep=25 disc_params: count=4225 sum=42.859717 norm=2.665901
+[DBG-D] ep=25 source_f_bank: shape=(47516, 64) sum=203257.406250 norm=217.977859 mean=0.066838 std=0.105630
+[DBG-D] ep=25 target_f_bank: shape=(3394, 64) sum=13568.164062 norm=58.206551 mean=0.062464 std=0.108147
+[DBG-D] ep=25 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=206.318268 mean=0.333333 std=0.433020
+[DBG-D] ep=25 target_score_bank: shape=(3394, 3) sum=3393.999756 norm=54.126881 mean=0.333333 std=0.420288
 [DBG-D] ep=25 lr=8.510082e-04 iter_num=25
 [DBG-C] ep=26 b=0 src_idx[:8]=[887, 39137, 1356, 37259, 7872, 29408, 7554, 46878] tar_idx[:8]=[1935, 2348, 1695, 2165, 1640, 543, 3114, 17] src_label[:8]=[0, 2, 0, 0, 1, 1, 0, 1]
 [DBG-C] ep=26 b=0 src_feat: shape=(32, 310) sum=-2243.229736 norm=49.434013 mean=-0.226132 std=0.441845
@@ -487,13 +521,13 @@ number of target samples 3394
 [DBG-C] ep=26 b=2 src_idx[:8]=[14875, 7884, 137, 24825, 37149, 18474, 5443, 26342] tar_idx[:8]=[815, 978, 738, 2308, 2980, 913, 880, 1059] src_label[:8]=[0, 1, 2, 1, 0, 0, 2, 0]
 [DBG-C] ep=26 b=2 src_feat: shape=(32, 310) sum=-2287.926270 norm=52.938396 mean=-0.230638 std=0.478891
 [DBG-C] ep=26 b=2 tar_feat: shape=(32, 310) sum=-2159.696045 norm=51.943806 mean=-0.217711 std=0.473937
-22:31:09 | INFO     train.training_pcl train    267 Epoch 26/1000 | total_loss_sum=218.0761 | total_cls_loss=0.6599 | total_transfer_loss=73.5597| total_domain_loss=418.6528 | total_source_loss=58.5960 | total_target_loss=58.8466
-[DBG-D] ep=26 model_params: count=189414 sum=-9.282630 norm=13.086733
-[DBG-D] ep=26 disc_params: count=4225 sum=42.578393 norm=2.562295
-[DBG-D] ep=26 source_f_bank: shape=(47516, 64) sum=199966.812500 norm=217.978729 mean=0.065756 std=0.106307
-[DBG-D] ep=26 target_f_bank: shape=(3394, 64) sum=13443.378906 norm=58.258049 mean=0.061889 std=0.108604
-[DBG-D] ep=26 source_score_bank: shape=(47516, 3) sum=47516.003906 norm=207.153442 mean=0.333333 std=0.435808
-[DBG-D] ep=26 target_score_bank: shape=(3394, 3) sum=3394.000244 norm=55.131187 mean=0.333333 std=0.432919
+22:45:31 | INFO     train.training_pcl train    314 Epoch 26/1000 | total_loss_sum=218.1815 | total_cls_loss=0.7300 | total_transfer_loss=73.5614| total_domain_loss=418.7926 | total_source_loss=58.6018 | total_target_loss=58.8383
+[DBG-D] ep=26 model_params: count=189414 sum=5.868876 norm=13.380562
+[DBG-D] ep=26 disc_params: count=4225 sum=43.658519 norm=2.656671
+[DBG-D] ep=26 source_f_bank: shape=(47516, 64) sum=202495.187500 norm=217.977890 mean=0.066588 std=0.105788
+[DBG-D] ep=26 target_f_bank: shape=(3394, 64) sum=13574.623047 norm=58.240887 mean=0.062494 std=0.108215
+[DBG-D] ep=26 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=207.140244 mean=0.333333 std=0.435764
+[DBG-D] ep=26 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=54.055851 mean=0.333333 std=0.419389
 [DBG-D] ep=26 lr=8.458970e-04 iter_num=26
 [DBG-C] ep=27 b=0 src_idx[:8]=[41620, 33441, 2772, 9947, 37893, 46201, 17349, 16103] tar_idx[:8]=[961, 1466, 2112, 412, 1023, 3219, 672, 2905] src_label[:8]=[0, 1, 1, 2, 0, 2, 1, 0]
 [DBG-C] ep=27 b=0 src_feat: shape=(32, 310) sum=-1701.439941 norm=53.590176 mean=-0.171516 std=0.510015
@@ -504,13 +538,13 @@ number of target samples 3394
 [DBG-C] ep=27 b=2 src_idx[:8]=[41346, 46871, 8210, 38016, 12668, 35228, 44150, 47046] tar_idx[:8]=[2214, 439, 1782, 2204, 3138, 1256, 2151, 2857] src_label[:8]=[0, 1, 0, 0, 0, 2, 2, 1]
 [DBG-C] ep=27 b=2 src_feat: shape=(32, 310) sum=-2146.956055 norm=51.226303 mean=-0.216427 std=0.466595
 [DBG-C] ep=27 b=2 tar_feat: shape=(32, 310) sum=-1635.770996 norm=51.280224 mean=-0.164896 std=0.487770
-22:31:16 | INFO     train.training_pcl train    267 Epoch 27/1000 | total_loss_sum=220.4203 | total_cls_loss=2.4621 | total_transfer_loss=73.5635| total_domain_loss=418.9081 | total_source_loss=59.0128 | total_target_loss=59.2735
-[DBG-D] ep=27 model_params: count=189414 sum=13.116460 norm=13.264928
-[DBG-D] ep=27 disc_params: count=4225 sum=38.241529 norm=2.576261
-[DBG-D] ep=27 source_f_bank: shape=(47516, 64) sum=199426.718750 norm=217.978867 mean=0.065579 std=0.106416
-[DBG-D] ep=27 target_f_bank: shape=(3394, 64) sum=13458.828125 norm=58.240868 mean=0.061961 std=0.108521
-[DBG-D] ep=27 source_score_bank: shape=(47516, 3) sum=47516.003906 norm=207.862183 mean=0.333333 std=0.438169
-[DBG-D] ep=27 target_score_bank: shape=(3394, 3) sum=3394.000244 norm=54.811600 mean=0.333333 std=0.428915
+22:45:36 | INFO     train.training_pcl train    314 Epoch 27/1000 | total_loss_sum=218.2343 | total_cls_loss=0.7460 | total_transfer_loss=73.5679| total_domain_loss=418.5751 | total_source_loss=58.6117 | total_target_loss=59.0333
+[DBG-D] ep=27 model_params: count=189414 sum=-1.480131 norm=13.261333
+[DBG-D] ep=27 disc_params: count=4225 sum=39.152083 norm=2.705721
+[DBG-D] ep=27 source_f_bank: shape=(47516, 64) sum=201772.000000 norm=217.977936 mean=0.066350 std=0.105937
+[DBG-D] ep=27 target_f_bank: shape=(3394, 64) sum=13573.577148 norm=58.240883 mean=0.062489 std=0.108217
+[DBG-D] ep=27 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=207.904373 mean=0.333333 std=0.438309
+[DBG-D] ep=27 target_score_bank: shape=(3394, 3) sum=3393.999756 norm=53.225159 mean=0.333333 std=0.408819
 [DBG-D] ep=27 lr=8.408569e-04 iter_num=27
 [DBG-C] ep=28 b=0 src_idx[:8]=[40563, 28521, 43395, 30805, 25660, 16983, 35668, 8048] tar_idx[:8]=[2198, 1914, 2794, 861, 233, 3178, 758, 391] src_label[:8]=[0, 0, 0, 1, 2, 2, 1, 2]
 [DBG-C] ep=28 b=0 src_feat: shape=(32, 310) sum=-1756.921021 norm=52.272186 mean=-0.177109 std=0.494063
@@ -521,278 +555,41 @@ number of target samples 3394
 [DBG-C] ep=28 b=2 src_idx[:8]=[18475, 36851, 36720, 10039, 35625, 44914, 45650, 28307] tar_idx[:8]=[710, 2534, 3189, 1495, 284, 116, 96, 1669] src_label[:8]=[0, 1, 1, 0, 1, 0, 0, 2]
 [DBG-C] ep=28 b=2 src_feat: shape=(32, 310) sum=-1903.565430 norm=50.440311 mean=-0.191892 std=0.468694
 [DBG-C] ep=28 b=2 tar_feat: shape=(32, 310) sum=-2062.829102 norm=53.269764 mean=-0.207946 std=0.492786
-22:31:23 | INFO     train.training_pcl train    267 Epoch 28/1000 | total_loss_sum=218.9507 | total_cls_loss=1.3225 | total_transfer_loss=73.5585| total_domain_loss=418.3233 | total_source_loss=58.7507 | total_target_loss=59.0874
-[DBG-D] ep=28 model_params: count=189414 sum=3.418169 norm=13.227816
-[DBG-D] ep=28 disc_params: count=4225 sum=43.524486 norm=2.615546
-[DBG-D] ep=28 source_f_bank: shape=(47516, 64) sum=198777.968750 norm=217.979156 mean=0.065365 std=0.106547
-[DBG-D] ep=28 target_f_bank: shape=(3394, 64) sum=13515.681641 norm=58.232269 mean=0.062222 std=0.108350
-[DBG-D] ep=28 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=208.631531 mean=0.333333 std=0.440726
-[DBG-D] ep=28 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=55.181824 mean=0.333333 std=0.433553
-[DBG-D] ep=28 lr=8.358863e-04 iter_num=28
-[DBG-C] ep=29 b=0 src_idx[:8]=[11632, 38366, 11415, 34579, 16464, 2049, 7560, 26693] tar_idx[:8]=[418, 3063, 869, 865, 940, 1396, 2650, 105] src_label[:8]=[0, 1, 2, 0, 1, 2, 0, 1]
-[DBG-C] ep=29 b=0 src_feat: shape=(32, 310) sum=-2223.752197 norm=53.495579 mean=-0.224169 std=0.488117
-[DBG-C] ep=29 b=0 tar_feat: shape=(32, 310) sum=-2682.302979 norm=54.016804 mean=-0.270393 std=0.470153
-[DBG-C] ep=29 b=1 src_idx[:8]=[9359, 2470, 15328, 30635, 6897, 1230, 293, 2058] tar_idx[:8]=[907, 2356, 1629, 424, 2789, 1202, 1633, 2676] src_label[:8]=[0, 1, 2, 2, 2, 2, 1, 2]
-[DBG-C] ep=29 b=1 src_feat: shape=(32, 310) sum=-1751.791016 norm=52.851761 mean=-0.176592 std=0.500424
-[DBG-C] ep=29 b=1 tar_feat: shape=(32, 310) sum=-1359.053589 norm=52.328495 mean=-0.137001 std=0.507240
-[DBG-C] ep=29 b=2 src_idx[:8]=[20649, 9239, 14816, 28167, 34057, 7150, 24558, 26941] tar_idx[:8]=[3336, 833, 2989, 1125, 1259, 212, 1656, 2840] src_label[:8]=[1, 1, 2, 1, 2, 1, 0, 2]
-[DBG-C] ep=29 b=2 src_feat: shape=(32, 310) sum=-1721.506348 norm=52.548435 mean=-0.173539 std=0.498267
-[DBG-C] ep=29 b=2 tar_feat: shape=(32, 310) sum=-963.584595 norm=49.405167 mean=-0.097136 std=0.486461
-22:31:31 | INFO     train.training_pcl train    267 Epoch 29/1000 | total_loss_sum=217.9934 | total_cls_loss=0.6338 | total_transfer_loss=73.5661| total_domain_loss=417.5860 | total_source_loss=58.5729 | total_target_loss=58.7408
-[DBG-D] ep=29 model_params: count=189414 sum=-8.282316 norm=13.078072
-[DBG-D] ep=29 disc_params: count=4225 sum=44.555354 norm=2.732529
-[DBG-D] ep=29 source_f_bank: shape=(47516, 64) sum=198130.531250 norm=217.979202 mean=0.065153 std=0.106678
-[DBG-D] ep=29 target_f_bank: shape=(3394, 64) sum=13479.835938 norm=58.249477 mean=0.062057 std=0.108487
-[DBG-D] ep=29 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=209.343903 mean=0.333333 std=0.443090
-[DBG-D] ep=29 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=54.564861 mean=0.333333 std=0.425814
-[DBG-D] ep=29 lr=8.309837e-04 iter_num=29
-[DBG-C] ep=30 b=0 src_idx[:8]=[28661, 38870, 1103, 18020, 31769, 5486, 15468, 24457] tar_idx[:8]=[2752, 2640, 1504, 1200, 3361, 256, 1432, 984] src_label[:8]=[0, 1, 2, 1, 2, 2, 2, 0]
-[DBG-C] ep=30 b=0 src_feat: shape=(32, 310) sum=-2316.739258 norm=50.958527 mean=-0.233542 std=0.455247
-[DBG-C] ep=30 b=0 tar_feat: shape=(32, 310) sum=-1829.433960 norm=54.685749 mean=-0.184419 std=0.517186
-[DBG-C] ep=30 b=1 src_idx[:8]=[24930, 24649, 26381, 17219, 5083, 19016, 7575, 6489] tar_idx[:8]=[1469, 2174, 2077, 1140, 641, 760, 2797, 693] src_label[:8]=[2, 0, 0, 1, 1, 2, 0, 2]
-[DBG-C] ep=30 b=1 src_feat: shape=(32, 310) sum=-878.210205 norm=52.788448 mean=-0.088529 std=0.522589
-[DBG-C] ep=30 b=1 tar_feat: shape=(32, 310) sum=-843.583374 norm=50.652401 mean=-0.085039 std=0.501427
-[DBG-C] ep=30 b=2 src_idx[:8]=[3412, 8679, 17352, 46077, 46566, 31092, 15635, 3056] tar_idx[:8]=[3208, 1936, 2127, 1175, 586, 768, 2324, 1575] src_label[:8]=[2, 2, 1, 2, 1, 0, 2, 2]
-[DBG-C] ep=30 b=2 src_feat: shape=(32, 310) sum=-1171.597656 norm=49.342197 mean=-0.118105 std=0.481148
-[DBG-C] ep=30 b=2 tar_feat: shape=(32, 310) sum=-836.118408 norm=52.293110 mean=-0.084286 std=0.518252
-22:31:40 | INFO     train.training_pcl train    267 Epoch 30/1000 | total_loss_sum=218.1663 | total_cls_loss=0.7216 | total_transfer_loss=73.5595| total_domain_loss=417.5402 | total_source_loss=58.6076 | total_target_loss=58.9898
-[DBG-C] ep=31 b=0 src_idx[:8]=[18378, 19646, 37704, 35286, 9566, 31515, 24662, 36480] tar_idx[:8]=[2935, 17, 875, 1566, 2980, 3028, 666, 505] src_label[:8]=[0, 0, 1, 0, 1, 1, 0, 0]
-[DBG-C] ep=31 b=0 src_feat: shape=(32, 310) sum=-2237.157227 norm=50.986340 mean=-0.225520 std=0.459586
-[DBG-C] ep=31 b=0 tar_feat: shape=(32, 310) sum=-1156.771240 norm=54.087593 mean=-0.116610 std=0.530412
-[DBG-C] ep=31 b=1 src_idx[:8]=[43782, 11233, 18663, 39412, 228, 17437, 39049, 33169] tar_idx[:8]=[2311, 1420, 715, 1067, 1332, 2224, 3141, 909] src_label[:8]=[2, 1, 1, 2, 2, 1, 1, 0]
-[DBG-C] ep=31 b=1 src_feat: shape=(32, 310) sum=-2244.537109 norm=51.595554 mean=-0.226264 std=0.466030
-[DBG-C] ep=31 b=1 tar_feat: shape=(32, 310) sum=-1241.449951 norm=50.220589 mean=-0.125146 std=0.488474
-[DBG-C] ep=31 b=2 src_idx[:8]=[3745, 25976, 22674, 29409, 219, 42635, 11306, 18840] tar_idx[:8]=[60, 2203, 2707, 1894, 1235, 2321, 216, 1292] src_label[:8]=[1, 2, 1, 1, 2, 2, 2, 2]
-[DBG-C] ep=31 b=2 src_feat: shape=(32, 310) sum=-1861.061279 norm=50.040798 mean=-0.187607 std=0.466104
-[DBG-C] ep=31 b=2 tar_feat: shape=(32, 310) sum=-1231.104980 norm=49.528461 mean=-0.124103 std=0.481567
-22:31:48 | INFO     train.training_pcl train    267 Epoch 31/1000 | total_loss_sum=218.0629 | total_cls_loss=0.6323 | total_transfer_loss=73.5642| total_domain_loss=417.2228 | total_source_loss=58.5950 | total_target_loss=58.9335
-[DBG-C] ep=32 b=0 src_idx[:8]=[10701, 12615, 19971, 38482, 45963, 34736, 31347, 23114] tar_idx[:8]=[1729, 1879, 2018, 3174, 332, 1644, 1331, 2911] src_label[:8]=[0, 1, 2, 2, 2, 0, 0, 1]
-[DBG-C] ep=32 b=0 src_feat: shape=(32, 310) sum=-1189.563354 norm=48.582493 mean=-0.119916 std=0.472834
-[DBG-C] ep=32 b=0 tar_feat: shape=(32, 310) sum=-1655.269653 norm=54.698074 mean=-0.166862 std=0.523245
-[DBG-C] ep=32 b=1 src_idx[:8]=[44637, 12103, 20124, 13537, 33458, 2597, 34761, 28539] tar_idx[:8]=[771, 2459, 1970, 2462, 1164, 542, 420, 1312] src_label[:8]=[0, 2, 2, 0, 1, 0, 0, 0]
-[DBG-C] ep=32 b=1 src_feat: shape=(32, 310) sum=-1542.191284 norm=50.636608 mean=-0.155463 std=0.484076
-[DBG-C] ep=32 b=1 tar_feat: shape=(32, 310) sum=-1701.765625 norm=53.757141 mean=-0.171549 std=0.511772
-[DBG-C] ep=32 b=2 src_idx[:8]=[1525, 14428, 11518, 20475, 9166, 14090, 27373, 42166] tar_idx[:8]=[1143, 2217, 1349, 371, 559, 2109, 935, 2371] src_label[:8]=[0, 0, 0, 2, 1, 0, 2, 0]
-[DBG-C] ep=32 b=2 src_feat: shape=(32, 310) sum=-1948.926270 norm=52.015293 mean=-0.196464 std=0.483907
-[DBG-C] ep=32 b=2 tar_feat: shape=(32, 310) sum=-1190.142822 norm=49.152100 mean=-0.119974 std=0.478718
-22:31:55 | INFO     train.training_pcl train    267 Epoch 32/1000 | total_loss_sum=223.2759 | total_cls_loss=4.5324 | total_transfer_loss=73.5694| total_domain_loss=418.3317 | total_source_loss=59.5872 | total_target_loss=60.0191
-[DBG-C] ep=33 b=0 src_idx[:8]=[18478, 15533, 10367, 20019, 46267, 38733, 38194, 7058] tar_idx[:8]=[1461, 1781, 2670, 2181, 273, 2935, 391, 1573] src_label[:8]=[0, 2, 2, 2, 2, 0, 0, 1]
-[DBG-C] ep=33 b=0 src_feat: shape=(32, 310) sum=-1290.036255 norm=50.409809 mean=-0.130044 std=0.489159
-[DBG-C] ep=33 b=0 tar_feat: shape=(32, 310) sum=-1913.825684 norm=53.239494 mean=-0.192926 std=0.498533
-[DBG-C] ep=33 b=1 src_idx[:8]=[4688, 45418, 14740, 45683, 21035, 7004, 1003, 17889] tar_idx[:8]=[1594, 1383, 2824, 396, 1246, 1192, 2200, 849] src_label[:8]=[0, 0, 2, 1, 0, 2, 1, 1]
-[DBG-C] ep=33 b=1 src_feat: shape=(32, 310) sum=-1346.023071 norm=52.226692 mean=-0.135688 std=0.506534
-[DBG-C] ep=33 b=1 tar_feat: shape=(32, 310) sum=-1248.806030 norm=50.977764 mean=-0.125888 std=0.496131
-[DBG-C] ep=33 b=2 src_idx[:8]=[44278, 5253, 5723, 9908, 34551, 35728, 13199, 33460] tar_idx[:8]=[2060, 2069, 510, 1924, 771, 2152, 1807, 2322] src_label[:8]=[2, 2, 1, 2, 0, 2, 2, 1]
-[DBG-C] ep=33 b=2 src_feat: shape=(32, 310) sum=-2833.093994 norm=51.582264 mean=-0.285594 std=0.432057
-[DBG-C] ep=33 b=2 tar_feat: shape=(32, 310) sum=-469.842865 norm=47.257236 mean=-0.047363 std=0.472128
-22:32:02 | INFO     train.training_pcl train    267 Epoch 33/1000 | total_loss_sum=218.5724 | total_cls_loss=0.9552 | total_transfer_loss=73.5704| total_domain_loss=417.2521 | total_source_loss=58.6365 | total_target_loss=59.3952
-[DBG-C] ep=34 b=0 src_idx[:8]=[12017, 13756, 3883, 3469, 33085, 39846, 3724, 16544] tar_idx[:8]=[2694, 2033, 2077, 3268, 2665, 2927, 1875, 2398] src_label[:8]=[2, 2, 0, 2, 0, 0, 1, 2]
-[DBG-C] ep=34 b=0 src_feat: shape=(32, 310) sum=-1370.323242 norm=49.905060 mean=-0.138137 std=0.481665
-[DBG-C] ep=34 b=0 tar_feat: shape=(32, 310) sum=-1434.463135 norm=51.329285 mean=-0.144603 std=0.494681
-[DBG-C] ep=34 b=1 src_idx[:8]=[43684, 9991, 34524, 22907, 8800, 3623, 36481, 33188] tar_idx[:8]=[1616, 203, 847, 615, 51, 2876, 2836, 1923] src_label[:8]=[2, 0, 0, 0, 2, 2, 0, 0]
-[DBG-C] ep=34 b=1 src_feat: shape=(32, 310) sum=-1745.831543 norm=51.707787 mean=-0.175991 std=0.488443
-[DBG-C] ep=34 b=1 tar_feat: shape=(32, 310) sum=-590.770752 norm=50.476353 mean=-0.059554 std=0.503309
-[DBG-C] ep=34 b=2 src_idx[:8]=[11503, 45831, 34440, 33869, 16114, 42064, 41660, 11921] tar_idx[:8]=[59, 1178, 3347, 1904, 2063, 3056, 1754, 40] src_label[:8]=[0, 1, 0, 0, 0, 0, 1, 1]
-[DBG-C] ep=34 b=2 src_feat: shape=(32, 310) sum=-2158.723389 norm=51.434540 mean=-0.217613 std=0.468350
-[DBG-C] ep=34 b=2 tar_feat: shape=(32, 310) sum=-1416.572388 norm=51.602741 mean=-0.142800 std=0.498061
-22:32:10 | INFO     train.training_pcl train    267 Epoch 34/1000 | total_loss_sum=219.1185 | total_cls_loss=1.9454 | total_transfer_loss=72.8863| total_domain_loss=416.9267 | total_source_loss=58.8843 | total_target_loss=59.3336
-[DBG-C] ep=35 b=0 src_idx[:8]=[32873, 41628, 33343, 40930, 21357, 37951, 32089, 45686] tar_idx[:8]=[2015, 2140, 3097, 1358, 2560, 1019, 2046, 1812] src_label[:8]=[1, 0, 1, 2, 1, 0, 1, 1]
-[DBG-C] ep=35 b=0 src_feat: shape=(32, 310) sum=-880.111816 norm=51.720474 mean=-0.088721 std=0.511677
-[DBG-C] ep=35 b=0 tar_feat: shape=(32, 310) sum=-1194.557739 norm=51.241623 mean=-0.120419 std=0.500212
-[DBG-C] ep=35 b=1 src_idx[:8]=[16673, 26501, 28889, 135, 15057, 20797, 13205, 41662] tar_idx[:8]=[2082, 3265, 1527, 1696, 2613, 121, 733, 218] src_label[:8]=[2, 1, 1, 2, 0, 1, 2, 1]
-[DBG-C] ep=35 b=1 src_feat: shape=(32, 310) sum=-1768.758179 norm=52.888245 mean=-0.178302 std=0.500206
-[DBG-C] ep=35 b=1 tar_feat: shape=(32, 310) sum=-1198.274414 norm=49.347496 mean=-0.120794 std=0.480535
-[DBG-C] ep=35 b=2 src_idx[:8]=[39266, 47250, 8757, 39056, 37997, 23916, 17645, 3472] tar_idx[:8]=[60, 2171, 1327, 1818, 2369, 1125, 2996, 1873] src_label[:8]=[2, 2, 2, 1, 0, 2, 0, 2]
-[DBG-C] ep=35 b=2 src_feat: shape=(32, 310) sum=-1669.932129 norm=52.072670 mean=-0.168340 std=0.495005
-[DBG-C] ep=35 b=2 tar_feat: shape=(32, 310) sum=-1345.815796 norm=51.717842 mean=-0.135667 std=0.501249
-22:32:18 | INFO     train.training_pcl train    267 Epoch 35/1000 | total_loss_sum=218.8952 | total_cls_loss=1.2180 | total_transfer_loss=73.5678| total_domain_loss=416.6780 | total_source_loss=58.7051 | total_target_loss=59.1109
-[DBG-C] ep=36 b=0 src_idx[:8]=[23037, 33320, 13483, 41528, 542, 29530, 15927, 35303] tar_idx[:8]=[2651, 903, 2517, 2787, 2525, 265, 3386, 407] src_label[:8]=[0, 1, 0, 0, 0, 1, 1, 0]
-[DBG-C] ep=36 b=0 src_feat: shape=(32, 310) sum=-1461.267334 norm=50.547390 mean=-0.147305 std=0.485684
-[DBG-C] ep=36 b=0 tar_feat: shape=(32, 310) sum=-1410.973145 norm=52.712631 mean=-0.142235 std=0.509802
-[DBG-C] ep=36 b=1 src_idx[:8]=[20074, 39039, 44560, 595, 35203, 44718, 16329, 11785] tar_idx[:8]=[1350, 2578, 484, 2879, 2720, 2281, 3091, 2789] src_label[:8]=[2, 1, 1, 0, 2, 0, 1, 1]
-[DBG-C] ep=36 b=1 src_feat: shape=(32, 310) sum=-1919.813965 norm=49.391266 mean=-0.193530 std=0.456601
-[DBG-C] ep=36 b=1 tar_feat: shape=(32, 310) sum=-1220.715820 norm=49.148724 mean=-0.123056 std=0.477900
-[DBG-C] ep=36 b=2 src_idx[:8]=[26263, 15301, 15552, 22613, 7186, 46182, 35866, 40053] tar_idx[:8]=[444, 190, 2075, 2963, 808, 1734, 3112, 3355] src_label[:8]=[0, 1, 2, 1, 1, 2, 2, 1]
-[DBG-C] ep=36 b=2 src_feat: shape=(32, 310) sum=-1095.901367 norm=49.069347 mean=-0.110474 std=0.480146
-[DBG-C] ep=36 b=2 tar_feat: shape=(32, 310) sum=-877.507446 norm=52.608288 mean=-0.088458 std=0.520766
-22:32:26 | INFO     train.training_pcl train    267 Epoch 36/1000 | total_loss_sum=219.1482 | total_cls_loss=0.6719 | total_transfer_loss=73.2995| total_domain_loss=420.5486 | total_source_loss=58.6007 | total_target_loss=68.5179
-[DBG-C] ep=37 b=0 src_idx[:8]=[46846, 44914, 20500, 42866, 23441, 23405, 15426, 7146] tar_idx[:8]=[3352, 2041, 2431, 2169, 1210, 2712, 673, 3017] src_label[:8]=[1, 0, 2, 2, 2, 2, 2, 1]
-[DBG-C] ep=37 b=0 src_feat: shape=(32, 310) sum=-948.637939 norm=48.558430 mean=-0.095629 std=0.478092
-[DBG-C] ep=37 b=0 tar_feat: shape=(32, 310) sum=-706.999634 norm=48.548203 mean=-0.071270 std=0.482222
-[DBG-C] ep=37 b=1 src_idx[:8]=[18086, 33144, 20766, 5157, 38289, 16794, 21384, 4685] tar_idx[:8]=[1949, 2791, 1724, 1423, 2474, 257, 2083, 1740] src_label[:8]=[2, 0, 1, 2, 1, 0, 1, 2]
-[DBG-C] ep=37 b=1 src_feat: shape=(32, 310) sum=-1722.616333 norm=52.493877 mean=-0.173651 std=0.497648
-[DBG-C] ep=37 b=1 tar_feat: shape=(32, 310) sum=-2022.353027 norm=51.930012 mean=-0.203866 std=0.479905
-[DBG-C] ep=37 b=2 src_idx[:8]=[24369, 28158, 20620, 47037, 37308, 31481, 20480, 12553] tar_idx[:8]=[657, 2552, 34, 152, 2064, 3358, 1264, 550] src_label[:8]=[0, 1, 1, 1, 0, 1, 2, 1]
-[DBG-C] ep=37 b=2 src_feat: shape=(32, 310) sum=-1158.455811 norm=50.137039 mean=-0.116780 std=0.489680
-[DBG-C] ep=37 b=2 tar_feat: shape=(32, 310) sum=-514.314941 norm=48.255817 mean=-0.051846 std=0.481742
-22:32:34 | INFO     train.training_pcl train    267 Epoch 37/1000 | total_loss_sum=218.7341 | total_cls_loss=1.0317 | total_transfer_loss=73.5235| total_domain_loss=416.3571 | total_source_loss=58.7239 | total_target_loss=59.0230
-[DBG-C] ep=38 b=0 src_idx[:8]=[47104, 37754, 5601, 14503, 32913, 41610, 377, 46692] tar_idx[:8]=[966, 2975, 1405, 2839, 2369, 3113, 1791, 1293] src_label[:8]=[2, 1, 2, 1, 1, 0, 1, 0]
-[DBG-C] ep=38 b=0 src_feat: shape=(32, 310) sum=-2083.878418 norm=51.582565 mean=-0.210068 std=0.473409
-[DBG-C] ep=38 b=0 tar_feat: shape=(32, 310) sum=-1680.871338 norm=50.464993 mean=-0.169443 std=0.477533
-[DBG-C] ep=38 b=1 src_idx[:8]=[21751, 33391, 9454, 914, 6234, 894, 31041, 2734] tar_idx[:8]=[3314, 2678, 1382, 1809, 1978, 1077, 2592, 666] src_label[:8]=[0, 1, 0, 1, 1, 0, 0, 1]
-[DBG-C] ep=38 b=1 src_feat: shape=(32, 310) sum=-1760.116699 norm=50.777958 mean=-0.177431 std=0.477976
-[DBG-C] ep=38 b=1 tar_feat: shape=(32, 310) sum=-1416.041260 norm=54.685276 mean=-0.142746 std=0.530199
-[DBG-C] ep=38 b=2 src_idx[:8]=[47282, 40385, 45582, 47419, 21805, 3888, 31486, 30725] tar_idx[:8]=[1939, 1884, 1755, 345, 2715, 574, 101, 2295] src_label[:8]=[2, 2, 0, 0, 0, 0, 1, 2]
-[DBG-C] ep=38 b=2 src_feat: shape=(32, 310) sum=-1038.666260 norm=50.569252 mean=-0.104704 std=0.496839
-[DBG-C] ep=38 b=2 tar_feat: shape=(32, 310) sum=-1536.888306 norm=52.341515 mean=-0.154928 std=0.502191
-22:32:42 | INFO     train.training_pcl train    267 Epoch 38/1000 | total_loss_sum=219.8673 | total_cls_loss=1.9346 | total_transfer_loss=73.4363| total_domain_loss=416.6606 | total_source_loss=58.9042 | total_target_loss=59.4826
-[DBG-C] ep=39 b=0 src_idx[:8]=[10843, 30042, 22474, 41678, 36095, 2123, 35415, 45167] tar_idx[:8]=[1402, 1737, 2732, 3293, 817, 1225, 251, 731] src_label[:8]=[0, 1, 2, 1, 2, 2, 0, 1]
-[DBG-C] ep=39 b=0 src_feat: shape=(32, 310) sum=-2703.509766 norm=50.282394 mean=-0.272531 std=0.424989
-[DBG-C] ep=39 b=0 tar_feat: shape=(32, 310) sum=-1985.835083 norm=51.194473 mean=-0.200185 std=0.473444
-[DBG-C] ep=39 b=1 src_idx[:8]=[31824, 32981, 1575, 8943, 15792, 18742, 28986, 21163] tar_idx[:8]=[2254, 101, 1846, 2182, 3226, 1157, 1729, 1828] src_label[:8]=[2, 1, 1, 2, 2, 2, 2, 0]
-[DBG-C] ep=39 b=1 src_feat: shape=(32, 310) sum=-2208.216553 norm=50.135540 mean=-0.222602 std=0.451501
-[DBG-C] ep=39 b=1 tar_feat: shape=(32, 310) sum=-1008.968750 norm=50.379112 mean=-0.101711 std=0.495512
-[DBG-C] ep=39 b=2 src_idx[:8]=[26846, 40143, 1768, 30003, 12552, 33879, 5717, 42868] tar_idx[:8]=[1810, 2319, 1162, 1852, 388, 2813, 1018, 175] src_label[:8]=[2, 1, 2, 1, 1, 0, 1, 2]
-[DBG-C] ep=39 b=2 src_feat: shape=(32, 310) sum=-1601.673218 norm=52.733608 mean=-0.161459 std=0.504264
-[DBG-C] ep=39 b=2 tar_feat: shape=(32, 310) sum=-1124.352539 norm=51.470848 mean=-0.113342 std=0.504223
-22:32:50 | INFO     train.training_pcl train    267 Epoch 39/1000 | total_loss_sum=218.1726 | total_cls_loss=0.6671 | total_transfer_loss=73.4683| total_domain_loss=415.8203 | total_source_loss=58.5786 | total_target_loss=58.8398
-[DBG-C] ep=40 b=0 src_idx[:8]=[31014, 18222, 26022, 12375, 18397, 39428, 44709, 44084] tar_idx[:8]=[472, 421, 964, 1320, 2349, 1332, 2654, 274] src_label[:8]=[0, 2, 1, 2, 0, 2, 0, 0]
-[DBG-C] ep=40 b=0 src_feat: shape=(32, 310) sum=-1788.011719 norm=49.399704 mean=-0.180243 std=0.462098
-[DBG-C] ep=40 b=0 tar_feat: shape=(32, 310) sum=-2420.668457 norm=56.215061 mean=-0.244019 std=0.508962
-[DBG-C] ep=40 b=1 src_idx[:8]=[26470, 6027, 35676, 11976, 9410, 18456, 13281, 44481] tar_idx[:8]=[1143, 1719, 2147, 1693, 843, 1683, 2805, 1412] src_label[:8]=[0, 0, 1, 2, 0, 0, 2, 1]
-[DBG-C] ep=40 b=1 src_feat: shape=(32, 310) sum=-1542.196899 norm=50.733582 mean=-0.155463 std=0.485098
-[DBG-C] ep=40 b=1 tar_feat: shape=(32, 310) sum=-1130.303101 norm=50.639305 mean=-0.113942 std=0.495524
-[DBG-C] ep=40 b=2 src_idx[:8]=[46546, 40695, 41254, 14561, 47270, 3308, 32502, 22590] tar_idx[:8]=[1832, 246, 2491, 1273, 1711, 374, 458, 1643] src_label[:8]=[1, 0, 0, 1, 2, 0, 2, 2]
-[DBG-C] ep=40 b=2 src_feat: shape=(32, 310) sum=-791.985229 norm=47.480125 mean=-0.079837 std=0.470003
-[DBG-C] ep=40 b=2 tar_feat: shape=(32, 310) sum=-1698.704834 norm=53.085262 mean=-0.171240 std=0.504757
-22:32:58 | INFO     train.training_pcl train    267 Epoch 40/1000 | total_loss_sum=218.3735 | total_cls_loss=0.7383 | total_transfer_loss=73.4868| total_domain_loss=415.8672 | total_source_loss=58.6175 | total_target_loss=58.9460
-[DBG-C] ep=41 b=0 src_idx[:8]=[14937, 33144, 35825, 311, 33852, 34181, 13939, 33169] tar_idx[:8]=[3284, 2123, 181, 101, 3266, 1113, 2216, 460] src_label[:8]=[0, 0, 2, 1, 0, 1, 1, 0]
-[DBG-C] ep=41 b=0 src_feat: shape=(32, 310) sum=-2114.546875 norm=54.065712 mean=-0.213160 std=0.499255
-[DBG-C] ep=41 b=0 tar_feat: shape=(32, 310) sum=-1459.426514 norm=53.327831 mean=-0.147120 std=0.514841
-[DBG-C] ep=41 b=1 src_idx[:8]=[36485, 29378, 23400, 4314, 39544, 5407, 1305, 10275] tar_idx[:8]=[832, 2425, 2116, 1383, 609, 2158, 746, 582] src_label[:8]=[0, 2, 2, 1, 2, 2, 0, 2]
-[DBG-C] ep=41 b=1 src_feat: shape=(32, 310) sum=-2085.312256 norm=50.761440 mean=-0.210213 std=0.464309
-[DBG-C] ep=41 b=1 tar_feat: shape=(32, 310) sum=-636.716797 norm=51.018421 mean=-0.064185 std=0.508226
-[DBG-C] ep=41 b=2 src_idx[:8]=[22751, 22515, 2405, 18556, 28336, 12270, 14235, 23876] tar_idx[:8]=[1471, 2153, 2404, 2563, 2874, 221, 95, 2531] src_label[:8]=[1, 2, 1, 1, 2, 2, 0, 2]
-[DBG-C] ep=41 b=2 src_feat: shape=(32, 310) sum=-1690.154663 norm=52.097363 mean=-0.170378 std=0.494568
-[DBG-C] ep=41 b=2 tar_feat: shape=(32, 310) sum=-1088.948730 norm=54.708172 mean=-0.109773 std=0.538230
-22:33:06 | INFO     train.training_pcl train    267 Epoch 41/1000 | total_loss_sum=219.7396 | total_cls_loss=1.8361 | total_transfer_loss=73.5023| total_domain_loss=415.8282 | total_source_loss=58.8190 | total_target_loss=58.9495
-[DBG-C] ep=42 b=0 src_idx[:8]=[9396, 22057, 3999, 46033, 2813, 20768, 20321, 35404] tar_idx[:8]=[1456, 2950, 533, 2527, 1289, 3122, 2471, 1235] src_label[:8]=[0, 1, 0, 2, 1, 1, 0, 0]
-[DBG-C] ep=42 b=0 src_feat: shape=(32, 310) sum=-2437.119385 norm=54.360332 mean=-0.245677 std=0.487395
-[DBG-C] ep=42 b=0 tar_feat: shape=(32, 310) sum=-1085.307007 norm=50.688953 mean=-0.109406 std=0.497056
-[DBG-C] ep=42 b=1 src_idx[:8]=[16093, 20818, 7324, 26263, 44820, 8420, 28318, 2886] tar_idx[:8]=[161, 96, 3080, 3363, 672, 856, 563, 1853] src_label[:8]=[0, 1, 0, 0, 0, 1, 2, 1]
-[DBG-C] ep=42 b=1 src_feat: shape=(32, 310) sum=-1890.180420 norm=50.538422 mean=-0.190542 std=0.470307
-[DBG-C] ep=42 b=1 tar_feat: shape=(32, 310) sum=-941.245972 norm=50.575554 mean=-0.094884 std=0.498872
-[DBG-C] ep=42 b=2 src_idx[:8]=[9564, 31382, 13945, 12846, 664, 46410, 20781, 15504] tar_idx[:8]=[3180, 1889, 1875, 185, 623, 2115, 2853, 1680] src_label[:8]=[1, 0, 1, 0, 0, 1, 1, 2]
-[DBG-C] ep=42 b=2 src_feat: shape=(32, 310) sum=-2461.487061 norm=52.865471 mean=-0.248134 std=0.469235
-[DBG-C] ep=42 b=2 tar_feat: shape=(32, 310) sum=-1000.703796 norm=51.598946 mean=-0.100877 std=0.508175
-22:33:13 | INFO     train.training_pcl train    267 Epoch 42/1000 | total_loss_sum=219.0912 | total_cls_loss=1.2364 | total_transfer_loss=73.5030| total_domain_loss=415.6872 | total_source_loss=58.7398 | total_target_loss=58.9247
-[DBG-C] ep=43 b=0 src_idx[:8]=[30287, 43498, 32814, 46312, 33069, 2422, 2354, 40029] tar_idx[:8]=[2239, 2780, 2446, 1093, 433, 476, 2389, 2810] src_label[:8]=[2, 1, 1, 2, 0, 1, 1, 0]
-[DBG-C] ep=43 b=0 src_feat: shape=(32, 310) sum=-1624.691650 norm=51.255291 mean=-0.163779 std=0.487883
-[DBG-C] ep=43 b=0 tar_feat: shape=(32, 310) sum=-1604.037720 norm=51.542763 mean=-0.161697 std=0.491616
-[DBG-C] ep=43 b=1 src_idx[:8]=[36686, 10984, 13023, 27593, 20696, 46988, 27800, 41228] tar_idx[:8]=[2244, 608, 766, 1267, 2989, 2040, 1082, 1688] src_label[:8]=[1, 0, 1, 1, 1, 1, 0, 0]
-[DBG-C] ep=43 b=1 src_feat: shape=(32, 310) sum=-2222.703613 norm=52.346813 mean=-0.224063 std=0.475444
-[DBG-C] ep=43 b=1 tar_feat: shape=(32, 310) sum=-1948.552612 norm=51.547794 mean=-0.196427 std=0.478853
-[DBG-C] ep=43 b=2 src_idx[:8]=[38232, 32171, 43696, 36041, 692, 30963, 7522, 38682] tar_idx[:8]=[359, 3229, 1013, 2660, 551, 2574, 2731, 641] src_label[:8]=[0, 1, 2, 2, 0, 1, 0, 0]
-[DBG-C] ep=43 b=2 src_feat: shape=(32, 310) sum=-2127.875488 norm=49.832115 mean=-0.214504 std=0.452035
-[DBG-C] ep=43 b=2 tar_feat: shape=(32, 310) sum=-2126.587646 norm=53.551910 mean=-0.214374 std=0.493114
-22:33:22 | INFO     train.training_pcl train    267 Epoch 43/1000 | total_loss_sum=218.7739 | total_cls_loss=0.9509 | total_transfer_loss=73.5060| total_domain_loss=415.5222 | total_source_loss=58.6823 | total_target_loss=58.8498
-[DBG-C] ep=44 b=0 src_idx[:8]=[22465, 21228, 10605, 22440, 36724, 26942, 26320, 45688] tar_idx[:8]=[2839, 1348, 1761, 1438, 833, 935, 639, 2589] src_label[:8]=[2, 0, 1, 2, 1, 2, 0, 1]
-[DBG-C] ep=44 b=0 src_feat: shape=(32, 310) sum=-1836.096313 norm=50.859863 mean=-0.185090 std=0.475944
-[DBG-C] ep=44 b=0 tar_feat: shape=(32, 310) sum=-1013.463196 norm=50.832142 mean=-0.102164 std=0.500062
-[DBG-C] ep=44 b=1 src_idx[:8]=[13434, 6338, 4722, 30799, 36901, 40807, 17908, 33062] tar_idx[:8]=[773, 1540, 1155, 1892, 2781, 1790, 2033, 1905] src_label[:8]=[0, 1, 0, 1, 2, 2, 1, 0]
-[DBG-C] ep=44 b=1 src_feat: shape=(32, 310) sum=-1677.125122 norm=50.720676 mean=-0.169065 std=0.480389
-[DBG-C] ep=44 b=1 tar_feat: shape=(32, 310) sum=-1120.562378 norm=51.231796 mean=-0.112960 std=0.501848
-[DBG-C] ep=44 b=2 src_idx[:8]=[38873, 32330, 18637, 29370, 18428, 5218, 14924, 15460] tar_idx[:8]=[2355, 3067, 2696, 1926, 2904, 723, 631, 44] src_label[:8]=[1, 2, 1, 2, 0, 2, 0, 2]
-[DBG-C] ep=44 b=2 src_feat: shape=(32, 310) sum=-2685.483398 norm=53.120426 mean=-0.270714 std=0.459553
-[DBG-C] ep=44 b=2 tar_feat: shape=(32, 310) sum=-1548.466553 norm=53.933105 mean=-0.156095 std=0.518541
-22:33:29 | INFO     train.training_pcl train    267 Epoch 44/1000 | total_loss_sum=220.2277 | total_cls_loss=2.0181 | total_transfer_loss=73.5283| total_domain_loss=415.7390 | total_source_loss=58.9349 | total_target_loss=59.0707
-[DBG-C] ep=45 b=0 src_idx[:8]=[24842, 19136, 28344, 40290, 43895, 43093, 1380, 40959] tar_idx[:8]=[886, 1181, 2292, 2276, 2870, 1791, 2611, 3250] src_label[:8]=[1, 2, 2, 2, 2, 1, 0, 2]
-[DBG-C] ep=45 b=0 src_feat: shape=(32, 310) sum=-1514.506470 norm=49.354885 mean=-0.152672 std=0.471454
-[DBG-C] ep=45 b=0 tar_feat: shape=(32, 310) sum=-1413.495605 norm=50.561794 mean=-0.142489 std=0.487270
-[DBG-C] ep=45 b=1 src_idx[:8]=[18415, 20757, 18764, 2517, 36918, 9229, 42044, 44856] tar_idx[:8]=[3142, 2428, 447, 396, 2457, 1380, 3022, 495] src_label[:8]=[0, 1, 2, 0, 2, 1, 0, 0]
-[DBG-C] ep=45 b=1 src_feat: shape=(32, 310) sum=-1319.381836 norm=48.376026 mean=-0.133002 std=0.467166
-[DBG-C] ep=45 b=1 tar_feat: shape=(32, 310) sum=-1836.611572 norm=52.238586 mean=-0.185142 std=0.490749
-[DBG-C] ep=45 b=2 src_idx[:8]=[17306, 22836, 33691, 25560, 31261, 2170, 11785, 28311] tar_idx[:8]=[3196, 948, 1687, 1765, 3040, 1129, 180, 1118] src_label[:8]=[1, 1, 2, 2, 0, 2, 1, 2]
-[DBG-C] ep=45 b=2 src_feat: shape=(32, 310) sum=-1510.299805 norm=47.705517 mean=-0.152248 std=0.454157
-[DBG-C] ep=45 b=2 tar_feat: shape=(32, 310) sum=-545.262268 norm=49.437714 mean=-0.054966 std=0.493339
-22:33:37 | INFO     train.training_pcl train    267 Epoch 45/1000 | total_loss_sum=218.6472 | total_cls_loss=0.8009 | total_transfer_loss=73.5275| total_domain_loss=415.2043 | total_source_loss=58.6342 | total_target_loss=58.7624
-[DBG-C] ep=46 b=0 src_idx[:8]=[13385, 13634, 21730, 19432, 43644, 46128, 4346, 4775] tar_idx[:8]=[316, 295, 582, 2476, 1195, 290, 2036, 2149] src_label[:8]=[0, 2, 0, 1, 1, 2, 1, 0]
-[DBG-C] ep=46 b=0 src_feat: shape=(32, 310) sum=-2180.119873 norm=51.702858 mean=-0.219770 std=0.470317
-[DBG-C] ep=46 b=0 tar_feat: shape=(32, 310) sum=-1711.123169 norm=54.122353 mean=-0.172492 std=0.515324
-[DBG-C] ep=46 b=1 src_idx[:8]=[5413, 20265, 9814, 38210, 21475, 13865, 44666, 2127] tar_idx[:8]=[812, 1461, 991, 194, 3114, 1993, 369, 2084] src_label[:8]=[2, 0, 2, 0, 2, 1, 0, 2]
-[DBG-C] ep=46 b=1 src_feat: shape=(32, 310) sum=-1828.211426 norm=50.806324 mean=-0.184296 std=0.475676
-[DBG-C] ep=46 b=1 tar_feat: shape=(32, 310) sum=-1379.644897 norm=51.834774 mean=-0.139077 std=0.501532
-[DBG-C] ep=46 b=2 src_idx[:8]=[7208, 25612, 17085, 16392, 14601, 16237, 38439, 33471] tar_idx[:8]=[2850, 1021, 362, 1148, 9, 185, 2441, 1770] src_label[:8]=[1, 2, 2, 1, 1, 0, 2, 1]
-[DBG-C] ep=46 b=2 src_feat: shape=(32, 310) sum=-2079.335693 norm=51.077187 mean=-0.209610 std=0.468057
-[DBG-C] ep=46 b=2 tar_feat: shape=(32, 310) sum=-556.299561 norm=48.393429 mean=-0.056079 std=0.482659
-22:33:45 | INFO     train.training_pcl train    267 Epoch 46/1000 | total_loss_sum=218.5834 | total_cls_loss=0.7491 | total_transfer_loss=73.4978| total_domain_loss=415.1719 | total_source_loss=58.5982 | total_target_loss=58.7928
-[DBG-C] ep=47 b=0 src_idx[:8]=[35674, 35953, 4784, 34564, 46542, 29953, 37757, 19251] tar_idx[:8]=[3267, 329, 3130, 3145, 1149, 246, 2112, 3167] src_label[:8]=[1, 2, 0, 0, 1, 1, 1, 1]
-[DBG-C] ep=47 b=0 src_feat: shape=(32, 310) sum=-2069.948975 norm=50.611946 mean=-0.208664 std=0.463361
-[DBG-C] ep=47 b=0 tar_feat: shape=(32, 310) sum=-1405.831787 norm=53.587475 mean=-0.141717 std=0.519058
-[DBG-C] ep=47 b=1 src_idx[:8]=[30832, 5703, 25246, 38237, 35227, 23168, 37751, 3734] tar_idx[:8]=[1925, 814, 2021, 53, 2006, 739, 1763, 49] src_label[:8]=[1, 1, 0, 0, 2, 1, 1, 1]
-[DBG-C] ep=47 b=1 src_feat: shape=(32, 310) sum=-2121.668701 norm=52.865456 mean=-0.213878 std=0.485808
-[DBG-C] ep=47 b=1 tar_feat: shape=(32, 310) sum=-989.301514 norm=50.109001 mean=-0.099728 std=0.493148
-[DBG-C] ep=47 b=2 src_idx[:8]=[37, 8131, 8396, 27795, 21622, 38339, 4556, 37030] tar_idx[:8]=[82, 1951, 3178, 2520, 805, 2599, 2959, 824] src_label[:8]=[2, 0, 1, 0, 2, 1, 2, 2]
-[DBG-C] ep=47 b=2 src_feat: shape=(32, 310) sum=-1027.070801 norm=50.299732 mean=-0.103535 std=0.494319
-[DBG-C] ep=47 b=2 tar_feat: shape=(32, 310) sum=-838.148010 norm=48.644428 mean=-0.084491 std=0.481062
-22:33:53 | INFO     train.training_pcl train    267 Epoch 47/1000 | total_loss_sum=219.3093 | total_cls_loss=1.2583 | total_transfer_loss=73.5195| total_domain_loss=415.2779 | total_source_loss=58.7113 | total_target_loss=58.8324
-[DBG-C] ep=48 b=0 src_idx[:8]=[43942, 10898, 990, 6502, 38085, 26415, 8563, 2456] tar_idx[:8]=[1395, 3140, 1809, 2868, 3077, 2001, 1371, 2966] src_label[:8]=[0, 0, 1, 2, 0, 0, 2, 1]
-[DBG-C] ep=48 b=0 src_feat: shape=(32, 310) sum=-1699.741455 norm=51.286903 mean=-0.171345 std=0.485614
-[DBG-C] ep=48 b=0 tar_feat: shape=(32, 310) sum=-658.866211 norm=49.280243 mean=-0.066418 std=0.490332
-[DBG-C] ep=48 b=1 src_idx[:8]=[22993, 5747, 18136, 31834, 5939, 31936, 7032, 13179] tar_idx[:8]=[1349, 2335, 193, 2155, 1453, 2438, 992, 1691] src_label[:8]=[0, 1, 2, 2, 0, 0, 1, 2]
-[DBG-C] ep=48 b=1 src_feat: shape=(32, 310) sum=-2000.529053 norm=49.628830 mean=-0.201666 std=0.455675
-[DBG-C] ep=48 b=1 tar_feat: shape=(32, 310) sum=-1601.418091 norm=50.472668 mean=-0.161433 std=0.480381
-[DBG-C] ep=48 b=2 src_idx[:8]=[24646, 19688, 30223, 28925, 45163, 40509, 5001, 41859] tar_idx[:8]=[2075, 467, 2907, 1485, 1344, 1109, 435, 2182] src_label[:8]=[0, 1, 2, 2, 1, 2, 1, 2]
-[DBG-C] ep=48 b=2 src_feat: shape=(32, 310) sum=-1795.613770 norm=49.301712 mean=-0.181009 std=0.460742
-[DBG-C] ep=48 b=2 tar_feat: shape=(32, 310) sum=-1855.355103 norm=53.629681 mean=-0.187032 std=0.504954
-22:34:01 | INFO     train.training_pcl train    267 Epoch 48/1000 | total_loss_sum=219.9775 | total_cls_loss=1.7148 | total_transfer_loss=73.5200| total_domain_loss=415.3275 | total_source_loss=58.8494 | total_target_loss=58.9219
-[DBG-C] ep=49 b=0 src_idx[:8]=[35629, 45024, 26286, 24898, 16367, 35461, 34785, 37102] tar_idx[:8]=[163, 200, 311, 867, 1490, 3033, 171, 1941] src_label[:8]=[1, 0, 0, 2, 1, 0, 0, 2]
-[DBG-C] ep=49 b=0 src_feat: shape=(32, 310) sum=-1726.438843 norm=49.671665 mean=-0.174036 std=0.467387
-[DBG-C] ep=49 b=0 tar_feat: shape=(32, 310) sum=-686.190308 norm=51.192940 mean=-0.069172 std=0.509339
-[DBG-C] ep=49 b=1 src_idx[:8]=[24587, 21146, 27776, 12782, 13146, 9795, 1757, 18931] tar_idx[:8]=[485, 1030, 936, 912, 1487, 971, 1677, 3052] src_label[:8]=[0, 0, 0, 0, 2, 2, 2, 2]
-[DBG-C] ep=49 b=1 src_feat: shape=(32, 310) sum=-1809.593750 norm=51.289158 mean=-0.182419 std=0.481587
-[DBG-C] ep=49 b=1 tar_feat: shape=(32, 310) sum=-1653.104248 norm=51.671581 mean=-0.166644 std=0.491328
-[DBG-C] ep=49 b=2 src_idx[:8]=[12775, 3843, 6559, 39717, 11743, 18602, 6098, 17572] tar_idx[:8]=[1825, 3095, 954, 718, 2853, 594, 601, 1741] src_label[:8]=[0, 1, 2, 1, 1, 1, 0, 0]
-[DBG-C] ep=49 b=2 src_feat: shape=(32, 310) sum=-1571.531250 norm=50.383991 mean=-0.158420 std=0.480446
-[DBG-C] ep=49 b=2 tar_feat: shape=(32, 310) sum=-1857.859253 norm=53.487038 mean=-0.187284 std=0.503332
-22:34:09 | INFO     train.training_pcl train    267 Epoch 49/1000 | total_loss_sum=218.5733 | total_cls_loss=0.6248 | total_transfer_loss=73.5365| total_domain_loss=414.8393 | total_source_loss=58.5692 | total_target_loss=58.6831
-22:34:10 | INFO     train.training_pcl train    167 Epoch 50/1000 subj 0 sess 0 | acc=0.8318 best=0.9101
-[DBG-C] ep=50 b=0 src_idx[:8]=[39768, 24770, 28206, 40155, 12871, 34000, 43126, 44336] tar_idx[:8]=[870, 1866, 1290, 2337, 2373, 457, 2097, 3112] src_label[:8]=[1, 1, 1, 1, 0, 2, 1, 2]
-[DBG-C] ep=50 b=0 src_feat: shape=(32, 310) sum=-1567.722900 norm=50.611485 mean=-0.158037 std=0.482976
-[DBG-C] ep=50 b=0 tar_feat: shape=(32, 310) sum=-1276.912842 norm=52.730564 mean=-0.128721 std=0.513567
-[DBG-C] ep=50 b=1 src_idx[:8]=[3089, 5901, 18231, 8450, 22035, 16398, 36970, 2354] tar_idx[:8]=[2800, 3345, 2916, 913, 325, 373, 602, 170] src_label[:8]=[2, 0, 2, 1, 1, 1, 2, 1]
-[DBG-C] ep=50 b=1 src_feat: shape=(32, 310) sum=-1786.850342 norm=50.888889 mean=-0.180126 std=0.478157
-[DBG-C] ep=50 b=1 tar_feat: shape=(32, 310) sum=-1794.577637 norm=51.639473 mean=-0.180905 std=0.485913
-[DBG-C] ep=50 b=2 src_idx[:8]=[6204, 23857, 35964, 47079, 46956, 23432, 42333, 20508] tar_idx[:8]=[463, 2991, 20, 1445, 857, 1700, 40, 1920] src_label[:8]=[1, 2, 2, 2, 1, 2, 1, 2]
-[DBG-C] ep=50 b=2 src_feat: shape=(32, 310) sum=-1545.136841 norm=49.042698 mean=-0.155760 std=0.467139
-[DBG-C] ep=50 b=2 tar_feat: shape=(32, 310) sum=-1035.579224 norm=52.347794 mean=-0.104393 std=0.515139
-22:34:17 | INFO     train.training_pcl train    267 Epoch 50/1000 | total_loss_sum=219.4679 | total_cls_loss=1.2766 | total_transfer_loss=73.5199| total_domain_loss=414.9563 | total_source_loss=58.7446 | total_target_loss=58.7241
-[DBG-C] ep=51 b=0 src_idx[:8]=[10224, 45113, 40609, 12844, 41962, 43579, 14889, 27708] tar_idx[:8]=[2060, 2778, 333, 3357, 1420, 992, 3080, 3092] src_label[:8]=[2, 1, 0, 0, 2, 1, 0, 0]
-[DBG-C] ep=51 b=0 src_feat: shape=(32, 310) sum=-292.693573 norm=51.916946 mean=-0.029505 std=0.520449
-[DBG-C] ep=51 b=0 tar_feat: shape=(32, 310) sum=-1401.979248 norm=51.843281 mean=-0.141329 std=0.500991
-[DBG-C] ep=51 b=1 src_idx[:8]=[20191, 19664, 46168, 1897, 7371, 46323, 31200, 34281] tar_idx[:8]=[376, 352, 2261, 675, 3354, 2614, 320, 2283] src_label[:8]=[0, 0, 2, 2, 0, 2, 0, 1]
-[DBG-C] ep=51 b=1 src_feat: shape=(32, 310) sum=-1322.265259 norm=48.837517 mean=-0.133293 std=0.471900
-[DBG-C] ep=51 b=1 tar_feat: shape=(32, 310) sum=-2233.474854 norm=53.199085 mean=-0.225149 std=0.484385
-[DBG-C] ep=51 b=2 src_idx[:8]=[6612, 42513, 527, 25272, 21917, 46285, 12243, 7460] tar_idx[:8]=[2013, 1997, 454, 565, 2603, 3266, 1401, 2922] src_label[:8]=[0, 2, 0, 0, 1, 2, 2, 0]
-[DBG-C] ep=51 b=2 src_feat: shape=(32, 310) sum=-1564.902466 norm=48.599186 mean=-0.157752 std=0.461767
-[DBG-C] ep=51 b=2 tar_feat: shape=(32, 310) sum=-1040.344604 norm=53.742241 mean=-0.104873 std=0.529322
-22:34:25 | INFO     train.training_pcl train    267 Epoch 51/1000 | total_loss_sum=219.6947 | total_cls_loss=1.3996 | total_transfer_loss=73.4907| total_domain_loss=415.0828 | total_source_loss=58.7872 | total_target_loss=58.8496
-[DBG-C] ep=52 b=0 src_idx[:8]=[13387, 17925, 14406, 11578, 6378, 40536, 20108, 823] tar_idx[:8]=[3162, 3176, 1079, 2331, 1862, 3279, 1949, 2239] src_label[:8]=[0, 1, 0, 0, 2, 0, 2, 0]
-[DBG-C] ep=52 b=0 src_feat: shape=(32, 310) sum=-2549.167480 norm=54.145443 mean=-0.256973 std=0.479088
-[DBG-C] ep=52 b=0 tar_feat: shape=(32, 310) sum=-572.110535 norm=51.504238 mean=-0.057672 std=0.513915
-[DBG-C] ep=52 b=1 src_idx[:8]=[34978, 25915, 40322, 4896, 12097, 9023, 33074, 17008] tar_idx[:8]=[2794, 2191, 2103, 1748, 1183, 2317, 2731, 2151] src_label[:8]=[1, 2, 2, 0, 2, 2, 0, 2]
-[DBG-C] ep=52 b=1 src_feat: shape=(32, 310) sum=-2025.460938 norm=50.627201 mean=-0.204180 std=0.465522
-[DBG-C] ep=52 b=1 tar_feat: shape=(32, 310) sum=-1275.079590 norm=51.160969 mean=-0.128536 std=0.497352
-[DBG-C] ep=52 b=2 src_idx[:8]=[2322, 31408, 272, 44030, 14749, 46234, 8343, 25104] tar_idx[:8]=[2957, 2765, 1698, 2451, 847, 2136, 1288, 3116] src_label[:8]=[1, 0, 1, 0, 2, 2, 1, 0]
-[DBG-C] ep=52 b=2 src_feat: shape=(32, 310) sum=-1913.728760 norm=49.383972 mean=-0.192916 std=0.456781
-[DBG-C] ep=52 b=2 tar_feat: shape=(32, 310) sum=-1666.431396 norm=51.387554 mean=-0.167987 std=0.487854
-22:34:33 | INFO     train.training_pcl train    267 Epoch 52/1000 | total_loss_sum=219.8761 | total_cls_loss=1.4867 | total_transfer_loss=73.4936| total_domain_loss=415.1504 | total_source_loss=58.8054 | total_target_loss=58.8665
-[DBG-C] ep=53 b=0 src_idx[:8]=[16132, 2823, 37132, 8625, 25357, 11388, 30399, 12988] tar_idx[:8]=[607, 2118, 253, 1616, 1770, 1252, 3354, 1939] src_label[:8]=[0, 1, 0, 2, 1, 2, 0, 1]
-[DBG-C] ep=53 b=0 src_feat: shape=(32, 310) sum=-2187.637695 norm=50.285130 mean=-0.220528 std=0.454188
-[DBG-C] ep=53 b=0 tar_feat: shape=(32, 310) sum=-788.526245 norm=51.493729 mean=-0.079489 std=0.510888
-[DBG-C] ep=53 b=1 src_idx[:8]=[43152, 41006, 16634, 38240, 21748, 8122, 45732, 41302] tar_idx[:8]=[2907, 316, 180, 3313, 346, 711, 225, 3295] src_label[:8]=[1, 1, 2, 0, 0, 0, 1, 0]
-[DBG-C] ep=53 b=1 src_feat: shape=(32, 310) sum=-2189.338379 norm=51.359039 mean=-0.220699 std=0.466064
-[DBG-C] ep=53 b=1 tar_feat: shape=(32, 310) sum=-1248.333008 norm=50.647018 mean=-0.125840 std=0.492716
-[DBG-C] ep=53 b=2 src_idx[:8]=[36127, 37946, 9460, 36754, 32391, 5451, 39488, 11350] tar_idx[:8]=[1833, 551, 2149, 1054, 492, 1159, 3082, 1606] src_label[:8]=[2, 0, 0, 1, 2, 2, 2, 2]
-[DBG-C] ep=53 b=2 src_feat: shape=(32, 310) sum=-1637.078979 norm=49.544361 mean=-0.165028 std=0.469289
-[DBG-C] ep=53 b=2 tar_feat: shape=(32, 310) sum=-895.352661 norm=49.999184 mean=-0.090257 std=0.493848
-22:34:41 | INFO     train.training_pcl train    267 Epoch 53/1000 | total_loss_sum=218.8848 | total_cls_loss=0.6963 | total_transfer_loss=73.5340| total_domain_loss=414.7803 | total_source_loss=58.5872 | total_target_loss=58.7173
-[DBG-C] ep=54 b=0 src_idx[:8]=[37966, 23770, 26764, 10285, 24622, 19705, 34138, 7072] tar_idx[:8]=[898, 628, 1849, 2785, 605, 967, 1105, 1796] src_label[:8]=[0, 2, 2, 2, 0, 1, 2, 1]
-[DBG-C] ep=54 b=0 src_feat: shape=(32, 310) sum=-1606.754761 norm=50.182415 mean=-0.161971 std=0.477123
-[DBG-C] ep=54 b=0 tar_feat: shape=(32, 310) sum=-1019.391174 norm=51.700478 mean=-0.102761 std=0.508838
-[DBG-C] ep=54 b=1 src_idx[:8]=[36585, 10141, 29404, 534, 36488, 28045, 32069, 4121] tar_idx[:8]=[1933, 1815, 1888, 2464, 2566, 251, 3390, 256] src_label[:8]=[0, 0, 1, 0, 0, 0, 0, 0]
-[DBG-C] ep=54 b=1 src_feat: shape=(32, 310) sum=-1299.674072 norm=48.469948 mean=-0.131016 std=0.468706
-[DBG-C] ep=54 b=1 tar_feat: shape=(32, 310) sum=-1354.283447 norm=51.204990 mean=-0.136521 std=0.495678
-[DBG-C] ep=54 b=2 src_idx[:8]=[30908, 26023, 18267, 28199, 21928, 21902, 27448, 40273] tar_idx[:8]=[1504, 1314, 3336, 55, 2032, 519, 1190, 3142] src_label[:8]=[1, 1, 0, 1, 1, 1, 1, 1]
-[DBG-C] ep=54 b=2 src_feat: shape=(32, 310) sum=-1824.956421 norm=52.640392 mean=-0.183967 std=0.495496
-[DBG-C] ep=54 b=2 tar_feat: shape=(32, 310) sum=-1455.377930 norm=51.688221 mean=-0.146711 std=0.497818
+Exception in thread Thread-89 (_pin_memory_loop):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/threading.py", line 1073, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.12/threading.py", line 1010, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/utils/data/_utils/pin_memory.py", line 61, in _pin_memory_loop
+    do_one_step()
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/utils/data/_utils/pin_memory.py", line 37, in do_one_step
+    r = in_queue.get(timeout=MP_STATUS_CHECK_INTERVAL)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/queues.py", line 122, in get
+    return _ForkingPickler.loads(res)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/multiprocessing/reductions.py", line 541, in rebuild_storage_fd
+    fd = df.detach()
+         ^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/resource_sharer.py", line 57, in detach
+    with _resource_sharer.get_connection(self._id) as conn:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/resource_sharer.py", line 86, in get_connection
+    c = Client(address, authkey=process.current_process().authkey)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 526, in Client
+    deliver_challenge(c, authkey)
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 939, in deliver_challenge
+    response = connection.recv_bytes(256)        # reject large message
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 216, in recv_bytes
+    buf = self._recv_bytes(maxlength)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 395, in _recv
+    chunk = read(handle, remaining)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 104] Connection reset by peer

@@ -8,6 +8,10 @@ number of target samples 3394
 [DBG-A] model_params: count=189414 sum=-8.728317 norm=14.346090
 [DBG-A] disc_params: count=4225 sum=3.970165 norm=4.712274
 [DBG-A] GGCN.A: shape=(1, 3844) sum=1921.440430 norm=35.777954 mean=0.499854 std=0.288392
+[DBG-A2] src_dataset[0] idx=0 lbl=2 bytes_sum=144195 first16=[32, 92, 241, 190, 160, 123, 175, 190, 64, 160, 165, 190, 64, 216, 96, 190] feat[:8]=[-0.4714059829711914, -0.3427400588989258, -0.3234882354736328, -0.2195749282836914, -0.27666664123535156, -0.08599472045898438, -0.40802478790283203, -0.05897235870361328]
+[DBG-A2] tar_dataset[0] idx=0 lbl=2 bytes_sum=132076 first16=[32, 248, 79, 63, 64, 25, 153, 62, 32, 125, 118, 63, 0, 184, 155, 189] feat[:8]=[0.8123798370361328, 0.29902076721191406, 0.9628467559814453, -0.0760345458984375, 0.31902503967285156, 0.35698509216308594, 0.9518585205078125, -0.09603118896484375]
+[DBG-A2] src_dataset[-1] idx=47515 lbl=0 feat[:8]=[0.2381114959716797, 0.22095870971679688, 0.3009834289550781, 0.04230499267578125, -0.45175933837890625, -0.40500354766845703, -0.3973560333251953, -0.5398149490356445]
+[DBG-A2] tar_dataset[-1] idx=3393 lbl=0 feat[:8]=[-0.5065212249755859, -0.31615638732910156, 0.03612518310546875, -0.16493606567382812, 0.08896064758300781, -0.2093677520751953, -0.4145660400390625, 0.21666336059570312]
 Starting training for target subject 0
 [DBG-B] source_f_bank: shape=(47516, 64) sum=235728.125000 norm=217.976837 mean=0.077516 std=0.098063
 [DBG-B] target_f_bank: shape=(3394, 64) sum=15885.006836 norm=58.257996 mean=0.073130 std=0.101376
@@ -19,6 +23,38 @@ Training Loss: Total=271.3497, cls_loss=40.8126, Source=70.3301, Target=89.3358G
 [DBG-C] ep=0 b=0 src_idx[:8]=[4049, 26760, 13183, 3355, 24262, 44890, 32648, 23202] tar_idx[:8]=[237, 35, 1825, 588, 1055, 2543, 896, 550] src_label[:8]=[0, 2, 2, 0, 0, 0, 2, 1]
 [DBG-C] ep=0 b=0 src_feat: shape=(32, 310) sum=-1234.673706 norm=52.120461 mean=-0.124463 std=0.508311
 [DBG-C] ep=0 b=0 tar_feat: shape=(32, 310) sum=-1258.201904 norm=50.140858 mean=-0.126835 std=0.487211
+[DBG-E0] src_feat bytes_sum=4511310 first16=[160, 17, 160, 190, 224, 237, 193, 190, 0, 91, 79, 189, 160, 55, 180, 190]
+[DBG-E0] tar_feat bytes_sum=4546430 first16=[64, 84, 125, 191, 0, 99, 108, 191, 96, 161, 98, 191, 32, 163, 27, 191]
+[DBG-E0] src_feat[0,:8]=[-0.3126344680786133, -0.3787679672241211, -0.05062389373779297, -0.3519868850708008, -0.15826129913330078, -0.5346803665161133, -0.4734344482421875, -0.48979806900024414]
+[DBG-E0] tar_feat[0,:8]=[-0.9895668029785156, -0.9233856201171875, -0.8852748870849609, -0.6079578399658203, -0.8411350250244141, -0.8903961181640625, -0.7572212219238281, -0.49176788330078125]
+[DBG-E0] src_label[:8]=[0, 2, 2, 0, 0, 0, 2, 1]
+[DBG-E0] src_idx[:8]=[4049, 26760, 13183, 3355, 24262, 44890, 32648, 23202]
+[DBG-E0] tar_idx[:8]=[237, 35, 1825, 588, 1055, 2543, 896, 550]
+[DBG-E] source_in: shape=(32, 310) sum=-1234.673706 norm=52.120461 mean=-0.124463 std=0.508311
+[DBG-E] target_in: shape=(32, 310) sum=-1258.201904 norm=50.140858 mean=-0.126835 std=0.487211
+[DBG-E] source_in[0,:8]=[-0.3126344680786133, -0.3787679672241211, -0.05062389373779297, -0.3519868850708008, -0.15826129913330078, -0.5346803665161133, -0.4734344482421875, -0.48979806900024414]
+[DBG-E] target_in[0,:8]=[-0.9895668029785156, -0.9233856201171875, -0.8852748870849609, -0.6079578399658203, -0.8411350250244141, -0.8903961181640625, -0.7572212219238281, -0.49176788330078125]
+[DBG-E] source_f_raw: shape=(32, 64) sum=242.379700 norm=10.245976 mean=0.118349 std=0.193058
+[DBG-E] target_f_raw: shape=(32, 64) sum=232.084610 norm=10.154911 mean=0.113323 std=0.193724
+[DBG-E] src_adj[0]: shape=(32, 62, 62) sum=1569.293701 norm=5.033103 mean=0.012758 std=0.006571
+[DBG-E] src_adj[1]: shape=(32, 62, 62) sum=1569.501709 norm=5.033863 mean=0.012759 std=0.006573
+[DBG-E] tar_adj[0]: shape=(32, 62, 62) sum=1569.287109 norm=5.033085 mean=0.012758 std=0.006571
+[DBG-E] tar_adj[1]: shape=(32, 62, 62) sum=1569.503662 norm=5.033930 mean=0.012759 std=0.006573
+[DBG-E] source_predict: shape=(32, 3) sum=-1.788564 norm=1.829712 mean=-0.018631 std=0.186788
+[DBG-E] target_predict: shape=(32, 3) sum=-2.328221 norm=1.922927 mean=-0.024252 std=0.195776
+[DBG-E] src_prototype: shape=(3, 64) sum=9.905651 norm=1.175519 mean=0.051592 std=0.067521
+[DBG-E] tgt_prototype: shape=(3, 64) sum=14.197943 norm=1.657351 mean=0.073948 std=0.094257
+[DBG-E] src_sim: shape=(32, 3) sum=41.983570 norm=5.282471 mean=0.437329 std=0.316957
+[DBG-E] tgt_sim: shape=(32, 3) sum=58.278996 norm=6.085638 mean=0.607073 std=0.132005
+[DBG-E] tat_cluster_label[:16]=[1, 2, 1, 2, 2, 1, 1, 2, 0, 1, 0, 2, 0, 2, 1, 0]
+[DBG-E] s2t_pro: shape=(32, 3) sum=32.000000 norm=3.275757 mean=0.333333 std=0.025939
+[DBG-E] t2s_pro: shape=(32, 3) sum=32.000000 norm=3.390852 mean=0.333333 std=0.093539
+[DBG-E] s2s_pro: shape=(32, 3) sum=32.000000 norm=3.384007 mean=0.333333 std=0.090893
+[DBG-E] t2t_pro: shape=(32, 3) sum=32.000000 norm=3.289378 mean=0.333333 std=0.040176
+[DBG-E0] cls_loss=1.16388798 source_loss=0.00000000 target_loss=0.96734643
+[DBG-E0] global_transfer_loss=0.72167629 cross_domain_loss=2.15173912 in_domain_loss=2.15011621
+[DBG-E0] boost_factor=0.00000000 total_loss=2.74593544
+[DBG-E0] src_prob_max_mean=0.388047 mask_count=0
 [DBG-C] ep=0 b=1 src_idx[:8]=[36062, 45838, 33516, 4845, 47140, 9536, 25098, 38987] tar_idx[:8]=[2948, 1155, 3199, 1697, 2394, 436, 47, 2223] src_label[:8]=[2, 1, 2, 0, 2, 1, 0, 1]
 [DBG-C] ep=0 b=1 src_feat: shape=(32, 310) sum=-1622.829834 norm=48.010281 mean=-0.163592 std=0.453449
 [DBG-C] ep=0 b=1 tar_feat: shape=(32, 310) sum=-1440.843018 norm=51.479561 mean=-0.145246 std=0.496065
@@ -322,6 +358,10 @@ number of target samples 3394
 [DBG-A] model_params: count=189414 sum=-8.728317 norm=14.346090
 [DBG-A] disc_params: count=4225 sum=3.970165 norm=4.712274
 [DBG-A] GGCN.A: shape=(1, 3844) sum=1921.440430 norm=35.777954 mean=0.499854 std=0.288392
+[DBG-A2] src_dataset[0] idx=0 lbl=2 bytes_sum=132076 first16=[32, 248, 79, 63, 64, 25, 153, 62, 32, 125, 118, 63, 0, 184, 155, 189] feat[:8]=[0.8123798370361328, 0.29902076721191406, 0.9628467559814453, -0.0760345458984375, 0.31902503967285156, 0.35698509216308594, 0.9518585205078125, -0.09603118896484375]
+[DBG-A2] tar_dataset[0] idx=0 lbl=2 bytes_sum=144195 first16=[32, 92, 241, 190, 160, 123, 175, 190, 64, 160, 165, 190, 64, 216, 96, 190] feat[:8]=[-0.4714059829711914, -0.3427400588989258, -0.3234882354736328, -0.2195749282836914, -0.27666664123535156, -0.08599472045898438, -0.40802478790283203, -0.05897235870361328]
+[DBG-A2] src_dataset[-1] idx=47515 lbl=0 feat[:8]=[0.2381114959716797, 0.22095870971679688, 0.3009834289550781, 0.04230499267578125, -0.45175933837890625, -0.40500354766845703, -0.3973560333251953, -0.5398149490356445]
+[DBG-A2] tar_dataset[-1] idx=3393 lbl=0 feat[:8]=[1.0, 1.0, 0.9999990463256836, 1.0, 0.9262523651123047, 1.0, 1.0, 1.0]
 Starting training for target subject 1
 [DBG-B] source_f_bank: shape=(47516, 64) sum=234387.812500 norm=217.976837 mean=0.077075 std=0.098409
 [DBG-B] target_f_bank: shape=(3394, 64) sum=17225.330078 norm=58.258057 mean=0.079300 std=0.096625
@@ -333,6 +373,38 @@ Training Loss: Total=271.6122, cls_loss=40.8477, Source=70.5065, Target=86.9319G
 [DBG-C] ep=0 b=0 src_idx[:8]=[4049, 26760, 13183, 3355, 24262, 44890, 32648, 23202] tar_idx[:8]=[237, 35, 1825, 588, 1055, 2543, 896, 550] src_label[:8]=[0, 2, 2, 0, 0, 0, 2, 1]
 [DBG-C] ep=0 b=0 src_feat: shape=(32, 310) sum=-1445.405029 norm=51.520596 mean=-0.145706 std=0.496359
 [DBG-C] ep=0 b=0 tar_feat: shape=(32, 310) sum=-2750.774414 norm=51.875660 mean=-0.277296 std=0.440914
+[DBG-E0] src_feat bytes_sum=4539336 first16=[160, 17, 160, 190, 224, 237, 193, 190, 0, 91, 79, 189, 160, 55, 180, 190]
+[DBG-E0] tar_feat bytes_sum=4718652 first16=[192, 153, 244, 190, 208, 55, 18, 191, 128, 27, 251, 190, 0, 175, 199, 190]
+[DBG-E0] src_feat[0,:8]=[-0.3126344680786133, -0.3787679672241211, -0.05062389373779297, -0.3519868850708008, -0.15826129913330078, -0.5346803665161133, -0.4734344482421875, -0.48979806900024414]
+[DBG-E0] tar_feat[0,:8]=[-0.4777355194091797, -0.5711641311645508, -0.4904441833496094, -0.39000701904296875, -0.5762252807617188, 0.26154327392578125, -0.09322738647460938, -0.2931537628173828]
+[DBG-E0] src_label[:8]=[0, 2, 2, 0, 0, 0, 2, 1]
+[DBG-E0] src_idx[:8]=[4049, 26760, 13183, 3355, 24262, 44890, 32648, 23202]
+[DBG-E0] tar_idx[:8]=[237, 35, 1825, 588, 1055, 2543, 896, 550]
+[DBG-E] source_in: shape=(32, 310) sum=-1445.405029 norm=51.520596 mean=-0.145706 std=0.496359
+[DBG-E] target_in: shape=(32, 310) sum=-2750.774414 norm=51.875660 mean=-0.277296 std=0.440914
+[DBG-E] source_in[0,:8]=[-0.3126344680786133, -0.3787679672241211, -0.05062389373779297, -0.3519868850708008, -0.15826129913330078, -0.5346803665161133, -0.4734344482421875, -0.48979806900024414]
+[DBG-E] target_in[0,:8]=[-0.4777355194091797, -0.5711641311645508, -0.4904441833496094, -0.39000701904296875, -0.5762252807617188, 0.26154327392578125, -0.09322738647460938, -0.2931537628173828]
+[DBG-E] source_f_raw: shape=(32, 64) sum=232.946701 norm=9.813838 mean=0.113744 std=0.184678
+[DBG-E] target_f_raw: shape=(32, 64) sum=234.898697 norm=9.944031 mean=0.114697 std=0.187470
+[DBG-E] src_adj[0]: shape=(32, 62, 62) sum=1569.268066 norm=5.033020 mean=0.012757 std=0.006571
+[DBG-E] src_adj[1]: shape=(32, 62, 62) sum=1569.468506 norm=5.033753 mean=0.012759 std=0.006573
+[DBG-E] tar_adj[0]: shape=(32, 62, 62) sum=1568.816162 norm=5.031570 mean=0.012754 std=0.006569
+[DBG-E] tar_adj[1]: shape=(32, 62, 62) sum=1569.164062 norm=5.032761 mean=0.012757 std=0.006571
+[DBG-E] source_predict: shape=(32, 3) sum=-1.231528 norm=1.820061 mean=-0.012828 std=0.186289
+[DBG-E] target_predict: shape=(32, 3) sum=-1.641502 norm=1.670743 mean=-0.017099 std=0.170551
+[DBG-E] src_prototype: shape=(3, 64) sum=9.864555 norm=1.174861 mean=0.051378 std=0.067625
+[DBG-E] tgt_prototype: shape=(3, 64) sum=15.242212 norm=1.594245 mean=0.079387 std=0.083497
+[DBG-E] src_sim: shape=(32, 3) sum=41.971783 norm=5.276552 mean=0.437206 std=0.316089
+[DBG-E] tgt_sim: shape=(32, 3) sum=61.302010 norm=6.301766 mean=0.638563 std=0.077262
+[DBG-E] tat_cluster_label[:16]=[0, 0, 0, 1, 0, 1, 1, 0, 2, 2, 2, 1, 1, 0, 0, 1]
+[DBG-E] s2t_pro: shape=(32, 3) sum=32.000000 norm=3.269910 mean=0.333333 std=0.016431
+[DBG-E] t2s_pro: shape=(32, 3) sum=32.000000 norm=3.390815 mean=0.333333 std=0.093525
+[DBG-E] s2s_pro: shape=(32, 3) sum=32.000000 norm=3.383813 mean=0.333333 std=0.090816
+[DBG-E] t2t_pro: shape=(32, 3) sum=31.999998 norm=3.271426 mean=0.333333 std=0.019348
+[DBG-E0] cls_loss=1.16635227 source_loss=0.00000000 target_loss=1.04017496
+[DBG-E0] global_transfer_loss=0.72249430 cross_domain_loss=2.15351105 in_domain_loss=2.15560722
+[DBG-E0] boost_factor=0.00000000 total_loss=2.75067043
+[DBG-E0] src_prob_max_mean=0.387046 mask_count=0
 [DBG-C] ep=0 b=1 src_idx[:8]=[36062, 45838, 33516, 4845, 47140, 9536, 25098, 38987] tar_idx[:8]=[2948, 1155, 3199, 1697, 2394, 436, 47, 2223] src_label[:8]=[2, 1, 2, 0, 2, 1, 0, 1]
 [DBG-C] ep=0 b=1 src_feat: shape=(32, 310) sum=-1398.247803 norm=47.505352 mean=-0.140952 std=0.455685
 [DBG-C] ep=0 b=1 tar_feat: shape=(32, 310) sum=-2532.916504 norm=50.272018 mean=-0.255334 std=0.435418
@@ -552,649 +624,17 @@ Training Loss: Total=219.5892, cls_loss=0.9973, Source=58.6883, Target=59.6806Gl
 [DBG-D] ep=11 target_score_bank: shape=(3394, 3) sum=3393.999756 norm=56.429604 mean=0.333333 std=0.449051
 [DBG-D] ep=11 lr=9.310124e-04 iter_num=11
 Epoch 12: Test Accuracy=0.8020, Best Accuracy=0.8023
-Training Loss: Total=218.9549, cls_loss=0.7001, Source=58.6011, Target=59.2430Global Transfer=73.5548, Cross-Domain=213.4969, In-Domain=213.4431
 [DBG-C] ep=12 b=0 src_idx[:8]=[13393, 46845, 2773, 28954, 22712, 4090, 17148, 15563] tar_idx[:8]=[52, 573, 594, 2916, 2250, 1810, 1181, 1586] src_label[:8]=[0, 1, 1, 2, 1, 0, 2, 2]
 [DBG-C] ep=12 b=0 src_feat: shape=(32, 310) sum=-1198.419434 norm=49.943977 mean=-0.120808 std=0.486704
 [DBG-C] ep=12 b=0 tar_feat: shape=(32, 310) sum=-2334.069580 norm=48.741367 mean=-0.235289 std=0.429122
-[DBG-C] ep=12 b=1 src_idx[:8]=[30721, 5862, 39150, 39692, 25414, 2446, 17405, 14553] tar_idx[:8]=[3255, 2028, 1296, 3298, 1985, 1403, 396, 2721] src_label[:8]=[2, 1, 2, 1, 1, 1, 1, 1]
-[DBG-C] ep=12 b=1 src_feat: shape=(32, 310) sum=-1204.465454 norm=49.466026 mean=-0.121418 std=0.481605
-[DBG-C] ep=12 b=1 tar_feat: shape=(32, 310) sum=-2297.185303 norm=51.319839 mean=-0.231571 std=0.460318
-[DBG-C] ep=12 b=2 src_idx[:8]=[37949, 35815, 23675, 19673, 16188, 22525, 6216, 44873] tar_idx[:8]=[3392, 3121, 1371, 2422, 1953, 873, 174, 3384] src_label[:8]=[0, 2, 0, 0, 0, 2, 1, 0]
-[DBG-C] ep=12 b=2 src_feat: shape=(32, 310) sum=-1266.123169 norm=52.148624 mean=-0.127633 std=0.507816
-[DBG-C] ep=12 b=2 tar_feat: shape=(32, 310) sum=-1909.809082 norm=53.039185 mean=-0.192521 std=0.496533
-[DBG-D] ep=12 model_params: count=189414 sum=-25.262771 norm=14.100491
-[DBG-D] ep=12 disc_params: count=4225 sum=42.470853 norm=2.357320
-[DBG-D] ep=12 source_f_bank: shape=(47516, 64) sum=218187.656250 norm=217.977295 mean=0.071748 std=0.102358
-[DBG-D] ep=12 target_f_bank: shape=(3394, 64) sum=13516.171875 norm=58.258057 mean=0.062225 std=0.108412
-[DBG-D] ep=12 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=186.776382 mean=0.333333 std=0.365537
-[DBG-D] ep=12 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=56.294529 mean=0.333333 std=0.447383
-[DBG-D] ep=12 lr=9.247147e-04 iter_num=12
-Epoch 13: Test Accuracy=0.7940, Best Accuracy=0.8023
-Training Loss: Total=221.9418, cls_loss=3.2299, Source=59.0563, Target=59.7317Global Transfer=73.5710, Cross-Domain=213.2623, In-Domain=213.2781
-[DBG-C] ep=13 b=0 src_idx[:8]=[25955, 29511, 4140, 30948, 34564, 43068, 16032, 24540] tar_idx[:8]=[1177, 2931, 2162, 425, 2723, 1149, 2790, 2085] src_label[:8]=[2, 1, 0, 1, 0, 1, 1, 0]
-[DBG-C] ep=13 b=0 src_feat: shape=(32, 310) sum=-1711.671143 norm=52.733604 mean=-0.172547 std=0.500578
-[DBG-C] ep=13 b=0 tar_feat: shape=(32, 310) sum=-3051.765381 norm=54.407158 mean=-0.307638 std=0.451421
-[DBG-C] ep=13 b=1 src_idx[:8]=[37503, 17392, 25948, 5491, 3415, 30267, 28469, 4512] tar_idx[:8]=[3115, 3364, 278, 2705, 2716, 720, 1776, 2238] src_label[:8]=[2, 1, 2, 2, 2, 2, 0, 2]
-[DBG-C] ep=13 b=1 src_feat: shape=(32, 310) sum=-1589.224365 norm=50.049187 mean=-0.160204 std=0.476308
-[DBG-C] ep=13 b=1 tar_feat: shape=(32, 310) sum=-2423.579102 norm=55.448891 mean=-0.244312 std=0.500274
-[DBG-C] ep=13 b=2 src_idx[:8]=[30630, 6191, 1226, 4751, 23616, 19940, 7029, 17040] tar_idx[:8]=[2800, 2266, 2377, 3099, 1930, 293, 2273, 2068] src_label[:8]=[2, 1, 2, 0, 0, 2, 1, 2]
-[DBG-C] ep=13 b=2 src_feat: shape=(32, 310) sum=-1489.976685 norm=50.189461 mean=-0.150199 std=0.481033
-[DBG-C] ep=13 b=2 tar_feat: shape=(32, 310) sum=-2809.984375 norm=52.622379 mean=-0.283265 std=0.446011
-[DBG-D] ep=13 model_params: count=189414 sum=-19.020364 norm=14.126900
-[DBG-D] ep=13 disc_params: count=4225 sum=41.012284 norm=2.445114
-[DBG-D] ep=13 source_f_bank: shape=(47516, 64) sum=216737.343750 norm=217.977509 mean=0.071271 std=0.102691
-[DBG-D] ep=13 target_f_bank: shape=(3394, 64) sum=13386.760742 norm=58.232281 mean=0.061629 std=0.108688
-[DBG-D] ep=13 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=189.113388 mean=0.333333 std=0.373871
-[DBG-D] ep=13 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=55.598263 mean=0.333333 std=0.438747
-[DBG-D] ep=13 lr=9.185155e-04 iter_num=13
-Epoch 14: Test Accuracy=0.7985, Best Accuracy=0.8023
-Training Loss: Total=219.6382, cls_loss=1.3542, Source=58.8200, Target=59.2886Global Transfer=73.5598, Cross-Domain=212.7105, In-Domain=212.6602
-[DBG-C] ep=14 b=0 src_idx[:8]=[11916, 14438, 10270, 20865, 13067, 30183, 1972, 45119] tar_idx[:8]=[709, 3355, 833, 388, 1397, 2196, 2087, 2508] src_label[:8]=[1, 0, 2, 0, 1, 2, 2, 1]
-[DBG-C] ep=14 b=0 src_feat: shape=(32, 310) sum=-1865.412354 norm=54.536907 mean=-0.188046 std=0.514287
-[DBG-C] ep=14 b=0 tar_feat: shape=(32, 310) sum=-2979.628906 norm=52.630486 mean=-0.300366 std=0.434776
-[DBG-C] ep=14 b=1 src_idx[:8]=[34938, 3959, 29393, 5229, 3898, 23462, 21998, 45643] tar_idx[:8]=[1472, 564, 2682, 2030, 2516, 1804, 2913, 3372] src_label[:8]=[1, 0, 2, 2, 0, 2, 1, 0]
-[DBG-C] ep=14 b=1 src_feat: shape=(32, 310) sum=-1737.358521 norm=50.517815 mean=-0.175137 std=0.476039
-[DBG-C] ep=14 b=1 tar_feat: shape=(32, 310) sum=-2592.883545 norm=52.591572 mean=-0.261379 std=0.458825
-[DBG-C] ep=14 b=2 src_idx[:8]=[35084, 19236, 30480, 33877, 34730, 19413, 13913, 4640] tar_idx[:8]=[2738, 2060, 303, 2342, 356, 1794, 1164, 405] src_label[:8]=[2, 1, 0, 0, 0, 1, 1, 2]
-[DBG-C] ep=14 b=2 src_feat: shape=(32, 310) sum=-1257.251953 norm=49.182850 mean=-0.126739 std=0.477291
-[DBG-C] ep=14 b=2 tar_feat: shape=(32, 310) sum=-3002.449219 norm=53.607529 mean=-0.302666 std=0.445093
-[DBG-D] ep=14 model_params: count=189414 sum=-23.106245 norm=14.102495
-[DBG-D] ep=14 disc_params: count=4225 sum=38.044256 norm=2.395468
-[DBG-D] ep=14 source_f_bank: shape=(47516, 64) sum=215422.281250 norm=217.977600 mean=0.070839 std=0.102990
-[DBG-D] ep=14 target_f_bank: shape=(3394, 64) sum=13440.713867 norm=58.258022 mean=0.061877 std=0.108611
-[DBG-D] ep=14 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=191.253784 mean=0.333333 std=0.381433
-[DBG-D] ep=14 target_score_bank: shape=(3394, 3) sum=3394.000244 norm=55.499966 mean=0.333333 std=0.437523
-[DBG-D] ep=14 lr=9.124124e-04 iter_num=14
-Epoch 15: Test Accuracy=0.7864, Best Accuracy=0.8023
-Training Loss: Total=220.1457, cls_loss=1.8073, Source=58.9023, Target=59.5200Global Transfer=73.5614, Cross-Domain=212.4527, In-Domain=212.4565
-[DBG-C] ep=15 b=0 src_idx[:8]=[20999, 23327, 2498, 39362, 1835, 11447, 11036, 8327] tar_idx[:8]=[1830, 2472, 2450, 1577, 1702, 2518, 3380, 620] src_label[:8]=[0, 2, 0, 2, 2, 2, 0, 1]
-[DBG-C] ep=15 b=0 src_feat: shape=(32, 310) sum=-1240.682251 norm=48.406052 mean=-0.125069 std=0.469664
-[DBG-C] ep=15 b=0 tar_feat: shape=(32, 310) sum=-2623.244141 norm=53.853210 mean=-0.264440 std=0.471646
-[DBG-C] ep=15 b=1 src_idx[:8]=[30018, 42748, 47117, 13143, 32604, 45426, 9017, 18779] tar_idx[:8]=[2226, 234, 2745, 2443, 2467, 2383, 2108, 171] src_label[:8]=[1, 2, 2, 2, 2, 0, 2, 2]
-[DBG-C] ep=15 b=1 src_feat: shape=(32, 310) sum=-1400.914917 norm=51.747292 mean=-0.141221 std=0.500019
-[DBG-C] ep=15 b=1 tar_feat: shape=(32, 310) sum=-2980.719238 norm=52.835701 mean=-0.300476 std=0.437203
-[DBG-C] ep=15 b=2 src_idx[:8]=[10111, 23116, 36241, 17422, 18019, 34466, 44771, 10298] tar_idx[:8]=[1960, 1766, 1634, 209, 527, 2476, 3163, 1777] src_label[:8]=[0, 1, 1, 1, 1, 0, 0, 2]
-[DBG-C] ep=15 b=2 src_feat: shape=(32, 310) sum=-1650.055420 norm=51.234421 mean=-0.166336 std=0.486795
-[DBG-C] ep=15 b=2 tar_feat: shape=(32, 310) sum=-2607.576172 norm=50.828304 mean=-0.262861 std=0.437446
-[DBG-D] ep=15 model_params: count=189414 sum=-21.258953 norm=14.095434
-[DBG-D] ep=15 disc_params: count=4225 sum=37.991962 norm=2.414692
-[DBG-D] ep=15 source_f_bank: shape=(47516, 64) sum=214175.859375 norm=217.977661 mean=0.070429 std=0.103270
-[DBG-D] ep=15 target_f_bank: shape=(3394, 64) sum=13422.875977 norm=58.258049 mean=0.061795 std=0.108657
-[DBG-D] ep=15 source_score_bank: shape=(47516, 3) sum=47515.996094 norm=193.289566 mean=0.333333 std=0.388565
-[DBG-D] ep=15 target_score_bank: shape=(3394, 3) sum=3394.000244 norm=55.656898 mean=0.333333 std=0.439477
-[DBG-D] ep=15 lr=9.064031e-04 iter_num=15
-Epoch 16: Test Accuracy=0.7902, Best Accuracy=0.8023
-Training Loss: Total=218.4446, cls_loss=0.6683, Source=58.5800, Target=59.0249Global Transfer=73.5625, Cross-Domain=211.7235, In-Domain=211.7233
-[DBG-C] ep=16 b=0 src_idx[:8]=[30963, 8269, 30546, 29774, 24582, 19696, 30566, 35275] tar_idx[:8]=[3217, 2936, 1867, 581, 551, 1438, 3063, 2129] src_label[:8]=[1, 0, 2, 0, 0, 1, 2, 0]
-[DBG-C] ep=16 b=0 src_feat: shape=(32, 310) sum=-1988.996704 norm=52.845436 mean=-0.200504 std=0.491262
-[DBG-C] ep=16 b=0 tar_feat: shape=(32, 310) sum=-2306.447510 norm=50.032265 mean=-0.232505 std=0.445312
-[DBG-C] ep=16 b=1 src_idx[:8]=[2531, 23663, 42688, 33210, 37523, 32581, 20090, 13207] tar_idx[:8]=[1502, 2397, 2813, 1680, 2820, 1145, 2922, 1176] src_label[:8]=[0, 0, 2, 0, 2, 2, 2, 2]
-[DBG-C] ep=16 b=1 src_feat: shape=(32, 310) sum=-1006.707214 norm=50.275558 mean=-0.101483 std=0.494497
-[DBG-C] ep=16 b=1 tar_feat: shape=(32, 310) sum=-2806.918701 norm=52.507870 mean=-0.282956 std=0.444845
-[DBG-C] ep=16 b=2 src_idx[:8]=[45929, 3475, 32526, 7633, 40327, 42725, 36142, 32753] tar_idx[:8]=[753, 1300, 3184, 1797, 1120, 1001, 2639, 2832] src_label[:8]=[2, 2, 2, 0, 2, 2, 2, 2]
-[DBG-C] ep=16 b=2 src_feat: shape=(32, 310) sum=-1327.448486 norm=48.118607 mean=-0.133815 std=0.464244
-[DBG-C] ep=16 b=2 tar_feat: shape=(32, 310) sum=-3397.227783 norm=53.352798 mean=-0.342462 std=0.411928
-[DBG-D] ep=16 model_params: count=189414 sum=-27.685653 norm=13.873808
-[DBG-D] ep=16 disc_params: count=4225 sum=37.151039 norm=2.417608
-[DBG-D] ep=16 source_f_bank: shape=(47516, 64) sum=212846.875000 norm=217.977737 mean=0.069992 std=0.103567
-[DBG-D] ep=16 target_f_bank: shape=(3394, 64) sum=13383.079102 norm=58.258057 mean=0.061612 std=0.108761
-[DBG-D] ep=16 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=195.158173 mean=0.333333 std=0.395063
-[DBG-D] ep=16 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=55.548794 mean=0.333333 std=0.438132
-[DBG-D] ep=16 lr=9.004853e-04 iter_num=16
-Epoch 17: Test Accuracy=0.7796, Best Accuracy=0.8023
-Training Loss: Total=218.3264, cls_loss=0.6643, Source=58.5923, Target=58.9370Global Transfer=73.5442, Cross-Domain=211.3150, In-Domain=211.3036
-[DBG-C] ep=17 b=0 src_idx[:8]=[28694, 38403, 15742, 11235, 43342, 7755, 1492, 23495] tar_idx[:8]=[2272, 2389, 3388, 328, 221, 3352, 2754, 1538] src_label[:8]=[1, 1, 2, 1, 0, 1, 0, 2]
-[DBG-C] ep=17 b=0 src_feat: shape=(32, 310) sum=-1941.864746 norm=50.446835 mean=-0.195753 std=0.467165
-[DBG-C] ep=17 b=0 tar_feat: shape=(32, 310) sum=-2224.822510 norm=51.204754 mean=-0.224276 std=0.462632
-[DBG-C] ep=17 b=1 src_idx[:8]=[3895, 9439, 44313, 32808, 42532, 39662, 9160, 9801] tar_idx[:8]=[1097, 1288, 3118, 2895, 2592, 1470, 938, 1727] src_label[:8]=[0, 0, 2, 1, 2, 1, 1, 2]
-[DBG-C] ep=17 b=1 src_feat: shape=(32, 310) sum=-1683.558350 norm=49.786160 mean=-0.169714 std=0.470196
-[DBG-C] ep=17 b=1 tar_feat: shape=(32, 310) sum=-2440.437988 norm=51.387302 mean=-0.246012 std=0.453535
-[DBG-C] ep=17 b=2 src_idx[:8]=[31436, 23052, 18476, 46951, 12762, 25043, 39699, 4655] tar_idx[:8]=[234, 763, 2049, 2581, 2357, 2309, 2249, 1732] src_label[:8]=[0, 0, 0, 1, 0, 2, 1, 2]
-[DBG-C] ep=17 b=2 src_feat: shape=(32, 310) sum=-1440.647949 norm=50.274612 mean=-0.145227 std=0.483451
-[DBG-C] ep=17 b=2 tar_feat: shape=(32, 310) sum=-3016.417236 norm=51.602299 mean=-0.304074 std=0.419504
-[DBG-D] ep=17 model_params: count=189414 sum=-32.029107 norm=13.607466
-[DBG-D] ep=17 disc_params: count=4225 sum=42.970979 norm=2.348815
-[DBG-D] ep=17 source_f_bank: shape=(47516, 64) sum=211606.312500 norm=217.977829 mean=0.069584 std=0.103842
-[DBG-D] ep=17 target_f_bank: shape=(3394, 64) sum=13390.134766 norm=58.240856 mean=0.061644 std=0.108701
-[DBG-D] ep=17 source_score_bank: shape=(47516, 3) sum=47515.996094 norm=196.925415 mean=0.333333 std=0.401168
-[DBG-D] ep=17 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=56.461002 mean=0.333333 std=0.449439
-[DBG-D] ep=17 lr=8.946569e-04 iter_num=17
-Epoch 18: Test Accuracy=0.7675, Best Accuracy=0.8023
-Training Loss: Total=221.2158, cls_loss=2.8633, Source=59.1169, Target=59.8796Global Transfer=73.5739, Cross-Domain=211.4399, In-Domain=211.4798
-[DBG-C] ep=18 b=0 src_idx[:8]=[37162, 1049, 2893, 34372, 31016, 32692, 12169, 31707] tar_idx[:8]=[1384, 3205, 2745, 1043, 1843, 2713, 1754, 3044] src_label[:8]=[0, 1, 1, 1, 0, 2, 2, 2]
-[DBG-C] ep=18 b=0 src_feat: shape=(32, 310) sum=-1725.915894 norm=51.400192 mean=-0.173983 std=0.485883
-[DBG-C] ep=18 b=0 tar_feat: shape=(32, 310) sum=-2842.894531 norm=51.327591 mean=-0.286582 std=0.428329
-[DBG-C] ep=18 b=1 src_idx[:8]=[2820, 31053, 36897, 10439, 31158, 11519, 40706, 754] tar_idx[:8]=[1603, 632, 2707, 3350, 539, 1113, 3020, 2083] src_label[:8]=[1, 0, 2, 1, 0, 0, 0, 0]
-[DBG-C] ep=18 b=1 src_feat: shape=(32, 310) sum=-1444.533447 norm=48.751911 mean=-0.145618 std=0.467343
-[DBG-C] ep=18 b=1 tar_feat: shape=(32, 310) sum=-2423.741699 norm=51.370705 mean=-0.244329 std=0.454255
-[DBG-C] ep=18 b=2 src_idx[:8]=[7999, 45176, 36818, 38037, 6887, 32389, 17313, 17121] tar_idx[:8]=[764, 496, 2793, 1556, 886, 2661, 2752, 1962] src_label[:8]=[2, 1, 1, 0, 2, 2, 1, 2]
-[DBG-C] ep=18 b=2 src_feat: shape=(32, 310) sum=-1022.954041 norm=48.447163 mean=-0.103120 std=0.475389
-[DBG-C] ep=18 b=2 tar_feat: shape=(32, 310) sum=-2677.484863 norm=53.664963 mean=-0.269908 std=0.466355
-[DBG-D] ep=18 model_params: count=189414 sum=-16.943379 norm=13.774425
-[DBG-D] ep=18 disc_params: count=4225 sum=38.737641 norm=2.484017
-[DBG-D] ep=18 source_f_bank: shape=(47516, 64) sum=210546.781250 norm=217.977829 mean=0.069235 std=0.104074
-[DBG-D] ep=18 target_f_bank: shape=(3394, 64) sum=13570.929688 norm=58.258049 mean=0.062477 std=0.108267
-[DBG-D] ep=18 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=198.456894 mean=0.333333 std=0.406427
-[DBG-D] ep=18 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=55.008965 mean=0.333333 std=0.431390
-[DBG-D] ep=18 lr=8.889158e-04 iter_num=18
-Epoch 19: Test Accuracy=0.7746, Best Accuracy=0.8023
-Training Loss: Total=219.3529, cls_loss=1.5072, Source=58.8021, Target=59.2861Global Transfer=73.5598, Cross-Domain=210.9009, In-Domain=210.8863
-[DBG-C] ep=19 b=0 src_idx[:8]=[39978, 15700, 879, 9915, 4782, 3211, 45052, 34826] tar_idx[:8]=[1842, 2235, 2174, 1356, 3366, 1359, 333, 1040] src_label[:8]=[0, 2, 0, 2, 0, 0, 1, 0]
-[DBG-C] ep=19 b=0 src_feat: shape=(32, 310) sum=-1471.999634 norm=49.103329 mean=-0.148387 std=0.470172
-[DBG-C] ep=19 b=0 tar_feat: shape=(32, 310) sum=-2788.222412 norm=51.372597 mean=-0.281071 std=0.432505
-[DBG-C] ep=19 b=1 src_idx[:8]=[38019, 13695, 34364, 8691, 28216, 28878, 32511, 23869] tar_idx[:8]=[1594, 3050, 2177, 2369, 3269, 2276, 366, 2260] src_label[:8]=[0, 2, 1, 2, 1, 1, 2, 2]
-[DBG-C] ep=19 b=1 src_feat: shape=(32, 310) sum=-1645.878540 norm=50.276138 mean=-0.165915 std=0.476762
-[DBG-C] ep=19 b=1 tar_feat: shape=(32, 310) sum=-3065.583008 norm=51.331776 mean=-0.309031 std=0.412477
-[DBG-C] ep=19 b=2 src_idx[:8]=[30599, 18665, 14477, 47220, 4522, 31101, 28175, 28390] tar_idx[:8]=[428, 1934, 465, 2307, 2341, 191, 730, 2006] src_label[:8]=[2, 1, 0, 2, 2, 0, 1, 2]
-[DBG-C] ep=19 b=2 src_feat: shape=(32, 310) sum=-1960.467163 norm=52.350357 mean=-0.197628 std=0.487066
-[DBG-C] ep=19 b=2 tar_feat: shape=(32, 310) sum=-2790.205078 norm=52.281658 mean=-0.281271 std=0.443225
-[DBG-D] ep=19 model_params: count=189414 sum=-19.055815 norm=13.739119
-[DBG-D] ep=19 disc_params: count=4225 sum=40.628282 norm=2.506962
-[DBG-D] ep=19 source_f_bank: shape=(47516, 64) sum=209502.312500 norm=217.977936 mean=0.068892 std=0.104302
-[DBG-D] ep=19 target_f_bank: shape=(3394, 64) sum=13442.021484 norm=58.249435 mean=0.061883 std=0.108586
-[DBG-D] ep=19 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=199.851364 mean=0.333333 std=0.411193
-[DBG-D] ep=19 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=55.281239 mean=0.333333 std=0.434795
-[DBG-D] ep=19 lr=8.832599e-04 iter_num=19
-Epoch 20: Test Accuracy=0.7796, Best Accuracy=0.8023
-Training Loss: Total=218.1880, cls_loss=0.7004, Source=58.5898, Target=58.9557Global Transfer=73.5563, Cross-Domain=210.4121, In-Domain=210.4001
-[DBG-C] ep=20 b=0 src_idx[:8]=[23552, 8968, 30689, 31233, 30435, 40645, 15746, 33620] tar_idx[:8]=[1605, 1304, 1341, 1589, 2995, 476, 2455, 3148] src_label[:8]=[0, 2, 2, 0, 0, 0, 2, 2]
-[DBG-C] ep=20 b=0 src_feat: shape=(32, 310) sum=-1118.632080 norm=49.181530 mean=-0.112765 std=0.480770
-[DBG-C] ep=20 b=0 tar_feat: shape=(32, 310) sum=-3339.314453 norm=53.169170 mean=-0.336624 std=0.414340
-[DBG-C] ep=20 b=1 src_idx[:8]=[37929, 3409, 37552, 44432, 39416, 31806, 23981, 32859] tar_idx[:8]=[2939, 2163, 2708, 1748, 1694, 1088, 2884, 3173] src_label[:8]=[0, 2, 2, 1, 2, 2, 2, 1]
-[DBG-C] ep=20 b=1 src_feat: shape=(32, 310) sum=-702.831421 norm=50.126247 mean=-0.070850 std=0.498293
-[DBG-C] ep=20 b=1 tar_feat: shape=(32, 310) sum=-2939.571533 norm=52.663395 mean=-0.296328 std=0.437937
-[DBG-C] ep=20 b=2 src_idx[:8]=[38465, 40512, 40706, 16382, 22461, 9185, 11168, 36825] tar_idx[:8]=[2721, 1295, 2242, 2704, 2739, 104, 3265, 1546] src_label[:8]=[2, 2, 0, 1, 2, 1, 1, 1]
-[DBG-C] ep=20 b=2 src_feat: shape=(32, 310) sum=-1455.774048 norm=50.892227 mean=-0.146751 std=0.489468
-[DBG-C] ep=20 b=2 tar_feat: shape=(32, 310) sum=-2939.424316 norm=51.982410 mean=-0.296313 std=0.429667
-[DBG-D] ep=20 model_params: count=189414 sum=-30.459187 norm=13.533862
-[DBG-D] ep=20 disc_params: count=4225 sum=40.087715 norm=2.451456
-[DBG-D] ep=20 source_f_bank: shape=(47516, 64) sum=208439.390625 norm=217.978043 mean=0.068543 std=0.104532
-[DBG-D] ep=20 target_f_bank: shape=(3394, 64) sum=13477.277344 norm=58.249466 mean=0.062046 std=0.108493
-[DBG-D] ep=20 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=201.211533 mean=0.333333 std=0.415820
-[DBG-D] ep=20 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=55.350910 mean=0.333333 std=0.435665
-[DBG-D] ep=20 lr=8.776872e-04 iter_num=20
-Saved best model to ./model/seed3/independent_re/0/CrossSub_no_nsal_1.pth
-Epoch 21: Test Accuracy=0.8326, Best Accuracy=0.8326
-Training Loss: Total=220.2988, cls_loss=2.2754, Source=58.9922, Target=59.4655Global Transfer=73.5663, Cross-Domain=210.5468, In-Domain=210.5335
-[DBG-C] ep=21 b=0 src_idx[:8]=[23176, 36352, 36992, 28035, 46831, 2901, 3553, 30875] tar_idx[:8]=[2830, 2125, 978, 3206, 2743, 3070, 169, 1957] src_label[:8]=[1, 1, 2, 0, 0, 1, 2, 1]
-[DBG-C] ep=21 b=0 src_feat: shape=(32, 310) sum=-1623.384277 norm=53.461349 mean=-0.163648 std=0.511236
-[DBG-C] ep=21 b=0 tar_feat: shape=(32, 310) sum=-2883.305908 norm=53.093506 mean=-0.290656 std=0.446883
-[DBG-C] ep=21 b=1 src_idx[:8]=[23665, 31329, 29074, 33877, 26420, 33893, 41486, 11705] tar_idx[:8]=[210, 466, 1533, 3287, 3053, 629, 1356, 331] src_label[:8]=[0, 0, 2, 0, 0, 0, 0, 0]
-[DBG-C] ep=21 b=1 src_feat: shape=(32, 310) sum=-1942.251953 norm=50.667233 mean=-0.195792 std=0.469548
-[DBG-C] ep=21 b=1 tar_feat: shape=(32, 310) sum=-3015.782715 norm=51.519241 mean=-0.304010 std=0.418520
-[DBG-C] ep=21 b=2 src_idx[:8]=[40867, 14438, 32652, 46027, 26175, 5616, 34842, 37558] tar_idx[:8]=[1017, 2619, 630, 246, 2367, 5, 2124, 142] src_label[:8]=[2, 0, 2, 2, 1, 2, 0, 2]
-[DBG-C] ep=21 b=2 src_feat: shape=(32, 310) sum=-1074.063843 norm=50.569561 mean=-0.108273 std=0.496077
-[DBG-C] ep=21 b=2 tar_feat: shape=(32, 310) sum=-2459.058105 norm=49.883987 mean=-0.247889 std=0.435222
-[DBG-D] ep=21 model_params: count=189414 sum=-6.857223 norm=13.673480
-[DBG-D] ep=21 disc_params: count=4225 sum=37.699101 norm=2.502629
-[DBG-D] ep=21 source_f_bank: shape=(47516, 64) sum=207634.375000 norm=217.978088 mean=0.068278 std=0.104705
-[DBG-D] ep=21 target_f_bank: shape=(3394, 64) sum=13504.360352 norm=58.232296 mean=0.062170 std=0.108379
-[DBG-D] ep=21 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=202.403870 mean=0.333333 std=0.419860
-[DBG-D] ep=21 target_score_bank: shape=(3394, 3) sum=3394.000244 norm=54.964687 mean=0.333333 std=0.430835
-[DBG-D] ep=21 lr=8.721959e-04 iter_num=21
-Saved best model to ./model/seed3/independent_re/0/CrossSub_no_nsal_1.pth
-Epoch 22: Test Accuracy=0.8415, Best Accuracy=0.8415
-Training Loss: Total=218.0434, cls_loss=0.6558, Source=58.5784, Target=58.8867Global Transfer=73.5578, Cross-Domain=209.8931, In-Domain=209.8866
-[DBG-C] ep=22 b=0 src_idx[:8]=[42539, 37640, 22417, 45648, 4774, 27102, 34951, 591] tar_idx[:8]=[2127, 2977, 3178, 1099, 203, 1370, 315, 2004] src_label[:8]=[2, 1, 2, 0, 0, 0, 1, 0]
-[DBG-C] ep=22 b=0 src_feat: shape=(32, 310) sum=-802.154724 norm=50.247700 mean=-0.080862 std=0.498002
-[DBG-C] ep=22 b=0 tar_feat: shape=(32, 310) sum=-3032.945312 norm=50.965073 mean=-0.305740 std=0.410339
-[DBG-C] ep=22 b=1 src_idx[:8]=[22051, 34088, 20585, 3271, 14458, 34707, 10315, 39695] tar_idx[:8]=[2960, 2528, 2879, 1340, 3210, 348, 10, 871] src_label[:8]=[1, 2, 2, 0, 0, 0, 2, 1]
-[DBG-C] ep=22 b=1 src_feat: shape=(32, 310) sum=-1063.399414 norm=51.611008 mean=-0.107198 std=0.507003
-[DBG-C] ep=22 b=1 tar_feat: shape=(32, 310) sum=-3026.620605 norm=51.109833 mean=-0.305103 std=0.412623
-[DBG-C] ep=22 b=2 src_idx[:8]=[1601, 9670, 17244, 19031, 781, 25864, 10840, 18115] tar_idx[:8]=[594, 1409, 2073, 2769, 2422, 2287, 171, 1915] src_label[:8]=[1, 1, 1, 2, 0, 2, 0, 2]
-[DBG-C] ep=22 b=2 src_feat: shape=(32, 310) sum=-1246.555420 norm=48.410748 mean=-0.125661 std=0.469555
-[DBG-C] ep=22 b=2 tar_feat: shape=(32, 310) sum=-2919.827393 norm=53.534710 mean=-0.294337 std=0.449771
-[DBG-D] ep=22 model_params: count=189414 sum=-12.027339 norm=13.470313
-[DBG-D] ep=22 disc_params: count=4225 sum=41.037532 norm=2.523648
-[DBG-D] ep=22 source_f_bank: shape=(47516, 64) sum=206721.625000 norm=217.978134 mean=0.067978 std=0.104900
-[DBG-D] ep=22 target_f_bank: shape=(3394, 64) sum=13495.399414 norm=58.249458 mean=0.062129 std=0.108446
-[DBG-D] ep=22 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=203.576569 mean=0.333333 std=0.423819
-[DBG-D] ep=22 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=55.498672 mean=0.333333 std=0.437507
-[DBG-D] ep=22 lr=8.667842e-04 iter_num=22
-Epoch 23: Test Accuracy=0.7743, Best Accuracy=0.8415
-Training Loss: Total=218.2110, cls_loss=0.7277, Source=58.6240, Target=59.3217Global Transfer=73.5629, Cross-Domain=209.8258, In-Domain=209.8341
-[DBG-C] ep=23 b=0 src_idx[:8]=[21915, 16063, 32816, 29358, 33439, 9388, 28352, 39656] tar_idx[:8]=[1549, 224, 3375, 2450, 3331, 1918, 404, 1615] src_label[:8]=[1, 0, 1, 2, 1, 0, 2, 1]
-[DBG-C] ep=23 b=0 src_feat: shape=(32, 310) sum=-2267.978271 norm=51.729374 mean=-0.228627 std=0.466372
-[DBG-C] ep=23 b=0 tar_feat: shape=(32, 310) sum=-2637.065430 norm=56.260834 mean=-0.265833 std=0.498436
-[DBG-C] ep=23 b=1 src_idx[:8]=[15002, 36324, 7380, 39129, 32965, 36124, 28007, 5800] tar_idx[:8]=[481, 2089, 1121, 1802, 1298, 2449, 2846, 1187] src_label[:8]=[0, 1, 0, 2, 1, 2, 0, 1]
-[DBG-C] ep=23 b=1 src_feat: shape=(32, 310) sum=-1602.044556 norm=53.314896 mean=-0.161496 std=0.510378
-[DBG-C] ep=23 b=1 tar_feat: shape=(32, 310) sum=-3099.776611 norm=51.888657 mean=-0.312477 std=0.416881
-[DBG-C] ep=23 b=2 src_idx[:8]=[20571, 8100, 9579, 10036, 43285, 10852, 39731, 30683] tar_idx[:8]=[1748, 2625, 417, 158, 93, 887, 283, 1029] src_label[:8]=[2, 0, 1, 0, 0, 0, 1, 2]
-[DBG-C] ep=23 b=2 src_feat: shape=(32, 310) sum=-1821.628906 norm=51.940975 mean=-0.183632 std=0.488124
-[DBG-C] ep=23 b=2 tar_feat: shape=(32, 310) sum=-3431.281006 norm=53.848835 mean=-0.345895 std=0.415550
-[DBG-D] ep=23 model_params: count=189414 sum=-10.460228 norm=13.281624
-[DBG-D] ep=23 disc_params: count=4225 sum=42.890198 norm=2.569231
-[DBG-D] ep=23 source_f_bank: shape=(47516, 64) sum=205881.890625 norm=217.978134 mean=0.067702 std=0.105079
-[DBG-D] ep=23 target_f_bank: shape=(3394, 64) sum=13473.607422 norm=58.232269 mean=0.062029 std=0.108461
-[DBG-D] ep=23 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=204.595688 mean=0.333333 std=0.427248
-[DBG-D] ep=23 target_score_bank: shape=(3394, 3) sum=3394.000244 norm=54.804214 mean=0.333333 std=0.428823
-[DBG-D] ep=23 lr=8.614501e-04 iter_num=23
-Epoch 24: Test Accuracy=0.7964, Best Accuracy=0.8415
-Training Loss: Total=220.6404, cls_loss=2.5382, Source=59.1250, Target=59.5254Global Transfer=73.5690, Cross-Domain=209.9600, In-Domain=209.9386
-[DBG-C] ep=24 b=0 src_idx[:8]=[11592, 19383, 23793, 41772, 43912, 37242, 40906, 6315] tar_idx[:8]=[478, 1366, 3132, 2620, 3179, 1198, 579, 2657] src_label[:8]=[0, 1, 2, 1, 2, 0, 2, 1]
-[DBG-C] ep=24 b=0 src_feat: shape=(32, 310) sum=-1059.481812 norm=54.263309 mean=-0.106803 std=0.534273
-[DBG-C] ep=24 b=0 tar_feat: shape=(32, 310) sum=-2807.338379 norm=50.730900 mean=-0.282998 std=0.423519
-[DBG-C] ep=24 b=1 src_idx[:8]=[23700, 7356, 37797, 23114, 41995, 22548, 1502, 11050] tar_idx[:8]=[731, 931, 29, 2914, 2793, 2852, 2836, 275] src_label[:8]=[0, 0, 1, 1, 2, 2, 0, 0]
-[DBG-C] ep=24 b=1 src_feat: shape=(32, 310) sum=-1735.928101 norm=49.205982 mean=-0.174993 std=0.462033
-[DBG-C] ep=24 b=1 tar_feat: shape=(32, 310) sum=-1798.412964 norm=56.276932 mean=-0.181292 std=0.535187
-[DBG-C] ep=24 b=2 src_idx[:8]=[35095, 4838, 40626, 7035, 24923, 31150, 4567, 21225] tar_idx[:8]=[2952, 3375, 2584, 1645, 874, 936, 19, 1828] src_label[:8]=[2, 0, 0, 1, 2, 0, 2, 0]
-[DBG-C] ep=24 b=2 src_feat: shape=(32, 310) sum=-2090.112305 norm=49.036011 mean=-0.210697 std=0.444993
-[DBG-C] ep=24 b=2 tar_feat: shape=(32, 310) sum=-2626.812744 norm=53.170666 mean=-0.264800 std=0.463567
-[DBG-D] ep=24 model_params: count=189414 sum=11.523261 norm=13.496946
-[DBG-D] ep=24 disc_params: count=4225 sum=41.140428 norm=2.634368
-[DBG-D] ep=24 source_f_bank: shape=(47516, 64) sum=205286.093750 norm=217.978333 mean=0.067506 std=0.105205
-[DBG-D] ep=24 target_f_bank: shape=(3394, 64) sum=13505.635742 norm=58.258022 mean=0.062176 std=0.108440
-[DBG-D] ep=24 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=205.482407 mean=0.333333 std=0.430223
-[DBG-D] ep=24 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=54.154404 mean=0.333333 std=0.420636
-[DBG-D] ep=24 lr=8.561920e-04 iter_num=24
-Epoch 25: Test Accuracy=0.8394, Best Accuracy=0.8415
-Training Loss: Total=218.1994, cls_loss=0.8177, Source=58.6281, Target=58.8368Global Transfer=73.5573, Cross-Domain=209.3262, In-Domain=209.3009
-[DBG-C] ep=25 b=0 src_idx[:8]=[45413, 27080, 30790, 35101, 8467, 6954, 13249, 30795] tar_idx[:8]=[3041, 3088, 734, 1220, 897, 1942, 766, 2176] src_label[:8]=[2, 0, 1, 2, 1, 2, 2, 1]
-[DBG-C] ep=25 b=0 src_feat: shape=(32, 310) sum=-1651.911499 norm=51.308605 mean=-0.166523 std=0.487518
-[DBG-C] ep=25 b=0 tar_feat: shape=(32, 310) sum=-3354.041992 norm=51.696732 mean=-0.338109 std=0.393838
-[DBG-C] ep=25 b=1 src_idx[:8]=[43704, 38558, 19627, 1767, 16973, 11133, 6804, 20853] tar_idx[:8]=[2713, 2396, 1, 2731, 352, 805, 131, 1999] src_label[:8]=[2, 2, 0, 2, 2, 1, 2, 0]
-[DBG-C] ep=25 b=1 src_feat: shape=(32, 310) sum=-306.702332 norm=47.400429 mean=-0.030918 std=0.474930
-[DBG-C] ep=25 b=1 tar_feat: shape=(32, 310) sum=-2848.355225 norm=51.976929 mean=-0.287133 std=0.435790
-[DBG-C] ep=25 b=2 src_idx[:8]=[31055, 13871, 21831, 2764, 7100, 37256, 30233, 2083] tar_idx[:8]=[527, 2796, 201, 3344, 522, 1644, 671, 621] src_label[:8]=[0, 1, 0, 1, 1, 0, 2, 2]
-[DBG-C] ep=25 b=2 src_feat: shape=(32, 310) sum=-2134.432617 norm=51.098335 mean=-0.215165 std=0.465764
-[DBG-C] ep=25 b=2 tar_feat: shape=(32, 310) sum=-2509.633301 norm=51.786716 mean=-0.252987 std=0.454277
-[DBG-D] ep=25 model_params: count=189414 sum=9.166836 norm=13.356440
-[DBG-D] ep=25 disc_params: count=4225 sum=45.092189 norm=2.599420
-[DBG-D] ep=25 source_f_bank: shape=(47516, 64) sum=204548.687500 norm=217.978333 mean=0.067263 std=0.105360
-[DBG-D] ep=25 target_f_bank: shape=(3394, 64) sum=13493.522461 norm=58.249454 mean=0.062120 std=0.108451
-[DBG-D] ep=25 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=206.344421 mean=0.333333 std=0.433107
-[DBG-D] ep=25 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=54.800797 mean=0.333333 std=0.428780
-[DBG-D] ep=25 lr=8.510082e-04 iter_num=25
-Epoch 26: Test Accuracy=0.8276, Best Accuracy=0.8415
-Training Loss: Total=218.0771, cls_loss=0.7304, Source=58.6004, Target=58.8292Global Transfer=73.5603, Cross-Domain=209.1544, In-Domain=209.1282
-[DBG-C] ep=26 b=0 src_idx[:8]=[887, 39137, 1356, 37259, 7872, 29408, 7554, 46878] tar_idx[:8]=[1935, 2348, 1695, 2165, 1640, 543, 3114, 17] src_label[:8]=[0, 2, 0, 0, 1, 1, 0, 1]
-[DBG-C] ep=26 b=0 src_feat: shape=(32, 310) sum=-2001.508667 norm=50.236359 mean=-0.201765 std=0.462295
-[DBG-C] ep=26 b=0 tar_feat: shape=(32, 310) sum=-2145.560547 norm=48.156536 mean=-0.216286 std=0.432452
-[DBG-C] ep=26 b=1 src_idx[:8]=[16297, 16196, 22955, 20695, 11713, 35484, 30558, 15271] tar_idx[:8]=[2548, 2121, 1084, 301, 1652, 2528, 704, 200] src_label[:8]=[1, 0, 0, 1, 1, 1, 2, 1]
-[DBG-C] ep=26 b=1 src_feat: shape=(32, 310) sum=-1875.393921 norm=54.413429 mean=-0.189052 std=0.512597
-[DBG-C] ep=26 b=1 tar_feat: shape=(32, 310) sum=-3179.293945 norm=53.035374 mean=-0.320493 std=0.425260
-[DBG-C] ep=26 b=2 src_idx[:8]=[14875, 7884, 137, 24825, 37149, 18474, 5443, 26342] tar_idx[:8]=[815, 978, 738, 2308, 2980, 913, 880, 1059] src_label[:8]=[0, 1, 2, 1, 0, 0, 2, 0]
-[DBG-C] ep=26 b=2 src_feat: shape=(32, 310) sum=-2233.719482 norm=52.563347 mean=-0.225173 std=0.477324
-[DBG-C] ep=26 b=2 tar_feat: shape=(32, 310) sum=-2994.765625 norm=52.722858 mean=-0.301892 std=0.434847
-[DBG-D] ep=26 model_params: count=189414 sum=6.200499 norm=13.222468
-[DBG-D] ep=26 disc_params: count=4225 sum=45.511256 norm=2.642419
-[DBG-D] ep=26 source_f_bank: shape=(47516, 64) sum=203883.609375 norm=217.978561 mean=0.067044 std=0.105499
-[DBG-D] ep=26 target_f_bank: shape=(3394, 64) sum=13441.957031 norm=58.232269 mean=0.061883 std=0.108544
-[DBG-D] ep=26 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=207.158722 mean=0.333333 std=0.435826
-[DBG-D] ep=26 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=54.630177 mean=0.333333 std=0.426636
-[DBG-D] ep=26 lr=8.458970e-04 iter_num=26
-Epoch 27: Test Accuracy=0.8185, Best Accuracy=0.8415
-Training Loss: Total=219.6050, cls_loss=1.8840, Source=58.8642, Target=59.1959Global Transfer=73.5609, Cross-Domain=209.2541, In-Domain=209.2344
-[DBG-C] ep=27 b=0 src_idx[:8]=[41620, 33441, 2772, 9947, 37893, 46201, 17349, 16103] tar_idx[:8]=[961, 1466, 2112, 412, 1023, 3219, 672, 2905] src_label[:8]=[0, 1, 1, 2, 0, 2, 1, 0]
-[DBG-C] ep=27 b=0 src_feat: shape=(32, 310) sum=-1440.958130 norm=53.071239 mean=-0.145258 std=0.512693
-[DBG-C] ep=27 b=0 tar_feat: shape=(32, 310) sum=-3062.810303 norm=53.935352 mean=-0.308751 std=0.444905
-[DBG-C] ep=27 b=1 src_idx[:8]=[34407, 44347, 19037, 27340, 22893, 28723, 34553, 45636] tar_idx[:8]=[720, 2399, 1368, 985, 1475, 719, 1358, 1350] src_label[:8]=[1, 2, 2, 2, 0, 1, 0, 0]
-[DBG-C] ep=27 b=1 src_feat: shape=(32, 310) sum=-995.708374 norm=49.324448 mean=-0.100374 std=0.484975
-[DBG-C] ep=27 b=1 tar_feat: shape=(32, 310) sum=-3328.423096 norm=52.386059 mean=-0.335527 std=0.405070
-[DBG-C] ep=27 b=2 src_idx[:8]=[41346, 46871, 8210, 38016, 12668, 35228, 44150, 47046] tar_idx[:8]=[2214, 439, 1782, 2204, 3138, 1256, 2151, 2857] src_label[:8]=[0, 1, 0, 0, 0, 2, 2, 1]
-[DBG-C] ep=27 b=2 src_feat: shape=(32, 310) sum=-2106.948242 norm=52.408924 mean=-0.212394 std=0.481453
-[DBG-C] ep=27 b=2 tar_feat: shape=(32, 310) sum=-2765.494873 norm=51.858627 mean=-0.278780 std=0.439775
-[DBG-D] ep=27 model_params: count=189414 sum=6.337988 norm=13.324246
-[DBG-D] ep=27 disc_params: count=4225 sum=44.440351 norm=2.622735
-[DBG-D] ep=27 source_f_bank: shape=(47516, 64) sum=203362.656250 norm=217.978699 mean=0.066873 std=0.105608
-[DBG-D] ep=27 target_f_bank: shape=(3394, 64) sum=13506.978516 norm=58.258041 mean=0.062182 std=0.108436
-[DBG-D] ep=27 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=207.875504 mean=0.333333 std=0.438213
-[DBG-D] ep=27 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=54.486168 mean=0.333333 std=0.424823
-[DBG-D] ep=27 lr=8.408569e-04 iter_num=27
-Epoch 28: Test Accuracy=0.8235, Best Accuracy=0.8415
-Training Loss: Total=217.9337, cls_loss=0.6375, Source=58.5713, Target=58.7577Global Transfer=73.5690, Cross-Domain=208.7873, In-Domain=208.7667
-[DBG-C] ep=28 b=0 src_idx[:8]=[40563, 28521, 43395, 30805, 25660, 16983, 35668, 8048] tar_idx[:8]=[2198, 1914, 2794, 861, 233, 3178, 758, 391] src_label[:8]=[0, 0, 0, 1, 2, 2, 1, 2]
-[DBG-C] ep=28 b=0 src_feat: shape=(32, 310) sum=-1619.095337 norm=52.137711 mean=-0.163215 std=0.497405
-[DBG-C] ep=28 b=0 tar_feat: shape=(32, 310) sum=-3152.978760 norm=52.924496 mean=-0.317841 std=0.425858
-[DBG-C] ep=28 b=1 src_idx[:8]=[44600, 5206, 26787, 43158, 42828, 32406, 7259, 29175] tar_idx[:8]=[3014, 2806, 2644, 1128, 732, 1990, 2275, 14] src_label[:8]=[0, 2, 2, 1, 2, 2, 0, 2]
-[DBG-C] ep=28 b=1 src_feat: shape=(32, 310) sum=-1393.928711 norm=50.278049 mean=-0.140517 std=0.484877
-[DBG-C] ep=28 b=1 tar_feat: shape=(32, 310) sum=-3063.634766 norm=49.137405 mean=-0.308834 std=0.384749
-[DBG-C] ep=28 b=2 src_idx[:8]=[18475, 36851, 36720, 10039, 35625, 44914, 45650, 28307] tar_idx[:8]=[710, 2534, 3189, 1495, 284, 116, 96, 1669] src_label[:8]=[0, 1, 1, 0, 1, 0, 0, 2]
-[DBG-C] ep=28 b=2 src_feat: shape=(32, 310) sum=-1713.009888 norm=49.807869 mean=-0.172682 std=0.469346
-[DBG-C] ep=28 b=2 tar_feat: shape=(32, 310) sum=-2919.371338 norm=51.364342 mean=-0.294291 std=0.423518
-[DBG-D] ep=28 model_params: count=189414 sum=-0.899441 norm=13.136394
-[DBG-D] ep=28 disc_params: count=4225 sum=42.269569 norm=2.708768
-[DBG-D] ep=28 source_f_bank: shape=(47516, 64) sum=202697.906250 norm=217.978821 mean=0.066654 std=0.105746
-[DBG-D] ep=28 target_f_bank: shape=(3394, 64) sum=13456.689453 norm=58.258034 mean=0.061951 std=0.108569
-[DBG-D] ep=28 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=208.662216 mean=0.333333 std=0.440828
-[DBG-D] ep=28 target_score_bank: shape=(3394, 3) sum=3394.000244 norm=53.324310 mean=0.333333 std=0.410087
-[DBG-D] ep=28 lr=8.358863e-04 iter_num=28
-Epoch 29: Test Accuracy=0.8088, Best Accuracy=0.8415
-Training Loss: Total=218.0367, cls_loss=0.6716, Source=58.5932, Target=59.0167Global Transfer=73.5594, Cross-Domain=208.7578, In-Domain=208.7479
-[DBG-C] ep=29 b=0 src_idx[:8]=[11632, 38366, 11415, 34579, 16464, 2049, 7560, 26693] tar_idx[:8]=[418, 3063, 869, 865, 940, 1396, 2650, 105] src_label[:8]=[0, 1, 2, 0, 1, 2, 0, 1]
-[DBG-C] ep=29 b=0 src_feat: shape=(32, 310) sum=-2099.901611 norm=53.638443 mean=-0.211684 std=0.495220
-[DBG-C] ep=29 b=0 tar_feat: shape=(32, 310) sum=-3282.052490 norm=54.987900 mean=-0.330852 std=0.441998
-[DBG-C] ep=29 b=1 src_idx[:8]=[9359, 2470, 15328, 30635, 6897, 1230, 293, 2058] tar_idx[:8]=[907, 2356, 1629, 424, 2789, 1202, 1633, 2676] src_label[:8]=[0, 1, 2, 2, 2, 2, 1, 2]
-[DBG-C] ep=29 b=1 src_feat: shape=(32, 310) sum=-1274.096924 norm=51.613911 mean=-0.128437 std=0.502073
-[DBG-C] ep=29 b=1 tar_feat: shape=(32, 310) sum=-3109.091797 norm=52.678253 mean=-0.313417 std=0.426059
-[DBG-C] ep=29 b=2 src_idx[:8]=[20649, 9239, 14816, 28167, 34057, 7150, 24558, 26941] tar_idx[:8]=[3336, 833, 2989, 1125, 1259, 212, 1656, 2840] src_label[:8]=[1, 1, 2, 1, 2, 1, 0, 2]
-[DBG-C] ep=29 b=2 src_feat: shape=(32, 310) sum=-1721.506348 norm=52.548435 mean=-0.173539 std=0.498267
-[DBG-C] ep=29 b=2 tar_feat: shape=(32, 310) sum=-2779.787842 norm=51.622555 mean=-0.280221 std=0.436043
-[DBG-D] ep=29 model_params: count=189414 sum=-0.281248 norm=12.978513
-[DBG-D] ep=29 disc_params: count=4225 sum=45.060626 norm=2.669138
-[DBG-D] ep=29 source_f_bank: shape=(47516, 64) sum=202071.437500 norm=217.978851 mean=0.066448 std=0.105875
-[DBG-D] ep=29 target_f_bank: shape=(3394, 64) sum=13528.361328 norm=58.249443 mean=0.062281 std=0.108359
-[DBG-D] ep=29 source_score_bank: shape=(47516, 3) sum=47516.000000 norm=209.376816 mean=0.333333 std=0.443199
-[DBG-D] ep=29 target_score_bank: shape=(3394, 3) sum=3394.000000 norm=53.945938 mean=0.333333 std=0.417996
-[DBG-D] ep=29 lr=8.309837e-04 iter_num=29
-Epoch 30: Test Accuracy=0.8244, Best Accuracy=0.8415
-Training Loss: Total=221.2942, cls_loss=3.1255, Source=59.2228, Target=59.4068Global Transfer=73.5622, Cross-Domain=209.0146, In-Domain=208.9933
-[DBG-C] ep=30 b=0 src_idx[:8]=[28661, 38870, 1103, 18020, 31769, 5486, 15468, 24457] tar_idx[:8]=[2752, 2640, 1504, 1200, 3361, 256, 1432, 984] src_label[:8]=[0, 1, 2, 1, 2, 2, 2, 0]
-[DBG-C] ep=30 b=0 src_feat: shape=(32, 310) sum=-2063.724365 norm=50.671780 mean=-0.208037 std=0.464302
-[DBG-C] ep=30 b=0 tar_feat: shape=(32, 310) sum=-2711.860596 norm=52.067482 mean=-0.273373 std=0.445618
-[DBG-C] ep=30 b=1 src_idx[:8]=[24930, 24649, 26381, 17219, 5083, 19016, 7575, 6489] tar_idx[:8]=[1469, 2174, 2077, 1140, 641, 760, 2797, 693] src_label[:8]=[2, 0, 0, 1, 1, 2, 0, 2]
-[DBG-C] ep=30 b=1 src_feat: shape=(32, 310) sum=-1012.431519 norm=52.409691 mean=-0.102060 std=0.516240
-[DBG-C] ep=30 b=1 tar_feat: shape=(32, 310) sum=-3226.387451 norm=50.905224 mean=-0.325241 std=0.394282
-[DBG-C] ep=30 b=2 src_idx[:8]=[3412, 8679, 17352, 46077, 46566, 31092, 15635, 3056] tar_idx[:8]=[3208, 1936, 2127, 1175, 586, 768, 2324, 1575] src_label[:8]=[2, 2, 1, 2, 1, 0, 2, 2]
-[DBG-C] ep=30 b=2 src_feat: shape=(32, 310) sum=-1009.001221 norm=49.219162 mean=-0.101714 std=0.483616
-[DBG-C] ep=30 b=2 tar_feat: shape=(32, 310) sum=-3166.666016 norm=50.181881 mean=-0.319220 std=0.389829
-Epoch 31: Test Accuracy=0.8338, Best Accuracy=0.8415
-Training Loss: Total=218.1454, cls_loss=0.7523, Source=58.5952, Target=58.9625Global Transfer=73.5662, Cross-Domain=208.5156, In-Domain=208.5043
-[DBG-C] ep=31 b=0 src_idx[:8]=[18378, 19646, 37704, 35286, 9566, 31515, 24662, 36480] tar_idx[:8]=[2935, 17, 875, 1566, 2980, 3028, 666, 505] src_label[:8]=[0, 0, 1, 0, 1, 1, 0, 0]
-[DBG-C] ep=31 b=0 src_feat: shape=(32, 310) sum=-2233.270752 norm=51.174511 mean=-0.225128 std=0.461881
-[DBG-C] ep=31 b=0 tar_feat: shape=(32, 310) sum=-2891.984375 norm=50.313877 mean=-0.291531 std=0.412574
-[DBG-C] ep=31 b=1 src_idx[:8]=[43782, 11233, 18663, 39412, 228, 17437, 39049, 33169] tar_idx[:8]=[2311, 1420, 715, 1067, 1332, 2224, 3141, 909] src_label[:8]=[2, 1, 1, 2, 2, 1, 1, 0]
-[DBG-C] ep=31 b=1 src_feat: shape=(32, 310) sum=-2061.203613 norm=51.629406 mean=-0.207783 std=0.474930
-[DBG-C] ep=31 b=1 tar_feat: shape=(32, 310) sum=-2794.013428 norm=52.299232 mean=-0.281655 std=0.443190
-[DBG-C] ep=31 b=2 src_idx[:8]=[3745, 25976, 22674, 29409, 219, 42635, 11306, 18840] tar_idx[:8]=[60, 2203, 2707, 1894, 1235, 2321, 216, 1292] src_label[:8]=[1, 2, 1, 1, 2, 2, 2, 2]
-[DBG-C] ep=31 b=2 src_feat: shape=(32, 310) sum=-1779.514526 norm=49.933659 mean=-0.179387 std=0.468178
-[DBG-C] ep=31 b=2 tar_feat: shape=(32, 310) sum=-3132.556396 norm=52.020481 mean=-0.315782 std=0.416046
-Epoch 32: Test Accuracy=0.8014, Best Accuracy=0.8415
-Training Loss: Total=218.0380, cls_loss=0.6514, Source=58.5851, Target=58.9185Global Transfer=73.5628, Cross-Domain=208.3864, In-Domain=208.3812
-[DBG-C] ep=32 b=0 src_idx[:8]=[10701, 12615, 19971, 38482, 45963, 34736, 31347, 23114] tar_idx[:8]=[1729, 1879, 2018, 3174, 332, 1644, 1331, 2911] src_label[:8]=[0, 1, 2, 2, 2, 0, 0, 1]
-[DBG-C] ep=32 b=0 src_feat: shape=(32, 310) sum=-959.481812 norm=48.150539 mean=-0.096722 std=0.473693
-[DBG-C] ep=32 b=0 tar_feat: shape=(32, 310) sum=-2697.007324 norm=52.035492 mean=-0.271876 std=0.446158
-[DBG-C] ep=32 b=1 src_idx[:8]=[44637, 12103, 20124, 13537, 33458, 2597, 34761, 28539] tar_idx[:8]=[771, 2459, 1970, 2462, 1164, 542, 420, 1312] src_label[:8]=[0, 2, 2, 0, 1, 0, 0, 0]
-[DBG-C] ep=32 b=1 src_feat: shape=(32, 310) sum=-1482.874390 norm=50.557159 mean=-0.149483 std=0.485121
-[DBG-C] ep=32 b=1 tar_feat: shape=(32, 310) sum=-2851.714844 norm=54.478649 mean=-0.287471 std=0.465369
-[DBG-C] ep=32 b=2 src_idx[:8]=[1525, 14428, 11518, 20475, 9166, 14090, 27373, 42166] tar_idx[:8]=[1143, 2217, 1349, 371, 559, 2109, 935, 2371] src_label[:8]=[0, 0, 0, 2, 1, 0, 2, 0]
-[DBG-C] ep=32 b=2 src_feat: shape=(32, 310) sum=-1934.264893 norm=52.647522 mean=-0.194986 std=0.491341
-[DBG-C] ep=32 b=2 tar_feat: shape=(32, 310) sum=-2416.592529 norm=49.240608 mean=-0.243608 std=0.430224
-Epoch 33: Test Accuracy=0.8214, Best Accuracy=0.8415
-Training Loss: Total=220.6172, cls_loss=2.6255, Source=58.9972, Target=59.6425Global Transfer=73.5631, Cross-Domain=208.6603, In-Domain=208.6563
-[DBG-C] ep=33 b=0 src_idx[:8]=[18478, 15533, 10367, 20019, 46267, 38733, 38194, 7058] tar_idx[:8]=[1461, 1781, 2670, 2181, 273, 2935, 391, 1573] src_label[:8]=[0, 2, 2, 2, 2, 0, 0, 1]
-[DBG-C] ep=33 b=0 src_feat: shape=(32, 310) sum=-1205.954590 norm=50.100826 mean=-0.121568 std=0.488138
-[DBG-C] ep=33 b=0 tar_feat: shape=(32, 310) sum=-2990.671875 norm=53.030964 mean=-0.301479 std=0.438892
-[DBG-C] ep=33 b=1 src_idx[:8]=[4688, 45418, 14740, 45683, 21035, 7004, 1003, 17889] tar_idx[:8]=[1594, 1383, 2824, 396, 1246, 1192, 2200, 849] src_label[:8]=[0, 0, 2, 1, 0, 2, 1, 1]
-[DBG-C] ep=33 b=1 src_feat: shape=(32, 310) sum=-1000.672302 norm=51.209923 mean=-0.100874 std=0.504193
-[DBG-C] ep=33 b=1 tar_feat: shape=(32, 310) sum=-3586.241455 norm=53.741131 mean=-0.361516 std=0.400577
-[DBG-C] ep=33 b=2 src_idx[:8]=[44278, 5253, 5723, 9908, 34551, 35728, 13199, 33460] tar_idx[:8]=[2060, 2069, 510, 1924, 771, 2152, 1807, 2322] src_label[:8]=[2, 2, 1, 2, 0, 2, 2, 1]
-[DBG-C] ep=33 b=2 src_feat: shape=(32, 310) sum=-2692.902832 norm=51.823559 mean=-0.271462 std=0.443917
-[DBG-C] ep=33 b=2 tar_feat: shape=(32, 310) sum=-2815.575439 norm=52.919453 mean=-0.283828 std=0.449185
-Epoch 34: Test Accuracy=0.8226, Best Accuracy=0.8415
-Training Loss: Total=218.5346, cls_loss=0.9258, Source=58.6742, Target=59.3058Global Transfer=73.5721, Cross-Domain=208.3684, In-Domain=208.3630
-[DBG-C] ep=34 b=0 src_idx[:8]=[12017, 13756, 3883, 3469, 33085, 39846, 3724, 16544] tar_idx[:8]=[2694, 2033, 2077, 3268, 2665, 2927, 1875, 2398] src_label[:8]=[2, 2, 0, 2, 0, 0, 1, 2]
-[DBG-C] ep=34 b=0 src_feat: shape=(32, 310) sum=-927.613342 norm=50.469776 mean=-0.093509 std=0.498051
-[DBG-C] ep=34 b=0 tar_feat: shape=(32, 310) sum=-2731.389648 norm=49.127457 mean=-0.275342 std=0.409269
-[DBG-C] ep=34 b=1 src_idx[:8]=[43684, 9991, 34524, 22907, 8800, 3623, 36481, 33188] tar_idx[:8]=[1616, 203, 847, 615, 51, 2876, 2836, 1923] src_label[:8]=[2, 0, 0, 0, 2, 2, 0, 0]
-[DBG-C] ep=34 b=1 src_feat: shape=(32, 310) sum=-1477.343750 norm=51.000015 mean=-0.148926 std=0.489942
-[DBG-C] ep=34 b=1 tar_feat: shape=(32, 310) sum=-3017.731934 norm=51.888515 mean=-0.304207 std=0.422953
-[DBG-C] ep=34 b=2 src_idx[:8]=[11503, 45831, 34440, 33869, 16114, 42064, 41660, 11921] tar_idx[:8]=[59, 1178, 3347, 1904, 2063, 3056, 1754, 40] src_label[:8]=[0, 1, 0, 0, 0, 0, 1, 1]
-[DBG-C] ep=34 b=2 src_feat: shape=(32, 310) sum=-2168.677246 norm=51.269520 mean=-0.218617 std=0.466052
-[DBG-C] ep=34 b=2 tar_feat: shape=(32, 310) sum=-2269.411377 norm=54.640190 mean=-0.228771 std=0.498650
-Epoch 35: Test Accuracy=0.8262, Best Accuracy=0.8415
-Training Loss: Total=218.6502, cls_loss=1.1117, Source=58.6662, Target=58.8472Global Transfer=73.5634, Cross-Domain=208.1314, In-Domain=208.1160
-[DBG-C] ep=35 b=0 src_idx[:8]=[32873, 41628, 33343, 40930, 21357, 37951, 32089, 45686] tar_idx[:8]=[2015, 2140, 3097, 1358, 2560, 1019, 2046, 1812] src_label[:8]=[1, 0, 1, 2, 1, 0, 1, 1]
-[DBG-C] ep=35 b=0 src_feat: shape=(32, 310) sum=-880.555420 norm=51.934093 mean=-0.088766 std=0.513846
-[DBG-C] ep=35 b=0 tar_feat: shape=(32, 310) sum=-2883.743896 norm=50.509384 mean=-0.290700 std=0.415558
-[DBG-C] ep=35 b=1 src_idx[:8]=[16673, 26501, 28889, 135, 15057, 20797, 13205, 41662] tar_idx[:8]=[2082, 3265, 1527, 1696, 2613, 121, 733, 218] src_label[:8]=[2, 1, 1, 2, 0, 1, 2, 1]
-[DBG-C] ep=35 b=1 src_feat: shape=(32, 310) sum=-1716.633057 norm=52.513081 mean=-0.173048 std=0.498062
-[DBG-C] ep=35 b=1 tar_feat: shape=(32, 310) sum=-2436.160400 norm=50.533077 mean=-0.245581 std=0.443992
-[DBG-C] ep=35 b=2 src_idx[:8]=[39266, 47250, 8757, 39056, 37997, 23916, 17645, 3472] tar_idx[:8]=[60, 2171, 1327, 1818, 2369, 1125, 2996, 1873] src_label[:8]=[2, 2, 2, 1, 0, 2, 0, 2]
-[DBG-C] ep=35 b=2 src_feat: shape=(32, 310) sum=-1510.317017 norm=51.520439 mean=-0.152250 std=0.494389
-[DBG-C] ep=35 b=2 tar_feat: shape=(32, 310) sum=-2760.083740 norm=49.631489 mean=-0.278234 std=0.413422
-Epoch 36: Test Accuracy=0.8279, Best Accuracy=0.8415
-Training Loss: Total=218.9408, cls_loss=1.2501, Source=58.7015, Target=59.1915Global Transfer=73.5667, Cross-Domain=208.2333, In-Domain=208.2261
-[DBG-C] ep=36 b=0 src_idx[:8]=[23037, 33320, 13483, 41528, 542, 29530, 15927, 35303] tar_idx[:8]=[2651, 903, 2517, 2787, 2525, 265, 3386, 407] src_label[:8]=[0, 1, 0, 0, 0, 1, 1, 0]
-[DBG-C] ep=36 b=0 src_feat: shape=(32, 310) sum=-1504.655151 norm=50.709705 mean=-0.151679 std=0.486044
-[DBG-C] ep=36 b=0 tar_feat: shape=(32, 310) sum=-2546.159424 norm=54.623535 mean=-0.256669 std=0.484689
-[DBG-C] ep=36 b=1 src_idx[:8]=[20074, 39039, 44560, 595, 35203, 44718, 16329, 11785] tar_idx[:8]=[1350, 2578, 484, 2879, 2720, 2281, 3091, 2789] src_label[:8]=[2, 1, 1, 0, 2, 0, 1, 1]
-[DBG-C] ep=36 b=1 src_feat: shape=(32, 310) sum=-1788.162109 norm=49.721241 mean=-0.180258 std=0.465556
-[DBG-C] ep=36 b=1 tar_feat: shape=(32, 310) sum=-3270.581543 norm=53.218575 mean=-0.329696 std=0.420505
-[DBG-C] ep=36 b=2 src_idx[:8]=[26263, 15301, 15552, 22613, 7186, 46182, 35866, 40053] tar_idx[:8]=[444, 190, 2075, 2963, 808, 1734, 3112, 3355] src_label[:8]=[0, 1, 2, 1, 1, 2, 2, 1]
-[DBG-C] ep=36 b=2 src_feat: shape=(32, 310) sum=-1057.647827 norm=49.176502 mean=-0.106618 std=0.482119
-[DBG-C] ep=36 b=2 tar_feat: shape=(32, 310) sum=-2916.351318 norm=52.652580 mean=-0.293987 std=0.439382
-Epoch 37: Test Accuracy=0.7814, Best Accuracy=0.8415
-Training Loss: Total=218.2776, cls_loss=0.6676, Source=58.6007, Target=59.2581Global Transfer=73.5657, Cross-Domain=208.1224, In-Domain=208.1341
-[DBG-C] ep=37 b=0 src_idx[:8]=[46846, 44914, 20500, 42866, 23441, 23405, 15426, 7146] tar_idx[:8]=[3352, 2041, 2431, 2169, 1210, 2712, 673, 3017] src_label[:8]=[1, 0, 2, 2, 2, 2, 2, 1]
-[DBG-C] ep=37 b=0 src_feat: shape=(32, 310) sum=-929.502686 norm=48.750904 mean=-0.093700 std=0.480443
-[DBG-C] ep=37 b=0 tar_feat: shape=(32, 310) sum=-2397.923096 norm=51.773560 mean=-0.241726 std=0.460219
-[DBG-C] ep=37 b=1 src_idx[:8]=[18086, 33144, 20766, 5157, 38289, 16794, 21384, 4685] tar_idx[:8]=[1949, 2791, 1724, 1423, 2474, 257, 2083, 1740] src_label[:8]=[2, 0, 1, 2, 1, 0, 1, 2]
-[DBG-C] ep=37 b=1 src_feat: shape=(32, 310) sum=-1612.993042 norm=52.624516 mean=-0.162600 std=0.502746
-[DBG-C] ep=37 b=1 tar_feat: shape=(32, 310) sum=-3127.788574 norm=51.893127 mean=-0.315301 std=0.414806
-[DBG-C] ep=37 b=2 src_idx[:8]=[24369, 28158, 20620, 47037, 37308, 31481, 20480, 12553] tar_idx[:8]=[657, 2552, 34, 152, 2064, 3358, 1264, 550] src_label[:8]=[0, 1, 1, 1, 0, 1, 2, 1]
-[DBG-C] ep=37 b=2 src_feat: shape=(32, 310) sum=-960.965332 norm=49.943020 mean=-0.096872 std=0.492019
-[DBG-C] ep=37 b=2 tar_feat: shape=(32, 310) sum=-2676.303223 norm=51.492550 mean=-0.269789 std=0.441045
-Epoch 38: Test Accuracy=0.7531, Best Accuracy=0.8415
-Training Loss: Total=218.4841, cls_loss=0.7718, Source=58.6289, Target=59.4031Global Transfer=73.5668, Cross-Domain=208.1445, In-Domain=208.1533
-[DBG-C] ep=38 b=0 src_idx[:8]=[47104, 37754, 5601, 14503, 32913, 41610, 377, 46692] tar_idx[:8]=[966, 2975, 1405, 2839, 2369, 3113, 1791, 1293] src_label[:8]=[2, 1, 2, 1, 1, 0, 1, 0]
-[DBG-C] ep=38 b=0 src_feat: shape=(32, 310) sum=-2087.409912 norm=51.592316 mean=-0.210424 std=0.473358
-[DBG-C] ep=38 b=0 tar_feat: shape=(32, 310) sum=-3085.390625 norm=50.519814 mean=-0.311027 std=0.400701
-[DBG-C] ep=38 b=1 src_idx[:8]=[21751, 33391, 9454, 914, 6234, 894, 31041, 2734] tar_idx[:8]=[3314, 2678, 1382, 1809, 1978, 1077, 2592, 666] src_label[:8]=[0, 1, 0, 1, 1, 0, 0, 1]
-[DBG-C] ep=38 b=1 src_feat: shape=(32, 310) sum=-1512.637939 norm=50.065155 mean=-0.152484 std=0.479004
-[DBG-C] ep=38 b=1 tar_feat: shape=(32, 310) sum=-3026.018311 norm=52.405254 mean=-0.305042 std=0.428735
-[DBG-C] ep=38 b=2 src_idx[:8]=[47282, 40385, 45582, 47419, 21805, 3888, 31486, 30725] tar_idx[:8]=[1939, 1884, 1755, 345, 2715, 574, 101, 2295] src_label[:8]=[2, 2, 0, 0, 0, 0, 1, 2]
-[DBG-C] ep=38 b=2 src_feat: shape=(32, 310) sum=-815.333435 norm=50.432392 mean=-0.082191 std=0.499663
-[DBG-C] ep=38 b=2 tar_feat: shape=(32, 310) sum=-2697.056396 norm=53.202148 mean=-0.271881 std=0.459817
-Epoch 39: Test Accuracy=0.8052, Best Accuracy=0.8415
-Training Loss: Total=219.1030, cls_loss=1.2405, Source=58.7332, Target=59.3098Global Transfer=73.5629, Cross-Domain=208.1271, In-Domain=208.1411
-[DBG-C] ep=39 b=0 src_idx[:8]=[10843, 30042, 22474, 41678, 36095, 2123, 35415, 45167] tar_idx[:8]=[1402, 1737, 2732, 3293, 817, 1225, 251, 731] src_label[:8]=[0, 1, 2, 1, 2, 2, 0, 1]
-[DBG-C] ep=39 b=0 src_feat: shape=(32, 310) sum=-2542.168701 norm=50.278061 mean=-0.256267 std=0.434941
-[DBG-C] ep=39 b=0 tar_feat: shape=(32, 310) sum=-2794.776855 norm=52.638794 mean=-0.281732 std=0.447176
-[DBG-C] ep=39 b=1 src_idx[:8]=[31824, 32981, 1575, 8943, 15792, 18742, 28986, 21163] tar_idx[:8]=[2254, 101, 1846, 2182, 3226, 1157, 1729, 1828] src_label[:8]=[2, 1, 1, 2, 2, 2, 2, 0]
-[DBG-C] ep=39 b=1 src_feat: shape=(32, 310) sum=-1442.730103 norm=50.838089 mean=-0.145436 std=0.489293
-[DBG-C] ep=39 b=1 tar_feat: shape=(32, 310) sum=-2667.461182 norm=51.831619 mean=-0.268897 std=0.445570
-[DBG-C] ep=39 b=2 src_idx[:8]=[26846, 40143, 1768, 30003, 12552, 33879, 5717, 42868] tar_idx[:8]=[1810, 2319, 1162, 1852, 388, 2813, 1018, 175] src_label[:8]=[2, 1, 2, 1, 1, 0, 1, 2]
-[DBG-C] ep=39 b=2 src_feat: shape=(32, 310) sum=-1237.318481 norm=52.370350 mean=-0.124730 std=0.510829
-[DBG-C] ep=39 b=2 tar_feat: shape=(32, 310) sum=-3204.207031 norm=51.111408 mean=-0.323005 std=0.398784
-Epoch 40: Test Accuracy=0.7820, Best Accuracy=0.8415
-Training Loss: Total=218.2745, cls_loss=0.6518, Source=58.5754, Target=58.9024Global Transfer=73.5698, Cross-Domain=207.7957, In-Domain=207.8125
-[DBG-C] ep=40 b=0 src_idx[:8]=[31014, 18222, 26022, 12375, 18397, 39428, 44709, 44084] tar_idx[:8]=[472, 421, 964, 1320, 2349, 1332, 2654, 274] src_label[:8]=[0, 2, 1, 2, 0, 2, 0, 0]
-[DBG-C] ep=40 b=0 src_feat: shape=(32, 310) sum=-1660.650757 norm=49.396751 mean=-0.167404 std=0.466872
-[DBG-C] ep=40 b=0 tar_feat: shape=(32, 310) sum=-2524.174805 norm=56.186863 mean=-0.254453 std=0.503509
-[DBG-C] ep=40 b=1 src_idx[:8]=[26470, 6027, 35676, 11976, 9410, 18456, 13281, 44481] tar_idx[:8]=[1143, 1719, 2147, 1693, 843, 1683, 2805, 1412] src_label[:8]=[0, 0, 1, 2, 0, 0, 2, 1]
-[DBG-C] ep=40 b=1 src_feat: shape=(32, 310) sum=-1818.375732 norm=49.844402 mean=-0.183304 std=0.465695
-[DBG-C] ep=40 b=1 tar_feat: shape=(32, 310) sum=-2625.683594 norm=50.716133 mean=-0.264686 std=0.435026
-[DBG-C] ep=40 b=2 src_idx[:8]=[46546, 40695, 41254, 14561, 47270, 3308, 32502, 22590] tar_idx[:8]=[1832, 246, 2491, 1273, 1711, 374, 458, 1643] src_label[:8]=[1, 0, 0, 1, 2, 0, 2, 2]
-[DBG-C] ep=40 b=2 src_feat: shape=(32, 310) sum=-1006.944641 norm=48.251129 mean=-0.101507 std=0.473723
-[DBG-C] ep=40 b=2 tar_feat: shape=(32, 310) sum=-3293.421387 norm=53.111950 mean=-0.331998 std=0.417322
-Saved best model to ./model/seed3/independent_re/0/CrossSub_no_nsal_1.pth
-Epoch 41: Test Accuracy=0.8550, Best Accuracy=0.8550
-Training Loss: Total=218.2880, cls_loss=0.6136, Source=58.5758, Target=59.0690Global Transfer=73.5641, Cross-Domain=207.7765, In-Domain=207.7888
-[DBG-C] ep=41 b=0 src_idx[:8]=[14937, 33144, 35825, 311, 33852, 34181, 13939, 33169] tar_idx[:8]=[3284, 2123, 181, 101, 3266, 1113, 2216, 460] src_label[:8]=[0, 0, 2, 1, 0, 1, 1, 0]
-[DBG-C] ep=41 b=0 src_feat: shape=(32, 310) sum=-2000.348267 norm=53.559696 mean=-0.201648 std=0.498539
-[DBG-C] ep=41 b=0 tar_feat: shape=(32, 310) sum=-2690.760254 norm=50.131733 mean=-0.271246 std=0.424016
-[DBG-C] ep=41 b=1 src_idx[:8]=[36485, 29378, 23400, 4314, 39544, 5407, 1305, 10275] tar_idx[:8]=[832, 2425, 2116, 1383, 609, 2158, 746, 582] src_label[:8]=[0, 2, 2, 1, 2, 2, 0, 2]
-[DBG-C] ep=41 b=1 src_feat: shape=(32, 310) sum=-1476.871338 norm=49.448475 mean=-0.148878 std=0.473651
-[DBG-C] ep=41 b=1 tar_feat: shape=(32, 310) sum=-2206.507324 norm=50.121529 mean=-0.222430 std=0.451429
-[DBG-C] ep=41 b=2 src_idx[:8]=[22751, 22515, 2405, 18556, 28336, 12270, 14235, 23876] tar_idx[:8]=[1471, 2153, 2404, 2563, 2874, 221, 95, 2531] src_label[:8]=[1, 2, 1, 1, 2, 2, 0, 2]
-[DBG-C] ep=41 b=2 src_feat: shape=(32, 310) sum=-1668.627319 norm=52.154339 mean=-0.168208 std=0.495915
-[DBG-C] ep=41 b=2 tar_feat: shape=(32, 310) sum=-2902.123047 norm=51.036674 mean=-0.292553 std=0.420720
-Epoch 42: Test Accuracy=0.8524, Best Accuracy=0.8550
-Training Loss: Total=222.0061, cls_loss=3.4893, Source=59.2470, Target=59.3824Global Transfer=73.5701, Cross-Domain=208.0108, In-Domain=208.0193
-[DBG-C] ep=42 b=0 src_idx[:8]=[9396, 22057, 3999, 46033, 2813, 20768, 20321, 35404] tar_idx[:8]=[1456, 2950, 533, 2527, 1289, 3122, 2471, 1235] src_label[:8]=[0, 1, 0, 2, 1, 1, 0, 0]
-[DBG-C] ep=42 b=0 src_feat: shape=(32, 310) sum=-2288.373779 norm=53.906727 mean=-0.230683 std=0.489639
-[DBG-C] ep=42 b=0 tar_feat: shape=(32, 310) sum=-2770.562012 norm=52.435669 mean=-0.279291 std=0.446301
-[DBG-C] ep=42 b=1 src_idx[:8]=[16093, 20818, 7324, 26263, 44820, 8420, 28318, 2886] tar_idx[:8]=[161, 96, 3080, 3363, 672, 856, 563, 1853] src_label[:8]=[0, 1, 0, 0, 0, 1, 2, 1]
-[DBG-C] ep=42 b=1 src_feat: shape=(32, 310) sum=-1507.236816 norm=50.767349 mean=-0.151939 std=0.486569
-[DBG-C] ep=42 b=1 tar_feat: shape=(32, 310) sum=-2284.983887 norm=52.301495 mean=-0.230341 std=0.471928
-[DBG-C] ep=42 b=2 src_idx[:8]=[9564, 31382, 13945, 12846, 664, 46410, 20781, 15504] tar_idx[:8]=[3180, 1889, 1875, 185, 623, 2115, 2853, 1680] src_label[:8]=[1, 0, 1, 0, 0, 1, 1, 2]
-[DBG-C] ep=42 b=2 src_feat: shape=(32, 310) sum=-2294.478516 norm=53.558388 mean=-0.231298 std=0.485477
-[DBG-C] ep=42 b=2 tar_feat: shape=(32, 310) sum=-2958.503418 norm=51.103844 mean=-0.298236 std=0.417539
-Epoch 43: Test Accuracy=0.8447, Best Accuracy=0.8550
-Training Loss: Total=218.5107, cls_loss=0.7364, Source=58.6317, Target=58.7436Global Transfer=73.5690, Cross-Domain=207.6151, In-Domain=207.6250
-[DBG-C] ep=43 b=0 src_idx[:8]=[30287, 43498, 32814, 46312, 33069, 2422, 2354, 40029] tar_idx[:8]=[2239, 2780, 2446, 1093, 433, 476, 2389, 2810] src_label[:8]=[2, 1, 1, 2, 0, 1, 1, 0]
-[DBG-C] ep=43 b=0 src_feat: shape=(32, 310) sum=-1384.476807 norm=50.620007 mean=-0.139564 std=0.488724
-[DBG-C] ep=43 b=0 tar_feat: shape=(32, 310) sum=-3464.468994 norm=53.403694 mean=-0.349241 std=0.406870
-[DBG-C] ep=43 b=1 src_idx[:8]=[36686, 10984, 13023, 27593, 20696, 46988, 27800, 41228] tar_idx[:8]=[2244, 608, 766, 1267, 2989, 2040, 1082, 1688] src_label[:8]=[1, 0, 1, 1, 1, 1, 0, 0]
-[DBG-C] ep=43 b=1 src_feat: shape=(32, 310) sum=-2348.192383 norm=52.949833 mean=-0.236713 std=0.476046
-[DBG-C] ep=43 b=1 tar_feat: shape=(32, 310) sum=-3204.225830 norm=52.870987 mean=-0.323007 std=0.421275
-[DBG-C] ep=43 b=2 src_idx[:8]=[38232, 32171, 43696, 36041, 692, 30963, 7522, 38682] tar_idx[:8]=[359, 3229, 1013, 2660, 551, 2574, 2731, 641] src_label[:8]=[0, 1, 2, 2, 0, 1, 0, 0]
-[DBG-C] ep=43 b=2 src_feat: shape=(32, 310) sum=-1977.183838 norm=48.986725 mean=-0.199313 std=0.449666
-[DBG-C] ep=43 b=2 tar_feat: shape=(32, 310) sum=-2373.829102 norm=54.179974 mean=-0.239297 std=0.488544
-Saved best model to ./model/seed3/independent_re/0/CrossSub_no_nsal_1.pth
-Epoch 44: Test Accuracy=0.8715, Best Accuracy=0.8715
-Training Loss: Total=218.8069, cls_loss=0.8986, Source=58.6502, Target=58.9839Global Transfer=73.5726, Cross-Domain=207.7200, In-Domain=207.7332
-[DBG-C] ep=44 b=0 src_idx[:8]=[22465, 21228, 10605, 22440, 36724, 26942, 26320, 45688] tar_idx[:8]=[2839, 1348, 1761, 1438, 833, 935, 639, 2589] src_label[:8]=[2, 0, 1, 2, 1, 2, 0, 1]
-[DBG-C] ep=44 b=0 src_feat: shape=(32, 310) sum=-1298.373779 norm=51.163033 mean=-0.130884 std=0.496760
-[DBG-C] ep=44 b=0 tar_feat: shape=(32, 310) sum=-2949.957764 norm=49.111477 mean=-0.297375 std=0.393348
-[DBG-C] ep=44 b=1 src_idx[:8]=[13434, 6338, 4722, 30799, 36901, 40807, 17908, 33062] tar_idx[:8]=[773, 1540, 1155, 1892, 2781, 1790, 2033, 1905] src_label[:8]=[0, 1, 0, 1, 2, 2, 1, 0]
-[DBG-C] ep=44 b=1 src_feat: shape=(32, 310) sum=-1666.053833 norm=50.782150 mean=-0.167949 std=0.481434
-[DBG-C] ep=44 b=1 tar_feat: shape=(32, 310) sum=-3449.583008 norm=52.566132 mean=-0.347740 std=0.397040
-[DBG-C] ep=44 b=2 src_idx[:8]=[38873, 32330, 18637, 29370, 18428, 5218, 14924, 15460] tar_idx[:8]=[2355, 3067, 2696, 1926, 2904, 723, 631, 44] src_label[:8]=[1, 2, 1, 2, 0, 2, 0, 2]
-[DBG-C] ep=44 b=2 src_feat: shape=(32, 310) sum=-2711.690186 norm=53.282726 mean=-0.273356 std=0.459883
-[DBG-C] ep=44 b=2 tar_feat: shape=(32, 310) sum=-2669.389160 norm=49.570911 mean=-0.269092 std=0.418708
-Epoch 45: Test Accuracy=0.8038, Best Accuracy=0.8715
-Training Loss: Total=218.5685, cls_loss=0.6627, Source=58.5913, Target=59.1803Global Transfer=73.5746, Cross-Domain=207.6913, In-Domain=207.6953
-[DBG-C] ep=45 b=0 src_idx[:8]=[24842, 19136, 28344, 40290, 43895, 43093, 1380, 40959] tar_idx[:8]=[886, 1181, 2292, 2276, 2870, 1791, 2611, 3250] src_label[:8]=[1, 2, 2, 2, 2, 1, 0, 2]
-[DBG-C] ep=45 b=0 src_feat: shape=(32, 310) sum=-1306.922607 norm=49.055161 mean=-0.131746 std=0.474602
-[DBG-C] ep=45 b=0 tar_feat: shape=(32, 310) sum=-3264.632080 norm=50.927334 mean=-0.329096 std=0.391359
-[DBG-C] ep=45 b=1 src_idx[:8]=[18415, 20757, 18764, 2517, 36918, 9229, 42044, 44856] tar_idx[:8]=[3142, 2428, 447, 396, 2457, 1380, 3022, 495] src_label[:8]=[0, 1, 2, 0, 2, 1, 0, 0]
-[DBG-C] ep=45 b=1 src_feat: shape=(32, 310) sum=-1118.074097 norm=48.263992 mean=-0.112709 std=0.471316
-[DBG-C] ep=45 b=1 tar_feat: shape=(32, 310) sum=-3016.468262 norm=52.206837 mean=-0.304079 std=0.426975
-[DBG-C] ep=45 b=2 src_idx[:8]=[17306, 22836, 33691, 25560, 31261, 2170, 11785, 28311] tar_idx[:8]=[3196, 948, 1687, 1765, 3040, 1129, 180, 1118] src_label[:8]=[1, 1, 2, 2, 0, 2, 1, 2]
-[DBG-C] ep=45 b=2 src_feat: shape=(32, 310) sum=-1422.291992 norm=47.920300 mean=-0.143376 std=0.459295
-[DBG-C] ep=45 b=2 tar_feat: shape=(32, 310) sum=-2228.775391 norm=50.230320 mean=-0.224675 std=0.451536
-Epoch 46: Test Accuracy=0.8061, Best Accuracy=0.8715
-Training Loss: Total=218.8567, cls_loss=0.8477, Source=58.6423, Target=59.1253Global Transfer=73.5711, Cross-Domain=207.6906, In-Domain=207.6904
-[DBG-C] ep=46 b=0 src_idx[:8]=[13385, 13634, 21730, 19432, 43644, 46128, 4346, 4775] tar_idx[:8]=[316, 295, 582, 2476, 1195, 290, 2036, 2149] src_label[:8]=[0, 2, 0, 1, 1, 2, 1, 0]
-[DBG-C] ep=46 b=0 src_feat: shape=(32, 310) sum=-2191.260010 norm=51.683983 mean=-0.220893 std=0.469581
-[DBG-C] ep=46 b=0 tar_feat: shape=(32, 310) sum=-3278.181641 norm=53.565090 mean=-0.330462 std=0.424322
-[DBG-C] ep=46 b=1 src_idx[:8]=[5413, 20265, 9814, 38210, 21475, 13865, 44666, 2127] tar_idx[:8]=[812, 1461, 991, 194, 3114, 1993, 369, 2084] src_label[:8]=[2, 0, 2, 0, 2, 1, 0, 2]
-[DBG-C] ep=46 b=1 src_feat: shape=(32, 310) sum=-1725.046265 norm=51.059830 mean=-0.173896 std=0.482283
-[DBG-C] ep=46 b=1 tar_feat: shape=(32, 310) sum=-2906.359619 norm=51.143032 mean=-0.292980 std=0.421724
-[DBG-C] ep=46 b=2 src_idx[:8]=[7208, 25612, 17085, 16392, 14601, 16237, 38439, 33471] tar_idx[:8]=[2850, 1021, 362, 1148, 9, 185, 2441, 1770] src_label[:8]=[1, 2, 2, 1, 1, 0, 2, 1]
-[DBG-C] ep=46 b=2 src_feat: shape=(32, 310) sum=-1884.286377 norm=51.054665 mean=-0.189948 std=0.476133
-[DBG-C] ep=46 b=2 tar_feat: shape=(32, 310) sum=-2925.073975 norm=52.850674 mean=-0.294866 std=0.441186
-Epoch 47: Test Accuracy=0.7708, Best Accuracy=0.8715
-Training Loss: Total=219.6339, cls_loss=1.9670, Source=58.8605, Target=60.0380Global Transfer=72.7362, Cross-Domain=208.1239, In-Domain=208.1208
-[DBG-C] ep=47 b=0 src_idx[:8]=[35674, 35953, 4784, 34564, 46542, 29953, 37757, 19251] tar_idx[:8]=[3267, 329, 3130, 3145, 1149, 246, 2112, 3167] src_label[:8]=[1, 2, 0, 0, 1, 1, 1, 1]
-[DBG-C] ep=47 b=0 src_feat: shape=(32, 310) sum=-1844.826416 norm=50.661087 mean=-0.185970 std=0.473458
-[DBG-C] ep=47 b=0 tar_feat: shape=(32, 310) sum=-3099.663574 norm=52.191956 mean=-0.312466 std=0.420689
-[DBG-C] ep=47 b=1 src_idx[:8]=[30832, 5703, 25246, 38237, 35227, 23168, 37751, 3734] tar_idx[:8]=[1925, 814, 2021, 53, 2006, 739, 1763, 49] src_label[:8]=[1, 1, 0, 0, 2, 1, 1, 1]
-[DBG-C] ep=47 b=1 src_feat: shape=(32, 310) sum=-2121.668701 norm=52.865452 mean=-0.213878 std=0.485808
-[DBG-C] ep=47 b=1 tar_feat: shape=(32, 310) sum=-2913.422607 norm=53.378830 mean=-0.293692 std=0.448323
-[DBG-C] ep=47 b=2 src_idx[:8]=[37, 8131, 8396, 27795, 21622, 38339, 4556, 37030] tar_idx[:8]=[82, 1951, 3178, 2520, 805, 2599, 2959, 824] src_label[:8]=[2, 0, 1, 0, 2, 1, 2, 2]
-[DBG-C] ep=47 b=2 src_feat: shape=(32, 310) sum=-976.700439 norm=49.885666 mean=-0.098458 std=0.491116
-[DBG-C] ep=47 b=2 tar_feat: shape=(32, 310) sum=-3158.723145 norm=50.077003 mean=-0.318420 std=0.389124
-Epoch 48: Test Accuracy=0.7905, Best Accuracy=0.8715
-Training Loss: Total=218.8900, cls_loss=0.7383, Source=58.6333, Target=59.8707Global Transfer=73.4721, Cross-Domain=207.9352, In-Domain=207.9301
-[DBG-C] ep=48 b=0 src_idx[:8]=[43942, 10898, 990, 6502, 38085, 26415, 8563, 2456] tar_idx[:8]=[1395, 3140, 1809, 2868, 3077, 2001, 1371, 2966] src_label[:8]=[0, 0, 1, 2, 0, 0, 2, 1]
-[DBG-C] ep=48 b=0 src_feat: shape=(32, 310) sum=-1636.609985 norm=50.764072 mean=-0.164981 std=0.482268
-[DBG-C] ep=48 b=0 tar_feat: shape=(32, 310) sum=-2664.776123 norm=50.322090 mean=-0.268627 std=0.427939
-[DBG-C] ep=48 b=1 src_idx[:8]=[22993, 5747, 18136, 31834, 5939, 31936, 7032, 13179] tar_idx[:8]=[1349, 2335, 193, 2155, 1453, 2438, 992, 1691] src_label[:8]=[0, 1, 2, 2, 0, 0, 1, 2]
-[DBG-C] ep=48 b=1 src_feat: shape=(32, 310) sum=-1815.072754 norm=49.449673 mean=-0.182971 std=0.461565
-[DBG-C] ep=48 b=1 tar_feat: shape=(32, 310) sum=-2409.285645 norm=52.822521 mean=-0.242872 std=0.471495
-[DBG-C] ep=48 b=2 src_idx[:8]=[24646, 19688, 30223, 28925, 45163, 40509, 5001, 41859] tar_idx[:8]=[2075, 467, 2907, 1485, 1344, 1109, 435, 2182] src_label[:8]=[0, 1, 2, 2, 1, 2, 1, 2]
-[DBG-C] ep=48 b=2 src_feat: shape=(32, 310) sum=-1414.674561 norm=48.898544 mean=-0.142608 std=0.469809
-[DBG-C] ep=48 b=2 tar_feat: shape=(32, 310) sum=-3186.155762 norm=51.375587 mean=-0.321185 std=0.403646
-Epoch 49: Test Accuracy=0.7755, Best Accuracy=0.8715
-Training Loss: Total=219.2124, cls_loss=1.1092, Source=58.7061, Target=59.3394Global Transfer=73.4156, Cross-Domain=207.6801, In-Domain=207.6925
-[DBG-C] ep=49 b=0 src_idx[:8]=[35629, 45024, 26286, 24898, 16367, 35461, 34785, 37102] tar_idx[:8]=[163, 200, 311, 867, 1490, 3033, 171, 1941] src_label[:8]=[1, 0, 0, 2, 1, 0, 0, 2]
-[DBG-C] ep=49 b=0 src_feat: shape=(32, 310) sum=-1622.427002 norm=50.131516 mean=-0.163551 std=0.476044
-[DBG-C] ep=49 b=0 tar_feat: shape=(32, 310) sum=-2922.773193 norm=48.809196 mean=-0.294634 std=0.391613
-[DBG-C] ep=49 b=1 src_idx[:8]=[24587, 21146, 27776, 12782, 13146, 9795, 1757, 18931] tar_idx[:8]=[485, 1030, 936, 912, 1487, 971, 1677, 3052] src_label[:8]=[0, 0, 0, 0, 2, 2, 2, 2]
-[DBG-C] ep=49 b=1 src_feat: shape=(32, 310) sum=-1512.492188 norm=50.347481 mean=-0.152469 std=0.481983
-[DBG-C] ep=49 b=1 tar_feat: shape=(32, 310) sum=-2627.944824 norm=49.880417 mean=-0.264914 std=0.425031
-[DBG-C] ep=49 b=2 src_idx[:8]=[12775, 3843, 6559, 39717, 11743, 18602, 6098, 17572] tar_idx[:8]=[1825, 3095, 954, 718, 2853, 594, 601, 1741] src_label[:8]=[0, 1, 2, 1, 1, 1, 0, 0]
-[DBG-C] ep=49 b=2 src_feat: shape=(32, 310) sum=-1513.122803 norm=49.963654 mean=-0.152533 std=0.477919
-[DBG-C] ep=49 b=2 tar_feat: shape=(32, 310) sum=-3195.302246 norm=52.036755 mean=-0.322107 std=0.411376
-Epoch 50: Test Accuracy=0.7681, Best Accuracy=0.8715
-Training Loss: Total=219.4357, cls_loss=1.2647, Source=58.7721, Target=58.9697Global Transfer=73.4274, Cross-Domain=207.5557, In-Domain=207.5628
-[DBG-C] ep=50 b=0 src_idx[:8]=[39768, 24770, 28206, 40155, 12871, 34000, 43126, 44336] tar_idx[:8]=[870, 1866, 1290, 2337, 2373, 457, 2097, 3112] src_label[:8]=[1, 1, 1, 1, 0, 2, 1, 2]
-[DBG-C] ep=50 b=0 src_feat: shape=(32, 310) sum=-1567.722656 norm=50.611481 mean=-0.158037 std=0.482976
-[DBG-C] ep=50 b=0 tar_feat: shape=(32, 310) sum=-2924.052246 norm=52.404526 mean=-0.294763 std=0.435858
-[DBG-C] ep=50 b=1 src_idx[:8]=[3089, 5901, 18231, 8450, 22035, 16398, 36970, 2354] tar_idx[:8]=[2800, 3345, 2916, 913, 325, 373, 602, 170] src_label[:8]=[2, 0, 2, 1, 1, 1, 2, 1]
-[DBG-C] ep=50 b=1 src_feat: shape=(32, 310) sum=-1336.048218 norm=50.566673 mean=-0.134682 std=0.489536
-[DBG-C] ep=50 b=1 tar_feat: shape=(32, 310) sum=-2600.887695 norm=50.870319 mean=-0.262186 std=0.438342
-[DBG-C] ep=50 b=2 src_idx[:8]=[6204, 23857, 35964, 47079, 46956, 23432, 42333, 20508] tar_idx[:8]=[463, 2991, 20, 1445, 857, 1700, 40, 1920] src_label[:8]=[1, 2, 2, 2, 1, 2, 1, 2]
-[DBG-C] ep=50 b=2 src_feat: shape=(32, 310) sum=-1619.914795 norm=49.417713 mean=-0.163298 std=0.468547
-[DBG-C] ep=50 b=2 tar_feat: shape=(32, 310) sum=-2824.371338 norm=51.761738 mean=-0.284715 std=0.434793
-Epoch 51: Test Accuracy=0.7581, Best Accuracy=0.8715
-Training Loss: Total=218.7775, cls_loss=0.7166, Source=58.6005, Target=58.9605Global Transfer=73.4634, Cross-Domain=207.4742, In-Domain=207.4797
-[DBG-C] ep=51 b=0 src_idx[:8]=[10224, 45113, 40609, 12844, 41962, 43579, 14889, 27708] tar_idx[:8]=[2060, 2778, 333, 3357, 1420, 992, 3080, 3092] src_label[:8]=[2, 1, 0, 0, 2, 1, 0, 0]
-[DBG-C] ep=51 b=0 src_feat: shape=(32, 310) sum=-180.364960 norm=51.246651 mean=-0.018182 std=0.514233
-[DBG-C] ep=51 b=0 tar_feat: shape=(32, 310) sum=-3153.534424 norm=52.183861 mean=-0.317897 std=0.416498
-[DBG-C] ep=51 b=1 src_idx[:8]=[20191, 19664, 46168, 1897, 7371, 46323, 31200, 34281] tar_idx[:8]=[376, 352, 2261, 675, 3354, 2614, 320, 2283] src_label[:8]=[0, 0, 2, 2, 0, 2, 0, 1]
-[DBG-C] ep=51 b=1 src_feat: shape=(32, 310) sum=-917.740723 norm=48.832207 mean=-0.092514 std=0.481504
-[DBG-C] ep=51 b=1 tar_feat: shape=(32, 310) sum=-3108.085205 norm=54.433369 mean=-0.313315 std=0.447820
-[DBG-C] ep=51 b=2 src_idx[:8]=[6612, 42513, 527, 25272, 21917, 46285, 12243, 7460] tar_idx[:8]=[2013, 1997, 454, 565, 2603, 3266, 1401, 2922] src_label[:8]=[0, 2, 0, 0, 1, 2, 2, 0]
-[DBG-C] ep=51 b=2 src_feat: shape=(32, 310) sum=-1626.541992 norm=48.814781 mean=-0.163966 std=0.461895
-[DBG-C] ep=51 b=2 tar_feat: shape=(32, 310) sum=-2745.373779 norm=51.270527 mean=-0.276751 std=0.434067
-Epoch 52: Test Accuracy=0.7613, Best Accuracy=0.8715
-Training Loss: Total=219.4586, cls_loss=1.1599, Source=58.7685, Target=59.0299Global Transfer=73.4600, Cross-Domain=207.5017, In-Domain=207.5056
-[DBG-C] ep=52 b=0 src_idx[:8]=[13387, 17925, 14406, 11578, 6378, 40536, 20108, 823] tar_idx[:8]=[3162, 3176, 1079, 2331, 1862, 3279, 1949, 2239] src_label[:8]=[0, 1, 0, 0, 2, 0, 2, 0]
-[DBG-C] ep=52 b=0 src_feat: shape=(32, 310) sum=-2333.923340 norm=53.358677 mean=-0.235275 std=0.481332
-[DBG-C] ep=52 b=0 tar_feat: shape=(32, 310) sum=-2677.756836 norm=49.889439 mean=-0.269935 std=0.421966
-[DBG-C] ep=52 b=1 src_idx[:8]=[34978, 25915, 40322, 4896, 12097, 9023, 33074, 17008] tar_idx[:8]=[2794, 2191, 2103, 1748, 1183, 2317, 2731, 2151] src_label[:8]=[1, 2, 2, 0, 2, 2, 0, 2]
-[DBG-C] ep=52 b=1 src_feat: shape=(32, 310) sum=-1693.306274 norm=51.206459 mean=-0.170696 std=0.484986
-[DBG-C] ep=52 b=1 tar_feat: shape=(32, 310) sum=-2883.791504 norm=52.150692 mean=-0.290705 std=0.435514
-[DBG-C] ep=52 b=2 src_idx[:8]=[2322, 31408, 272, 44030, 14749, 46234, 8343, 25104] tar_idx[:8]=[2957, 2765, 1698, 2451, 847, 2136, 1288, 3116] src_label[:8]=[1, 0, 1, 0, 2, 2, 1, 0]
-[DBG-C] ep=52 b=2 src_feat: shape=(32, 310) sum=-1929.150391 norm=50.479504 mean=-0.194471 std=0.468056
-[DBG-C] ep=52 b=2 tar_feat: shape=(32, 310) sum=-3044.254883 norm=53.396740 mean=-0.306881 std=0.439618
-Epoch 53: Test Accuracy=0.7814, Best Accuracy=0.8715
-Training Loss: Total=218.7183, cls_loss=0.6152, Source=58.5739, Target=58.9280Global Transfer=73.4540, Cross-Domain=207.3793, In-Domain=207.3843
-[DBG-C] ep=53 b=0 src_idx[:8]=[16132, 2823, 37132, 8625, 25357, 11388, 30399, 12988] tar_idx[:8]=[607, 2118, 253, 1616, 1770, 1252, 3354, 1939] src_label[:8]=[0, 1, 0, 2, 1, 2, 0, 1]
-[DBG-C] ep=53 b=0 src_feat: shape=(32, 310) sum=-2080.101562 norm=49.936821 mean=-0.209688 std=0.455447
-[DBG-C] ep=53 b=0 tar_feat: shape=(32, 310) sum=-2695.234375 norm=51.971741 mean=-0.271697 std=0.445517
-[DBG-C] ep=53 b=1 src_idx[:8]=[43152, 41006, 16634, 38240, 21748, 8122, 45732, 41302] tar_idx[:8]=[2907, 316, 180, 3313, 346, 711, 225, 3295] src_label[:8]=[1, 1, 2, 0, 0, 0, 1, 0]
-[DBG-C] ep=53 b=1 src_feat: shape=(32, 310) sum=-2216.215820 norm=51.772568 mean=-0.223409 std=0.469374
-[DBG-C] ep=53 b=1 tar_feat: shape=(32, 310) sum=-2242.338135 norm=52.213722 mean=-0.226042 std=0.473026
-[DBG-C] ep=53 b=2 src_idx[:8]=[36127, 37946, 9460, 36754, 32391, 5451, 39488, 11350] tar_idx[:8]=[1833, 551, 2149, 1054, 492, 1159, 3082, 1606] src_label[:8]=[2, 0, 0, 1, 2, 2, 2, 2]
-[DBG-C] ep=53 b=2 src_feat: shape=(32, 310) sum=-1424.348145 norm=49.300282 mean=-0.143583 std=0.473728
-[DBG-C] ep=53 b=2 tar_feat: shape=(32, 310) sum=-3298.937500 norm=50.790890 mean=-0.332554 std=0.386620
-Epoch 54: Test Accuracy=0.7952, Best Accuracy=0.8715
-Training Loss: Total=219.1679, cls_loss=0.8799, Source=58.6641, Target=58.9097Global Transfer=73.4712, Cross-Domain=207.4296, In-Domain=207.4322
-[DBG-C] ep=54 b=0 src_idx[:8]=[37966, 23770, 26764, 10285, 24622, 19705, 34138, 7072] tar_idx[:8]=[898, 628, 1849, 2785, 605, 967, 1105, 1796] src_label[:8]=[0, 2, 2, 2, 0, 1, 2, 1]
-[DBG-C] ep=54 b=0 src_feat: shape=(32, 310) sum=-1439.353760 norm=50.120304 mean=-0.145096 std=0.481872
-[DBG-C] ep=54 b=0 tar_feat: shape=(32, 310) sum=-3354.931152 norm=52.205425 mean=-0.338199 std=0.400470
-[DBG-C] ep=54 b=1 src_idx[:8]=[36585, 10141, 29404, 534, 36488, 28045, 32069, 4121] tar_idx[:8]=[1933, 1815, 1888, 2464, 2566, 251, 3390, 256] src_label[:8]=[0, 0, 1, 0, 0, 0, 0, 0]
-[DBG-C] ep=54 b=1 src_feat: shape=(32, 310) sum=-1285.736206 norm=47.840446 mean=-0.129611 std=0.462536
-[DBG-C] ep=54 b=1 tar_feat: shape=(32, 310) sum=-2491.088623 norm=54.343380 mean=-0.251118 std=0.484423
-[DBG-C] ep=54 b=2 src_idx[:8]=[30908, 26023, 18267, 28199, 21928, 21902, 27448, 40273] tar_idx[:8]=[1504, 1314, 3336, 55, 2032, 519, 1190, 3142] src_label[:8]=[1, 1, 0, 1, 1, 1, 1, 1]
-[DBG-C] ep=54 b=2 src_feat: shape=(32, 310) sum=-1840.751953 norm=51.677570 mean=-0.185560 std=0.484564
-[DBG-C] ep=54 b=2 tar_feat: shape=(32, 310) sum=-2620.816162 norm=51.975716 mean=-0.264195 std=0.450053
-Epoch 55: Test Accuracy=0.7958, Best Accuracy=0.8715
-Training Loss: Total=221.1861, cls_loss=2.5073, Source=58.9535, Target=59.1832Global Transfer=73.4417, Cross-Domain=207.5725, In-Domain=207.5739
-[DBG-C] ep=55 b=0 src_idx[:8]=[1744, 20174, 10293, 16813, 2124, 16086, 38, 41434] tar_idx[:8]=[3160, 1542, 10, 506, 777, 1584, 444, 938] src_label[:8]=[1, 0, 2, 0, 2, 0, 2, 0]
-[DBG-C] ep=55 b=0 src_feat: shape=(32, 310) sum=-1780.600098 norm=51.901428 mean=-0.179496 std=0.489238
-[DBG-C] ep=55 b=0 tar_feat: shape=(32, 310) sum=-2608.486084 norm=49.815800 mean=-0.262952 std=0.425485
-[DBG-C] ep=55 b=1 src_idx[:8]=[33646, 9625, 32346, 10816, 26368, 20816, 28809, 16096] tar_idx[:8]=[1823, 873, 2115, 445, 560, 2369, 1213, 2633] src_label[:8]=[2, 1, 2, 0, 0, 1, 1, 0]
-[DBG-C] ep=55 b=1 src_feat: shape=(32, 310) sum=-2435.381836 norm=51.766426 mean=-0.245502 std=0.458135
-[DBG-C] ep=55 b=1 tar_feat: shape=(32, 310) sum=-2953.524414 norm=50.689682 mean=-0.297734 std=0.412781
-[DBG-C] ep=55 b=2 src_idx[:8]=[10799, 21312, 9144, 41661, 32445, 15829, 31036, 19514] tar_idx[:8]=[2726, 3086, 1387, 505, 1201, 1196, 1353, 3047] src_label[:8]=[0, 1, 1, 1, 2, 1, 0, 0]
-[DBG-C] ep=55 b=2 src_feat: shape=(32, 310) sum=-1691.352539 norm=49.751560 mean=-0.170499 std=0.469543
-[DBG-C] ep=55 b=2 tar_feat: shape=(32, 310) sum=-3600.733643 norm=52.879810 mean=-0.362977 std=0.387486
-Epoch 56: Test Accuracy=0.7967, Best Accuracy=0.8715
-[DBG-C] ep=56 b=0 src_idx[:8]=[335, 8946, 8093, 2799, 23109, 3905, 409, 24899] tar_idx[:8]=[732, 90, 371, 2283, 3392, 2050, 1105, 2161] src_label[:8]=[1, 2, 0, 1, 1, 0, 1, 2]
-[DBG-C] ep=56 b=0 src_feat: shape=(32, 310) sum=-2003.683105 norm=53.533684 mean=-0.201984 std=0.498121
-[DBG-C] ep=56 b=0 tar_feat: shape=(32, 310) sum=-2593.217529 norm=53.912418 mean=-0.261413 std=0.474009
-[DBG-C] ep=56 b=1 src_idx[:8]=[39920, 14262, 26032, 7350, 28328, 29644, 26285, 19623] tar_idx[:8]=[1232, 1755, 787, 1073, 2171, 2313, 133, 2131] src_label[:8]=[0, 0, 1, 0, 2, 0, 0, 0]
-[DBG-C] ep=56 b=1 src_feat: shape=(32, 310) sum=-1822.342773 norm=49.764469 mean=-0.183704 std=0.464674
-[DBG-C] ep=56 b=1 tar_feat: shape=(32, 310) sum=-3064.506836 norm=51.589100 mean=-0.308922 std=0.415782
-[DBG-C] ep=56 b=2 src_idx[:8]=[42623, 21756, 38941, 39995, 17694, 25106, 2226, 5179] tar_idx[:8]=[2357, 2761, 178, 3354, 915, 1296, 1272, 94] src_label[:8]=[2, 0, 1, 0, 0, 0, 2, 2]
-[DBG-C] ep=56 b=2 src_feat: shape=(32, 310) sum=-2041.890503 norm=51.418941 mean=-0.205836 std=0.473474
-[DBG-C] ep=56 b=2 tar_feat: shape=(32, 310) sum=-2514.088623 norm=51.174881 mean=-0.253436 std=0.446978
 Traceback (most recent call last):
-  File "/home/isaber/iSaber/EEG-Emotion-Recognition/main_PCL.py", line 635, in <module>
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/main_PCL.py", line 683, in <module>
     best_acc, source_att, target_att, conf_matrix = main(test_id, args)
                                                     ^^^^^^^^^^^^^^^^^^^
-  File "/home/isaber/iSaber/EEG-Emotion-Recognition/main_PCL.py", line 541, in main
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/main_PCL.py", line 589, in main
     train_loss, train_acc, loss_dict = train_epoch(
                                        ^^^^^^^^^^^^
-  File "/home/isaber/iSaber/EEG-Emotion-Recognition/main_PCL.py", line 346, in train_epoch
-    s2t_pro, t2s_pro, s2s_pro, t2t_pro) = model(
-                                          ^^^^^^
-  File "/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/isaber/iSaber/EEG-Emotion-Recognition/model/PCL_TDGCN.py", line 541, in forward
-    tgt_sim, tgt_prototype, tat_cluster_label = self._get_target_similar(
-                                                ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/isaber/iSaber/EEG-Emotion-Recognition/model/PCL_TDGCN.py", line 641, in _get_target_similar
-    prototype = torch.tensor(kmeans.cluster_centers_, device=self.device)
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/main_PCL.py", line 439, in train_epoch
+    'target_loss': loss_dict.get('target_loss', 0.0) + target_loss.item(),
+                                                       ^^^^^^^^^^^^^^^^^^
 KeyboardInterrupt
