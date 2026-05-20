@@ -4,8 +4,10 @@ import awkward as ak
 from einops import rearrange
 from loguru import logger
 import numpy as np
+from sklearn import preprocessing
 import torch
 from torch.utils.data import DataLoader, TensorDataset
+from sklearn.preprocessing import MinMaxScaler
 
 from constant import CLI_arguments_enum
 
@@ -223,10 +225,12 @@ def normalization_wrt_trial(data:list, type = 'min_max'):
 
     return data
 
-def normalization_wrt_session(data:list, type = 'min_max'):
+def normalization_wrt_subject(data:list, type = 'min_max'):
     '''
     param {type}: min_max, z_score
     
+    NOTE: Differet sessions are separatly normalized.
+
     input:
         data: list shape (session, subject, trial, sample, electrode, feature)
         type: str, 'min_max' or 'z_score'
@@ -237,15 +241,14 @@ def normalization_wrt_session(data:list, type = 'min_max'):
 
     for session_id in range(len(data)):
         for subject_id in range(len(data[session_id])):
-                data[session_id][subject_id]= normalize_one_session(
+                data[session_id][subject_id]= normalize_one_subject(
                     data[session_id][subject_id], type)
 
     return data
 
 
-import awkward as ak
 
-def normalize_one_session(data, type='z_score'):
+def normalize_one_subject(data, type='min_max'):
     '''
     description: Normalizes a jagged EEG array of shape (trials, var_samples, 62, 5)
     param {type}: 'min_max', 'z_score'
@@ -258,21 +261,24 @@ def normalize_one_session(data, type='z_score'):
     flat_data = ak.flatten(data, axis=1)
     
     if type == 'min_max':
-        # Calculate min/max along the total_samples dimension
-        x_min = ak.min(flat_data, axis=0) # Shape becomes (62, 5)
-        x_max = ak.max(flat_data, axis=0) # Shape becomes (62, 5)
-        _range = x_max - x_min
-        
-        # Broadcast the (62, 5) stats back across the original jagged array
-        ret = (data - x_min) / (_range + 1e-8)
-        
+        # Convert to numpy, normalize, then restore jagged shape
+        flat_np = ak.to_numpy(flat_data)              # (N, 62, 5)
+        N, E, F = flat_np.shape
+        flat_2d = flat_np.reshape(N, E * F)
+
+        scaler = preprocessing.MinMaxScaler(feature_range=(-1, 1))
+        flat_2d = scaler.fit_transform(flat_2d).astype(np.float32)
+
+        flat_3d = flat_2d.reshape(N, E, F)
+        ret = ak.unflatten(flat_3d, ak.num(data, axis=1), axis=0)
+
     elif type == 'z_score':
-        # Calculate mean/std along the total_samples dimension
-        x_mean = ak.mean(flat_data, axis=0) # Shape becomes (62, 5)
-        x_std = ak.std(flat_data, axis=0)   # Shape becomes (62, 5)
-        
-        # Broadcast the (62, 5) stats back across the original jagged array
-        ret = (data - x_mean) / (x_std + 1e-8)
+        flat_np = ak.to_numpy(flat_data)              # (N, 62, 5)
+        x_mean = flat_np.mean(axis=0)                  # (62, 5)
+        x_std = flat_np.std(axis=0)                    # (62, 5)
+
+        flat_np = (flat_np - x_mean) / (x_std + 1e-8)
+        ret = ak.unflatten(flat_np, ak.num(data, axis=1), axis=0)
 
     return ret.to_list()
 def normalize_one_trial(data, type = 'min_max'):

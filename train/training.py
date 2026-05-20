@@ -166,7 +166,8 @@ def train(
     test_shape = test_data.shape
     train_flat = train_data.reshape(train_shape[0], -1)
     test_flat = test_data.reshape(test_shape[0], -1)
-    train_flat, test_flat = _normalize_for_prpl(train_flat, test_flat)
+    # This is removed since we use subject-wise normalization.
+    # train_flat, test_flat = _normalize_for_prpl(train_flat, test_flat)
     train_data = train_flat.reshape(train_shape)
     test_data = test_flat.reshape(test_shape)
 
