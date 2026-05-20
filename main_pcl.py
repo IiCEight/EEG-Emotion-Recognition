@@ -1,6 +1,9 @@
 from typing import Annotated
 
 import pickle
+import random
+
+import numpy as np
 import torch
 import typer
 from einops import rearrange
@@ -14,7 +17,19 @@ from model.PCL_TDGCN import PCL
 from model.PCL_SABER import PCL_SABER
 from train import training_pcl
 from utils.metric import Metric
-from utils.random_seed import setup_seed
+
+
+def _set_seed_pcl(seed: int) -> None:
+    """Match main_PCL.set_seed exactly (do NOT touch cudnn.enabled)."""
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
+    np.random.seed(seed)
+    random.seed(seed)
+    torch.backends.cudnn.benchmark = False
+    torch.backends.cudnn.deterministic = True
+    torch.set_num_threads(2)
 
 app = typer.Typer(pretty_exceptions_show_locals=False)
 
@@ -43,7 +58,7 @@ def main(
 ):
     """PCL-TDGCN subject-independent training entry point."""
     setUpLogger(level=level)
-    setup_seed(seed)
+    _set_seed_pcl(seed)
 
     logger.info(
         f'Launching....\nmodel_name: PCL\ndataset: {dataset}\ndataset_path: {dataset_path}'
@@ -72,7 +87,7 @@ def main(
 
     for session_id in range(num_sessions):
         for subject_id in range(num_subjects):
-            setup_seed(seed)
+            _set_seed_pcl(seed)
 
             train_data, train_labels, test_data, test_labels = merge_and_split(
                 data, labels,
