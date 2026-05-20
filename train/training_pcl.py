@@ -121,7 +121,7 @@ def train(
     print(f"[DBG-A] subj={subject_id} sess={session_id} src_n={source_num} tgt_n={target_num}")
     print(f"[DBG-A] {_dbg_params('model', model)}")
     print(f"[DBG-A] {_dbg_params('disc', discriminator)}")
-    print(f"[DBG-A] {_dbg_tstat('MHGCN.A', model.encoder.MHGCN.A)}")
+    print(f"[DBG-A] {_dbg_tstat('GGCN.A', model.encoder.GGCN.A)}")                      
 
     # --- Initialize memory banks ---
     model.eval()

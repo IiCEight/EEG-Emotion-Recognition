@@ -481,8 +481,7 @@ def main(test_id: int, args: argparse.Namespace) -> Tuple[float, List, List, np.
     print(f"[DBG-A] subj={test_id} sess={args.session} src_n={source_sample_num} tgt_n={target_sample_num}")
     print(f"[DBG-A] {_dbg_params('model', model)}")
     print(f"[DBG-A] {_dbg_params('disc', domain_discriminator)}")
-    print(f"[DBG-A] {_dbg_tstat('MHGCN.A', model.encoder.MHGCN.A)}")
-
+    print(f"[DBG-A] {_dbg_tstat('GGCN.A', model.encoder.GGCN.A)}")                      
     # Initialize feature memory banks
     model.eval()
     initialize_source_banks(data_loaders["source_loader"], model, args)
