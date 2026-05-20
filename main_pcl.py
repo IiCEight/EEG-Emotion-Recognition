@@ -30,7 +30,7 @@ def main(
     epochs: Annotated[int, typer.Option(help="epochs")] = 1000,
     lr: Annotated[float, typer.Option(help="learning rate")] = 0.001,
     weight_decay: Annotated[float, typer.Option(help="weight decay")] = 0.001,
-    seed: Annotated[int, typer.Option(help="random seed")] = 200,
+    seed: Annotated[int, typer.Option(help="random seed")] = 42,
     eval_interval: Annotated[int, typer.Option(help="evaluate every N epochs")] = 1,
     early_stop_patience: Annotated[int, typer.Option(help="early stop patience (0=disabled)")] = 1000,
     layers: Annotated[int, typer.Option(help="MHGCN layers")] = 2,
@@ -47,8 +47,13 @@ def main(
     setup_seed(seed)
 
     logger.info(
-        "PCL | dataset={} device={} batch={} epochs={} lr={} seed={}",
-        dataset, device, batch_size, epochs, lr, seed,
+        f'Launching....\nmodel_name: PCL\ndataset: {dataset}\ndataset_path: {dataset_path}'
+        + f'\ncache_dir: {cache_dir}'
+        + f'\ndevice: {device}\nlogging level: {level}'
+        + f'\nbatch_size: {batch_size}\nepochs: {epochs}'
+        + f'\nrandom seed: {seed}'
+        + f'\nonly one experiment: {only_one_experiment}\nonly one session: {only_one_session}'
+        + f'\nlearning rate: {lr}\nearly stop patience: {early_stop_patience}'
     )
 
     if direct_cache is not None:
