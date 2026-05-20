@@ -59,7 +59,7 @@ def main(
     only_one_session: Annotated[bool, typer.Option(help="run one session only")] = True,
     use_saber_encoder: Annotated[bool, typer.Option(help="replace MHGCN encoder with Saber's FeatureExtractor")] = False,
     direct_cache: Annotated[str | None, typer.Option(help="load dataset directly from this .pkl file (bypasses load_data)")] = None,
-    use_orig_loader: Annotated[bool, typer.Option(help="use main_PCL.prepare_data + create_data_loaders (raw .mat path)")] = True,
+    use_orig_loader: Annotated[bool, typer.Option(help="use main_PCL.prepare_data + create_data_loaders (raw .mat path)")] = False,
     level: Annotated[cli_enum.LevelName, typer.Option("-l", help="log level")] = cli_enum.LevelName.INFO,
 ):
     """PCL-TDGCN subject-independent training entry point."""
