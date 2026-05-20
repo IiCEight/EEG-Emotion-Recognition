@@ -8,6 +8,7 @@
 # @Result  : 加入对比学习提升类内紧凑性和类间分离性
 """
 
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -624,6 +625,8 @@ class PCL(nn.Module):
         # 选择高置信度样本
         output = self.target_f_bank.to(self.device)
         scores = self.target_score_bank
+        # scores.max(dim=1)[0] takes the maximum probability across 
+        # the 3 classes for each sample → shape [target_num].
         aggregated_scores = scores.max(dim=1)[0]
         num_samples = len(aggregated_scores)
 
@@ -633,8 +636,14 @@ class PCL(nn.Module):
         output_f = output[top_indices]
 
         # K-means聚类
-        kmeans = KMeans(n_clusters=self.num_of_class, random_state=0)
-        kmeans.fit(output_f.cpu().detach().numpy())
+        pool = output_f.cpu().detach().numpy()
+        pool = np.unique(pool, axis=0)  # remove exact duplicates
+        if len(pool) < self.num_of_class:
+            rng = np.random.default_rng(0)
+            while len(pool) < self.num_of_class:
+                pool = np.vstack([pool, pool[rng.integers(len(pool))] + rng.standard_normal(pool.shape[1]) * 1e-4])
+        kmeans = KMeans(n_clusters=self.num_of_class, random_state=0, n_init="auto")
+        kmeans.fit(pool)
         prototype = torch.tensor(kmeans.cluster_centers_, device=self.device)
 
         # 计算相似性

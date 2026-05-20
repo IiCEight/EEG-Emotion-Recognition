@@ -182,7 +182,8 @@ def train(
             target_loss = criterion(tgt_sim, tgt_cluster_label.long())
 
             global_transfer_loss = dann_loss(
-                src_f, tar_f,
+                src_f + 0.005 * torch.randn_like(src_f),
+                tar_f + 0.005 * torch.randn_like(tar_f),
                 src_prob, F.softmax(tar_out, dim=1),
             )
 

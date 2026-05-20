@@ -5,12 +5,14 @@ import torch
 import typer
 from einops import rearrange
 from loguru import logger
+from sklearn.preprocessing import MinMaxScaler
 
 import constant.CLI_arguments_enum as cli_enum
 from config.logging import setUpLogger
 from data.dataloder import load_data
-from data.utils import merge_and_split, normalization_wrt_subject
+from data.utils import merge_and_split
 from model.PCL_TDGCN import PCL
+from model.PCL_SABER import PCL_SABER
 from train import training_pcl
 from utils.metric import Metric
 from utils.random_seed import setup_seed
@@ -36,6 +38,7 @@ def main(
     hidden_2: Annotated[int, typer.Option(help="encoder hidden dim 2 / feature dim")] = 64,
     only_one_experiment: Annotated[bool, typer.Option(help="run one subject only (debug)")] = False,
     only_one_session: Annotated[bool, typer.Option(help="run one session only")] = True,
+    use_saber_encoder: Annotated[bool, typer.Option(help="replace MHGCN encoder with Saber's FeatureExtractor")] = False,
     direct_cache: Annotated[str | None, typer.Option(help="load dataset directly from this .pkl file (bypasses load_data)")] = None,
     level: Annotated[cli_enum.LevelName, typer.Option("-l", help="log level")] = cli_enum.LevelName.INFO,
 ):
@@ -58,8 +61,6 @@ def main(
             cache_dir=cache_dir,
         )
 
-    normalization_wrt_subject(data)
-
     num_sessions = len(labels)
     metric = Metric(num_subjects, num_sessions)
 
@@ -80,10 +81,17 @@ def main(
             train_data = rearrange(train_data, "s c f -> s f c").reshape(-1, 310)
             test_data = rearrange(test_data, "s c f -> s f c").reshape(-1, 310)
 
+            # Normalize per subject per feature column — matches original utils_PCL normalization
+            src_scaler = MinMaxScaler(feature_range=(-1, 1))
+            train_data = src_scaler.fit_transform(train_data).astype("float32")
+            tgt_scaler = MinMaxScaler(feature_range=(-1, 1))
+            test_data = tgt_scaler.fit_transform(test_data).astype("float32")
+
             source_num = train_data.shape[0]
             target_num = test_data.shape[0]
 
-            model = PCL(
+            model_cls = PCL_SABER if use_saber_encoder else PCL
+            model = model_cls(
                 in_planes=[num_features, num_electrodes],
                 layers=layers,
                 hidden_1=hidden_1,
