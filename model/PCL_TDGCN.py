@@ -541,8 +541,10 @@ class PCL(nn.Module):
             print(f"[DBG-E] target_in[0,:8]={target[0,:8].detach().cpu().tolist()}")
             print(f"[DBG-E] {self._dbg_t('source_f_raw', source_f)}")
             print(f"[DBG-E] {self._dbg_t('target_f_raw', target_f)}")
-            print(f"[DBG-E] {self._dbg_t('src_adj', self.src_adj)}")
-            print(f"[DBG-E] {self._dbg_t('tar_adj', self.tar_adj)}")
+            for i, a in enumerate(self.src_adj):
+                print(f"[DBG-E] {self._dbg_t(f'src_adj[{i}]', a)}")
+            for i, a in enumerate(self.tar_adj):
+                print(f"[DBG-E] {self._dbg_t(f'tar_adj[{i}]', a)}")
 
         # 分类预测
         source_predict = self.cls_classifier(source_f)
