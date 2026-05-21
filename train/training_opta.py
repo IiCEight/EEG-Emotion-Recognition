@@ -252,11 +252,12 @@ def train(
             try:
                 losses, diag = model(src_data, tgt_data, src_label, epoch, epochs)
                 lam1 = 2.0 * (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)
+                lam2 = 0.5
                 total_loss = (
                     losses["src_ce"]
                     + losses["dann"]
                     + lam1 * losses["tgt_ce"]
-                    + losses["tri"]
+                    + lam2 * losses["tri"]
                     + losses["xconf"]
                 )
 

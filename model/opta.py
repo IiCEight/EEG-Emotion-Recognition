@@ -147,6 +147,16 @@ class OPTA(nn.Module):
         sim = sim - torch.eye(M.size(0), device=M.device) * 2.0
         return sim.max().item()
 
+    def _hinge(self, M: torch.Tensor) -> torch.Tensor:
+        margin = self.triangulation_margin
+        sim = M @ M.t()
+        # Add eps inside sqrt so gradient stays finite when two prototypes coincide
+        # (sim=1 → inside=0 → sqrt'=inf → NaN). Common with cold-start M_t == M_s
+        # or near-collapse, observed during smoke test.
+        dist = (2.0 - 2.0 * sim).clamp_min(0.0).add(1e-8).sqrt()
+        off = ~torch.eye(M.size(0), dtype=torch.bool, device=M.device)
+        return F.relu(margin - dist)[off].pow(2).mean()
+
     def forward(
         self,
         source: torch.Tensor,
@@ -209,11 +219,14 @@ class OPTA(nn.Module):
         loss_tgt_ce = (c_score * ce_per_sample).mean()
 
         zero = torch.zeros((), device=source.device)
+        # Triangulation: same-class anchors attract, different-class anchors repel
+        align = ((M_s - M_t) ** 2).sum(dim=1).mean()
+        loss_tri = align + (self._hinge(M_s) + self._hinge(M_t))
         losses = {
             "src_ce": loss_src_ce,
             "dann": loss_dann,
             "tgt_ce": loss_tgt_ce,
-            "tri": zero,
+            "tri": loss_tri,
             "xconf": zero,
         }
         diag = {
