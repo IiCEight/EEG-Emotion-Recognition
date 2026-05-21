@@ -10,6 +10,25 @@ from model.prpl import FeatureExtractor as MlpFeatureExtractor
 from model.saber import FeatureExtractor as GcnFeatureExtractor
 
 
+class _LabelSmoothingCE(nn.Module):
+    def __init__(self, num_classes: int, epsilon: float = 0.0005):
+        super().__init__()
+        self.num_classes = num_classes
+        self.epsilon = epsilon
+
+    def forward(self, logits: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        log_prob = F.log_softmax(logits, dim=-1)
+        weight = logits.new_ones(logits.size()) * self.epsilon / (logits.size(-1) - 1.0)
+        weight.scatter_(-1, target.unsqueeze(-1), 1.0 - self.epsilon)
+        return (-weight * log_prob).sum(dim=-1).mean()
+
+
+def source_prototypes(f_s: torch.Tensor, y_s_oh: torch.Tensor) -> torch.Tensor:
+    counts = y_s_oh.sum(0).clamp(min=1.0).unsqueeze(1)  # [C, 1]
+    M_s = (y_s_oh.t() @ f_s) / counts                   # [C, D]
+    return F.normalize(M_s, dim=1)
+
+
 class CosineClassifier(nn.Module):
     def __init__(self, feat_dim: int = 64, num_classes: int = 3):
         super().__init__()
@@ -82,8 +101,9 @@ class OPTA(nn.Module):
             )
 
         self.classifier = CosineClassifier(feat_dim=self.feat_dim, num_classes=num_classes)
-        self.domain_disc = Discriminator(in_feature=self.feat_dim, num_class=2)
+        self.domain_disc = Discriminator(in_feature=self.feat_dim, num_class=1)
         self.dann = DomainAdversarialLoss(self.domain_disc, max_iter=max_iter)
+        self.smooth_ce = _LabelSmoothingCE(num_classes=num_classes)
 
         # Pool is allocated lazily on first forward (we need to know device).
         self.pool: FIFOPool | None = None
@@ -107,16 +127,32 @@ class OPTA(nn.Module):
         f_s = self.feature_extractor(source)
         f_t = self.feature_extractor(target)
 
+        # Source prototypes (cached for inference; per-batch, on-graph)
+        M_s = source_prototypes(f_s, source_label_oh)
+        self._last_M_s.copy_(M_s.detach())
+
+        # Source CE on cosine classifier
+        logits_s = self.classifier(f_s)
+        src_label = source_label_oh.argmax(dim=1)
+        loss_src_ce = self.smooth_ce(logits_s, src_label)
+
+        # DANN with feature noise (matches SABER/PRPL pattern)
+        noise = 0.005
+        loss_dann = self.dann(
+            f_s + noise * torch.randn_like(f_s),
+            f_t + noise * torch.randn_like(f_t),
+        )
+
         zero = torch.zeros((), device=source.device)
         losses = {
-            "src_ce": zero,
-            "dann": zero,
+            "src_ce": loss_src_ce,
+            "dann": loss_dann,
             "tgt_ce": zero,
             "tri": zero,
             "xconf": zero,
         }
         diag = {
-            "pool_size": float(self.pool.size if self.pool is not None else 0),
+            "pool_size": float(self.pool.size),
             "agree_rate": 0.0,
             "M_t_offdiag_max": 0.0,
         }
@@ -126,8 +162,10 @@ class OPTA(nn.Module):
     def predict(self, x: torch.Tensor) -> torch.Tensor:
         self.eval()
         f = self.feature_extractor(x)
-        logits = self.classifier(f)
-        return logits.argmax(dim=1)
+        # Stage 2: use source prototypes (target prototypes not yet implemented).
+        f_n = F.normalize(f, dim=1)
+        M = self._last_M_s
+        return (f_n @ M.t()).argmax(dim=1)
 
     def get_parameters(self):
         return [
