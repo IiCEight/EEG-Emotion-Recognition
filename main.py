@@ -145,6 +145,23 @@ def main(
                     session_id, learning_rate, early_stop_patience,
                     test_metadata=test_metadata, failure_log_path=failure_log,
                 )
+            elif model_name == cli_enum.ModelName.OPTA:
+                from model.opta import OPTA
+                import train.training_opta as training_opta
+
+                model = OPTA(
+                    num_electrodes=num_electrodes,
+                    in_features=num_features,
+                    num_classes=num_classes,
+                    use_gcn=use_gcn,
+                    max_iter=epochs,
+                ).to(device)
+                training_opta.train(
+                    model, metric, train_data, train_labels, test_data, test_labels,
+                    batch_size, num_classes, device, epochs, task_type, subject_id,
+                    session_id, learning_rate, early_stop_patience,
+                    test_metadata=test_metadata, failure_log_path=failure_log,
+                )
             else:
                 model = Saber(
                     num_electrodes, num_features, num_classes, use_gcn=use_gcn,

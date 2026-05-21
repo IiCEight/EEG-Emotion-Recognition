@@ -15,6 +15,7 @@ class ModelName(str, Enum):
     ADANN = "ADANN"
     SABER_T = "SABER_T"
     PCL = "PCL"
+    OPTA = "OPTA"
 
 class DatasetName(str, Enum):
     DEAP = "DEAP"
