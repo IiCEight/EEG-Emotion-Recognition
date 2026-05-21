@@ -1,8 +1,915 @@
-Traceback (most recent call last):
-  File "/home/isaber/iSaber/EEG-Emotion-Recognition/main_pcl.py", line 6, in <module>
-    import torch
-  File "/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/__init__.py", line 416, in <module>
-    from torch._C import *  # noqa: F403
-    ^^^^^^^^^^^^^^^^^^^^^^
-  File "<frozen importlib._bootstrap>", line 463, in _lock_unlock_module
-KeyboardInterrupt
+11:12:08 | INFO     __main__ main     61  Launching....
+model_name: PCL
+dataset: SEED
+dataset_path: ../data/SEED
+cache_dir: ./cache
+device: cuda:0
+logging level: LevelName.INFO
+batch_size: 32
+epochs: 1000
+random seed: 200
+only one experiment: False
+only one session: True
+learning rate: 0.001
+early stop patience: 1000
+11:12:08 | INFO     data.dataloder load_data 64  Loading dataset SEED from path ../data/SEED
+11:12:12 | INFO     data.dataloder load_data 89  Dataset cache hit: cache/seed_73fe27d0a09dc03b42c0f4e3e65ed43f.pkl
+11:12:50 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+11:12:51 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+11:12:51 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+11:12:51 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+11:12:51 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+number of source samples 47516
+number of target samples 3394
+11:13:00 | INFO     utils.metric update   25  --> A new better acc 0.3253 on subject 0 session 0
+11:13:00 | INFO     train.training_pcl train    137 Epoch 0/1000 subj 0 sess 0 | acc=0.3253 best=0.3253
+11:13:04 | INFO     train.training_pcl train    226 Epoch 0/1000 | total_loss_sum=265.1694 | total_cls_loss=37.1033 | total_transfer_loss=69.7734| total_domain_loss=449.3553 | total_source_loss=68.4217 | total_target_loss=85.5560
+11:13:05 | INFO     utils.metric update   25  --> A new better acc 0.8217 on subject 0 session 0
+11:13:10 | INFO     utils.metric update   25  --> A new better acc 0.8418 on subject 0 session 0
+11:13:15 | INFO     utils.metric update   25  --> A new better acc 0.8556 on subject 0 session 0
+11:13:23 | INFO     utils.metric update   25  --> A new better acc 0.8804 on subject 0 session 0
+11:16:44 | INFO     train.training_pcl train    137 Epoch 50/1000 subj 0 sess 0 | acc=0.7802 best=0.8804
+11:16:48 | INFO     train.training_pcl train    226 Epoch 50/1000 | total_loss_sum=217.6813 | total_cls_loss=0.6139 | total_transfer_loss=72.6722| total_domain_loss=414.4440 | total_source_loss=58.5766 | total_target_loss=58.6086
+11:17:46 | INFO     utils.metric update   25  --> A new better acc 0.9210 on subject 0 session 0
+11:17:55 | INFO     utils.metric update   25  --> A new better acc 0.9299 on subject 0 session 0
+11:20:24 | INFO     train.training_pcl train    137 Epoch 100/1000 subj 0 sess 0 | acc=0.5250 best=0.9299
+11:20:29 | INFO     train.training_pcl train    226 Epoch 100/1000 | total_loss_sum=221.4731 | total_cls_loss=0.6306 | total_transfer_loss=73.5191| total_domain_loss=414.3639 | total_source_loss=58.5662 | total_target_loss=58.8940
+11:24:06 | INFO     train.training_pcl train    137 Epoch 150/1000 subj 0 sess 0 | acc=0.7307 best=0.9299
+11:24:09 | INFO     train.training_pcl train    226 Epoch 150/1000 | total_loss_sum=221.4564 | total_cls_loss=1.3997 | total_transfer_loss=69.6543| total_domain_loss=414.2228 | total_source_loss=58.7776 | total_target_loss=58.6447
+11:27:48 | INFO     train.training_pcl train    137 Epoch 200/1000 subj 0 sess 0 | acc=0.3992 best=0.9299
+11:27:51 | INFO     train.training_pcl train    226 Epoch 200/1000 | total_loss_sum=250.0885 | total_cls_loss=1.7378 | total_transfer_loss=82.4936| total_domain_loss=441.0731 | total_source_loss=58.8221 | total_target_loss=94.4157
+11:31:28 | INFO     train.training_pcl train    137 Epoch 250/1000 subj 0 sess 0 | acc=0.6747 best=0.9299
+11:31:32 | INFO     train.training_pcl train    226 Epoch 250/1000 | total_loss_sum=230.5298 | total_cls_loss=0.5942 | total_transfer_loss=67.0760| total_domain_loss=422.7949 | total_source_loss=58.5959 | total_target_loss=79.2290
+11:35:15 | INFO     train.training_pcl train    137 Epoch 300/1000 subj 0 sess 0 | acc=0.5846 best=0.9299
+11:35:18 | INFO     train.training_pcl train    226 Epoch 300/1000 | total_loss_sum=241.5533 | total_cls_loss=0.7055 | total_transfer_loss=73.7032| total_domain_loss=427.3493 | total_source_loss=58.6514 | total_target_loss=77.3194
+11:38:57 | INFO     train.training_pcl train    137 Epoch 350/1000 subj 0 sess 0 | acc=0.6747 best=0.9299
+11:39:01 | INFO     train.training_pcl train    226 Epoch 350/1000 | total_loss_sum=235.7223 | total_cls_loss=0.5842 | total_transfer_loss=67.1117| total_domain_loss=422.2241 | total_source_loss=58.5865 | total_target_loss=72.1419
+11:42:46 | INFO     train.training_pcl train    137 Epoch 400/1000 subj 0 sess 0 | acc=0.6777 best=0.9299
+11:42:50 | INFO     train.training_pcl train    226 Epoch 400/1000 | total_loss_sum=239.0621 | total_cls_loss=0.5830 | total_transfer_loss=73.5420| total_domain_loss=415.3821 | total_source_loss=58.5588 | total_target_loss=59.0292
+11:46:31 | INFO     train.training_pcl train    137 Epoch 450/1000 subj 0 sess 0 | acc=0.2555 best=0.9299
+11:46:35 | INFO     train.training_pcl train    226 Epoch 450/1000 | total_loss_sum=233.9872 | total_cls_loss=0.5982 | total_transfer_loss=62.4711| total_domain_loss=427.5284 | total_source_loss=58.6025 | total_target_loss=60.5791
+11:50:14 | INFO     train.training_pcl train    137 Epoch 500/1000 subj 0 sess 0 | acc=0.4856 best=0.9299
+11:50:18 | INFO     train.training_pcl train    226 Epoch 500/1000 | total_loss_sum=266.7654 | total_cls_loss=0.9154 | total_transfer_loss=87.6746| total_domain_loss=423.6187 | total_source_loss=58.7276 | total_target_loss=70.8890
+11:54:05 | INFO     train.training_pcl train    137 Epoch 550/1000 subj 0 sess 0 | acc=0.6747 best=0.9299
+11:54:08 | INFO     train.training_pcl train    226 Epoch 550/1000 | total_loss_sum=296.2941 | total_cls_loss=0.8539 | total_transfer_loss=88.7529| total_domain_loss=446.0797 | total_source_loss=58.7526 | total_target_loss=109.4393
+11:57:49 | INFO     train.training_pcl train    137 Epoch 600/1000 subj 0 sess 0 | acc=0.7278 best=0.9299
+11:57:53 | INFO     train.training_pcl train    226 Epoch 600/1000 | total_loss_sum=248.7704 | total_cls_loss=0.5764 | total_transfer_loss=72.7544| total_domain_loss=413.8480 | total_source_loss=58.5813 | total_target_loss=58.5089
+12:01:33 | INFO     train.training_pcl train    137 Epoch 650/1000 subj 0 sess 0 | acc=0.7278 best=0.9299
+12:01:37 | INFO     train.training_pcl train    226 Epoch 650/1000 | total_loss_sum=251.3942 | total_cls_loss=0.5737 | total_transfer_loss=72.7347| total_domain_loss=413.7990 | total_source_loss=58.5795 | total_target_loss=58.5097
+12:05:19 | INFO     train.training_pcl train    137 Epoch 700/1000 subj 0 sess 0 | acc=0.7278 best=0.9299
+12:05:23 | INFO     train.training_pcl train    226 Epoch 700/1000 | total_loss_sum=253.9898 | total_cls_loss=0.5667 | total_transfer_loss=72.7284| total_domain_loss=413.7694 | total_source_loss=58.5782 | total_target_loss=58.5099
+12:09:10 | INFO     train.training_pcl train    137 Epoch 750/1000 subj 0 sess 0 | acc=0.6700 best=0.9299
+12:09:14 | INFO     train.training_pcl train    226 Epoch 750/1000 | total_loss_sum=261.8350 | total_cls_loss=0.7021 | total_transfer_loss=67.6001| total_domain_loss=425.4619 | total_source_loss=58.6853 | total_target_loss=69.4210
+12:13:11 | INFO     train.training_pcl train    137 Epoch 800/1000 subj 0 sess 0 | acc=0.4755 best=0.9299
+12:13:15 | INFO     train.training_pcl train    226 Epoch 800/1000 | total_loss_sum=269.4059 | total_cls_loss=0.6677 | total_transfer_loss=70.5448| total_domain_loss=421.9248 | total_source_loss=58.6408 | total_target_loss=72.5988
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+12:17:16 | INFO     train.training_pcl train    137 Epoch 850/1000 subj 0 sess 0 | acc=0.3300 best=0.9299
+12:17:20 | INFO     train.training_pcl train    226 Epoch 850/1000 | total_loss_sum=299.8149 | total_cls_loss=0.7018 | total_transfer_loss=86.5987| total_domain_loss=428.4275 | total_source_loss=58.6305 | total_target_loss=85.0070
+12:21:19 | INFO     train.training_pcl train    137 Epoch 900/1000 subj 0 sess 0 | acc=0.3730 best=0.9299
+12:21:24 | INFO     train.training_pcl train    226 Epoch 900/1000 | total_loss_sum=289.4946 | total_cls_loss=0.8688 | total_transfer_loss=76.8658| total_domain_loss=429.6164 | total_source_loss=58.6203 | total_target_loss=79.6594
+12:25:24 | INFO     train.training_pcl train    137 Epoch 950/1000 subj 0 sess 0 | acc=0.3763 best=0.9299
+12:25:28 | INFO     train.training_pcl train    226 Epoch 950/1000 | total_loss_sum=290.9340 | total_cls_loss=0.7610 | total_transfer_loss=72.6618| total_domain_loss=425.2089 | total_source_loss=58.6770 | total_target_loss=83.4321
+12:29:30 | INFO     __main__ main     131 Done subj=0 sess=0 acc=0.9299
+12:29:37 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+12:29:38 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+12:29:38 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+12:29:38 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+12:29:38 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+number of source samples 47516
+number of target samples 3394
+12:29:44 | INFO     utils.metric update   25  --> A new better acc 0.3253 on subject 1 session 0
+12:29:44 | INFO     train.training_pcl train    137 Epoch 0/1000 subj 1 sess 0 | acc=0.3253 best=0.3253
+12:29:47 | INFO     train.training_pcl train    226 Epoch 0/1000 | total_loss_sum=263.9713 | total_cls_loss=34.5597 | total_transfer_loss=71.6328| total_domain_loss=450.8345 | total_source_loss=67.6119 | total_target_loss=86.7140
+12:29:48 | INFO     utils.metric update   25  --> A new better acc 0.7148 on subject 1 session 0
+12:29:52 | INFO     utils.metric update   25  --> A new better acc 0.7675 on subject 1 session 0
+12:29:57 | INFO     utils.metric update   25  --> A new better acc 0.7834 on subject 1 session 0
+12:30:01 | INFO     utils.metric update   25  --> A new better acc 0.7999 on subject 1 session 0
+12:30:05 | INFO     utils.metric update   25  --> A new better acc 0.8182 on subject 1 session 0
+12:30:11 | INFO     utils.metric update   25  --> A new better acc 0.8671 on subject 1 session 0
+12:30:16 | INFO     utils.metric update   25  --> A new better acc 0.8757 on subject 1 session 0
+12:30:24 | INFO     utils.metric update   25  --> A new better acc 0.8810 on subject 1 session 0
+12:30:29 | INFO     utils.metric update   25  --> A new better acc 0.8824 on subject 1 session 0
+12:30:33 | INFO     utils.metric update   25  --> A new better acc 0.9004 on subject 1 session 0
+12:33:29 | INFO     train.training_pcl train    137 Epoch 50/1000 subj 1 sess 0 | acc=0.6691 best=0.9004
+12:33:35 | INFO     train.training_pcl train    226 Epoch 50/1000 | total_loss_sum=218.9709 | total_cls_loss=1.3315 | total_transfer_loss=72.6116| total_domain_loss=416.0190 | total_source_loss=58.8109 | total_target_loss=60.2758
+12:37:12 | INFO     train.training_pcl train    137 Epoch 100/1000 subj 1 sess 0 | acc=0.4947 best=0.9004
+12:37:16 | INFO     train.training_pcl train    226 Epoch 100/1000 | total_loss_sum=221.7520 | total_cls_loss=1.1343 | total_transfer_loss=73.1491| total_domain_loss=414.4836 | total_source_loss=58.6969 | total_target_loss=58.7986
+12:40:54 | INFO     train.training_pcl train    137 Epoch 150/1000 subj 1 sess 0 | acc=0.4652 best=0.9004
+12:40:58 | INFO     train.training_pcl train    226 Epoch 150/1000 | total_loss_sum=239.7018 | total_cls_loss=0.9717 | total_transfer_loss=86.2801| total_domain_loss=419.5698 | total_source_loss=58.6756 | total_target_loss=65.8597
+12:44:36 | INFO     train.training_pcl train    137 Epoch 200/1000 subj 1 sess 0 | acc=0.6827 best=0.9004
+12:44:40 | INFO     train.training_pcl train    226 Epoch 200/1000 | total_loss_sum=226.5787 | total_cls_loss=0.7540 | total_transfer_loss=72.5950| total_domain_loss=414.3301 | total_source_loss=58.6409 | total_target_loss=58.8092
+12:48:18 | INFO     train.training_pcl train    137 Epoch 250/1000 subj 1 sess 0 | acc=0.4066 best=0.9004
+12:48:22 | INFO     train.training_pcl train    226 Epoch 250/1000 | total_loss_sum=231.0911 | total_cls_loss=0.7146 | total_transfer_loss=68.4004| total_domain_loss=423.8999 | total_source_loss=58.6733 | total_target_loss=74.4767
+12:51:56 | INFO     train.training_pcl train    137 Epoch 300/1000 subj 1 sess 0 | acc=0.4107 best=0.9004
+12:51:59 | INFO     train.training_pcl train    226 Epoch 300/1000 | total_loss_sum=233.5883 | total_cls_loss=0.6533 | total_transfer_loss=67.4654| total_domain_loss=422.2899 | total_source_loss=58.6322 | total_target_loss=75.1566
+12:55:37 | INFO     train.training_pcl train    137 Epoch 350/1000 subj 1 sess 0 | acc=0.4673 best=0.9004
+12:55:41 | INFO     train.training_pcl train    226 Epoch 350/1000 | total_loss_sum=257.6836 | total_cls_loss=0.5806 | total_transfer_loss=86.2638| total_domain_loss=423.2255 | total_source_loss=58.5856 | total_target_loss=79.6852
+12:59:24 | INFO     train.training_pcl train    137 Epoch 400/1000 subj 1 sess 0 | acc=0.5274 best=0.9004
+12:59:27 | INFO     train.training_pcl train    226 Epoch 400/1000 | total_loss_sum=238.3490 | total_cls_loss=0.5717 | total_transfer_loss=73.3330| total_domain_loss=413.8267 | total_source_loss=58.5808 | total_target_loss=58.5135
+13:03:05 | INFO     train.training_pcl train    137 Epoch 450/1000 subj 1 sess 0 | acc=0.6055 best=0.9004
+13:03:09 | INFO     train.training_pcl train    226 Epoch 450/1000 | total_loss_sum=241.0292 | total_cls_loss=0.5594 | total_transfer_loss=73.2519| total_domain_loss=413.7476 | total_source_loss=58.5725 | total_target_loss=58.5141
+13:06:47 | INFO     train.training_pcl train    137 Epoch 500/1000 subj 1 sess 0 | acc=0.6055 best=0.9004
+13:06:52 | INFO     train.training_pcl train    226 Epoch 500/1000 | total_loss_sum=243.7642 | total_cls_loss=0.5674 | total_transfer_loss=73.2013| total_domain_loss=413.7738 | total_source_loss=58.5796 | total_target_loss=58.5118
+13:10:30 | INFO     train.training_pcl train    137 Epoch 550/1000 subj 1 sess 0 | acc=0.6055 best=0.9004
+13:10:34 | INFO     train.training_pcl train    226 Epoch 550/1000 | total_loss_sum=246.5669 | total_cls_loss=0.5578 | total_transfer_loss=73.2915| total_domain_loss=413.7525 | total_source_loss=58.5705 | total_target_loss=58.5165
+13:14:15 | INFO     train.training_pcl train    137 Epoch 600/1000 subj 1 sess 0 | acc=0.6055 best=0.9004
+13:14:19 | INFO     train.training_pcl train    226 Epoch 600/1000 | total_loss_sum=249.5060 | total_cls_loss=0.6776 | total_transfer_loss=73.2888| total_domain_loss=413.9158 | total_source_loss=58.6338 | total_target_loss=58.5672
+13:17:59 | INFO     train.training_pcl train    137 Epoch 650/1000 subj 1 sess 0 | acc=0.6055 best=0.9004
+13:18:03 | INFO     train.training_pcl train    226 Epoch 650/1000 | total_loss_sum=251.8961 | total_cls_loss=0.5548 | total_transfer_loss=73.2797| total_domain_loss=413.7244 | total_source_loss=58.5705 | total_target_loss=58.5091
+13:21:40 | INFO     train.training_pcl train    137 Epoch 700/1000 subj 1 sess 0 | acc=0.6055 best=0.9004
+13:21:44 | INFO     train.training_pcl train    226 Epoch 700/1000 | total_loss_sum=254.5372 | total_cls_loss=0.5629 | total_transfer_loss=73.2847| total_domain_loss=413.7562 | total_source_loss=58.5746 | total_target_loss=58.5115
+13:25:14 | INFO     train.training_pcl train    137 Epoch 750/1000 subj 1 sess 0 | acc=0.6055 best=0.9004
+13:25:17 | INFO     train.training_pcl train    226 Epoch 750/1000 | total_loss_sum=257.1130 | total_cls_loss=0.5497 | total_transfer_loss=73.3172| total_domain_loss=413.7170 | total_source_loss=58.5678 | total_target_loss=58.5097
+13:27:56 | INFO     train.training_pcl train    137 Epoch 800/1000 subj 1 sess 0 | acc=0.6055 best=0.9004
+13:27:58 | INFO     train.training_pcl train    226 Epoch 800/1000 | total_loss_sum=259.6954 | total_cls_loss=0.5548 | total_transfer_loss=73.3562| total_domain_loss=413.7431 | total_source_loss=58.5712 | total_target_loss=58.5139
+13:30:36 | INFO     train.training_pcl train    137 Epoch 850/1000 subj 1 sess 0 | acc=0.6055 best=0.9004
+13:30:40 | INFO     train.training_pcl train    226 Epoch 850/1000 | total_loss_sum=262.1735 | total_cls_loss=0.5522 | total_transfer_loss=73.3678| total_domain_loss=413.7135 | total_source_loss=58.5686 | total_target_loss=58.5118
+13:33:16 | INFO     train.training_pcl train    137 Epoch 900/1000 subj 1 sess 0 | acc=0.6055 best=0.9004
+13:33:19 | INFO     train.training_pcl train    226 Epoch 900/1000 | total_loss_sum=264.5477 | total_cls_loss=0.5520 | total_transfer_loss=73.3124| total_domain_loss=413.7185 | total_source_loss=58.5710 | total_target_loss=58.5076
+13:35:59 | INFO     train.training_pcl train    137 Epoch 950/1000 subj 1 sess 0 | acc=0.6055 best=0.9004
+13:36:01 | INFO     train.training_pcl train    226 Epoch 950/1000 | total_loss_sum=266.8661 | total_cls_loss=0.5513 | total_transfer_loss=73.2488| total_domain_loss=413.7156 | total_source_loss=58.5713 | total_target_loss=58.5121
+13:38:41 | INFO     __main__ main     131 Done subj=1 sess=0 acc=0.9004
+13:38:48 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+13:38:48 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+13:38:48 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+13:38:48 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+13:38:48 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+number of source samples 47516
+number of target samples 3394
+13:38:52 | INFO     utils.metric update   25  --> A new better acc 0.3253 on subject 2 session 0
+13:38:52 | INFO     train.training_pcl train    137 Epoch 0/1000 subj 2 sess 0 | acc=0.3253 best=0.3253
+13:38:54 | INFO     train.training_pcl train    226 Epoch 0/1000 | total_loss_sum=263.9764 | total_cls_loss=34.4949 | total_transfer_loss=71.4327| total_domain_loss=450.7905 | total_source_loss=67.8908 | total_target_loss=88.9610
+13:38:55 | INFO     utils.metric update   25  --> A new better acc 0.7269 on subject 2 session 0
+13:39:03 | INFO     utils.metric update   25  --> A new better acc 0.7316 on subject 2 session 0
+13:39:06 | INFO     utils.metric update   25  --> A new better acc 0.7331 on subject 2 session 0
+13:39:10 | INFO     utils.metric update   25  --> A new better acc 0.7387 on subject 2 session 0
+13:39:37 | INFO     utils.metric update   25  --> A new better acc 0.7578 on subject 2 session 0
+13:39:40 | INFO     utils.metric update   25  --> A new better acc 0.7599 on subject 2 session 0
+13:39:53 | INFO     utils.metric update   25  --> A new better acc 0.8270 on subject 2 session 0
+13:40:56 | INFO     utils.metric update   25  --> A new better acc 0.8362 on subject 2 session 0
+13:40:59 | INFO     utils.metric update   25  --> A new better acc 0.8497 on subject 2 session 0
+13:41:01 | INFO     utils.metric update   25  --> A new better acc 0.8642 on subject 2 session 0
+13:41:04 | INFO     utils.metric update   25  --> A new better acc 0.8972 on subject 2 session 0
+13:41:17 | INFO     train.training_pcl train    137 Epoch 50/1000 subj 2 sess 0 | acc=0.8730 best=0.8972
+13:41:20 | INFO     train.training_pcl train    226 Epoch 50/1000 | total_loss_sum=218.5371 | total_cls_loss=0.6064 | total_transfer_loss=73.5312| total_domain_loss=414.4798 | total_source_loss=58.5643 | total_target_loss=58.7959
+13:42:29 | INFO     utils.metric update   25  --> A new better acc 0.9107 on subject 2 session 0
+13:42:39 | INFO     utils.metric update   25  --> A new better acc 0.9243 on subject 2 session 0
+13:42:44 | INFO     utils.metric update   25  --> A new better acc 0.9249 on subject 2 session 0
+13:42:57 | INFO     utils.metric update   25  --> A new better acc 0.9322 on subject 2 session 0
+13:43:00 | INFO     utils.metric update   25  --> A new better acc 0.9735 on subject 2 session 0
+13:43:03 | INFO     utils.metric update   25  --> A new better acc 0.9811 on subject 2 session 0
+13:43:05 | INFO     utils.metric update   25  --> A new better acc 1.0000 on subject 2 session 0
+13:43:05 | INFO     train.training_pcl train    143 Perfect accuracy, stopping.
+13:43:05 | INFO     __main__ main     131 Done subj=2 sess=0 acc=1.0000
+13:43:11 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+13:43:12 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+13:43:12 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+13:43:12 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+13:43:12 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+number of source samples 47516
+number of target samples 3394
+13:43:15 | INFO     utils.metric update   25  --> A new better acc 0.3253 on subject 3 session 0
+13:43:15 | INFO     train.training_pcl train    137 Epoch 0/1000 subj 3 sess 0 | acc=0.3253 best=0.3253
+13:43:18 | INFO     train.training_pcl train    226 Epoch 0/1000 | total_loss_sum=267.7773 | total_cls_loss=39.3554 | total_transfer_loss=69.4179| total_domain_loss=450.4165 | total_source_loss=68.9206 | total_target_loss=85.1406
+13:43:18 | INFO     utils.metric update   25  --> A new better acc 0.8518 on subject 3 session 0
+13:43:21 | INFO     utils.metric update   25  --> A new better acc 0.8603 on subject 3 session 0
+13:43:23 | INFO     utils.metric update   25  --> A new better acc 0.9084 on subject 3 session 0
+13:43:26 | INFO     utils.metric update   25  --> A new better acc 0.9405 on subject 3 session 0
+13:43:29 | INFO     utils.metric update   25  --> A new better acc 0.9493 on subject 3 session 0
+13:43:55 | INFO     utils.metric update   25  --> A new better acc 0.9508 on subject 3 session 0
+13:43:58 | INFO     utils.metric update   25  --> A new better acc 0.9694 on subject 3 session 0
+13:45:39 | INFO     train.training_pcl train    137 Epoch 50/1000 subj 3 sess 0 | acc=0.8836 best=0.9694
+13:45:41 | INFO     train.training_pcl train    226 Epoch 50/1000 | total_loss_sum=218.6974 | total_cls_loss=0.6214 | total_transfer_loss=73.5915| total_domain_loss=414.8153 | total_source_loss=58.5773 | total_target_loss=58.8954
+13:48:00 | INFO     train.training_pcl train    137 Epoch 100/1000 subj 3 sess 0 | acc=0.8029 best=0.9694
+13:48:03 | INFO     train.training_pcl train    226 Epoch 100/1000 | total_loss_sum=221.4714 | total_cls_loss=0.5990 | total_transfer_loss=73.5847| total_domain_loss=414.1898 | total_source_loss=58.5687 | total_target_loss=58.8589
+13:50:22 | INFO     train.training_pcl train    137 Epoch 150/1000 subj 3 sess 0 | acc=0.8768 best=0.9694
+13:50:24 | INFO     train.training_pcl train    226 Epoch 150/1000 | total_loss_sum=224.1917 | total_cls_loss=0.5724 | total_transfer_loss=73.5443| total_domain_loss=413.7916 | total_source_loss=58.5564 | total_target_loss=58.5114
+13:52:42 | INFO     train.training_pcl train    137 Epoch 200/1000 subj 3 sess 0 | acc=0.6202 best=0.9694
+13:52:45 | INFO     train.training_pcl train    226 Epoch 200/1000 | total_loss_sum=228.1884 | total_cls_loss=0.7188 | total_transfer_loss=73.8432| total_domain_loss=415.8336 | total_source_loss=58.6344 | total_target_loss=59.3235
+13:55:04 | INFO     train.training_pcl train    137 Epoch 250/1000 subj 3 sess 0 | acc=0.8518 best=0.9694
+13:55:06 | INFO     train.training_pcl train    226 Epoch 250/1000 | total_loss_sum=230.0556 | total_cls_loss=0.5621 | total_transfer_loss=73.5613| total_domain_loss=414.0052 | total_source_loss=58.5706 | total_target_loss=58.5447
+13:57:25 | INFO     train.training_pcl train    137 Epoch 300/1000 subj 3 sess 0 | acc=0.9308 best=0.9694
+13:57:28 | INFO     train.training_pcl train    226 Epoch 300/1000 | total_loss_sum=232.8772 | total_cls_loss=0.5718 | total_transfer_loss=73.5303| total_domain_loss=413.9444 | total_source_loss=58.5605 | total_target_loss=58.5205
+13:59:47 | INFO     train.training_pcl train    137 Epoch 350/1000 subj 3 sess 0 | acc=0.7908 best=0.9694
+13:59:49 | INFO     train.training_pcl train    226 Epoch 350/1000 | total_loss_sum=235.4880 | total_cls_loss=0.5589 | total_transfer_loss=73.3470| total_domain_loss=413.7260 | total_source_loss=58.5658 | total_target_loss=58.5073
+14:02:13 | INFO     train.training_pcl train    137 Epoch 400/1000 subj 3 sess 0 | acc=0.7908 best=0.9694
+14:02:16 | INFO     train.training_pcl train    226 Epoch 400/1000 | total_loss_sum=238.3709 | total_cls_loss=0.5864 | total_transfer_loss=73.3482| total_domain_loss=413.7863 | total_source_loss=58.5810 | total_target_loss=58.5131
+14:04:31 | INFO     train.training_pcl train    137 Epoch 450/1000 subj 3 sess 0 | acc=0.7908 best=0.9694
+14:04:34 | INFO     train.training_pcl train    226 Epoch 450/1000 | total_loss_sum=241.1247 | total_cls_loss=0.5595 | total_transfer_loss=73.3584| total_domain_loss=413.7285 | total_source_loss=58.5655 | total_target_loss=58.5138
+14:06:53 | INFO     train.training_pcl train    137 Epoch 500/1000 subj 3 sess 0 | acc=0.7908 best=0.9694
+14:06:57 | INFO     train.training_pcl train    226 Epoch 500/1000 | total_loss_sum=243.8931 | total_cls_loss=0.5575 | total_transfer_loss=73.3675| total_domain_loss=413.7230 | total_source_loss=58.5609 | total_target_loss=58.5144
+14:09:16 | INFO     train.training_pcl train    137 Epoch 550/1000 subj 3 sess 0 | acc=0.7908 best=0.9694
+14:09:19 | INFO     train.training_pcl train    226 Epoch 550/1000 | total_loss_sum=246.5606 | total_cls_loss=0.5537 | total_transfer_loss=73.3123| total_domain_loss=413.7158 | total_source_loss=58.5596 | total_target_loss=58.5077
+14:11:35 | INFO     train.training_pcl train    137 Epoch 600/1000 subj 3 sess 0 | acc=0.7908 best=0.9694
+14:11:38 | INFO     train.training_pcl train    226 Epoch 600/1000 | total_loss_sum=249.3375 | total_cls_loss=0.5882 | total_transfer_loss=73.3199| total_domain_loss=413.7667 | total_source_loss=58.5850 | total_target_loss=58.5128
+14:13:57 | INFO     train.training_pcl train    137 Epoch 650/1000 subj 3 sess 0 | acc=0.7908 best=0.9694
+14:13:59 | INFO     train.training_pcl train    226 Epoch 650/1000 | total_loss_sum=251.9122 | total_cls_loss=0.5573 | total_transfer_loss=73.2940| total_domain_loss=413.7267 | total_source_loss=58.5656 | total_target_loss=58.5151
+14:16:17 | INFO     train.training_pcl train    137 Epoch 700/1000 subj 3 sess 0 | acc=0.7908 best=0.9694
+14:16:20 | INFO     train.training_pcl train    226 Epoch 700/1000 | total_loss_sum=254.6367 | total_cls_loss=0.5758 | total_transfer_loss=73.3810| total_domain_loss=413.7393 | total_source_loss=58.5717 | total_target_loss=58.5066
+14:18:38 | INFO     train.training_pcl train    137 Epoch 750/1000 subj 3 sess 0 | acc=0.7908 best=0.9694
+14:18:40 | INFO     train.training_pcl train    226 Epoch 750/1000 | total_loss_sum=257.2229 | total_cls_loss=0.5941 | total_transfer_loss=73.3604| total_domain_loss=413.7682 | total_source_loss=58.5757 | total_target_loss=58.5156
+14:20:57 | INFO     train.training_pcl train    137 Epoch 800/1000 subj 3 sess 0 | acc=0.7908 best=0.9694
+14:20:59 | INFO     train.training_pcl train    226 Epoch 800/1000 | total_loss_sum=259.6528 | total_cls_loss=0.5550 | total_transfer_loss=73.3329| total_domain_loss=413.7101 | total_source_loss=58.5628 | total_target_loss=58.5080
+14:23:17 | INFO     train.training_pcl train    137 Epoch 850/1000 subj 3 sess 0 | acc=0.7908 best=0.9694
+14:23:20 | INFO     train.training_pcl train    226 Epoch 850/1000 | total_loss_sum=262.1559 | total_cls_loss=0.5597 | total_transfer_loss=73.3437| total_domain_loss=413.7155 | total_source_loss=58.5686 | total_target_loss=58.5100
+14:25:44 | INFO     train.training_pcl train    137 Epoch 900/1000 subj 3 sess 0 | acc=0.7908 best=0.9694
+14:25:47 | INFO     train.training_pcl train    226 Epoch 900/1000 | total_loss_sum=264.6147 | total_cls_loss=0.5492 | total_transfer_loss=73.3970| total_domain_loss=413.6999 | total_source_loss=58.5594 | total_target_loss=58.5081
+14:28:07 | INFO     train.training_pcl train    137 Epoch 950/1000 subj 3 sess 0 | acc=0.7908 best=0.9694
+14:28:10 | INFO     train.training_pcl train    226 Epoch 950/1000 | total_loss_sum=267.0663 | total_cls_loss=0.5573 | total_transfer_loss=73.4370| total_domain_loss=413.7372 | total_source_loss=58.5647 | total_target_loss=58.5214
+14:30:31 | INFO     __main__ main     131 Done subj=3 sess=0 acc=0.9694
+14:30:35 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+14:30:35 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+14:30:35 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+14:30:35 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+14:30:35 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+number of source samples 47516
+number of target samples 3394
+14:30:39 | INFO     utils.metric update   25  --> A new better acc 0.3253 on subject 4 session 0
+14:30:39 | INFO     train.training_pcl train    137 Epoch 0/1000 subj 4 sess 0 | acc=0.3253 best=0.3253
+14:30:42 | INFO     train.training_pcl train    226 Epoch 0/1000 | total_loss_sum=264.1305 | total_cls_loss=37.0836 | total_transfer_loss=68.7914| total_domain_loss=450.5739 | total_source_loss=68.1408 | total_target_loss=83.7809
+14:30:42 | INFO     utils.metric update   25  --> A new better acc 0.7640 on subject 4 session 0
+14:30:45 | INFO     utils.metric update   25  --> A new better acc 0.8324 on subject 4 session 0
+14:30:52 | INFO     utils.metric update   25  --> A new better acc 0.8353 on subject 4 session 0
+14:31:36 | INFO     utils.metric update   25  --> A new better acc 0.8542 on subject 4 session 0
+14:31:59 | INFO     utils.metric update   25  --> A new better acc 0.9037 on subject 4 session 0
+14:32:02 | INFO     utils.metric update   25  --> A new better acc 0.9599 on subject 4 session 0
+14:32:05 | INFO     utils.metric update   25  --> A new better acc 0.9617 on subject 4 session 0
+14:32:16 | INFO     utils.metric update   25  --> A new better acc 1.0000 on subject 4 session 0
+14:32:16 | INFO     train.training_pcl train    143 Perfect accuracy, stopping.
+14:32:16 | INFO     __main__ main     131 Done subj=4 sess=0 acc=1.0000
+14:32:20 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+14:32:20 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+14:32:21 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+14:32:21 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+14:32:21 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+number of source samples 47516
+number of target samples 3394
+14:32:25 | INFO     utils.metric update   25  --> A new better acc 0.3253 on subject 5 session 0
+14:32:25 | INFO     train.training_pcl train    137 Epoch 0/1000 subj 5 sess 0 | acc=0.3253 best=0.3253
+14:32:27 | INFO     train.training_pcl train    226 Epoch 0/1000 | total_loss_sum=262.6434 | total_cls_loss=35.2913 | total_transfer_loss=69.8512| total_domain_loss=448.7453 | total_source_loss=67.7518 | total_target_loss=82.0464
+14:32:27 | INFO     utils.metric update   25  --> A new better acc 0.7283 on subject 5 session 0
+14:32:32 | INFO     utils.metric update   25  --> A new better acc 0.7555 on subject 5 session 0
+14:34:50 | INFO     train.training_pcl train    137 Epoch 50/1000 subj 5 sess 0 | acc=0.7039 best=0.7555
+14:34:52 | INFO     train.training_pcl train    226 Epoch 50/1000 | total_loss_sum=218.7680 | total_cls_loss=0.8093 | total_transfer_loss=73.5156| total_domain_loss=414.5005 | total_source_loss=58.6127 | total_target_loss=58.6170
+14:36:12 | INFO     utils.metric update   25  --> A new better acc 0.7722 on subject 5 session 0
+14:36:17 | INFO     utils.metric update   25  --> A new better acc 0.7752 on subject 5 session 0
+14:36:20 | INFO     utils.metric update   25  --> A new better acc 0.7781 on subject 5 session 0
+14:37:10 | INFO     train.training_pcl train    137 Epoch 100/1000 subj 5 sess 0 | acc=0.5728 best=0.7781
+14:37:13 | INFO     train.training_pcl train    226 Epoch 100/1000 | total_loss_sum=224.9848 | total_cls_loss=3.6450 | total_transfer_loss=73.5075| total_domain_loss=414.2353 | total_source_loss=59.1249 | total_target_loss=58.6516
+14:39:32 | INFO     train.training_pcl train    137 Epoch 150/1000 subj 5 sess 0 | acc=0.3930 best=0.7781
+14:39:34 | INFO     train.training_pcl train    226 Epoch 150/1000 | total_loss_sum=240.7533 | total_cls_loss=0.6539 | total_transfer_loss=86.9251| total_domain_loss=422.2692 | total_source_loss=58.6480 | total_target_loss=67.2759
+14:41:56 | INFO     train.training_pcl train    137 Epoch 200/1000 subj 5 sess 0 | acc=0.6747 best=0.7781
+14:41:59 | INFO     train.training_pcl train    226 Epoch 200/1000 | total_loss_sum=230.3261 | total_cls_loss=0.7126 | total_transfer_loss=72.6993| total_domain_loss=421.4292 | total_source_loss=58.6842 | total_target_loss=69.9530
+14:44:15 | INFO     train.training_pcl train    137 Epoch 250/1000 subj 5 sess 0 | acc=0.6202 best=0.7781
+14:44:17 | INFO     train.training_pcl train    226 Epoch 250/1000 | total_loss_sum=229.9046 | total_cls_loss=0.5775 | total_transfer_loss=73.4442| total_domain_loss=413.7869 | total_source_loss=58.5681 | total_target_loss=58.5325
+14:46:35 | INFO     train.training_pcl train    137 Epoch 300/1000 subj 5 sess 0 | acc=0.3285 best=0.7781
+14:46:38 | INFO     train.training_pcl train    226 Epoch 300/1000 | total_loss_sum=256.7615 | total_cls_loss=0.5699 | total_transfer_loss=86.2963| total_domain_loss=427.8629 | total_source_loss=58.5817 | total_target_loss=86.4460
+14:48:56 | INFO     train.training_pcl train    137 Epoch 350/1000 subj 5 sess 0 | acc=0.6049 best=0.7781
+14:48:59 | INFO     train.training_pcl train    226 Epoch 350/1000 | total_loss_sum=233.3738 | total_cls_loss=0.5775 | total_transfer_loss=67.1202| total_domain_loss=424.2868 | total_source_loss=58.5853 | total_target_loss=64.1713
+14:51:17 | INFO     utils.metric update   25  --> A new better acc 0.9122 on subject 5 session 0
+14:51:20 | INFO     train.training_pcl train    137 Epoch 400/1000 subj 5 sess 0 | acc=0.3736 best=0.9122
+14:51:22 | INFO     train.training_pcl train    226 Epoch 400/1000 | total_loss_sum=261.2908 | total_cls_loss=0.8755 | total_transfer_loss=92.8455| total_domain_loss=421.9221 | total_source_loss=58.7669 | total_target_loss=61.8578
+14:53:42 | INFO     train.training_pcl train    137 Epoch 450/1000 subj 5 sess 0 | acc=0.7292 best=0.9122
+14:53:44 | INFO     train.training_pcl train    226 Epoch 450/1000 | total_loss_sum=241.3243 | total_cls_loss=0.5631 | total_transfer_loss=73.5270| total_domain_loss=413.8340 | total_source_loss=58.5673 | total_target_loss=58.5235
+14:56:03 | INFO     train.training_pcl train    137 Epoch 500/1000 subj 5 sess 0 | acc=0.7292 best=0.9122
+14:56:06 | INFO     train.training_pcl train    226 Epoch 500/1000 | total_loss_sum=244.1660 | total_cls_loss=0.6245 | total_transfer_loss=73.5266| total_domain_loss=413.8534 | total_source_loss=58.5826 | total_target_loss=58.5123
+14:58:27 | INFO     train.training_pcl train    137 Epoch 550/1000 subj 5 sess 0 | acc=0.7292 best=0.9122
+14:58:29 | INFO     train.training_pcl train    226 Epoch 550/1000 | total_loss_sum=246.8295 | total_cls_loss=0.5670 | total_transfer_loss=73.5305| total_domain_loss=413.8201 | total_source_loss=58.5714 | total_target_loss=58.5164
+15:00:49 | INFO     train.training_pcl train    137 Epoch 600/1000 subj 5 sess 0 | acc=0.6500 best=0.9122
+15:00:51 | INFO     train.training_pcl train    226 Epoch 600/1000 | total_loss_sum=249.8980 | total_cls_loss=0.8436 | total_transfer_loss=73.4527| total_domain_loss=414.0233 | total_source_loss=58.6646 | total_target_loss=58.5840
+15:03:11 | INFO     train.training_pcl train    137 Epoch 650/1000 subj 5 sess 0 | acc=0.6014 best=0.9122
+15:03:14 | INFO     train.training_pcl train    226 Epoch 650/1000 | total_loss_sum=259.6747 | total_cls_loss=0.6563 | total_transfer_loss=69.9698| total_domain_loss=422.3768 | total_source_loss=58.6438 | total_target_loss=73.1311
+15:05:40 | INFO     train.training_pcl train    137 Epoch 700/1000 subj 5 sess 0 | acc=0.5206 best=0.9122
+15:05:42 | INFO     train.training_pcl train    226 Epoch 700/1000 | total_loss_sum=262.6414 | total_cls_loss=0.6997 | total_transfer_loss=71.6157| total_domain_loss=426.3211 | total_source_loss=58.6625 | total_target_loss=68.9694
+15:08:15 | INFO     train.training_pcl train    137 Epoch 750/1000 subj 5 sess 0 | acc=0.4532 best=0.9122
+15:08:17 | INFO     train.training_pcl train    226 Epoch 750/1000 | total_loss_sum=282.5809 | total_cls_loss=0.6224 | total_transfer_loss=74.6899| total_domain_loss=429.6287 | total_source_loss=58.5840 | total_target_loss=87.5647
+15:10:48 | INFO     train.training_pcl train    137 Epoch 800/1000 subj 5 sess 0 | acc=0.4042 best=0.9122
+15:10:51 | INFO     train.training_pcl train    226 Epoch 800/1000 | total_loss_sum=255.0586 | total_cls_loss=0.6160 | total_transfer_loss=68.3203| total_domain_loss=414.3502 | total_source_loss=58.6043 | total_target_loss=58.7552
+15:13:25 | INFO     train.training_pcl train    137 Epoch 850/1000 subj 5 sess 0 | acc=0.3103 best=0.9122
+15:13:27 | INFO     train.training_pcl train    226 Epoch 850/1000 | total_loss_sum=295.6962 | total_cls_loss=0.8794 | total_transfer_loss=83.7424| total_domain_loss=431.6641 | total_source_loss=58.7196 | total_target_loss=82.2940
+15:16:02 | INFO     train.training_pcl train    137 Epoch 900/1000 subj 5 sess 0 | acc=0.3833 best=0.9122
+15:16:05 | INFO     train.training_pcl train    226 Epoch 900/1000 | total_loss_sum=287.4718 | total_cls_loss=0.6969 | total_transfer_loss=74.0656| total_domain_loss=427.4618 | total_source_loss=58.6002 | total_target_loss=81.3188
+15:18:45 | INFO     train.training_pcl train    137 Epoch 950/1000 subj 5 sess 0 | acc=0.1806 best=0.9122
+15:18:48 | INFO     train.training_pcl train    226 Epoch 950/1000 | total_loss_sum=267.1283 | total_cls_loss=0.5827 | total_transfer_loss=73.4409| total_domain_loss=413.8117 | total_source_loss=58.5864 | total_target_loss=58.5169
+15:21:26 | INFO     __main__ main     131 Done subj=5 sess=0 acc=0.9122
+15:21:29 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+15:21:30 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+15:21:30 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+15:21:30 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+15:21:30 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+number of source samples 47516
+number of target samples 3394
+15:21:34 | INFO     utils.metric update   25  --> A new better acc 0.3253 on subject 6 session 0
+15:21:34 | INFO     train.training_pcl train    137 Epoch 0/1000 subj 6 sess 0 | acc=0.3253 best=0.3253
+15:21:36 | INFO     train.training_pcl train    226 Epoch 0/1000 | total_loss_sum=269.4783 | total_cls_loss=38.6617 | total_transfer_loss=71.9495| total_domain_loss=449.1647 | total_source_loss=69.0341 | total_target_loss=83.2062
+15:21:37 | INFO     utils.metric update   25  --> A new better acc 0.7799 on subject 6 session 0
+15:21:39 | INFO     utils.metric update   25  --> A new better acc 0.8185 on subject 6 session 0
+15:22:01 | INFO     utils.metric update   25  --> A new better acc 0.8344 on subject 6 session 0
+15:23:10 | INFO     utils.metric update   25  --> A new better acc 0.8483 on subject 6 session 0
+15:23:13 | INFO     utils.metric update   25  --> A new better acc 0.8662 on subject 6 session 0
+15:23:57 | INFO     train.training_pcl train    137 Epoch 50/1000 subj 6 sess 0 | acc=0.5283 best=0.8662
+15:24:00 | INFO     train.training_pcl train    226 Epoch 50/1000 | total_loss_sum=219.6053 | total_cls_loss=1.5185 | total_transfer_loss=73.2418| total_domain_loss=415.3663 | total_source_loss=58.7925 | total_target_loss=59.5970
+15:26:22 | INFO     train.training_pcl train    137 Epoch 100/1000 subj 6 sess 0 | acc=0.5810 best=0.8662
+15:26:25 | INFO     train.training_pcl train    226 Epoch 100/1000 | total_loss_sum=220.6139 | total_cls_loss=1.1133 | total_transfer_loss=71.6248| total_domain_loss=415.2496 | total_source_loss=58.7456 | total_target_loss=60.8531
+15:28:42 | INFO     train.training_pcl train    137 Epoch 150/1000 subj 6 sess 0 | acc=0.4390 best=0.8662
+15:28:44 | INFO     train.training_pcl train    226 Epoch 150/1000 | total_loss_sum=227.3607 | total_cls_loss=1.1135 | total_transfer_loss=72.6559| total_domain_loss=419.6998 | total_source_loss=58.7344 | total_target_loss=72.9163
+15:31:03 | INFO     train.training_pcl train    137 Epoch 200/1000 subj 6 sess 0 | acc=0.5062 best=0.8662
+15:31:05 | INFO     train.training_pcl train    226 Epoch 200/1000 | total_loss_sum=236.2220 | total_cls_loss=0.6525 | total_transfer_loss=75.3860| total_domain_loss=424.5743 | total_source_loss=58.5897 | total_target_loss=83.6721
+15:33:25 | INFO     train.training_pcl train    137 Epoch 250/1000 subj 6 sess 0 | acc=0.3259 best=0.8662
+15:33:27 | INFO     train.training_pcl train    226 Epoch 250/1000 | total_loss_sum=251.1044 | total_cls_loss=0.5565 | total_transfer_loss=86.2677| total_domain_loss=423.3283 | total_source_loss=58.5733 | total_target_loss=84.6030
+15:35:47 | INFO     train.training_pcl train    137 Epoch 300/1000 subj 6 sess 0 | acc=0.3356 best=0.8662
+15:35:50 | INFO     train.training_pcl train    226 Epoch 300/1000 | total_loss_sum=226.9776 | total_cls_loss=0.5735 | total_transfer_loss=64.7705| total_domain_loss=424.0444 | total_source_loss=58.5869 | total_target_loss=61.2478
+15:38:09 | INFO     train.training_pcl train    137 Epoch 350/1000 subj 6 sess 0 | acc=0.6034 best=0.8662
+15:38:11 | INFO     train.training_pcl train    226 Epoch 350/1000 | total_loss_sum=236.4197 | total_cls_loss=0.6579 | total_transfer_loss=73.5897| total_domain_loss=414.8611 | total_source_loss=58.6249 | total_target_loss=59.3844
+15:40:37 | INFO     train.training_pcl train    137 Epoch 400/1000 subj 6 sess 0 | acc=0.6700 best=0.8662
+15:40:39 | INFO     train.training_pcl train    226 Epoch 400/1000 | total_loss_sum=246.2080 | total_cls_loss=0.6875 | total_transfer_loss=71.3296| total_domain_loss=424.2947 | total_source_loss=58.5791 | total_target_loss=77.9047
+15:43:04 | INFO     train.training_pcl train    137 Epoch 450/1000 subj 6 sess 0 | acc=0.3447 best=0.8662
+15:43:06 | INFO     train.training_pcl train    226 Epoch 450/1000 | total_loss_sum=261.8723 | total_cls_loss=0.6364 | total_transfer_loss=82.4747| total_domain_loss=431.8585 | total_source_loss=58.5711 | total_target_loss=76.4161
+15:45:36 | INFO     train.training_pcl train    137 Epoch 500/1000 subj 6 sess 0 | acc=0.3721 best=0.8662
+15:45:38 | INFO     train.training_pcl train    226 Epoch 500/1000 | total_loss_sum=247.8246 | total_cls_loss=0.6513 | total_transfer_loss=73.4708| total_domain_loss=420.0140 | total_source_loss=58.5656 | total_target_loss=63.5600
+15:48:07 | INFO     train.training_pcl train    137 Epoch 550/1000 subj 6 sess 0 | acc=0.6046 best=0.8662
+15:48:09 | INFO     train.training_pcl train    226 Epoch 550/1000 | total_loss_sum=270.3285 | total_cls_loss=0.6179 | total_transfer_loss=71.4129| total_domain_loss=432.5090 | total_source_loss=58.5832 | total_target_loss=99.1771
+15:50:38 | INFO     train.training_pcl train    137 Epoch 600/1000 subj 6 sess 0 | acc=0.3754 best=0.8662
+15:50:40 | INFO     train.training_pcl train    226 Epoch 600/1000 | total_loss_sum=270.6110 | total_cls_loss=0.7254 | total_transfer_loss=84.5233| total_domain_loss=425.2581 | total_source_loss=58.6137 | total_target_loss=71.5673
+15:53:11 | INFO     train.training_pcl train    137 Epoch 650/1000 subj 6 sess 0 | acc=0.2781 best=0.8662
+15:53:14 | INFO     train.training_pcl train    226 Epoch 650/1000 | total_loss_sum=287.7226 | total_cls_loss=0.7016 | total_transfer_loss=87.1065| total_domain_loss=436.8973 | total_source_loss=58.6599 | total_target_loss=85.7828
+15:55:43 | INFO     train.training_pcl train    137 Epoch 700/1000 subj 6 sess 0 | acc=0.3253 best=0.8662
+15:55:46 | INFO     train.training_pcl train    226 Epoch 700/1000 | total_loss_sum=282.5556 | total_cls_loss=0.7254 | total_transfer_loss=72.2787| total_domain_loss=442.2650 | total_source_loss=58.5753 | total_target_loss=92.9365
+15:58:20 | INFO     train.training_pcl train    137 Epoch 750/1000 subj 6 sess 0 | acc=0.3447 best=0.8662
+15:58:22 | INFO     train.training_pcl train    226 Epoch 750/1000 | total_loss_sum=288.1763 | total_cls_loss=1.4254 | total_transfer_loss=78.7788| total_domain_loss=431.0456 | total_source_loss=58.8885 | total_target_loss=87.7260
+15:59:20 | INFO     utils.metric update   25  --> A new better acc 0.8925 on subject 6 session 0
+16:00:57 | INFO     train.training_pcl train    137 Epoch 800/1000 subj 6 sess 0 | acc=0.3300 best=0.8925
+16:00:59 | INFO     train.training_pcl train    226 Epoch 800/1000 | total_loss_sum=303.3142 | total_cls_loss=1.4285 | total_transfer_loss=89.6724| total_domain_loss=448.1507 | total_source_loss=58.9653 | total_target_loss=83.7189
+16:03:33 | INFO     train.training_pcl train    137 Epoch 850/1000 subj 6 sess 0 | acc=0.3350 best=0.8925
+16:03:35 | INFO     train.training_pcl train    226 Epoch 850/1000 | total_loss_sum=265.1350 | total_cls_loss=0.6999 | total_transfer_loss=68.5357| total_domain_loss=423.0307 | total_source_loss=58.6779 | total_target_loss=65.5831
+16:06:11 | INFO     train.training_pcl train    137 Epoch 900/1000 subj 6 sess 0 | acc=0.5575 best=0.8925
+16:06:14 | INFO     train.training_pcl train    226 Epoch 900/1000 | total_loss_sum=276.8846 | total_cls_loss=1.4898 | total_transfer_loss=75.3689| total_domain_loss=426.1093 | total_source_loss=58.8412 | total_target_loss=66.3226
+16:08:52 | INFO     train.training_pcl train    137 Epoch 950/1000 subj 6 sess 0 | acc=0.6046 best=0.8925
+16:08:55 | INFO     train.training_pcl train    226 Epoch 950/1000 | total_loss_sum=275.8378 | total_cls_loss=0.6702 | total_transfer_loss=70.6702| total_domain_loss=422.1070 | total_source_loss=58.6555 | total_target_loss=69.4440
+16:11:38 | INFO     __main__ main     131 Done subj=6 sess=0 acc=0.8925
+16:11:42 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+16:11:43 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+16:11:43 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+16:11:43 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+16:11:43 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+number of source samples 47516
+number of target samples 3394
+16:11:47 | INFO     utils.metric update   25  --> A new better acc 0.3253 on subject 7 session 0
+16:11:47 | INFO     train.training_pcl train    137 Epoch 0/1000 subj 7 sess 0 | acc=0.3253 best=0.3253
+16:11:49 | INFO     train.training_pcl train    226 Epoch 0/1000 | total_loss_sum=264.2749 | total_cls_loss=36.3371 | total_transfer_loss=69.9050| total_domain_loss=447.2775 | total_source_loss=68.5773 | total_target_loss=81.0759
+16:11:49 | INFO     utils.metric update   25  --> A new better acc 0.6529 on subject 7 session 0
+16:11:52 | INFO     utils.metric update   25  --> A new better acc 0.6582 on subject 7 session 0
+16:11:59 | INFO     utils.metric update   25  --> A new better acc 0.7563 on subject 7 session 0
+16:12:16 | INFO     utils.metric update   25  --> A new better acc 0.7572 on subject 7 session 0
+16:12:24 | INFO     utils.metric update   25  --> A new better acc 0.7784 on subject 7 session 0
+16:12:27 | INFO     utils.metric update   25  --> A new better acc 0.8041 on subject 7 session 0
+16:12:31 | INFO     utils.metric update   25  --> A new better acc 0.8135 on subject 7 session 0
+16:12:37 | INFO     utils.metric update   25  --> A new better acc 0.8232 on subject 7 session 0
+16:12:39 | INFO     utils.metric update   25  --> A new better acc 0.8244 on subject 7 session 0
+16:13:06 | INFO     utils.metric update   25  --> A new better acc 0.8453 on subject 7 session 0
+16:14:12 | INFO     train.training_pcl train    137 Epoch 50/1000 subj 7 sess 0 | acc=0.7434 best=0.8453
+16:14:16 | INFO     train.training_pcl train    226 Epoch 50/1000 | total_loss_sum=219.0394 | total_cls_loss=0.9566 | total_transfer_loss=73.5539| total_domain_loss=414.7370 | total_source_loss=58.6464 | total_target_loss=58.7144
+16:16:18 | INFO     utils.metric update   25  --> A new better acc 0.8550 on subject 7 session 0
+16:16:36 | INFO     train.training_pcl train    137 Epoch 100/1000 subj 7 sess 0 | acc=0.7475 best=0.8550
+16:16:39 | INFO     train.training_pcl train    226 Epoch 100/1000 | total_loss_sum=221.8610 | total_cls_loss=0.9936 | total_transfer_loss=73.5400| total_domain_loss=414.1154 | total_source_loss=58.6541 | total_target_loss=58.5507
+16:18:54 | INFO     train.training_pcl train    137 Epoch 150/1000 subj 7 sess 0 | acc=0.7124 best=0.8550
+16:18:57 | INFO     train.training_pcl train    226 Epoch 150/1000 | total_loss_sum=224.2126 | total_cls_loss=0.6078 | total_transfer_loss=73.4066| total_domain_loss=414.1380 | total_source_loss=58.5597 | total_target_loss=58.8493
+16:21:15 | INFO     train.training_pcl train    137 Epoch 200/1000 subj 7 sess 0 | acc=0.6134 best=0.8550
+16:21:18 | INFO     train.training_pcl train    226 Epoch 200/1000 | total_loss_sum=227.1207 | total_cls_loss=0.6041 | total_transfer_loss=73.3141| total_domain_loss=414.4079 | total_source_loss=58.5670 | total_target_loss=58.9654
+16:23:37 | INFO     train.training_pcl train    137 Epoch 250/1000 subj 7 sess 0 | acc=0.6700 best=0.8550
+16:23:40 | INFO     train.training_pcl train    226 Epoch 250/1000 | total_loss_sum=249.7040 | total_cls_loss=0.5906 | total_transfer_loss=86.4380| total_domain_loss=425.3735 | total_source_loss=58.5873 | total_target_loss=76.4493
+16:26:00 | INFO     train.training_pcl train    137 Epoch 300/1000 subj 7 sess 0 | acc=0.6747 best=0.8550
+16:26:03 | INFO     train.training_pcl train    226 Epoch 300/1000 | total_loss_sum=232.4587 | total_cls_loss=0.6206 | total_transfer_loss=67.1700| total_domain_loss=424.9578 | total_source_loss=58.5911 | total_target_loss=70.8110
+16:28:23 | INFO     train.training_pcl train    137 Epoch 350/1000 subj 7 sess 0 | acc=0.6606 best=0.8550
+16:28:25 | INFO     train.training_pcl train    226 Epoch 350/1000 | total_loss_sum=234.6379 | total_cls_loss=0.5764 | total_transfer_loss=72.1338| total_domain_loss=415.1632 | total_source_loss=58.5633 | total_target_loss=58.6828
+16:30:47 | INFO     train.training_pcl train    137 Epoch 400/1000 subj 7 sess 0 | acc=0.3253 best=0.8550
+16:30:50 | INFO     train.training_pcl train    226 Epoch 400/1000 | total_loss_sum=240.4431 | total_cls_loss=0.9499 | total_transfer_loss=74.0511| total_domain_loss=416.0687 | total_source_loss=58.7218 | total_target_loss=59.5478
+16:33:09 | INFO     train.training_pcl train    137 Epoch 450/1000 subj 7 sess 0 | acc=0.5298 best=0.8550
+16:33:12 | INFO     train.training_pcl train    226 Epoch 450/1000 | total_loss_sum=241.0796 | total_cls_loss=0.5587 | total_transfer_loss=73.3150| total_domain_loss=413.7396 | total_source_loss=58.5648 | total_target_loss=58.5081
+16:35:31 | INFO     train.training_pcl train    137 Epoch 500/1000 subj 7 sess 0 | acc=0.5144 best=0.8550
+16:35:33 | INFO     train.training_pcl train    226 Epoch 500/1000 | total_loss_sum=243.8722 | total_cls_loss=0.5785 | total_transfer_loss=73.2798| total_domain_loss=413.7906 | total_source_loss=58.5774 | total_target_loss=58.5469
+16:37:52 | INFO     train.training_pcl train    137 Epoch 550/1000 subj 7 sess 0 | acc=0.4691 best=0.8550
+16:37:54 | INFO     train.training_pcl train    226 Epoch 550/1000 | total_loss_sum=246.8301 | total_cls_loss=0.5721 | total_transfer_loss=73.5290| total_domain_loss=413.8307 | total_source_loss=58.5705 | total_target_loss=58.5086
+16:40:20 | INFO     train.training_pcl train    137 Epoch 600/1000 subj 7 sess 0 | acc=0.4691 best=0.8550
+16:40:22 | INFO     train.training_pcl train    226 Epoch 600/1000 | total_loss_sum=249.6959 | total_cls_loss=0.6903 | total_transfer_loss=73.5260| total_domain_loss=413.9202 | total_source_loss=58.6007 | total_target_loss=58.5194
+16:42:42 | INFO     train.training_pcl train    137 Epoch 650/1000 subj 7 sess 0 | acc=0.4691 best=0.8550
+16:42:47 | INFO     train.training_pcl train    226 Epoch 650/1000 | total_loss_sum=252.1896 | total_cls_loss=0.5773 | total_transfer_loss=73.5153| total_domain_loss=413.8503 | total_source_loss=58.5776 | total_target_loss=58.5142
+16:45:07 | INFO     train.training_pcl train    137 Epoch 700/1000 subj 7 sess 0 | acc=0.4691 best=0.8550
+16:45:09 | INFO     train.training_pcl train    226 Epoch 700/1000 | total_loss_sum=254.7805 | total_cls_loss=0.5656 | total_transfer_loss=73.5252| total_domain_loss=413.8086 | total_source_loss=58.5678 | total_target_loss=58.5063
+16:47:31 | INFO     train.training_pcl train    137 Epoch 750/1000 subj 7 sess 0 | acc=0.4691 best=0.8550
+16:47:33 | INFO     train.training_pcl train    226 Epoch 750/1000 | total_loss_sum=257.3670 | total_cls_loss=0.5660 | total_transfer_loss=73.5347| total_domain_loss=413.8105 | total_source_loss=58.5716 | total_target_loss=58.5067
+16:49:53 | INFO     train.training_pcl train    137 Epoch 800/1000 subj 7 sess 0 | acc=0.4691 best=0.8550
+16:49:56 | INFO     train.training_pcl train    226 Epoch 800/1000 | total_loss_sum=259.8882 | total_cls_loss=0.5673 | total_transfer_loss=73.5305| total_domain_loss=413.8000 | total_source_loss=58.5705 | total_target_loss=58.5078
+16:52:16 | INFO     train.training_pcl train    137 Epoch 850/1000 subj 7 sess 0 | acc=0.4691 best=0.8550
+16:52:19 | INFO     train.training_pcl train    226 Epoch 850/1000 | total_loss_sum=262.3607 | total_cls_loss=0.5634 | total_transfer_loss=73.5317| total_domain_loss=413.7785 | total_source_loss=58.5717 | total_target_loss=58.5069
+16:54:42 | INFO     train.training_pcl train    137 Epoch 900/1000 subj 7 sess 0 | acc=0.4691 best=0.8550
+16:54:44 | INFO     train.training_pcl train    226 Epoch 900/1000 | total_loss_sum=264.8001 | total_cls_loss=0.5649 | total_transfer_loss=73.5334| total_domain_loss=413.7945 | total_source_loss=58.5720 | total_target_loss=58.5103
+16:57:04 | INFO     train.training_pcl train    137 Epoch 950/1000 subj 7 sess 0 | acc=0.4691 best=0.8550
+16:57:06 | INFO     train.training_pcl train    226 Epoch 950/1000 | total_loss_sum=267.1786 | total_cls_loss=0.5642 | total_transfer_loss=73.5364| total_domain_loss=413.7816 | total_source_loss=58.5727 | total_target_loss=58.5091
+16:59:26 | INFO     __main__ main     131 Done subj=7 sess=0 acc=0.8550
+16:59:30 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+16:59:31 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+16:59:31 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+16:59:31 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+16:59:31 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+number of source samples 47516
+number of target samples 3394
+16:59:35 | INFO     utils.metric update   25  --> A new better acc 0.3253 on subject 8 session 0
+16:59:35 | INFO     train.training_pcl train    137 Epoch 0/1000 subj 8 sess 0 | acc=0.3253 best=0.3253
+16:59:37 | INFO     train.training_pcl train    226 Epoch 0/1000 | total_loss_sum=262.5280 | total_cls_loss=35.5951 | total_transfer_loss=68.5774| total_domain_loss=448.7880 | total_source_loss=68.5978 | total_target_loss=82.6417
+16:59:37 | INFO     utils.metric update   25  --> A new better acc 0.7239 on subject 8 session 0
+16:59:43 | INFO     utils.metric update   25  --> A new better acc 0.7345 on subject 8 session 0
+17:00:07 | INFO     utils.metric update   25  --> A new better acc 0.7443 on subject 8 session 0
+17:00:51 | INFO     utils.metric update   25  --> A new better acc 0.7873 on subject 8 session 0
+17:02:02 | INFO     train.training_pcl train    137 Epoch 50/1000 subj 8 sess 0 | acc=0.7602 best=0.7873
+17:02:04 | INFO     train.training_pcl train    226 Epoch 50/1000 | total_loss_sum=218.5414 | total_cls_loss=0.6206 | total_transfer_loss=73.4820| total_domain_loss=414.6478 | total_source_loss=58.5679 | total_target_loss=58.8384
+17:04:05 | INFO     utils.metric update   25  --> A new better acc 0.7964 on subject 8 session 0
+17:04:14 | INFO     utils.metric update   25  --> A new better acc 0.8103 on subject 8 session 0
+17:04:23 | INFO     train.training_pcl train    137 Epoch 100/1000 subj 8 sess 0 | acc=0.7805 best=0.8103
+17:04:26 | INFO     train.training_pcl train    226 Epoch 100/1000 | total_loss_sum=221.2906 | total_cls_loss=0.6003 | total_transfer_loss=73.4409| total_domain_loss=414.1198 | total_source_loss=58.5661 | total_target_loss=58.6417
+17:04:40 | INFO     utils.metric update   25  --> A new better acc 0.8191 on subject 8 session 0
+17:06:32 | INFO     utils.metric update   25  --> A new better acc 0.8547 on subject 8 session 0
+17:06:34 | INFO     utils.metric update   25  --> A new better acc 0.8574 on subject 8 session 0
+17:06:37 | INFO     utils.metric update   25  --> A new better acc 0.8810 on subject 8 session 0
+17:06:45 | INFO     train.training_pcl train    137 Epoch 150/1000 subj 8 sess 0 | acc=0.8424 best=0.8810
+17:06:47 | INFO     train.training_pcl train    226 Epoch 150/1000 | total_loss_sum=224.5464 | total_cls_loss=0.6433 | total_transfer_loss=73.6373| total_domain_loss=414.2850 | total_source_loss=58.5823 | total_target_loss=58.9542
+17:09:08 | INFO     train.training_pcl train    137 Epoch 200/1000 subj 8 sess 0 | acc=0.8064 best=0.8810
+17:09:10 | INFO     train.training_pcl train    226 Epoch 200/1000 | total_loss_sum=227.0487 | total_cls_loss=0.5791 | total_transfer_loss=73.4630| total_domain_loss=413.8780 | total_source_loss=58.5662 | total_target_loss=58.5180
+17:11:30 | INFO     train.training_pcl train    137 Epoch 250/1000 subj 8 sess 0 | acc=0.7457 best=0.8810
+17:11:32 | INFO     train.training_pcl train    226 Epoch 250/1000 | total_loss_sum=230.0099 | total_cls_loss=0.5753 | total_transfer_loss=73.5372| total_domain_loss=413.8599 | total_source_loss=58.5737 | total_target_loss=58.5098
+17:13:55 | INFO     train.training_pcl train    137 Epoch 300/1000 subj 8 sess 0 | acc=0.7457 best=0.8810
+17:13:57 | INFO     train.training_pcl train    226 Epoch 300/1000 | total_loss_sum=232.8522 | total_cls_loss=0.5656 | total_transfer_loss=73.5279| total_domain_loss=413.8264 | total_source_loss=58.5707 | total_target_loss=58.5103
+17:16:21 | INFO     train.training_pcl train    137 Epoch 350/1000 subj 8 sess 0 | acc=0.7457 best=0.8810
+17:16:24 | INFO     train.training_pcl train    226 Epoch 350/1000 | total_loss_sum=235.7052 | total_cls_loss=0.5649 | total_transfer_loss=73.5413| total_domain_loss=413.8115 | total_source_loss=58.5659 | total_target_loss=58.5066
+17:18:45 | INFO     train.training_pcl train    137 Epoch 400/1000 subj 8 sess 0 | acc=0.7457 best=0.8810
+17:18:48 | INFO     train.training_pcl train    226 Epoch 400/1000 | total_loss_sum=238.9782 | total_cls_loss=0.8831 | total_transfer_loss=73.5364| total_domain_loss=414.0031 | total_source_loss=58.6329 | total_target_loss=58.5818
+17:21:05 | INFO     train.training_pcl train    137 Epoch 450/1000 subj 8 sess 0 | acc=0.7457 best=0.8810
+17:21:08 | INFO     train.training_pcl train    226 Epoch 450/1000 | total_loss_sum=241.3371 | total_cls_loss=0.5731 | total_transfer_loss=73.5371| total_domain_loss=413.8070 | total_source_loss=58.5715 | total_target_loss=58.5100
+17:23:29 | INFO     train.training_pcl train    137 Epoch 500/1000 subj 8 sess 0 | acc=0.7457 best=0.8810
+17:23:31 | INFO     train.training_pcl train    226 Epoch 500/1000 | total_loss_sum=244.0777 | total_cls_loss=0.5621 | total_transfer_loss=73.5278| total_domain_loss=413.7825 | total_source_loss=58.5709 | total_target_loss=58.5101
+17:25:52 | INFO     train.training_pcl train    137 Epoch 550/1000 subj 8 sess 0 | acc=0.7457 best=0.8810
+17:25:54 | INFO     train.training_pcl train    226 Epoch 550/1000 | total_loss_sum=247.3329 | total_cls_loss=0.8099 | total_transfer_loss=73.4625| total_domain_loss=414.2293 | total_source_loss=58.6756 | total_target_loss=58.7819
+17:28:13 | INFO     train.training_pcl train    137 Epoch 600/1000 subj 8 sess 0 | acc=0.7457 best=0.8810
+17:28:15 | INFO     train.training_pcl train    226 Epoch 600/1000 | total_loss_sum=249.5148 | total_cls_loss=0.5661 | total_transfer_loss=73.5272| total_domain_loss=413.7855 | total_source_loss=58.5750 | total_target_loss=58.5101
+17:30:33 | INFO     train.training_pcl train    137 Epoch 650/1000 subj 8 sess 0 | acc=0.7457 best=0.8810
+17:30:35 | INFO     train.training_pcl train    226 Epoch 650/1000 | total_loss_sum=252.1542 | total_cls_loss=0.5588 | total_transfer_loss=73.5232| total_domain_loss=413.7882 | total_source_loss=58.5680 | total_target_loss=58.5098
+17:32:54 | INFO     train.training_pcl train    137 Epoch 700/1000 subj 8 sess 0 | acc=0.7457 best=0.8810
+17:32:56 | INFO     train.training_pcl train    226 Epoch 700/1000 | total_loss_sum=254.7961 | total_cls_loss=0.5644 | total_transfer_loss=73.5328| total_domain_loss=413.8070 | total_source_loss=58.5738 | total_target_loss=58.5114
+17:35:17 | INFO     train.training_pcl train    137 Epoch 750/1000 subj 8 sess 0 | acc=0.8064 best=0.8810
+17:35:19 | INFO     train.training_pcl train    226 Epoch 750/1000 | total_loss_sum=257.3095 | total_cls_loss=0.5710 | total_transfer_loss=73.4655| total_domain_loss=413.7877 | total_source_loss=58.5781 | total_target_loss=58.5134
+17:37:40 | INFO     train.training_pcl train    137 Epoch 800/1000 subj 8 sess 0 | acc=0.8064 best=0.8810
+17:37:42 | INFO     train.training_pcl train    226 Epoch 800/1000 | total_loss_sum=259.8074 | total_cls_loss=0.5541 | total_transfer_loss=73.4800| total_domain_loss=413.7360 | total_source_loss=58.5668 | total_target_loss=58.5068
+17:40:04 | INFO     train.training_pcl train    137 Epoch 850/1000 subj 8 sess 0 | acc=0.8064 best=0.8810
+17:40:06 | INFO     train.training_pcl train    226 Epoch 850/1000 | total_loss_sum=262.3130 | total_cls_loss=0.5601 | total_transfer_loss=73.4881| total_domain_loss=413.7433 | total_source_loss=58.5737 | total_target_loss=58.5120
+17:42:26 | INFO     train.training_pcl train    137 Epoch 900/1000 subj 8 sess 0 | acc=0.8064 best=0.8810
+17:42:29 | INFO     train.training_pcl train    226 Epoch 900/1000 | total_loss_sum=264.7108 | total_cls_loss=0.5542 | total_transfer_loss=73.4690| total_domain_loss=413.7380 | total_source_loss=58.5684 | total_target_loss=58.5111
+17:44:48 | INFO     train.training_pcl train    137 Epoch 950/1000 subj 8 sess 0 | acc=0.8064 best=0.8810
+17:44:51 | INFO     train.training_pcl train    226 Epoch 950/1000 | total_loss_sum=267.0532 | total_cls_loss=0.5577 | total_transfer_loss=73.4264| total_domain_loss=413.7450 | total_source_loss=58.5718 | total_target_loss=58.5083
+17:47:08 | INFO     __main__ main     131 Done subj=8 sess=0 acc=0.8810
+17:47:14 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+17:47:14 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+17:47:14 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+17:47:14 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+17:47:14 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+number of source samples 47516
+number of target samples 3394
+17:47:18 | INFO     utils.metric update   25  --> A new better acc 0.3253 on subject 9 session 0
+17:47:18 | INFO     train.training_pcl train    137 Epoch 0/1000 subj 9 sess 0 | acc=0.3253 best=0.3253
+17:47:20 | INFO     train.training_pcl train    226 Epoch 0/1000 | total_loss_sum=261.5432 | total_cls_loss=34.2795 | total_transfer_loss=69.6490| total_domain_loss=448.3624 | total_source_loss=67.9422 | total_target_loss=82.7340
+17:47:21 | INFO     utils.metric update   25  --> A new better acc 0.7342 on subject 9 session 0
+17:47:23 | INFO     utils.metric update   25  --> A new better acc 0.7722 on subject 9 session 0
+17:47:26 | INFO     utils.metric update   25  --> A new better acc 0.8002 on subject 9 session 0
+17:47:29 | INFO     utils.metric update   25  --> A new better acc 0.8044 on subject 9 session 0
+17:49:33 | INFO     utils.metric update   25  --> A new better acc 0.8097 on subject 9 session 0
+17:49:36 | INFO     utils.metric update   25  --> A new better acc 0.8212 on subject 9 session 0
+17:49:38 | INFO     utils.metric update   25  --> A new better acc 0.8412 on subject 9 session 0
+17:49:41 | INFO     utils.metric update   25  --> A new better acc 0.8430 on subject 9 session 0
+17:49:41 | INFO     train.training_pcl train    137 Epoch 50/1000 subj 9 sess 0 | acc=0.8430 best=0.8430
+17:49:43 | INFO     train.training_pcl train    226 Epoch 50/1000 | total_loss_sum=218.4793 | total_cls_loss=0.5951 | total_transfer_loss=73.5305| total_domain_loss=414.3277 | total_source_loss=58.5621 | total_target_loss=58.5326
+17:49:43 | INFO     utils.metric update   25  --> A new better acc 0.8768 on subject 9 session 0
+17:50:36 | INFO     utils.metric update   25  --> A new better acc 0.8780 on subject 9 session 0
+17:52:02 | INFO     train.training_pcl train    137 Epoch 100/1000 subj 9 sess 0 | acc=0.6402 best=0.8780
+17:52:05 | INFO     train.training_pcl train    226 Epoch 100/1000 | total_loss_sum=221.4999 | total_cls_loss=0.7453 | total_transfer_loss=71.0074| total_domain_loss=419.5792 | total_source_loss=58.6350 | total_target_loss=72.0234
+17:54:28 | INFO     train.training_pcl train    137 Epoch 150/1000 subj 9 sess 0 | acc=0.6382 best=0.8780
+17:54:30 | INFO     train.training_pcl train    226 Epoch 150/1000 | total_loss_sum=224.7073 | total_cls_loss=0.8444 | total_transfer_loss=73.6744| total_domain_loss=414.0502 | total_source_loss=58.6038 | total_target_loss=58.6081
+17:56:48 | INFO     train.training_pcl train    137 Epoch 200/1000 subj 9 sess 0 | acc=0.5106 best=0.8780
+17:56:50 | INFO     train.training_pcl train    226 Epoch 200/1000 | total_loss_sum=226.7719 | total_cls_loss=0.6612 | total_transfer_loss=67.1069| total_domain_loss=422.6601 | total_source_loss=58.6102 | total_target_loss=79.5725
+17:59:10 | INFO     train.training_pcl train    137 Epoch 250/1000 subj 9 sess 0 | acc=0.7113 best=0.8780
+17:59:13 | INFO     train.training_pcl train    226 Epoch 250/1000 | total_loss_sum=226.3357 | total_cls_loss=0.6389 | total_transfer_loss=69.6170| total_domain_loss=414.2546 | total_source_loss=58.6168 | total_target_loss=58.7526
+18:01:32 | INFO     train.training_pcl train    137 Epoch 300/1000 subj 9 sess 0 | acc=0.5377 best=0.8780
+18:01:35 | INFO     train.training_pcl train    226 Epoch 300/1000 | total_loss_sum=233.6084 | total_cls_loss=0.5873 | total_transfer_loss=67.2348| total_domain_loss=422.2128 | total_source_loss=58.5927 | total_target_loss=76.4049
+18:03:54 | INFO     train.training_pcl train    137 Epoch 350/1000 subj 9 sess 0 | acc=0.5628 best=0.8780
+18:03:57 | INFO     train.training_pcl train    226 Epoch 350/1000 | total_loss_sum=238.3773 | total_cls_loss=0.6185 | total_transfer_loss=66.9924| total_domain_loss=422.7526 | total_source_loss=58.5852 | total_target_loss=79.7490
+18:06:17 | INFO     train.training_pcl train    137 Epoch 400/1000 subj 9 sess 0 | acc=0.4287 best=0.8780
+18:06:19 | INFO     train.training_pcl train    226 Epoch 400/1000 | total_loss_sum=245.0401 | total_cls_loss=0.6593 | total_transfer_loss=76.5178| total_domain_loss=420.1819 | total_source_loss=58.6006 | total_target_loss=63.9037
+18:08:43 | INFO     train.training_pcl train    137 Epoch 450/1000 subj 9 sess 0 | acc=0.1152 best=0.8780
+18:08:46 | INFO     train.training_pcl train    226 Epoch 450/1000 | total_loss_sum=243.9677 | total_cls_loss=0.6417 | total_transfer_loss=66.5187| total_domain_loss=422.7530 | total_source_loss=58.6122 | total_target_loss=76.0229
+18:11:09 | INFO     train.training_pcl train    137 Epoch 500/1000 subj 9 sess 0 | acc=0.5168 best=0.8780
+18:11:12 | INFO     train.training_pcl train    226 Epoch 500/1000 | total_loss_sum=281.7713 | total_cls_loss=1.0322 | total_transfer_loss=84.0517| total_domain_loss=436.4015 | total_source_loss=58.7572 | total_target_loss=103.4015
+18:13:41 | INFO     train.training_pcl train    137 Epoch 550/1000 subj 9 sess 0 | acc=0.3300 best=0.8780
+18:13:43 | INFO     train.training_pcl train    226 Epoch 550/1000 | total_loss_sum=286.7460 | total_cls_loss=1.5853 | total_transfer_loss=89.6035| total_domain_loss=441.8599 | total_source_loss=58.9920 | total_target_loss=89.8219
+18:16:18 | INFO     train.training_pcl train    137 Epoch 600/1000 subj 9 sess 0 | acc=0.5993 best=0.8780
+18:16:20 | INFO     train.training_pcl train    226 Epoch 600/1000 | total_loss_sum=254.0234 | total_cls_loss=0.6544 | total_transfer_loss=67.3729| total_domain_loss=422.0828 | total_source_loss=58.6210 | total_target_loss=73.7328
+18:19:00 | INFO     train.training_pcl train    137 Epoch 650/1000 subj 9 sess 0 | acc=0.2339 best=0.8780
+18:19:03 | INFO     train.training_pcl train    226 Epoch 650/1000 | total_loss_sum=248.4068 | total_cls_loss=0.5844 | total_transfer_loss=69.1917| total_domain_loss=414.3171 | total_source_loss=58.5885 | total_target_loss=59.1981
+18:21:39 | INFO     train.training_pcl train    137 Epoch 700/1000 subj 9 sess 0 | acc=0.3406 best=0.8780
+18:21:42 | INFO     train.training_pcl train    226 Epoch 700/1000 | total_loss_sum=259.8509 | total_cls_loss=0.7123 | total_transfer_loss=72.0904| total_domain_loss=423.0293 | total_source_loss=58.5771 | total_target_loss=65.2027
+18:24:17 | INFO     train.training_pcl train    137 Epoch 750/1000 subj 9 sess 0 | acc=0.1794 best=0.8780
+18:24:20 | INFO     train.training_pcl train    226 Epoch 750/1000 | total_loss_sum=258.3605 | total_cls_loss=0.6518 | total_transfer_loss=73.6182| total_domain_loss=415.5260 | total_source_loss=58.6064 | total_target_loss=59.1294
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+18:26:55 | INFO     train.training_pcl train    137 Epoch 800/1000 subj 9 sess 0 | acc=0.3247 best=0.8780
+18:26:58 | INFO     train.training_pcl train    226 Epoch 800/1000 | total_loss_sum=273.7112 | total_cls_loss=0.7978 | total_transfer_loss=76.7485| total_domain_loss=422.9014 | total_source_loss=58.6973 | total_target_loss=69.5979
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+18:29:36 | INFO     train.training_pcl train    137 Epoch 850/1000 subj 9 sess 0 | acc=0.3253 best=0.8780
+18:29:39 | INFO     train.training_pcl train    226 Epoch 850/1000 | total_loss_sum=281.1996 | total_cls_loss=0.5980 | total_transfer_loss=72.5728| total_domain_loss=426.2972 | total_source_loss=58.5886 | total_target_loss=79.9991
+18:32:18 | INFO     train.training_pcl train    137 Epoch 900/1000 subj 9 sess 0 | acc=0.5230 best=0.8780
+18:32:21 | INFO     train.training_pcl train    226 Epoch 900/1000 | total_loss_sum=295.8814 | total_cls_loss=0.7376 | total_transfer_loss=70.1007| total_domain_loss=430.8514 | total_source_loss=58.7049 | total_target_loss=95.0083
+18:34:58 | INFO     train.training_pcl train    137 Epoch 950/1000 subj 9 sess 0 | acc=0.6747 best=0.8780
+18:35:01 | INFO     train.training_pcl train    226 Epoch 950/1000 | total_loss_sum=269.1133 | total_cls_loss=0.5803 | total_transfer_loss=69.7721| total_domain_loss=420.7452 | total_source_loss=58.5846 | total_target_loss=63.3462
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/sklearn/base.py:1336: ConvergenceWarning: Number of distinct clusters (2) found smaller than n_clusters (3). Possibly due to duplicate points in X.
+  return fit_method(estimator, *args, **kwargs)
+18:37:37 | INFO     __main__ main     131 Done subj=9 sess=0 acc=0.8780
+18:37:42 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+18:37:42 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+18:37:42 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+18:37:42 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+18:37:42 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+number of source samples 47516
+number of target samples 3394
+18:37:46 | INFO     utils.metric update   25  --> A new better acc 0.3253 on subject 10 session 0
+18:37:46 | INFO     train.training_pcl train    137 Epoch 0/1000 subj 10 sess 0 | acc=0.3253 best=0.3253
+18:37:48 | INFO     train.training_pcl train    226 Epoch 0/1000 | total_loss_sum=265.7634 | total_cls_loss=36.1892 | total_transfer_loss=71.0820| total_domain_loss=449.8687 | total_source_loss=68.5184 | total_target_loss=82.7181
+18:37:49 | INFO     utils.metric update   25  --> A new better acc 0.9148 on subject 10 session 0
+18:38:40 | INFO     utils.metric update   25  --> A new better acc 0.9175 on subject 10 session 0
+18:38:45 | INFO     utils.metric update   25  --> A new better acc 0.9313 on subject 10 session 0
+18:38:48 | INFO     utils.metric update   25  --> A new better acc 0.9605 on subject 10 session 0
+18:39:00 | INFO     utils.metric update   25  --> A new better acc 0.9691 on subject 10 session 0
+18:39:02 | INFO     utils.metric update   25  --> A new better acc 0.9776 on subject 10 session 0
+18:39:12 | INFO     utils.metric update   25  --> A new better acc 0.9779 on subject 10 session 0
+18:39:15 | INFO     utils.metric update   25  --> A new better acc 0.9811 on subject 10 session 0
+18:39:20 | INFO     utils.metric update   25  --> A new better acc 0.9876 on subject 10 session 0
+18:39:22 | INFO     utils.metric update   25  --> A new better acc 0.9885 on subject 10 session 0
+18:39:25 | INFO     utils.metric update   25  --> A new better acc 0.9900 on subject 10 session 0
+18:40:13 | INFO     utils.metric update   25  --> A new better acc 0.9906 on subject 10 session 0
+18:40:13 | INFO     train.training_pcl train    137 Epoch 50/1000 subj 10 sess 0 | acc=0.9906 best=0.9906
+18:40:15 | INFO     train.training_pcl train    226 Epoch 50/1000 | total_loss_sum=220.9724 | total_cls_loss=2.5344 | total_transfer_loss=73.5127| total_domain_loss=414.9239 | total_source_loss=59.0014 | total_target_loss=58.7938
+18:40:54 | INFO     utils.metric update   25  --> A new better acc 1.0000 on subject 10 session 0
+18:40:54 | INFO     train.training_pcl train    143 Perfect accuracy, stopping.
+18:40:54 | INFO     __main__ main     131 Done subj=10 sess=0 acc=1.0000
+18:40:58 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+18:40:59 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+18:40:59 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+18:40:59 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+18:40:59 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+number of source samples 47516
+number of target samples 3394
+18:41:03 | INFO     utils.metric update   25  --> A new better acc 0.3253 on subject 11 session 0
+18:41:03 | INFO     train.training_pcl train    137 Epoch 0/1000 subj 11 sess 0 | acc=0.3253 best=0.3253
+18:41:05 | INFO     train.training_pcl train    226 Epoch 0/1000 | total_loss_sum=263.6839 | total_cls_loss=36.0696 | total_transfer_loss=69.6164| total_domain_loss=450.7818 | total_source_loss=67.8416 | total_target_loss=87.0393
+18:41:05 | INFO     utils.metric update   25  --> A new better acc 0.7717 on subject 11 session 0
+18:42:31 | INFO     utils.metric update   25  --> A new better acc 0.9010 on subject 11 session 0
+18:43:02 | INFO     utils.metric update   25  --> A new better acc 0.9028 on subject 11 session 0
+18:43:05 | INFO     utils.metric update   25  --> A new better acc 0.9213 on subject 11 session 0
+18:43:09 | INFO     utils.metric update   25  --> A new better acc 0.9723 on subject 11 session 0
+18:43:28 | INFO     train.training_pcl train    137 Epoch 50/1000 subj 11 sess 0 | acc=0.8866 best=0.9723
+18:43:30 | INFO     train.training_pcl train    226 Epoch 50/1000 | total_loss_sum=221.2489 | total_cls_loss=2.9843 | total_transfer_loss=73.5414| total_domain_loss=414.7938 | total_source_loss=58.8241 | total_target_loss=58.8192
+18:45:52 | INFO     train.training_pcl train    137 Epoch 100/1000 subj 11 sess 0 | acc=0.8276 best=0.9723
+18:45:55 | INFO     train.training_pcl train    226 Epoch 100/1000 | total_loss_sum=221.4335 | total_cls_loss=0.6147 | total_transfer_loss=73.5294| total_domain_loss=414.3085 | total_source_loss=58.5607 | total_target_loss=58.7187
+18:48:16 | INFO     train.training_pcl train    137 Epoch 150/1000 subj 11 sess 0 | acc=0.3008 best=0.9723
+18:48:19 | INFO     train.training_pcl train    226 Epoch 150/1000 | total_loss_sum=224.3456 | total_cls_loss=0.6701 | total_transfer_loss=73.1269| total_domain_loss=415.3874 | total_source_loss=58.5917 | total_target_loss=59.3079
+18:50:39 | INFO     train.training_pcl train    137 Epoch 200/1000 subj 11 sess 0 | acc=0.5345 best=0.9723
+18:50:41 | INFO     train.training_pcl train    226 Epoch 200/1000 | total_loss_sum=227.3845 | total_cls_loss=0.8658 | total_transfer_loss=73.4124| total_domain_loss=413.9363 | total_source_loss=58.6480 | total_target_loss=58.5496
+18:52:59 | INFO     train.training_pcl train    137 Epoch 250/1000 subj 11 sess 0 | acc=0.5062 best=0.9723
+18:53:02 | INFO     train.training_pcl train    226 Epoch 250/1000 | total_loss_sum=228.0488 | total_cls_loss=0.6232 | total_transfer_loss=67.3056| total_domain_loss=421.2828 | total_source_loss=58.6033 | total_target_loss=69.3998
+18:55:22 | INFO     train.training_pcl train    137 Epoch 300/1000 subj 11 sess 0 | acc=0.2080 best=0.9723
+18:55:24 | INFO     train.training_pcl train    226 Epoch 300/1000 | total_loss_sum=232.8101 | total_cls_loss=0.5621 | total_transfer_loss=73.4693| total_domain_loss=413.9389 | total_source_loss=58.5663 | total_target_loss=58.5169
+18:57:43 | INFO     train.training_pcl train    137 Epoch 350/1000 subj 11 sess 0 | acc=0.1394 best=0.9723
+18:57:45 | INFO     train.training_pcl train    226 Epoch 350/1000 | total_loss_sum=234.1204 | total_cls_loss=0.6127 | total_transfer_loss=67.1806| total_domain_loss=421.3546 | total_source_loss=58.6008 | total_target_loss=67.6980
+19:00:06 | INFO     train.training_pcl train    137 Epoch 400/1000 subj 11 sess 0 | acc=0.4107 best=0.9723
+19:00:08 | INFO     train.training_pcl train    226 Epoch 400/1000 | total_loss_sum=246.9759 | total_cls_loss=0.9048 | total_transfer_loss=73.7471| total_domain_loss=421.9502 | total_source_loss=58.7290 | total_target_loss=73.9834
+19:02:30 | INFO     train.training_pcl train    137 Epoch 450/1000 subj 11 sess 0 | acc=0.3701 best=0.9723
+19:02:33 | INFO     train.training_pcl train    226 Epoch 450/1000 | total_loss_sum=241.6737 | total_cls_loss=0.6048 | total_transfer_loss=73.0767| total_domain_loss=414.6033 | total_source_loss=58.5959 | total_target_loss=59.8243
+19:04:58 | INFO     train.training_pcl train    137 Epoch 500/1000 subj 11 sess 0 | acc=0.3103 best=0.9723
+19:05:01 | INFO     train.training_pcl train    226 Epoch 500/1000 | total_loss_sum=244.0946 | total_cls_loss=0.7943 | total_transfer_loss=73.0465| total_domain_loss=414.5704 | total_source_loss=58.6067 | total_target_loss=58.6583
+19:07:34 | INFO     train.training_pcl train    137 Epoch 550/1000 subj 11 sess 0 | acc=0.6173 best=0.9723
+19:07:39 | INFO     train.training_pcl train    226 Epoch 550/1000 | total_loss_sum=263.7575 | total_cls_loss=0.8102 | total_transfer_loss=74.2193| total_domain_loss=426.0649 | total_source_loss=58.6862 | total_target_loss=83.5515
+19:10:04 | INFO     train.training_pcl train    137 Epoch 600/1000 subj 11 sess 0 | acc=0.5427 best=0.9723
+19:10:07 | INFO     train.training_pcl train    226 Epoch 600/1000 | total_loss_sum=261.1852 | total_cls_loss=0.7096 | total_transfer_loss=68.9606| total_domain_loss=425.3271 | total_source_loss=58.6577 | total_target_loss=82.0285
+19:12:39 | INFO     train.training_pcl train    137 Epoch 650/1000 subj 11 sess 0 | acc=0.3512 best=0.9723
+19:12:44 | INFO     train.training_pcl train    226 Epoch 650/1000 | total_loss_sum=245.8861 | total_cls_loss=0.7485 | total_transfer_loss=66.5018| total_domain_loss=414.2883 | total_source_loss=58.6718 | total_target_loss=59.0826
+19:15:19 | INFO     train.training_pcl train    137 Epoch 700/1000 subj 11 sess 0 | acc=0.3082 best=0.9723
+19:15:21 | INFO     train.training_pcl train    226 Epoch 700/1000 | total_loss_sum=256.6844 | total_cls_loss=0.6836 | total_transfer_loss=74.1498| total_domain_loss=415.1602 | total_source_loss=58.5977 | total_target_loss=59.7861
+19:18:01 | INFO     train.training_pcl train    137 Epoch 750/1000 subj 11 sess 0 | acc=0.2708 best=0.9723
+19:18:04 | INFO     train.training_pcl train    226 Epoch 750/1000 | total_loss_sum=257.1040 | total_cls_loss=0.5596 | total_transfer_loss=73.2912| total_domain_loss=413.7297 | total_source_loss=58.5691 | total_target_loss=58.5144
+19:20:54 | INFO     train.training_pcl train    137 Epoch 800/1000 subj 11 sess 0 | acc=0.2708 best=0.9723
+19:20:57 | INFO     train.training_pcl train    226 Epoch 800/1000 | total_loss_sum=259.6457 | total_cls_loss=0.5707 | total_transfer_loss=73.2851| total_domain_loss=413.7606 | total_source_loss=58.5759 | total_target_loss=58.5102
+19:23:54 | INFO     train.training_pcl train    137 Epoch 850/1000 subj 11 sess 0 | acc=0.3315 best=0.9723
+19:23:57 | INFO     train.training_pcl train    226 Epoch 850/1000 | total_loss_sum=262.1577 | total_cls_loss=0.6184 | total_transfer_loss=73.2246| total_domain_loss=413.8390 | total_source_loss=58.5987 | total_target_loss=58.5193
+19:26:57 | INFO     train.training_pcl train    137 Epoch 900/1000 subj 11 sess 0 | acc=0.3315 best=0.9723
+19:27:02 | INFO     train.training_pcl train    226 Epoch 900/1000 | total_loss_sum=264.3002 | total_cls_loss=0.5577 | total_transfer_loss=73.0523| total_domain_loss=413.7561 | total_source_loss=58.5672 | total_target_loss=58.5114
+19:29:57 | INFO     train.training_pcl train    137 Epoch 950/1000 subj 11 sess 0 | acc=0.3315 best=0.9723
+19:30:00 | INFO     train.training_pcl train    226 Epoch 950/1000 | total_loss_sum=266.6152 | total_cls_loss=0.5677 | total_transfer_loss=72.9621| total_domain_loss=413.7743 | total_source_loss=58.5765 | total_target_loss=58.5149
+19:32:54 | INFO     __main__ main     131 Done subj=11 sess=0 acc=0.9723
+19:33:03 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+19:33:04 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+19:33:04 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+19:33:04 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+19:33:04 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+number of source samples 47516
+number of target samples 3394
+19:33:08 | INFO     utils.metric update   25  --> A new better acc 0.3253 on subject 12 session 0
+19:33:08 | INFO     train.training_pcl train    137 Epoch 0/1000 subj 12 sess 0 | acc=0.3253 best=0.3253
+19:33:11 | INFO     train.training_pcl train    226 Epoch 0/1000 | total_loss_sum=261.9964 | total_cls_loss=35.7635 | total_transfer_loss=69.7346| total_domain_loss=448.0409 | total_source_loss=66.8902 | total_target_loss=80.9290
+19:33:11 | INFO     utils.metric update   25  --> A new better acc 0.7219 on subject 12 session 0
+19:33:14 | INFO     utils.metric update   25  --> A new better acc 0.7649 on subject 12 session 0
+19:34:03 | INFO     utils.metric update   25  --> A new better acc 0.7749 on subject 12 session 0
+19:34:06 | INFO     utils.metric update   25  --> A new better acc 0.7770 on subject 12 session 0
+19:34:53 | INFO     utils.metric update   25  --> A new better acc 0.8144 on subject 12 session 0
+19:35:37 | INFO     utils.metric update   25  --> A new better acc 0.8247 on subject 12 session 0
+19:35:49 | INFO     train.training_pcl train    137 Epoch 50/1000 subj 12 sess 0 | acc=0.7516 best=0.8247
+19:35:53 | INFO     train.training_pcl train    226 Epoch 50/1000 | total_loss_sum=218.5840 | total_cls_loss=0.6018 | total_transfer_loss=73.5706| total_domain_loss=414.5276 | total_source_loss=58.5651 | total_target_loss=58.8334
+19:37:01 | INFO     utils.metric update   25  --> A new better acc 0.8288 on subject 12 session 0
+19:38:02 | INFO     utils.metric update   25  --> A new better acc 0.8627 on subject 12 session 0
+19:38:05 | INFO     utils.metric update   25  --> A new better acc 0.8754 on subject 12 session 0
+19:38:28 | INFO     train.training_pcl train    137 Epoch 100/1000 subj 12 sess 0 | acc=0.7994 best=0.8754
+19:38:31 | INFO     train.training_pcl train    226 Epoch 100/1000 | total_loss_sum=221.3260 | total_cls_loss=0.5975 | total_transfer_loss=73.5093| total_domain_loss=413.9648 | total_source_loss=58.5675 | total_target_loss=58.6363
+19:41:10 | INFO     train.training_pcl train    137 Epoch 150/1000 subj 12 sess 0 | acc=0.8627 best=0.8754
+19:41:13 | INFO     train.training_pcl train    226 Epoch 150/1000 | total_loss_sum=224.3282 | total_cls_loss=0.6421 | total_transfer_loss=73.5500| total_domain_loss=413.9270 | total_source_loss=58.5875 | total_target_loss=58.5313
+19:43:46 | INFO     train.training_pcl train    137 Epoch 200/1000 subj 12 sess 0 | acc=0.8627 best=0.8754
+19:43:49 | INFO     train.training_pcl train    226 Epoch 200/1000 | total_loss_sum=227.1085 | total_cls_loss=0.5732 | total_transfer_loss=73.5346| total_domain_loss=413.8507 | total_source_loss=58.5672 | total_target_loss=58.5109
+19:45:58 | INFO     utils.metric update   25  --> A new better acc 0.8854 on subject 12 session 0
+19:46:26 | INFO     train.training_pcl train    137 Epoch 250/1000 subj 12 sess 0 | acc=0.6871 best=0.8854
+19:46:29 | INFO     train.training_pcl train    226 Epoch 250/1000 | total_loss_sum=232.0622 | total_cls_loss=0.7298 | total_transfer_loss=68.2109| total_domain_loss=422.7828 | total_source_loss=58.6911 | total_target_loss=79.9091
+19:49:05 | INFO     train.training_pcl train    137 Epoch 300/1000 subj 12 sess 0 | acc=0.6397 best=0.8854
+19:49:07 | INFO     train.training_pcl train    226 Epoch 300/1000 | total_loss_sum=256.8721 | total_cls_loss=0.8719 | total_transfer_loss=87.8053| total_domain_loss=427.3768 | total_source_loss=58.6887 | total_target_loss=80.7030
+19:51:46 | INFO     train.training_pcl train    137 Epoch 350/1000 subj 12 sess 0 | acc=0.6008 best=0.8854
+19:51:48 | INFO     train.training_pcl train    226 Epoch 350/1000 | total_loss_sum=239.8696 | total_cls_loss=0.7913 | total_transfer_loss=67.4707| total_domain_loss=423.7591 | total_source_loss=58.6565 | total_target_loss=81.3902
+19:54:26 | INFO     train.training_pcl train    137 Epoch 400/1000 subj 12 sess 0 | acc=0.6815 best=0.8854
+19:54:29 | INFO     train.training_pcl train    226 Epoch 400/1000 | total_loss_sum=238.7551 | total_cls_loss=0.5871 | total_transfer_loss=73.5777| total_domain_loss=414.4256 | total_source_loss=58.5703 | total_target_loss=58.6062
+19:57:04 | INFO     train.training_pcl train    137 Epoch 450/1000 subj 12 sess 0 | acc=0.5371 best=0.8854
+19:57:07 | INFO     train.training_pcl train    226 Epoch 450/1000 | total_loss_sum=266.5686 | total_cls_loss=0.6269 | total_transfer_loss=87.9411| total_domain_loss=422.7065 | total_source_loss=58.6138 | total_target_loss=78.7368
+19:59:45 | INFO     train.training_pcl train    137 Epoch 500/1000 subj 12 sess 0 | acc=0.7466 best=0.8854
+19:59:50 | INFO     train.training_pcl train    226 Epoch 500/1000 | total_loss_sum=245.0319 | total_cls_loss=0.6987 | total_transfer_loss=74.0770| total_domain_loss=414.5792 | total_source_loss=58.6209 | total_target_loss=58.6306
+20:02:26 | INFO     train.training_pcl train    137 Epoch 550/1000 subj 12 sess 0 | acc=0.2001 best=0.8854
+20:02:29 | INFO     train.training_pcl train    226 Epoch 550/1000 | total_loss_sum=279.6501 | total_cls_loss=1.5429 | total_transfer_loss=83.8001| total_domain_loss=428.8551 | total_source_loss=58.7946 | total_target_loss=92.7076
+20:05:06 | INFO     train.training_pcl train    137 Epoch 600/1000 subj 12 sess 0 | acc=0.3930 best=0.8854
+20:05:10 | INFO     train.training_pcl train    226 Epoch 600/1000 | total_loss_sum=282.4809 | total_cls_loss=0.7144 | total_transfer_loss=74.5269| total_domain_loss=442.6362 | total_source_loss=58.5784 | total_target_loss=103.2120
+20:07:48 | INFO     train.training_pcl train    137 Epoch 650/1000 subj 12 sess 0 | acc=0.4393 best=0.8854
+20:07:51 | INFO     train.training_pcl train    226 Epoch 650/1000 | total_loss_sum=254.8718 | total_cls_loss=0.6025 | total_transfer_loss=67.1409| total_domain_loss=425.8059 | total_source_loss=58.5832 | total_target_loss=69.0783
+20:10:34 | INFO     train.training_pcl train    137 Epoch 700/1000 subj 12 sess 0 | acc=0.6070 best=0.8854
+20:10:37 | INFO     train.training_pcl train    226 Epoch 700/1000 | total_loss_sum=254.2764 | total_cls_loss=0.5864 | total_transfer_loss=72.8291| total_domain_loss=414.5068 | total_source_loss=58.5750 | total_target_loss=58.5425
+20:13:21 | INFO     train.training_pcl train    137 Epoch 750/1000 subj 12 sess 0 | acc=0.6220 best=0.8854
+20:13:24 | INFO     train.training_pcl train    226 Epoch 750/1000 | total_loss_sum=257.4562 | total_cls_loss=0.6342 | total_transfer_loss=73.0622| total_domain_loss=415.6728 | total_source_loss=58.6104 | total_target_loss=58.6214
+20:16:03 | INFO     train.training_pcl train    137 Epoch 800/1000 subj 12 sess 0 | acc=0.5206 best=0.8854
+20:16:06 | INFO     train.training_pcl train    226 Epoch 800/1000 | total_loss_sum=259.8013 | total_cls_loss=0.5647 | total_transfer_loss=73.4429| total_domain_loss=413.8007 | total_source_loss=58.5740 | total_target_loss=58.5072
+20:18:46 | INFO     train.training_pcl train    137 Epoch 850/1000 subj 12 sess 0 | acc=0.5206 best=0.8854
+20:18:48 | INFO     train.training_pcl train    226 Epoch 850/1000 | total_loss_sum=262.2683 | total_cls_loss=0.5577 | total_transfer_loss=73.4504| total_domain_loss=413.7455 | total_source_loss=58.5724 | total_target_loss=58.5075
+20:21:26 | INFO     train.training_pcl train    137 Epoch 900/1000 subj 12 sess 0 | acc=0.5206 best=0.8854
+20:21:29 | INFO     train.training_pcl train    226 Epoch 900/1000 | total_loss_sum=264.6620 | total_cls_loss=0.5539 | total_transfer_loss=73.4222| total_domain_loss=413.7400 | total_source_loss=58.5696 | total_target_loss=58.5074
+20:24:10 | INFO     train.training_pcl train    137 Epoch 950/1000 subj 12 sess 0 | acc=0.5206 best=0.8854
+20:24:13 | INFO     train.training_pcl train    226 Epoch 950/1000 | total_loss_sum=267.0061 | total_cls_loss=0.5626 | total_transfer_loss=73.3665| total_domain_loss=413.7498 | total_source_loss=58.5744 | total_target_loss=58.5131
+20:26:52 | INFO     __main__ main     131 Done subj=12 sess=0 acc=0.8854
+20:26:57 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+20:26:57 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+20:26:57 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+20:26:57 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+20:26:57 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+number of source samples 47516
+number of target samples 3394
+20:27:02 | INFO     utils.metric update   25  --> A new better acc 0.3253 on subject 13 session 0
+20:27:02 | INFO     train.training_pcl train    137 Epoch 0/1000 subj 13 sess 0 | acc=0.3253 best=0.3253
+20:27:04 | INFO     train.training_pcl train    226 Epoch 0/1000 | total_loss_sum=266.4414 | total_cls_loss=37.1304 | total_transfer_loss=70.4784| total_domain_loss=449.8118 | total_source_loss=68.8701 | total_target_loss=83.1752
+20:27:05 | INFO     utils.metric update   25  --> A new better acc 0.7935 on subject 13 session 0
+20:27:12 | INFO     utils.metric update   25  --> A new better acc 0.8111 on subject 13 session 0
+20:27:16 | INFO     utils.metric update   25  --> A new better acc 0.8335 on subject 13 session 0
+20:27:37 | INFO     utils.metric update   25  --> A new better acc 0.8586 on subject 13 session 0
+20:28:00 | INFO     utils.metric update   25  --> A new better acc 0.9095 on subject 13 session 0
+20:28:03 | INFO     utils.metric update   25  --> A new better acc 0.9328 on subject 13 session 0
+20:28:06 | INFO     utils.metric update   25  --> A new better acc 0.9343 on subject 13 session 0
+20:28:27 | INFO     utils.metric update   25  --> A new better acc 0.9390 on subject 13 session 0
+20:29:42 | INFO     train.training_pcl train    137 Epoch 50/1000 subj 13 sess 0 | acc=0.8138 best=0.9390
+20:29:45 | INFO     train.training_pcl train    226 Epoch 50/1000 | total_loss_sum=218.5022 | total_cls_loss=0.6175 | total_transfer_loss=73.4697| total_domain_loss=414.5056 | total_source_loss=58.5819 | total_target_loss=58.6531
+20:32:28 | INFO     train.training_pcl train    137 Epoch 100/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+20:32:31 | INFO     train.training_pcl train    226 Epoch 100/1000 | total_loss_sum=221.2976 | total_cls_loss=0.5739 | total_transfer_loss=73.5318| total_domain_loss=413.8821 | total_source_loss=58.5685 | total_target_loss=58.5186
+20:35:07 | INFO     train.training_pcl train    137 Epoch 150/1000 subj 13 sess 0 | acc=0.8503 best=0.9390
+20:35:10 | INFO     train.training_pcl train    226 Epoch 150/1000 | total_loss_sum=224.2666 | total_cls_loss=0.5939 | total_transfer_loss=73.5625| total_domain_loss=413.8818 | total_source_loss=58.5674 | total_target_loss=58.5527
+20:37:46 | INFO     train.training_pcl train    137 Epoch 200/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+20:37:48 | INFO     train.training_pcl train    226 Epoch 200/1000 | total_loss_sum=227.1135 | total_cls_loss=0.5701 | total_transfer_loss=73.5449| total_domain_loss=413.8283 | total_source_loss=58.5695 | total_target_loss=58.5109
+20:40:29 | INFO     train.training_pcl train    137 Epoch 250/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+20:40:32 | INFO     train.training_pcl train    226 Epoch 250/1000 | total_loss_sum=231.1982 | total_cls_loss=1.4292 | total_transfer_loss=73.5300| total_domain_loss=414.2836 | total_source_loss=58.7961 | total_target_loss=58.6487
+20:43:08 | INFO     train.training_pcl train    137 Epoch 300/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+20:43:11 | INFO     train.training_pcl train    226 Epoch 300/1000 | total_loss_sum=232.8619 | total_cls_loss=0.5671 | total_transfer_loss=73.5304| total_domain_loss=413.8338 | total_source_loss=58.5735 | total_target_loss=58.5150
+20:45:46 | INFO     train.training_pcl train    137 Epoch 350/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+20:45:49 | INFO     train.training_pcl train    226 Epoch 350/1000 | total_loss_sum=236.7314 | total_cls_loss=1.3751 | total_transfer_loss=73.5502| total_domain_loss=413.9965 | total_source_loss=58.7180 | total_target_loss=58.5587
+20:48:28 | INFO     train.training_pcl train    137 Epoch 400/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+20:48:31 | INFO     train.training_pcl train    226 Epoch 400/1000 | total_loss_sum=238.5187 | total_cls_loss=0.5596 | total_transfer_loss=73.5366| total_domain_loss=413.7815 | total_source_loss=58.5671 | total_target_loss=58.5156
+20:51:08 | INFO     train.training_pcl train    137 Epoch 450/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+20:51:10 | INFO     train.training_pcl train    226 Epoch 450/1000 | total_loss_sum=241.3303 | total_cls_loss=0.5673 | total_transfer_loss=73.5379| total_domain_loss=413.8004 | total_source_loss=58.5721 | total_target_loss=58.5077
+20:53:48 | INFO     train.training_pcl train    137 Epoch 500/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+20:53:50 | INFO     train.training_pcl train    226 Epoch 500/1000 | total_loss_sum=244.4729 | total_cls_loss=0.8367 | total_transfer_loss=73.5378| total_domain_loss=413.9374 | total_source_loss=58.6289 | total_target_loss=58.5543
+20:56:26 | INFO     train.training_pcl train    137 Epoch 550/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+20:56:31 | INFO     train.training_pcl train    226 Epoch 550/1000 | total_loss_sum=246.8195 | total_cls_loss=0.5612 | total_transfer_loss=73.5362| total_domain_loss=413.7865 | total_source_loss=58.5726 | total_target_loss=58.5084
+20:59:04 | INFO     train.training_pcl train    137 Epoch 600/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+20:59:06 | INFO     train.training_pcl train    226 Epoch 600/1000 | total_loss_sum=249.5485 | total_cls_loss=0.5863 | total_transfer_loss=73.5242| total_domain_loss=413.8162 | total_source_loss=58.5866 | total_target_loss=58.5078
+21:01:44 | INFO     train.training_pcl train    137 Epoch 650/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+21:01:47 | INFO     train.training_pcl train    226 Epoch 650/1000 | total_loss_sum=252.1393 | total_cls_loss=0.5571 | total_transfer_loss=73.5129| total_domain_loss=413.7713 | total_source_loss=58.5688 | total_target_loss=58.5093
+21:04:23 | INFO     train.training_pcl train    137 Epoch 700/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+21:04:25 | INFO     train.training_pcl train    226 Epoch 700/1000 | total_loss_sum=254.7890 | total_cls_loss=0.5597 | total_transfer_loss=73.5377| total_domain_loss=413.7944 | total_source_loss=58.5717 | total_target_loss=58.5074
+21:07:01 | INFO     train.training_pcl train    137 Epoch 750/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+21:07:04 | INFO     train.training_pcl train    226 Epoch 750/1000 | total_loss_sum=257.3536 | total_cls_loss=0.5580 | total_transfer_loss=73.5313| total_domain_loss=413.7666 | total_source_loss=58.5721 | total_target_loss=58.5156
+21:09:41 | INFO     train.training_pcl train    137 Epoch 800/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+21:09:44 | INFO     train.training_pcl train    226 Epoch 800/1000 | total_loss_sum=259.8825 | total_cls_loss=0.5612 | total_transfer_loss=73.5301| total_domain_loss=413.7804 | total_source_loss=58.5727 | total_target_loss=58.5111
+21:12:19 | INFO     train.training_pcl train    137 Epoch 850/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+21:12:22 | INFO     train.training_pcl train    226 Epoch 850/1000 | total_loss_sum=262.3452 | total_cls_loss=0.5549 | total_transfer_loss=73.5324| total_domain_loss=413.7452 | total_source_loss=58.5705 | total_target_loss=58.5069
+21:14:58 | INFO     train.training_pcl train    137 Epoch 900/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+21:15:00 | INFO     train.training_pcl train    226 Epoch 900/1000 | total_loss_sum=264.7904 | total_cls_loss=0.5549 | total_transfer_loss=73.5352| total_domain_loss=413.7680 | total_source_loss=58.5708 | total_target_loss=58.5161
+21:17:34 | INFO     train.training_pcl train    137 Epoch 950/1000 subj 13 sess 0 | acc=0.8606 best=0.9390
+21:17:37 | INFO     train.training_pcl train    226 Epoch 950/1000 | total_loss_sum=267.1822 | total_cls_loss=0.5603 | total_transfer_loss=73.5423| total_domain_loss=413.7819 | total_source_loss=58.5747 | total_target_loss=58.5086
+21:20:11 | INFO     __main__ main     131 Done subj=13 sess=0 acc=0.9390
+21:20:16 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+21:20:16 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+21:20:16 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+21:20:16 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+21:20:17 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+number of source samples 47516
+number of target samples 3394
+21:20:21 | INFO     utils.metric update   25  --> A new better acc 0.3253 on subject 14 session 0
+21:20:21 | INFO     train.training_pcl train    137 Epoch 0/1000 subj 14 sess 0 | acc=0.3253 best=0.3253
+21:20:23 | INFO     train.training_pcl train    226 Epoch 0/1000 | total_loss_sum=268.1361 | total_cls_loss=38.6347 | total_transfer_loss=70.5356| total_domain_loss=448.5076 | total_source_loss=69.2643 | total_target_loss=81.5424
+21:20:24 | INFO     utils.metric update   25  --> A new better acc 0.7610 on subject 14 session 0
+21:21:42 | INFO     utils.metric update   25  --> A new better acc 0.7672 on subject 14 session 0
+21:21:45 | INFO     utils.metric update   25  --> A new better acc 0.7708 on subject 14 session 0
+21:22:32 | INFO     utils.metric update   25  --> A new better acc 0.7996 on subject 14 session 0
+21:22:35 | INFO     utils.metric update   25  --> A new better acc 0.8020 on subject 14 session 0
+21:22:43 | INFO     utils.metric update   25  --> A new better acc 0.9193 on subject 14 session 0
+21:23:02 | INFO     train.training_pcl train    137 Epoch 50/1000 subj 14 sess 0 | acc=0.8707 best=0.9193
+21:23:05 | INFO     train.training_pcl train    226 Epoch 50/1000 | total_loss_sum=218.5667 | total_cls_loss=0.6108 | total_transfer_loss=73.5485| total_domain_loss=414.5852 | total_source_loss=58.5637 | total_target_loss=58.5455
+21:25:40 | INFO     train.training_pcl train    137 Epoch 100/1000 subj 14 sess 0 | acc=0.7384 best=0.9193
+21:25:43 | INFO     train.training_pcl train    226 Epoch 100/1000 | total_loss_sum=221.4249 | total_cls_loss=0.5996 | total_transfer_loss=73.5602| total_domain_loss=414.1452 | total_source_loss=58.5865 | total_target_loss=58.5442
+21:28:20 | INFO     train.training_pcl train    137 Epoch 150/1000 subj 14 sess 0 | acc=0.2077 best=0.9193
+21:28:23 | INFO     train.training_pcl train    226 Epoch 150/1000 | total_loss_sum=224.0217 | total_cls_loss=0.5602 | total_transfer_loss=73.3567| total_domain_loss=413.9147 | total_source_loss=58.5616 | total_target_loss=58.5115
+21:31:00 | INFO     train.training_pcl train    137 Epoch 200/1000 subj 14 sess 0 | acc=0.1812 best=0.9193
+21:31:02 | INFO     train.training_pcl train    226 Epoch 200/1000 | total_loss_sum=227.9395 | total_cls_loss=1.0461 | total_transfer_loss=73.5406| total_domain_loss=414.3872 | total_source_loss=58.7348 | total_target_loss=58.8983
+21:33:41 | INFO     train.training_pcl train    137 Epoch 250/1000 subj 14 sess 0 | acc=0.3447 best=0.9193
+21:33:43 | INFO     train.training_pcl train    226 Epoch 250/1000 | total_loss_sum=230.2824 | total_cls_loss=0.6831 | total_transfer_loss=71.8424| total_domain_loss=420.7307 | total_source_loss=58.6024 | total_target_loss=60.3460
+21:36:26 | INFO     train.training_pcl train    137 Epoch 300/1000 subj 14 sess 0 | acc=0.2693 best=0.9193
+21:36:29 | INFO     train.training_pcl train    226 Epoch 300/1000 | total_loss_sum=232.8475 | total_cls_loss=0.5562 | total_transfer_loss=73.5209| total_domain_loss=413.8955 | total_source_loss=58.5686 | total_target_loss=58.5105
+21:39:06 | INFO     train.training_pcl train    137 Epoch 350/1000 subj 14 sess 0 | acc=0.2693 best=0.9193
+21:39:09 | INFO     train.training_pcl train    226 Epoch 350/1000 | total_loss_sum=236.2608 | total_cls_loss=0.9734 | total_transfer_loss=73.4427| total_domain_loss=414.0510 | total_source_loss=58.7336 | total_target_loss=58.5935
+21:41:52 | INFO     train.training_pcl train    137 Epoch 400/1000 subj 14 sess 0 | acc=0.6700 best=0.9193
+21:41:55 | INFO     train.training_pcl train    226 Epoch 400/1000 | total_loss_sum=239.9265 | total_cls_loss=0.5743 | total_transfer_loss=69.4123| total_domain_loss=425.1532 | total_source_loss=58.5766 | total_target_loss=66.7069
+21:44:34 | INFO     train.training_pcl train    137 Epoch 450/1000 subj 14 sess 0 | acc=0.4016 best=0.9193
+21:44:37 | INFO     train.training_pcl train    226 Epoch 450/1000 | total_loss_sum=270.3761 | total_cls_loss=0.6806 | total_transfer_loss=86.7754| total_domain_loss=445.4827 | total_source_loss=58.6739 | total_target_loss=79.4240
+21:44:45 | INFO     utils.metric update   25  --> A new better acc 0.9393 on subject 14 session 0
+21:44:54 | INFO     utils.metric update   25  --> A new better acc 0.9440 on subject 14 session 0
+21:47:20 | INFO     train.training_pcl train    137 Epoch 500/1000 subj 14 sess 0 | acc=0.3874 best=0.9440
+21:47:22 | INFO     train.training_pcl train    226 Epoch 500/1000 | total_loss_sum=250.8348 | total_cls_loss=0.6658 | total_transfer_loss=76.6912| total_domain_loss=418.9931 | total_source_loss=58.6021 | total_target_loss=63.4436
+21:50:11 | INFO     train.training_pcl train    137 Epoch 550/1000 subj 14 sess 0 | acc=0.3880 best=0.9440
+21:50:14 | INFO     train.training_pcl train    226 Epoch 550/1000 | total_loss_sum=246.5849 | total_cls_loss=0.7324 | total_transfer_loss=72.3342| total_domain_loss=415.0849 | total_source_loss=58.6591 | total_target_loss=59.3470
+21:52:59 | INFO     train.training_pcl train    137 Epoch 600/1000 subj 14 sess 0 | acc=0.2286 best=0.9440
+21:53:02 | INFO     train.training_pcl train    226 Epoch 600/1000 | total_loss_sum=249.4266 | total_cls_loss=0.5735 | total_transfer_loss=73.3632| total_domain_loss=414.0230 | total_source_loss=58.5751 | total_target_loss=58.5457
+21:55:54 | INFO     train.training_pcl train    137 Epoch 650/1000 subj 14 sess 0 | acc=0.2006 best=0.9440
+21:55:57 | INFO     train.training_pcl train    226 Epoch 650/1000 | total_loss_sum=252.1695 | total_cls_loss=0.5561 | total_transfer_loss=73.5320| total_domain_loss=413.8352 | total_source_loss=58.5694 | total_target_loss=58.5072
+21:58:46 | INFO     train.training_pcl train    137 Epoch 700/1000 subj 14 sess 0 | acc=0.2006 best=0.9440
+21:58:49 | INFO     train.training_pcl train    226 Epoch 700/1000 | total_loss_sum=254.7833 | total_cls_loss=0.5575 | total_transfer_loss=73.5289| total_domain_loss=413.8251 | total_source_loss=58.5704 | total_target_loss=58.5083
+22:01:39 | INFO     train.training_pcl train    137 Epoch 750/1000 subj 14 sess 0 | acc=0.2006 best=0.9440
+22:01:41 | INFO     train.training_pcl train    226 Epoch 750/1000 | total_loss_sum=257.3628 | total_cls_loss=0.5590 | total_transfer_loss=73.5280| total_domain_loss=413.8338 | total_source_loss=58.5748 | total_target_loss=58.5090
+22:04:30 | INFO     train.training_pcl train    137 Epoch 800/1000 subj 14 sess 0 | acc=0.2006 best=0.9440
+22:04:33 | INFO     train.training_pcl train    226 Epoch 800/1000 | total_loss_sum=259.8758 | total_cls_loss=0.5546 | total_transfer_loss=73.5265| total_domain_loss=413.8127 | total_source_loss=58.5727 | total_target_loss=58.5071
+22:07:23 | INFO     train.training_pcl train    137 Epoch 850/1000 subj 14 sess 0 | acc=0.2006 best=0.9440
+22:07:26 | INFO     train.training_pcl train    226 Epoch 850/1000 | total_loss_sum=262.3528 | total_cls_loss=0.5496 | total_transfer_loss=73.5366| total_domain_loss=413.7997 | total_source_loss=58.5686 | total_target_loss=58.5068
+22:10:15 | INFO     train.training_pcl train    137 Epoch 900/1000 subj 14 sess 0 | acc=0.2006 best=0.9440
+22:10:18 | INFO     train.training_pcl train    226 Epoch 900/1000 | total_loss_sum=264.7884 | total_cls_loss=0.5505 | total_transfer_loss=73.5378| total_domain_loss=413.7961 | total_source_loss=58.5722 | total_target_loss=58.5077
+22:13:07 | INFO     train.training_pcl train    137 Epoch 950/1000 subj 14 sess 0 | acc=0.2006 best=0.9440
+22:13:10 | INFO     train.training_pcl train    226 Epoch 950/1000 | total_loss_sum=267.1725 | total_cls_loss=0.5553 | total_transfer_loss=73.5337| total_domain_loss=413.8111 | total_source_loss=58.5736 | total_target_loss=58.5076
+22:15:58 | INFO     __main__ main     131 Done subj=14 sess=0 acc=0.9440
+22:15:58 | INFO     __main__ main     143 One best session acc: mean=0.9306 std=0.0473
