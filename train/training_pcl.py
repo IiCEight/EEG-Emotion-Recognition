@@ -133,7 +133,7 @@ def train(
             else:
                 patience_counter += 1
 
-            if epoch % eval_interval == 0:
+            if epoch % (eval_interval * 50) == 0:
                 logger.info(
                     "Epoch {}/{} subj {} sess {} | acc={:.4f} best={:.4f}",
                     epoch, epochs, subject_id, session_id, accuracy, best_acc,
@@ -222,7 +222,7 @@ def train(
             total_target_loss += target_loss.item()
             total_domain_loss += cross_domain_loss.item() + in_domain_loss.item()
 
-        if epoch % (eval_interval) == 0:
+        if epoch % (eval_interval * 50) == 0:
             logger.info(
                 "Epoch {}/{} | total_loss_sum={:.4f} | total_cls_loss={:.4f} | "
                 "total_transfer_loss={:.4f}| total_domain_loss={:.4f} | total_source_loss={:.4f} | total_target_loss={:.4f}",
