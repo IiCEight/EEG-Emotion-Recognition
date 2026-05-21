@@ -1,4 +1,5 @@
 import numpy as np
+import math
 import os
 import shutil
 import subprocess
@@ -230,6 +231,8 @@ def train(
         loss_cluster = 0.0
         loss_p = 0.0
 
+        diag = {"pool_size": 0.0, "M_t_offdiag_max": 0.0, "agree_rate": 0.0}
+
         for batch_idx in range(n_batch):
             try:
                 src_data, src_label = next(source_iter)
@@ -248,7 +251,14 @@ def train(
 
             try:
                 losses, diag = model(src_data, tgt_data, src_label, epoch, epochs)
-                total_loss = losses["src_ce"] + losses["dann"] + losses["tgt_ce"] + losses["tri"] + losses["xconf"]
+                lam1 = 2.0 * (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)
+                total_loss = (
+                    losses["src_ce"]
+                    + losses["dann"]
+                    + lam1 * losses["tgt_ce"]
+                    + losses["tri"]
+                    + losses["xconf"]
+                )
 
                 # Skeleton: total_loss may be a 0-d zero tensor with no grad. Guard.
                 if total_loss.requires_grad:
@@ -345,6 +355,12 @@ def train(
                 source_acc,
                 target_acc,
                 best_acc,
+            )
+            logger.info(
+                "Epoch {}/{} | pool_size: {}, M_t_offdiag_max: {:.4f}",
+                epoch + 1, epochs,
+                int(diag["pool_size"]),
+                diag["M_t_offdiag_max"],
             )
 
         if  best_acc >= (100.0 - 1e-1) or (early_stop_patience > 0 and stop >= early_stop_patience) :

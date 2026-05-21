@@ -29,6 +29,28 @@ def source_prototypes(f_s: torch.Tensor, y_s_oh: torch.Tensor) -> torch.Tensor:
     return F.normalize(M_s, dim=1)
 
 
+def sinkhorn_assignments(
+    Q: torch.Tensor, M_s: torch.Tensor, lam: float = 0.05, n_iter: int = 3
+) -> torch.Tensor:
+    cost = (Q @ M_s.t()) / lam   # [N, C]
+    P = cost.exp()
+    for _ in range(n_iter):
+        P = P / (P.sum(dim=1, keepdim=True) + 1e-8)
+        P = P / (P.sum(dim=0, keepdim=True) + 1e-8)
+    return P
+
+
+def target_prototypes(
+    Q: torch.Tensor, M_s: torch.Tensor, lam: float = 0.05, n_iter: int = 3
+) -> torch.Tensor:
+    if Q.size(0) < 3:
+        return M_s.clone()
+    P = sinkhorn_assignments(Q.detach(), M_s.detach(), lam, n_iter).detach()
+    counts = P.sum(dim=0, keepdim=True).t().clamp(min=1.0)  # [C, 1]
+    M_t = (P.t() @ Q) / counts
+    return F.normalize(M_t, dim=1)
+
+
 class CosineClassifier(nn.Module):
     def __init__(self, feat_dim: int = 64, num_classes: int = 3):
         super().__init__()
@@ -115,6 +137,16 @@ class OPTA(nn.Module):
         if self.pool is None:
             self.pool = FIFOPool(self.pool_capacity, self.feat_dim, device)
 
+    def _quantile_schedule(self, epoch: int, max_iter: int) -> float:
+        p = epoch / max(1, max_iter)
+        return 0.20 + 0.30 * (2.0 / (1.0 + math.exp(-5.0 * p)) - 1.0)
+
+    @staticmethod
+    def _offdiag_max(M: torch.Tensor) -> float:
+        sim = M @ M.t()
+        sim = sim - torch.eye(M.size(0), device=M.device) * 2.0
+        return sim.max().item()
+
     def forward(
         self,
         source: torch.Tensor,
@@ -126,35 +158,60 @@ class OPTA(nn.Module):
         self._ensure_pool(source.device)
         f_s = self.feature_extractor(source)
         f_t = self.feature_extractor(target)
+        B = f_s.size(0)
 
-        # Source prototypes (cached for inference; per-batch, on-graph)
+        # Source prototypes
         M_s = source_prototypes(f_s, source_label_oh)
         self._last_M_s.copy_(M_s.detach())
 
-        # Source CE on cosine classifier
+        # Source CE
         logits_s = self.classifier(f_s)
         src_label = source_label_oh.argmax(dim=1)
         loss_src_ce = self.smooth_ce(logits_s, src_label)
 
-        # DANN with feature noise (matches SABER/PRPL pattern)
+        # DANN
         noise = 0.005
         loss_dann = self.dann(
             f_s + noise * torch.randn_like(f_s),
             f_t + noise * torch.randn_like(f_t),
         )
 
+        # --- Stage 3: plain pseudo-labels by max(softmax(logits_t)) ---
+        logits_t = self.classifier(f_t)
+        with torch.no_grad():
+            p_t = F.softmax(logits_t, dim=1)
+            c_score, pseudo_label = p_t.max(dim=1)
+
+        # Push top-q% confident target features into FIFO
+        q_pct = self._quantile_schedule(epoch, max_iter)
+        k = max(1, int(q_pct * B))
+        topk_idx = c_score.topk(k).indices
+        self.pool.push(F.normalize(f_t[topk_idx], dim=1).detach())
+
+        # Target prototypes via Sinkhorn
+        M_t = target_prototypes(
+            self.pool.view(), M_s, lam=self.sinkhorn_lambda, n_iter=self.sinkhorn_iters
+        )
+
+        # Pseudo-CE on cosine similarity to M_t
+        tau = self.classifier.log_tau.exp().clamp(min=1e-3)
+        proto_logits_t = (F.normalize(f_t, dim=1) @ M_t.t()) / tau
+        ce_per_sample = F.cross_entropy(proto_logits_t, pseudo_label, reduction="none")
+        # In stage 3, weight uniformly (c_score weighting added in Task 4)
+        loss_tgt_ce = ce_per_sample.mean()
+
         zero = torch.zeros((), device=source.device)
         losses = {
             "src_ce": loss_src_ce,
             "dann": loss_dann,
-            "tgt_ce": zero,
+            "tgt_ce": loss_tgt_ce,
             "tri": zero,
             "xconf": zero,
         }
         diag = {
             "pool_size": float(self.pool.size),
             "agree_rate": 0.0,
-            "M_t_offdiag_max": 0.0,
+            "M_t_offdiag_max": self._offdiag_max(M_t),
         }
         return losses, diag
 
@@ -162,9 +219,15 @@ class OPTA(nn.Module):
     def predict(self, x: torch.Tensor) -> torch.Tensor:
         self.eval()
         f = self.feature_extractor(x)
-        # Stage 2: use source prototypes (target prototypes not yet implemented).
+        M_s = self._last_M_s
+        if self.pool is None or self.pool.size < 3:
+            M = M_s
+        else:
+            M_t = target_prototypes(
+                self.pool.view(), M_s, lam=self.sinkhorn_lambda, n_iter=self.sinkhorn_iters
+            )
+            M = M_s if self._offdiag_max(M_t) > 0.95 else M_t
         f_n = F.normalize(f, dim=1)
-        M = self._last_M_s
         return (f_n @ M.t()).argmax(dim=1)
 
     def get_parameters(self):
