@@ -218,16 +218,17 @@ class OPTA(nn.Module):
         ce_per_sample = F.cross_entropy(proto_logits_t, pseudo_label, reduction="none")
         loss_tgt_ce = (c_score * ce_per_sample).mean()
 
-        zero = torch.zeros((), device=source.device)
         # Triangulation: same-class anchors attract, different-class anchors repel
         align = ((M_s - M_t) ** 2).sum(dim=1).mean()
         loss_tri = align + (self._hinge(M_s) + self._hinge(M_t))
+        xconf_logits = (F.normalize(f_s, dim=1) @ M_t.t()) / tau
+        loss_xconf = self.smooth_ce(xconf_logits, src_label)
         losses = {
             "src_ce": loss_src_ce,
             "dann": loss_dann,
             "tgt_ce": loss_tgt_ce,
             "tri": loss_tri,
-            "xconf": zero,
+            "xconf": loss_xconf,
         }
         diag = {
             "pool_size": float(self.pool.size),

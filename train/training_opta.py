@@ -230,6 +230,7 @@ def train(
         loss_transfer = 0.0
         loss_cluster = 0.0
         loss_p = 0.0
+        loss_xconf_acc = 0.0
 
         diag = {"pool_size": 0.0, "M_t_offdiag_max": 0.0, "agree_rate": 0.0}
 
@@ -253,12 +254,13 @@ def train(
                 losses, diag = model(src_data, tgt_data, src_label, epoch, epochs)
                 lam1 = 2.0 * (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)
                 lam2 = 0.5
+                lam3 = 0.2 * min(1.0, epoch / 200.0)
                 total_loss = (
                     losses["src_ce"]
                     + losses["dann"]
                     + lam1 * losses["tgt_ce"]
                     + lam2 * losses["tri"]
-                    + losses["xconf"]
+                    + lam3 * losses["xconf"]
                 )
 
                 # Skeleton: total_loss may be a 0-d zero tensor with no grad. Guard.
@@ -272,6 +274,7 @@ def train(
                 loss_transfer += losses["dann"].detach().item()
                 loss_cluster += losses["tgt_ce"].detach().item()
                 loss_p += losses["tri"].detach().item()
+                loss_xconf_acc += losses["xconf"].detach().item()
             except RuntimeError as exc:
                 error_text = str(exc)
                 if "cuda" not in error_text.lower():
@@ -345,14 +348,15 @@ def train(
             source_acc = _evaluate(model, source_loader, device)
 
             logger.info(
-                "Epoch {}/{} | src_ce: {:.4f}, dann: {:.4f}, tgt_ce: {:.4f}, tri: {:.4f}, "
-                "source_acc: {:.4f}, target_acc: {:.4f}, best_acc: {:.4f}",
+                "Epoch {}/{} | src_ce: {:.4f}, dann: {:.4f}, tgt_ce: {:.4f}, "
+                "tri: {:.4f}, xconf: {:.4f}, source_acc: {:.4f}, target_acc: {:.4f}, best_acc: {:.4f}",
                 epoch + 1,
                 epochs,
                 loss_clf / n_batch,
                 loss_transfer / n_batch,
                 loss_cluster / n_batch,
                 loss_p / n_batch,
+                loss_xconf_acc / n_batch,
                 source_acc,
                 target_acc,
                 best_acc,
