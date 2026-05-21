@@ -151,13 +151,14 @@ class PCL_SABER(nn.Module):
 
         kmeans = KMeans(n_clusters=self.num_of_class, random_state=0, n_init="auto")
         pool = output_f.cpu().detach().numpy()
-        pool = np.unique(pool, axis=0)
-        if len(pool) < self.num_of_class:
+        unique_pool = np.unique(pool, axis=0)
+        if len(unique_pool) < self.num_of_class:
             rng = np.random.default_rng(0)
-            while len(pool) < self.num_of_class:
-                pool = np.vstack([pool, pool[rng.integers(len(pool))] + rng.standard_normal(pool.shape[1]) * 1e-4])
+            while len(unique_pool) < self.num_of_class:
+                unique_pool = np.vstack([unique_pool, rng.standard_normal(pool.shape[1]).astype(pool.dtype)])
+            pool = unique_pool
         kmeans.fit(pool)
-        prototype = torch.tensor(kmeans.cluster_centers_, device=self.device)
+        prototype = torch.tensor(kmeans.cluster_centers_, dtype=torch.float32, device=self.device)
 
         tgt_sim = torch.mm(
             F.normalize(f, p=2, dim=1),
