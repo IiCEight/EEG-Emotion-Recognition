@@ -216,7 +216,7 @@ def train(
         n_batch = min(len(source_loader), len(target_loader))
         if n_batch <= 0:
             logger.warning(
-                "No valid SABER batch in epoch {}. Check batch_size={} with train/test sizes.",
+                "No valid OPTA batch in epoch {}. Check batch_size={} with train/test sizes.",
                 epoch + 1,
                 batch_size,
             )
