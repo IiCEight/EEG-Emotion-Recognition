@@ -357,9 +357,10 @@ def train(
                 best_acc,
             )
             logger.info(
-                "Epoch {}/{} | pool_size: {}, M_t_offdiag_max: {:.4f}",
+                "Epoch {}/{} | pool_size: {}, agree_rate: {:.4f}, M_t_offdiag_max: {:.4f}",
                 epoch + 1, epochs,
                 int(diag["pool_size"]),
+                diag["agree_rate"],
                 diag["M_t_offdiag_max"],
             )
 

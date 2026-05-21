@@ -176,11 +176,20 @@ class OPTA(nn.Module):
             f_t + noise * torch.randn_like(f_t),
         )
 
-        # --- Stage 3: plain pseudo-labels by max(softmax(logits_t)) ---
+        # --- Stage 4: adversarial-confidence pseudo-labels ---
         logits_t = self.classifier(f_t)
         with torch.no_grad():
-            p_t = F.softmax(logits_t, dim=1)
-            c_score, pseudo_label = p_t.max(dim=1)
+            tau_no_grad = self.classifier.log_tau.exp().clamp(min=1e-3)
+            p_cls = F.softmax(logits_t, dim=1)
+            p_proto = F.softmax((F.normalize(f_t, dim=1) @ M_s.t()) / tau_no_grad, dim=1)
+            agree = (p_cls.argmax(dim=1) == p_proto.argmax(dim=1)).float()  # [B]
+            geom = (p_cls * p_proto).clamp_min(1e-12).sqrt()                # [B, C]
+            # d_score: discriminator's "looks like source" probability for target
+            d_logits = self.domain_disc(f_t)                                # [B, num_class] (num_class=1 → [B,1])
+            d_score = torch.sigmoid(d_logits).squeeze(-1)                   # [B]
+            c_full = agree.unsqueeze(1) * geom * d_score.unsqueeze(1)       # [B, C]
+            c_score, pseudo_label = c_full.max(dim=1)                       # [B], [B]
+        agree_rate = agree.mean().item()
 
         # Push top-q% confident target features into FIFO
         q_pct = self._quantile_schedule(epoch, max_iter)
@@ -193,12 +202,11 @@ class OPTA(nn.Module):
             self.pool.view(), M_s, lam=self.sinkhorn_lambda, n_iter=self.sinkhorn_iters
         )
 
-        # Pseudo-CE on cosine similarity to M_t
+        # Pseudo-CE on cosine similarity to M_t, weighted by c_score
         tau = self.classifier.log_tau.exp().clamp(min=1e-3)
         proto_logits_t = (F.normalize(f_t, dim=1) @ M_t.t()) / tau
         ce_per_sample = F.cross_entropy(proto_logits_t, pseudo_label, reduction="none")
-        # In stage 3, weight uniformly (c_score weighting added in Task 4)
-        loss_tgt_ce = ce_per_sample.mean()
+        loss_tgt_ce = (c_score * ce_per_sample).mean()
 
         zero = torch.zeros((), device=source.device)
         losses = {
@@ -210,7 +218,7 @@ class OPTA(nn.Module):
         }
         diag = {
             "pool_size": float(self.pool.size),
-            "agree_rate": 0.0,
+            "agree_rate": agree_rate,
             "M_t_offdiag_max": self._offdiag_max(M_t),
         }
         return losses, diag
