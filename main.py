@@ -74,6 +74,9 @@ def main(
     xconf_ramp_epochs: Annotated[int, typer.Option(
         help='OPTA: epochs over which xconf lam3 ramps from 0 to 0.2'
     )] = 200,
+    sinkhorn_warmup_epochs: Annotated[int, typer.Option(
+        help='OPTA: epochs to keep Sinkhorn assignments detached before allowing gradients'
+    )] = 100,
     level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
     """Welcome! Use --help option to see usage information."""
@@ -162,7 +165,7 @@ def main(
                     use_gcn=use_gcn,
                     max_iter=epochs,
                     pool_capacity=opta_pool_capacity,
-                    xconf_ramp_epochs=xconf_ramp_epochs,
+                    sinkhorn_warmup_epochs=sinkhorn_warmup_epochs,
                 ).to(device)
                 training_opta.train(
                     model, metric, train_data, train_labels, test_data, test_labels,

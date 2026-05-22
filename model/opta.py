@@ -111,7 +111,7 @@ class OPTA(nn.Module):
         sinkhorn_lambda: float = 0.05,
         sinkhorn_iters: int = 3,
         triangulation_margin: float = 0.5,
-        xconf_ramp_epochs: int = 200,
+        sinkhorn_warmup_epochs: int = 100,
     ):
         super().__init__()
         self.num_classes = num_classes
@@ -121,7 +121,7 @@ class OPTA(nn.Module):
         self.sinkhorn_lambda = sinkhorn_lambda
         self.sinkhorn_iters = sinkhorn_iters
         self.triangulation_margin = triangulation_margin
-        self.xconf_ramp_epochs = xconf_ramp_epochs
+        self.sinkhorn_warmup_epochs = sinkhorn_warmup_epochs
         self.feat_dim = 64
 
         if use_gcn:
@@ -227,7 +227,7 @@ class OPTA(nn.Module):
         # Target prototypes via Sinkhorn
         M_t = target_prototypes(
             self.pool.view(), M_s, lam=self.sinkhorn_lambda, n_iter=self.sinkhorn_iters,
-            detach_assignments=(epoch < 100),
+            detach_assignments=(epoch < self.sinkhorn_warmup_epochs),
         )
         self._last_M_t.copy_(M_t.detach())
 
