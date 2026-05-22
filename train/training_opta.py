@@ -152,6 +152,7 @@ def train(
     session_id: int,
     learning_rate: float,
     early_stop_patience: int = 0,
+    xconf_ramp_epochs: int = 200,
     transfer_loss_weight: float = 1.0,
     cluster_weight: float = 2.0,
     weight_decay: float = 1e-5,
@@ -254,7 +255,7 @@ def train(
                 losses, diag = model(src_data, tgt_data, src_label, epoch, epochs)
                 lam1 = 2.0 * (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)
                 lam2 = 0.5
-                lam3 = 0.2 * min(1.0, epoch / 200.0)
+                lam3 = 0.2 * min(1.0, epoch / max(1, xconf_ramp_epochs))
                 total_loss = (
                     losses["src_ce"]
                     + losses["dann"]

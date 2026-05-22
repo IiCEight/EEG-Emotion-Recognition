@@ -50,11 +50,16 @@ def sinkhorn_assignments(
 
 
 def target_prototypes(
-    Q: torch.Tensor, M_s: torch.Tensor, lam: float = 0.05, n_iter: int = 3
+    Q: torch.Tensor, M_s: torch.Tensor, lam: float = 0.05, n_iter: int = 3,
+    detach_assignments: bool = True,
 ) -> torch.Tensor:
     if Q.size(0) < 3:
         return M_s.clone()
-    P = sinkhorn_assignments(Q.detach(), M_s.detach(), lam, n_iter).detach()
+    Q_in = Q.detach() if detach_assignments else Q
+    M_s_in = M_s.detach() if detach_assignments else M_s
+    P = sinkhorn_assignments(Q_in, M_s_in, lam, n_iter)
+    if detach_assignments:
+        P = P.detach()
     counts = P.sum(dim=0, keepdim=True).t().clamp(min=1.0)  # [C, 1]
     M_t = (P.t() @ Q) / counts
     return F.normalize(M_t, dim=1)
@@ -106,6 +111,7 @@ class OPTA(nn.Module):
         sinkhorn_lambda: float = 0.05,
         sinkhorn_iters: int = 3,
         triangulation_margin: float = 0.5,
+        xconf_ramp_epochs: int = 200,
     ):
         super().__init__()
         self.num_classes = num_classes
@@ -115,6 +121,7 @@ class OPTA(nn.Module):
         self.sinkhorn_lambda = sinkhorn_lambda
         self.sinkhorn_iters = sinkhorn_iters
         self.triangulation_margin = triangulation_margin
+        self.xconf_ramp_epochs = xconf_ramp_epochs
         self.feat_dim = 64
 
         if use_gcn:
@@ -141,6 +148,7 @@ class OPTA(nn.Module):
 
         # Cache of last source prototypes for inference.
         self.register_buffer("_last_M_s", torch.zeros(num_classes, self.feat_dim), persistent=False)
+        self.register_buffer("_last_M_t", torch.zeros(num_classes, self.feat_dim), persistent=False)
 
     def _ensure_pool(self, device) -> None:
         if self.pool is None:
@@ -218,8 +226,10 @@ class OPTA(nn.Module):
 
         # Target prototypes via Sinkhorn
         M_t = target_prototypes(
-            self.pool.view(), M_s, lam=self.sinkhorn_lambda, n_iter=self.sinkhorn_iters
+            self.pool.view(), M_s, lam=self.sinkhorn_lambda, n_iter=self.sinkhorn_iters,
+            detach_assignments=(epoch < 100),
         )
+        self._last_M_t.copy_(M_t.detach())
 
         # Pseudo-CE on cosine similarity to M_t, weighted by c_score
         tau = self.classifier.log_tau.exp().clamp(min=1e-3)
@@ -250,14 +260,10 @@ class OPTA(nn.Module):
     def predict(self, x: torch.Tensor) -> torch.Tensor:
         self.eval()
         f = self.feature_extractor(x)
-        M_s = self._last_M_s
-        if self.pool is None or self.pool.size < 3:
-            M = M_s
+        if self._last_M_t.abs().sum() < 1e-6:
+            M = self._last_M_s
         else:
-            M_t = target_prototypes(
-                self.pool.view(), M_s, lam=self.sinkhorn_lambda, n_iter=self.sinkhorn_iters
-            )
-            M = M_s if self._offdiag_max(M_t) > 0.95 else M_t
+            M = self._last_M_s if self._offdiag_max(self._last_M_t) > 0.95 else self._last_M_t
         f_n = F.normalize(f, dim=1)
         return (f_n @ M.t()).argmax(dim=1)
 

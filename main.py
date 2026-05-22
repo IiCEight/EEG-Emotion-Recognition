@@ -68,6 +68,12 @@ def main(
     use_gcn: Annotated[bool, typer.Option(help='use GCN feature extractor for SABER (False = flat MLP, faster)')] = False,
     time_steps: Annotated[int, typer.Option(help='number of consecutive DE windows per sample for SABER_T (requires --sample-length N)')] = 2,
     trim_trial_start_pct: Annotated[float, typer.Option(help='discard the first X%% of each trial at load time (0 = disabled)')] = 0.0,
+    opta_pool_capacity: Annotated[int, typer.Option(
+        help='OPTA: target prototype pool capacity'
+    )] = 256,
+    xconf_ramp_epochs: Annotated[int, typer.Option(
+        help='OPTA: epochs over which xconf lam3 ramps from 0 to 0.2'
+    )] = 200,
     level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
     """Welcome! Use --help option to see usage information."""
@@ -155,11 +161,14 @@ def main(
                     num_classes=num_classes,
                     use_gcn=use_gcn,
                     max_iter=epochs,
+                    pool_capacity=opta_pool_capacity,
+                    xconf_ramp_epochs=xconf_ramp_epochs,
                 ).to(device)
                 training_opta.train(
                     model, metric, train_data, train_labels, test_data, test_labels,
                     batch_size, num_classes, device, epochs, task_type, subject_id,
                     session_id, learning_rate, early_stop_patience,
+                    xconf_ramp_epochs=xconf_ramp_epochs,
                     test_metadata=test_metadata, failure_log_path=failure_log,
                 )
             else:
