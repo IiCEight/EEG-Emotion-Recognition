@@ -24,6 +24,15 @@ class _LabelSmoothingCE(nn.Module):
 
 
 def source_prototypes(f_s: torch.Tensor, y_s_oh: torch.Tensor) -> torch.Tensor:
+    """Calculate Per-batch mean/centroid of source features on each class, L2-normalized.
+
+    Args:
+        f_s: Source features, shape [B, D].
+        y_s_oh: One-hot source labels, shape [B, C].
+
+    Returns:
+        M_s: Class prototype matrix, shape [C, D], each row on the unit sphere.
+    """
     counts = y_s_oh.sum(0).clamp(min=1.0).unsqueeze(1)  # [C, 1]
     M_s = (y_s_oh.t() @ f_s) / counts                   # [C, D]
     return F.normalize(M_s, dim=1)
