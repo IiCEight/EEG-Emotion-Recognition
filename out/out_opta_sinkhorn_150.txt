@@ -1,0 +1,243 @@
+15:43:33 | INFO     __main__ main     87  CUDA Available: True
+15:43:33 | INFO     __main__ main     88  Device Count: 1
+15:43:33 | INFO     __main__ main     90  GPU Name: NVIDIA GeForce RTX 4090
+15:43:33 | INFO     __main__ main     92  Launching....
+model_name: ModelName.OPTA
+dataset: DatasetName.SEED
+dataset_path: ../data/SEED
+cache_dir: ./cache
+device: cuda
+logging level: LevelName.INFO
+task type: TaskTypeName.SUBJECT_INDEPENDENT
+split type: SplitTypeName.LEAVE_ONE_SUBJECT_OUT
+batch_size: 32
+epochs: 1000
+data random: False
+random seed: 42
+failure_log: ./cache/failure_log_opta_sinkhorn_150.csv
+only one experiment: False
+only one session: True
+learning rate: 0.001
+early stop patience: 0
+use_gcn: True
+time_steps: 2
+trim_trial_start_pct: 0.0
+opta_pool_capacity: 256
+sinkhorn_warmup_epochs: 150
+15:43:33 | INFO     data.dataloder load_data 64  Loading dataset DatasetName.SEED from path ../data/SEED
+15:43:35 | INFO     data.dataloder load_data 89  Dataset cache hit: cache/seed_73fe27d0a09dc03b42c0f4e3e65ed43f.pkl
+15:43:58 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+15:43:58 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+15:43:58 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+15:43:58 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+15:43:58 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+15:43:58 | INFO     train.training_opta train    162 len of train data: 47516, len of test data: 3394
+15:44:01 | INFO     utils.metric update   25  --> A new better acc 0.8603 on subject 0 session 0
+15:44:02 | INFO     train.training_opta train    351 Epoch 1/1000 | src_ce: 0.2716, dann: 0.6121, tgt_ce: 0.0598, tri: 0.0541, xconf: 0.3483, source_acc: 97.1567, target_acc: 86.0342, best_acc: 86.0342
+15:44:02 | INFO     train.training_opta train    365 Epoch 1/1000 | pool_size: 256, agree_rate: 0.8125, M_t_offdiag_max: 0.7202
+15:46:31 | INFO     train.training_opta train    351 Epoch 50/1000 | src_ce: 1.0992, dann: 6.7868, tgt_ce: 0.0392, tri: 0.4943, xconf: 1.0986, source_acc: 36.1394, target_acc: 33.1173, best_acc: 86.0342
+15:46:31 | INFO     train.training_opta train    365 Epoch 50/1000 | pool_size: 256, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+15:49:12 | INFO     train.training_opta train    351 Epoch 100/1000 | src_ce: 0.0131, dann: 0.6939, tgt_ce: 0.0014, tri: 0.0011, xconf: 0.0137, source_acc: 99.7559, target_acc: 83.4119, best_acc: 86.0342
+15:49:12 | INFO     train.training_opta train    365 Epoch 100/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.0114
+15:49:15 | INFO     utils.metric update   25  --> A new better acc 0.8648 on subject 0 session 0
+15:50:34 | INFO     utils.metric update   25  --> A new better acc 0.8872 on subject 0 session 0
+15:50:58 | INFO     utils.metric update   25  --> A new better acc 0.9025 on subject 0 session 0
+15:51:02 | INFO     utils.metric update   25  --> A new better acc 0.9084 on subject 0 session 0
+15:51:05 | INFO     utils.metric update   25  --> A new better acc 0.9143 on subject 0 session 0
+15:51:08 | INFO     utils.metric update   25  --> A new better acc 0.9293 on subject 0 session 0
+15:51:11 | INFO     utils.metric update   25  --> A new better acc 0.9570 on subject 0 session 0
+15:51:16 | INFO     utils.metric update   25  --> A new better acc 0.9590 on subject 0 session 0
+15:51:19 | INFO     utils.metric update   25  --> A new better acc 0.9741 on subject 0 session 0
+15:51:24 | INFO     utils.metric update   25  --> A new better acc 0.9797 on subject 0 session 0
+15:51:28 | INFO     utils.metric update   25  --> A new better acc 0.9838 on subject 0 session 0
+15:51:58 | INFO     train.training_opta train    351 Epoch 150/1000 | src_ce: 0.0066, dann: 0.6935, tgt_ce: 0.0007, tri: 0.0006, xconf: 0.0076, source_acc: 100.0000, target_acc: 93.2233, best_acc: 98.3795
+15:51:58 | INFO     train.training_opta train    365 Epoch 150/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.0131
+15:52:14 | INFO     utils.metric update   25  --> A new better acc 0.9903 on subject 0 session 0
+15:54:55 | INFO     train.training_opta train    351 Epoch 200/1000 | src_ce: 0.0418, dann: 0.6937, tgt_ce: 0.0070, tri: 0.0064, xconf: 0.0492, source_acc: 97.7692, target_acc: 77.1656, best_acc: 99.0277
+15:54:55 | INFO     train.training_opta train    365 Epoch 200/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.0000
+15:57:45 | INFO     train.training_opta train    351 Epoch 250/1000 | src_ce: 0.0053, dann: 0.6927, tgt_ce: 0.0011, tri: 0.0015, xconf: 0.0069, source_acc: 100.0000, target_acc: 79.6995, best_acc: 99.0277
+15:57:45 | INFO     train.training_opta train    365 Epoch 250/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.0058
+16:00:42 | INFO     train.training_opta train    351 Epoch 300/1000 | src_ce: 0.0053, dann: 0.6929, tgt_ce: 0.0010, tri: 0.0041, xconf: 0.0069, source_acc: 99.9768, target_acc: 78.6093, best_acc: 99.0277
+16:00:42 | INFO     train.training_opta train    365 Epoch 300/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.2800
+16:03:35 | INFO     train.training_opta train    351 Epoch 350/1000 | src_ce: 0.1239, dann: 0.6940, tgt_ce: 0.0214, tri: 0.0000, xconf: 0.1285, source_acc: 98.1627, target_acc: 81.7030, best_acc: 99.0277
+16:03:35 | INFO     train.training_opta train    365 Epoch 350/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.0083
+16:06:32 | INFO     train.training_opta train    351 Epoch 400/1000 | src_ce: 0.0054, dann: 0.6931, tgt_ce: 0.0009, tri: 0.0063, xconf: 0.0056, source_acc: 100.0000, target_acc: 83.7655, best_acc: 99.0277
+16:06:32 | INFO     train.training_opta train    365 Epoch 400/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.2957
+16:09:25 | INFO     train.training_opta train    351 Epoch 450/1000 | src_ce: 0.0054, dann: 0.6937, tgt_ce: 0.0004, tri: 0.0026, xconf: 0.0089, source_acc: 100.0000, target_acc: 82.2923, best_acc: 99.0277
+16:09:25 | INFO     train.training_opta train    365 Epoch 450/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.1833
+16:12:16 | INFO     train.training_opta train    351 Epoch 500/1000 | src_ce: 0.0080, dann: 0.6917, tgt_ce: 0.0110, tri: 0.0313, xconf: 0.0346, source_acc: 99.7853, target_acc: 86.0342, best_acc: 99.0277
+16:12:16 | INFO     train.training_opta train    365 Epoch 500/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.0482
+16:15:12 | INFO     train.training_opta train    351 Epoch 550/1000 | src_ce: 0.0298, dann: 0.6915, tgt_ce: 0.0448, tri: 0.1384, xconf: 0.1232, source_acc: 99.5917, target_acc: 76.6942, best_acc: 99.0277
+16:15:12 | INFO     train.training_opta train    365 Epoch 550/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.0007
+16:18:10 | INFO     train.training_opta train    351 Epoch 600/1000 | src_ce: 0.0070, dann: 0.6939, tgt_ce: 0.0091, tri: 0.0373, xconf: 0.0279, source_acc: 100.0000, target_acc: 77.5486, best_acc: 99.0277
+16:18:10 | INFO     train.training_opta train    365 Epoch 600/1000 | pool_size: 256, agree_rate: 0.9688, M_t_offdiag_max: 0.0079
+16:21:00 | INFO     train.training_opta train    351 Epoch 650/1000 | src_ce: 0.0048, dann: 0.6928, tgt_ce: 0.0004, tri: 0.0009, xconf: 0.0061, source_acc: 100.0000, target_acc: 78.6977, best_acc: 99.0277
+16:21:00 | INFO     train.training_opta train    365 Epoch 650/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.0303
+16:23:54 | INFO     train.training_opta train    351 Epoch 700/1000 | src_ce: 0.0183, dann: 0.6941, tgt_ce: 0.0026, tri: 0.0007, xconf: 0.0202, source_acc: 98.9625, target_acc: 82.9699, best_acc: 99.0277
+16:23:54 | INFO     train.training_opta train    365 Epoch 700/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.1152
+16:26:49 | INFO     train.training_opta train    351 Epoch 750/1000 | src_ce: 0.0092, dann: 0.6937, tgt_ce: 0.0013, tri: 0.0001, xconf: 0.0139, source_acc: 99.2571, target_acc: 86.1226, best_acc: 99.0277
+16:26:49 | INFO     train.training_opta train    365 Epoch 750/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.0036
+16:29:43 | INFO     train.training_opta train    351 Epoch 800/1000 | src_ce: 0.1883, dann: 0.6936, tgt_ce: 0.0276, tri: 0.0001, xconf: 0.2121, source_acc: 93.8947, target_acc: 88.4502, best_acc: 99.0277
+16:29:43 | INFO     train.training_opta train    365 Epoch 800/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.0000
+16:32:34 | INFO     train.training_opta train    351 Epoch 850/1000 | src_ce: 0.1544, dann: 0.6936, tgt_ce: 0.0181, tri: 0.0001, xconf: 0.1632, source_acc: 93.2296, target_acc: 75.7219, best_acc: 99.0277
+16:32:34 | INFO     train.training_opta train    365 Epoch 850/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.0049
+16:35:28 | INFO     train.training_opta train    351 Epoch 900/1000 | src_ce: 0.1025, dann: 0.6936, tgt_ce: 0.0114, tri: 0.0001, xconf: 0.1077, source_acc: 96.1066, target_acc: 79.9057, best_acc: 99.0277
+16:35:28 | INFO     train.training_opta train    365 Epoch 900/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.0000
+16:38:25 | INFO     train.training_opta train    351 Epoch 950/1000 | src_ce: 0.1736, dann: 0.6931, tgt_ce: 0.0357, tri: 0.0441, xconf: 0.1949, source_acc: 90.0581, target_acc: 79.4048, best_acc: 99.0277
+16:38:25 | INFO     train.training_opta train    365 Epoch 950/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.0000
+16:41:21 | INFO     train.training_opta train    351 Epoch 1000/1000 | src_ce: 0.1261, dann: 0.6937, tgt_ce: 0.0335, tri: 0.0567, xconf: 0.1645, source_acc: 96.8179, target_acc: 85.4154, best_acc: 99.0277
+16:41:21 | INFO     train.training_opta train    365 Epoch 1000/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.0000
+16:41:21 | INFO     __main__ main     189 
+--------------> Finished training w.r.t. subject 0 session 0 acc 0.9903
+16:41:40 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+16:41:40 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (47516, 62, 5), label shape: (47516,)
+16:41:41 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+16:41:41 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3394, 62, 5), label shape: (3394,)
+16:41:41 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+16:41:41 | INFO     train.training_opta train    162 len of train data: 47516, len of test data: 3394
+16:41:44 | INFO     utils.metric update   25  --> A new better acc 0.7861 on subject 1 session 0
+16:41:45 | INFO     train.training_opta train    351 Epoch 1/1000 | src_ce: 0.2668, dann: 0.6555, tgt_ce: 0.1132, tri: 0.0906, xconf: 0.4228, source_acc: 98.0280, target_acc: 78.6093, best_acc: 78.6093
+16:41:45 | INFO     train.training_opta train    365 Epoch 1/1000 | pool_size: 256, agree_rate: 0.9375, M_t_offdiag_max: 0.9802
+16:41:49 | INFO     utils.metric update   25  --> A new better acc 0.8406 on subject 1 session 0
+16:44:24 | INFO     train.training_opta train    351 Epoch 50/1000 | src_ce: 0.0048, dann: 0.6944, tgt_ce: 0.0011, tri: 0.0009, xconf: 0.0054, source_acc: 100.0000, target_acc: 82.7637, best_acc: 84.0601
+16:44:24 | INFO     train.training_opta train    365 Epoch 50/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.1263
+16:44:30 | INFO     utils.metric update   25  --> A new better acc 0.8550 on subject 1 session 0
+16:44:36 | INFO     utils.metric update   25  --> A new better acc 0.8780 on subject 1 session 0
+16:44:39 | INFO     utils.metric update   25  --> A new better acc 0.8801 on subject 1 session 0
+16:44:45 | INFO     utils.metric update   25  --> A new better acc 0.8830 on subject 1 session 0
+16:47:07 | INFO     train.training_opta train    351 Epoch 100/1000 | src_ce: 0.0064, dann: 0.6933, tgt_ce: 0.0122, tri: 0.0111, xconf: 0.0234, source_acc: 99.9642, target_acc: 74.7790, best_acc: 88.3029
+16:47:07 | INFO     train.training_opta train    365 Epoch 100/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.8727
+16:49:55 | INFO     train.training_opta train    351 Epoch 150/1000 | src_ce: 0.0068, dann: 0.6934, tgt_ce: 0.0214, tri: 0.0400, xconf: 0.0738, source_acc: 99.5917, target_acc: 73.6299, best_acc: 88.3029
+16:49:55 | INFO     train.training_opta train    365 Epoch 150/1000 | pool_size: 256, agree_rate: 0.9688, M_t_offdiag_max: 0.9774
+16:52:54 | INFO     train.training_opta train    351 Epoch 200/1000 | src_ce: 0.0047, dann: 0.6933, tgt_ce: 0.0002, tri: 0.0006, xconf: 0.0087, source_acc: 100.0000, target_acc: 68.8568, best_acc: 88.3029
+16:52:54 | INFO     train.training_opta train    365 Epoch 200/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.1987
+16:55:46 | INFO     train.training_opta train    351 Epoch 250/1000 | src_ce: 0.0056, dann: 0.6942, tgt_ce: 0.0002, tri: 0.0073, xconf: 0.0085, source_acc: 99.3329, target_acc: 56.0106, best_acc: 88.3029
+16:55:46 | INFO     train.training_opta train    365 Epoch 250/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.6920
+16:58:41 | INFO     train.training_opta train    351 Epoch 300/1000 | src_ce: 0.0057, dann: 0.6901, tgt_ce: 0.0197, tri: 0.0724, xconf: 0.0425, source_acc: 99.9369, target_acc: 70.3300, best_acc: 88.3029
+16:58:41 | INFO     train.training_opta train    365 Epoch 300/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.7139
+17:01:29 | INFO     train.training_opta train    351 Epoch 350/1000 | src_ce: 0.0051, dann: 0.6943, tgt_ce: 0.0013, tri: 0.0027, xconf: 0.0064, source_acc: 100.0000, target_acc: 59.6936, best_acc: 88.3029
+17:01:29 | INFO     train.training_opta train    365 Epoch 350/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.5535
+17:04:25 | INFO     train.training_opta train    351 Epoch 400/1000 | src_ce: 0.0089, dann: 0.6931, tgt_ce: 0.0565, tri: 0.0973, xconf: 0.1245, source_acc: 100.0000, target_acc: 57.4543, best_acc: 88.3029
+17:04:25 | INFO     train.training_opta train    365 Epoch 400/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.4327
+17:07:19 | INFO     train.training_opta train    351 Epoch 450/1000 | src_ce: 0.0051, dann: 0.6934, tgt_ce: 0.0000, tri: 0.0047, xconf: 0.0124, source_acc: 100.0000, target_acc: 57.3365, best_acc: 88.3029
+17:07:19 | INFO     train.training_opta train    365 Epoch 450/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.3726
+17:10:15 | INFO     train.training_opta train    351 Epoch 500/1000 | src_ce: 0.0049, dann: 0.6926, tgt_ce: 0.0012, tri: 0.0069, xconf: 0.0078, source_acc: 99.9221, target_acc: 75.1621, best_acc: 88.3029
+17:10:15 | INFO     train.training_opta train    365 Epoch 500/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.3051
+17:13:09 | INFO     train.training_opta train    351 Epoch 550/1000 | src_ce: 0.0050, dann: 0.6933, tgt_ce: 0.0004, tri: 0.0034, xconf: 0.0059, source_acc: 100.0000, target_acc: 63.7596, best_acc: 88.3029
+17:13:09 | INFO     train.training_opta train    365 Epoch 550/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.4699
+17:16:04 | INFO     train.training_opta train    351 Epoch 600/1000 | src_ce: 0.0054, dann: 0.6925, tgt_ce: 0.0099, tri: 0.0389, xconf: 0.0266, source_acc: 100.0000, target_acc: 68.2970, best_acc: 88.3029
+17:16:04 | INFO     train.training_opta train    365 Epoch 600/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.5623
+17:18:57 | INFO     train.training_opta train    351 Epoch 650/1000 | src_ce: 0.0054, dann: 0.6934, tgt_ce: 0.0001, tri: 0.0089, xconf: 0.0075, source_acc: 99.7727, target_acc: 65.3506, best_acc: 88.3029
+17:18:57 | INFO     train.training_opta train    365 Epoch 650/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.3695
+17:21:51 | INFO     train.training_opta train    351 Epoch 700/1000 | src_ce: 0.0048, dann: 0.6933, tgt_ce: 0.0038, tri: 0.0230, xconf: 0.0135, source_acc: 100.0000, target_acc: 65.3506, best_acc: 88.3029
+17:21:51 | INFO     train.training_opta train    365 Epoch 700/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.2308
+17:24:44 | INFO     train.training_opta train    351 Epoch 750/1000 | src_ce: 0.0058, dann: 0.6931, tgt_ce: 0.0008, tri: 0.0145, xconf: 0.0109, source_acc: 99.9663, target_acc: 72.3335, best_acc: 88.3029
+17:24:44 | INFO     train.training_opta train    365 Epoch 750/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.3733
+17:25:05 | ERROR    train.training_opta train    302 CUDA failure at epoch 756/1000 batch 78/106 while training subject 1 session 0
+Traceback (most recent call last):
+
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/main.py", line 209, in <module>
+    app()
+    └ <typer.main.Typer object at 0x77a82dc2bad0>
+
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/typer/main.py", line 319, in __call__
+    return get_command(self)(*args, **kwargs)
+           │           │      │       └ {}
+           │           │      └ ()
+           │           └ <typer.main.Typer object at 0x77a82dc2bad0>
+           └ <function get_command at 0x77a889dddee0>
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/click/core.py", line 1485, in __call__
+    return self.main(*args, **kwargs)
+           │    │     │       └ {}
+           │    │     └ ()
+           │    └ <function TyperCommand.main at 0x77a889dc27a0>
+           └ <TyperCommand main>
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/typer/core.py", line 726, in main
+    return _main(
+           └ <function _main at 0x77a889dc19e0>
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/typer/core.py", line 190, in _main
+    rv = self.invoke(ctx)
+         │    │      └ <click.core.Context object at 0x77a82d98a420>
+         │    └ <function Command.invoke at 0x77a889d8eca0>
+         └ <TyperCommand main>
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/click/core.py", line 1269, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           │   │      │    │           │   └ {'batch_size': 32, 'failure_log': './cache/failure_log_opta_sinkhorn_150.csv', 'sinkhorn_warmup_epochs': 150, 'model_name': '...
+           │   │      │    │           └ <click.core.Context object at 0x77a82d98a420>
+           │   │      │    └ <function main at 0x77a82d966200>
+           │   │      └ <TyperCommand main>
+           │   └ <function Context.invoke at 0x77a889d8dee0>
+           └ <click.core.Context object at 0x77a82d98a420>
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/click/core.py", line 824, in invoke
+    return callback(*args, **kwargs)
+           │         │       └ {'batch_size': 32, 'failure_log': './cache/failure_log_opta_sinkhorn_150.csv', 'sinkhorn_warmup_epochs': 150, 'model_name': '...
+           │         └ ()
+           └ <function main at 0x77a82d966200>
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/typer/main.py", line 706, in wrapper
+    return callback(**use_params)
+           │          └ {'model_name': <ModelName.OPTA: 'OPTA'>, 'dataset': <DatasetName.SEED: 'SEED'>, 'dataset_path': '../data/SEED', 'cache_dir': ...
+           └ <function main at 0x77a82d966020>
+
+  File "/home/isaber/iSaber/EEG-Emotion-Recognition/main.py", line 171, in main
+    training_opta.train(
+    │             └ <function train at 0x77a82d8113a0>
+    └ <module 'train.training_opta' from '/home/isaber/iSaber/EEG-Emotion-Recognition/train/training_opta.py'>
+
+> File "/home/isaber/iSaber/EEG-Emotion-Recognition/train/training_opta.py", line 274, in train
+    loss_clf += losses["src_ce"].detach().item()
+    │           └ <unprintable dict object>
+    └ 0.36401733476668596
+
+torch.AcceleratorError: CUDA error: unknown error
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+17:25:05 | ERROR    train.training_opta train    311 CUDA failure class: likely_gpu_reset_or_contention
+17:25:05 | ERROR    train.training_opta train    312 CUDA diagnostics: {'device_arg': 'cuda', 'cuda_available': True, 'device_index': 0, 'device_name': 'NVIDIA GeForce RTX 4090', 'device_count': 1, 'mem_get_info_error': 'CUDA error: unknown error\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1\nCompile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.\n', 'allocated_gib': 0.017, 'reserved_gib': 2.41, 'max_allocated_gib': 2.256, 'max_reserved_gib': 2.41}
+17:25:05 | ERROR    train.training_opta train    314 Active GPU compute processes at failure:
+2587902, [Not Found], [N/A], GPU-dc852dbf-c9d2-69e0-e588-d781e76620df
+2587274, [Not Found], [N/A], GPU-dc852dbf-c9d2-69e0-e588-d781e76620df
+17:25:05 | ERROR    train.training_opta train    317 Likely cross-process GPU contention/reset. If vLLM is running on the same GPU, isolate workloads by GPU or reduce memory pressure.
+╭───────────────────────────────────────── Traceback (most recent call last) ──────────────────────────────────────────╮
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/train/training_opta.py:274 in train                                      │
+│                                                                                                                      │
+│   271 │   │   │   │   │   torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)                                    │
+│   272 │   │   │   │   │   optimizer.step()                                                                           │
+│   273 │   │   │   │                                                                                                  │
+│ ❱ 274 │   │   │   │   loss_clf += losses["src_ce"].detach().item()                                                   │
+│   275 │   │   │   │   loss_transfer += losses["dann"].detach().item()                                                │
+│   276 │   │   │   │   loss_cluster += losses["tgt_ce"].detach().item()                                               │
+│   277 │   │   │   │   loss_p += losses["tri"].detach().item()                                                        │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+AcceleratorError: CUDA error: unknown error
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+
+The above exception was the direct cause of the following exception:
+
+╭───────────────────────────────────────── Traceback (most recent call last) ──────────────────────────────────────────╮
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/main.py:171 in main                                                      │
+│                                                                                                                      │
+│   168 │   │   │   │   │   pool_capacity=opta_pool_capacity,                                                          │
+│   169 │   │   │   │   │   sinkhorn_warmup_epochs=sinkhorn_warmup_epochs,                                             │
+│   170 │   │   │   │   ).to(device)                                                                                   │
+│ ❱ 171 │   │   │   │   training_opta.train(                                                                           │
+│   172 │   │   │   │   │   model, metric, train_data, train_labels, test_data, test_labels,                           │
+│   173 │   │   │   │   │   batch_size, num_classes, device, epochs, task_type, subject_id,                            │
+│   174 │   │   │   │   │   session_id, learning_rate, early_stop_patience,                                            │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/train/training_opta.py:329 in train                                      │
+│                                                                                                                      │
+│   326 │   │   │   │   │   │   "Unclassified CUDA failure. Re-run with CUDA_LAUNCH_BLOCKING=1 a                       │
+│   327 │   │   │   │   │   )                                                                                          │
+│   328 │   │   │   │                                                                                                  │
+│ ❱ 329 │   │   │   │   raise RuntimeError(                                                                            │
+│   330 │   │   │   │   │   f"CUDA training failure ({failure_type}) at epoch {epoch + 1} batch                        │
+│   331 │   │   │   │   │   "See logs for diagnostics and process snapshot."                                           │
+│   332 │   │   │   │   ) from exc                                                                                     │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+RuntimeError: CUDA training failure (likely_gpu_reset_or_contention) at epoch 756 batch 78. See logs for diagnostics and
+process snapshot.

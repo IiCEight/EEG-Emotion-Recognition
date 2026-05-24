@@ -28,7 +28,7 @@ app = typer.Typer(
 def main(
     model_name: Annotated[
         cli_enum.ModelName, typer.Option('-m', help='model name')
-    ] = cli_enum.ModelName.SABER,
+    ] = cli_enum.ModelName.OPTA,
     dataset: Annotated[
         cli_enum.DatasetName, typer.Option(help='dataset name')
     ] = cli_enum.DatasetName.SEED,
@@ -64,8 +64,8 @@ def main(
     random_seed: Annotated[int | None, typer.Option(help='random seed for reproducibility, None for no seed (i.e., random)')] = 42,
     learning_rate: Annotated[float, typer.Option(help='learning rate for training')] = 0.001,
     early_stop_patience: Annotated[int, typer.Option(help='early stop after N epochs without test acc improvement (0 = disabled)')] = 0,
-    failure_log: Annotated[str | None, typer.Option(help='path to CSV file for logging misclassified samples (disabled if not set)')] = "./cache/failure_log.csv",
-    use_gcn: Annotated[bool, typer.Option(help='use GCN feature extractor for SABER (False = flat MLP, faster)')] = False,
+    failure_log: Annotated[str | None, typer.Option("-f", help='path to CSV file for logging misclassified samples (disabled if not set)')] = "./cache/failure_log.csv",
+    use_gcn: Annotated[bool, typer.Option(help='use GCN feature extractor for SABER (False = flat MLP, faster)')] = True,
     time_steps: Annotated[int, typer.Option(help='number of consecutive DE windows per sample for SABER_T (requires --sample-length N)')] = 2,
     trim_trial_start_pct: Annotated[float, typer.Option(help='discard the first X%% of each trial at load time (0 = disabled)')] = 0.0,
     opta_pool_capacity: Annotated[int, typer.Option(
@@ -94,10 +94,11 @@ def main(
         + f'\ncache_dir: {cache_dir}'
         + f'\ndevice: {device}\nlogging level: {level}\ntask type: {task_type}'
         + f'\nsplit type: {split_type}\nbatch_size: {batch_size}\nepochs: {epochs}'
-        + f'\ndata random: {data_random}\nrandom seed: {random_seed}'
+        + f'\ndata random: {data_random}\nrandom seed: {random_seed}\nfailure_log: {failure_log}'
         + f'\nonly one experiment: {only_one_experiment}\nonly one session: {only_one_session}'
         + f'\nlearning rate: {learning_rate}\nearly stop patience: {early_stop_patience}'
         + f'\nuse_gcn: {use_gcn}\ntime_steps: {time_steps}\ntrim_trial_start_pct: {trim_trial_start_pct}'
+        + f'\nopta_pool_capacity: {opta_pool_capacity}\nsinkhorn_warmup_epochs: {sinkhorn_warmup_epochs}'
     )
 
     data, labels, num_subjects, num_electrodes, num_features, num_classes = load_data(
