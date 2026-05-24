@@ -8,6 +8,7 @@ from loguru import logger
 from data.load.load_deap import load_deap
 from data.load.load_seed import load_seed
 from data.load.load_seed_raw import load_seed_raw
+from data.load.load_seed_iv import load_seed_iv
 from data.merge_and_split import merge_and_split_deap, merge_and_split_seed
 from data.preprocess.preprocess_deap import preprocess_deap
 from data.preprocess.preprocess_seed import preprocess_seed
@@ -66,6 +67,7 @@ def load_data(
     function_map = {
         # "DEAP": load_deap, TODO.
         "SEED": load_seed,
+        "SEED_IV": load_seed_iv,
     }
 
     if _to_plain_str(dataset_name) not in function_map:
@@ -93,10 +95,11 @@ def load_data(
                 logger.warning("Failed to load dataset cache {} ({})", cache_path, exc)
 
     # Load the data and labels
-    if _to_plain_str(dataset_name) == "SEED" and sample_length > 1:
+    name = _to_plain_str(dataset_name)
+    if name == "SEED" and sample_length > 1:
         result = load_seed_raw(dataset_path, sample_length=sample_length, stride=stride)
     else:
-        result = function_map[_to_plain_str(dataset_name)](dataset_path, trim_trial_start_pct=trim_trial_start_pct)
+        result = function_map[name](dataset_path, trim_trial_start_pct=trim_trial_start_pct)
 
     if cache_path is not None:
         try:
