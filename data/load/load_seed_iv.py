@@ -30,7 +30,7 @@ _SES_LABELS = [
 ]
 
 _FEATURE_INDEX = {
-    "de_movingAve": 0, "de_lds": 1, "psd_movingAve": 2, "psd_lds": 3,
+    "de_movingAve": 0, "de_LDS": 1, "psd_movingAve": 2, "psd_LDS": 3,
 }
 
 
@@ -46,7 +46,7 @@ def _parallel_read_seed_iv_feature(feature_id, dir_path, file):
 
 def load_seed_iv(
     dataset_path: str,
-    feature_type: str = "de_lds",
+    feature_type: str = "de_LDS",
     trim_trial_start_pct: float = 0.0,
 ) -> tuple[list, list, int, int, int, int]:
     """
