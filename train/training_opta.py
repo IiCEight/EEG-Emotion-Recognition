@@ -9,6 +9,7 @@ from loguru import logger
 from sklearn.preprocessing import MinMaxScaler
 from torch.utils.data import DataLoader, RandomSampler, TensorDataset
 
+from constant import CLI_arguments_enum
 from model.opta import OPTA
 from utils.failure_sample import record_failures
 from utils.metric import Metric
@@ -158,6 +159,7 @@ def train(
     weight_decay: float = 1e-5,
     test_metadata: list | None = None,
     failure_log_path: str | None = None,
+    dataset:str | None = None
 ):
     logger.info("len of train data: {}, len of test data: {}", len(train_data), len(test_data))
 
@@ -253,9 +255,15 @@ def train(
 
             try:
                 losses, diag = model(src_data, tgt_data, src_label, epoch, epochs)
-                lam1 = 2.0 * (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)
-                lam2 = 0.5
-                lam3 = 0.2 * min(1.0, epoch / max(1, xconf_ramp_epochs))
+                if dataset == CLI_arguments_enum.DatasetName.SEED_IV:
+                    lam1 = (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)
+                    lam2 = 0.5
+                    lam3 = 0.2 * min(1.0, epoch / max(1, xconf_ramp_epochs))
+                else:
+                    lam1 = 2.0 * (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)
+                    lam2 = 0.5
+                    lam3 = 0.2 * min(1.0, epoch / max(1, xconf_ramp_epochs))
+
                 total_loss = (
                     losses["src_ce"]
                     + losses["dann"]
