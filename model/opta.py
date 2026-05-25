@@ -148,7 +148,6 @@ class OPTA(nn.Module):
 
         # Cache of last source prototypes for inference.
         self.register_buffer("_last_M_s", torch.zeros(num_classes, self.feat_dim), persistent=False)
-        self.register_buffer("_last_M_t", torch.zeros(num_classes, self.feat_dim), persistent=False)
 
     def _ensure_pool(self, device) -> None:
         if self.pool is None:
@@ -229,7 +228,6 @@ class OPTA(nn.Module):
             self.pool.view(), M_s, lam=self.sinkhorn_lambda, n_iter=self.sinkhorn_iters,
             detach_assignments=(epoch < self.sinkhorn_warmup_epochs),
         )
-        self._last_M_t.copy_(M_t.detach())
 
         # Pseudo-CE on cosine similarity to M_t, weighted by c_score
         tau = self.classifier.log_tau.exp().clamp(min=1e-3)
@@ -260,10 +258,15 @@ class OPTA(nn.Module):
     def predict(self, x: torch.Tensor) -> torch.Tensor:
         self.eval()
         f = self.feature_extractor(x)
-        if self._last_M_t.abs().sum() < 1e-6:
-            M = self._last_M_s
+        M_s = self._last_M_s
+        if self.pool is None or self.pool.size < 3:
+            M = M_s
         else:
-            M = self._last_M_s if self._offdiag_max(self._last_M_t) > 0.95 else self._last_M_t
+            M_t = target_prototypes(
+                self.pool.view(), M_s, lam=self.sinkhorn_lambda, n_iter=self.sinkhorn_iters,
+                detach_assignments=True,
+            )
+            M = M_s if self._offdiag_max(M_t) > 0.95 else M_t
         f_n = F.normalize(f, dim=1)
         return (f_n @ M.t()).argmax(dim=1)
 
