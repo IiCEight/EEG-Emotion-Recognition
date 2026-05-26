@@ -173,7 +173,7 @@ def main(
                     batch_size, num_classes, device, epochs, task_type, subject_id,
                     session_id, learning_rate, early_stop_patience,
                     xconf_ramp_epochs=xconf_ramp_epochs,
-                    test_metadata=test_metadata, failure_log_path=failure_log,
+                    test_metadata=test_metadata, failure_log_path=failure_log, dataset=dataset
                 )
             else:
                 model = Saber(
