@@ -210,6 +210,10 @@ def train(
         weight_decay=weight_decay,
     )
 
+    # GRL steps every batch; correct max_iters so the ramp spans the full training run.
+    n_batch_est = min(len(source_loader), len(target_loader))
+    model.dann.grl.max_iters = max(1, epochs * n_batch_est)
+
     best_acc = 0.0
     stop = 0
     best_preds: tuple | None = None  # (y_true, y_preds) from best epoch
