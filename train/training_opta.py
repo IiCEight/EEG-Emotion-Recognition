@@ -256,9 +256,9 @@ def train(
             try:
                 losses, diag = model(src_data, tgt_data, src_label, epoch, epochs)
                 if dataset == CLI_arguments_enum.DatasetName.SEED_IV:
-                    lam1 = (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)
+                    lam1 = 2.0 * (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)
                     lam2 = 0.5
-                    lam3 = 0.2 * min(1.0, epoch / max(1, xconf_ramp_epochs))
+                    lam3 = 0.0  # xconf destabilises M_t on 4-class; disabled for SEED-IV
                 else:
                     lam1 = 2.0 * (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)
                     lam2 = 0.5
