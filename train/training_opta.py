@@ -263,6 +263,10 @@ def train(
                     lam1 = 2.0 * (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)
                     lam2 = 0.5 * min(1.0, epoch / 300.0)  # ramp tri to avoid 4-class prototype collapse
                     lam3 = 0.0  # xconf destabilises M_t on 4-class; disabled for SEED-IV
+                    # Gate pseudo-label loss when M_t is collapsing to break the feedback loop
+                    if diag["M_t_offdiag_max"] > 0.7:
+                        lam1 = 0.0
+                        lam2 = 0.0
                 else:
                     lam1 = 2.0 * (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)
                     lam2 = 0.5
