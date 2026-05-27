@@ -178,7 +178,7 @@ def train(
     train_data = train_flat.reshape(train_shape)
     test_data = test_flat.reshape(test_shape)
 
-    if model.use_gcn or model.use_pcl:
+    if model.use_gcn or model.use_pcl or model.use_mvgcn:
         train_data = rearrange(train_data, "sample chan feature -> sample feature chan")
         test_data = rearrange(test_data, "sample chan feature -> sample feature chan")
     else:
