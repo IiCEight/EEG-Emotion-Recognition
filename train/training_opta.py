@@ -154,6 +154,9 @@ def train(
     learning_rate: float,
     early_stop_patience: int = 0,
     xconf_ramp_epochs: int = 200,
+    lam1_scale: float = 1.0,
+    lam2_scale: float = 1.0,
+    lam3_scale: float = 1.0,
     transfer_loss_weight: float = 1.0,
     cluster_weight: float = 2.0,
     weight_decay: float = 1e-5,
@@ -275,9 +278,9 @@ def train(
                 total_loss = (
                     losses["src_ce"]
                     + losses["dann"]
-                    + lam1 * losses["tgt_ce"]
-                    + lam2 * losses["tri"]
-                    + lam3 * losses["xconf"]
+                    + lam1 * lam1_scale * losses["tgt_ce"]
+                    + lam2 * lam2_scale * losses["tri"]
+                    + lam3 * lam3_scale * losses["xconf"]
                 )
 
                 # Skeleton: total_loss may be a 0-d zero tensor with no grad. Guard.

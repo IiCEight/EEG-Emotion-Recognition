@@ -77,6 +77,15 @@ def main(
     sinkhorn_warmup_epochs: Annotated[int, typer.Option(
         help='OPTA: epochs to keep Sinkhorn assignments detached before allowing gradients'
     )] = 100,
+    opta_lam1_scale: Annotated[float, typer.Option(
+        help='OPTA: scale factor for lam1 (tgt_ce weight); 0.0 disables pseudo-label loss'
+    )] = 1.0,
+    opta_lam2_scale: Annotated[float, typer.Option(
+        help='OPTA: scale factor for lam2 (tri weight); 0.0 disables triangulation loss'
+    )] = 1.0,
+    opta_lam3_scale: Annotated[float, typer.Option(
+        help='OPTA: scale factor for lam3 (xconf weight); 0.0 disables cross-confusion loss'
+    )] = 1.0,
     level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
     """Welcome! Use --help option to see usage information."""
@@ -173,6 +182,7 @@ def main(
                     batch_size, num_classes, device, epochs, task_type, subject_id,
                     session_id, learning_rate, early_stop_patience,
                     xconf_ramp_epochs=xconf_ramp_epochs,
+                    lam1_scale=opta_lam1_scale, lam2_scale=opta_lam2_scale, lam3_scale=opta_lam3_scale,
                     test_metadata=test_metadata, failure_log_path=failure_log, dataset=dataset
                 )
             else:
