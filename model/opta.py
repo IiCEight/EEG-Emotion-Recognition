@@ -8,6 +8,7 @@ import torch.nn.functional as F
 from model.Adversarial import DomainAdversarialLoss
 from model.PCL_TDGCN import Encoder
 from model.classifier import Discriminator
+from model.multi_view_gcn import MultiViewGCN
 from model.PCL_SABER import _SaberEncoder as PclSaberEncoder
 from model.prpl import FeatureExtractor as MlpFeatureExtractor
 from model.saber import FeatureExtractor as GcnFeatureExtractor
@@ -109,6 +110,8 @@ class OPTA(nn.Module):
         num_classes: int = 3,
         use_gcn: bool = False,
         use_pcl: bool = False,
+        use_mvgcn: bool = False,
+        mvgcn_fusion: str = "concat",
         num_layers: int = 2,
         max_iter: int = 1000,
         pool_capacity: int = 256,
@@ -121,6 +124,7 @@ class OPTA(nn.Module):
         self.num_classes = num_classes
         self.use_gcn = use_gcn
         self.use_pcl = use_pcl
+        self.use_mvgcn = use_mvgcn
         self.max_iter = max_iter
         self.pool_capacity = pool_capacity
         self.sinkhorn_lambda = sinkhorn_lambda
@@ -133,7 +137,14 @@ class OPTA(nn.Module):
             logger.info("Number of classes: {}", num_classes)
             self.feature_extractor = Encoder(in_planes=[in_features, num_electrodes], layers=num_layers,
                         hidden_1=256, hidden_2=64,
-                        class_nums=num_classes)    
+                        class_nums=num_classes)
+        elif use_mvgcn:
+            self.feature_extractor = MultiViewGCN(
+                num_electrodes=num_electrodes,
+                in_features=in_features,
+                num_layers=num_layers,
+                fusion=mvgcn_fusion,
+            )
         elif use_gcn:
             self.feature_extractor = GcnFeatureExtractor(
                 num_electrodes=num_electrodes,
