@@ -67,6 +67,8 @@ def main(
     failure_log: Annotated[str | None, typer.Option("-f", help='path to CSV file for logging misclassified samples (disabled if not set)')] = None,
     use_gcn: Annotated[bool, typer.Option(help='use GCN feature extractor for SABER (False = flat MLP, faster)')] = True,
     use_pcl: Annotated[bool, typer.Option(help='use PCL (Saber-wrapped) feature extractor for OPTA')] = False,
+    use_mvgcn: Annotated[bool, typer.Option(help='use MultiViewGCN (2-branch GCN) feature extractor for OPTA')] = False,
+    mvgcn_fusion: Annotated[str, typer.Option(help='MultiViewGCN fusion mode: concat or attn')] = "concat",
     time_steps: Annotated[int, typer.Option(help='number of consecutive DE windows per sample for SABER_T (requires --sample-length N)')] = 2,
     trim_trial_start_pct: Annotated[float, typer.Option(help='discard the first X%% of each trial at load time (0 = disabled)')] = 0.0,
     opta_pool_capacity: Annotated[int, typer.Option(
@@ -175,6 +177,8 @@ def main(
                     num_classes=num_classes,
                     use_gcn=use_gcn,
                     use_pcl=use_pcl,
+                    use_mvgcn=use_mvgcn,
+                    mvgcn_fusion=mvgcn_fusion,
                     max_iter=epochs,
                     pool_capacity=opta_pool_capacity,
                     sinkhorn_warmup_epochs=sinkhorn_warmup_epochs,
