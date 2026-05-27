@@ -33,9 +33,8 @@ class MultiViewGCN(nn.Module):
         adj0 = torch.tensor(get_adj_from_standard()).float()
         self.adj_0 = nn.Parameter(adj0, requires_grad=True)
 
-        # View 1: Xavier-uniform adjacency, data-driven
-        adj1 = torch.empty(num_electrodes, num_electrodes)
-        nn.init.xavier_uniform_(adj1.unsqueeze(0)).squeeze_(0)
+        # View 1: uniform adjacency in [0, 1], data-driven (same value range as adj_0)
+        adj1 = torch.empty(num_electrodes, num_electrodes).uniform_(0, 1)
         self.adj_1 = nn.Parameter(adj1, requires_grad=True)
 
         self.gcn_0 = MulipleResidualGCN(num_layers, num_electrodes, in_features)
