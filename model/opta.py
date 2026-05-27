@@ -1,10 +1,12 @@
 import math
 
+from loguru import logger
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 from model.Adversarial import DomainAdversarialLoss
+from model.PCL_TDGCN import Encoder
 from model.classifier import Discriminator
 from model.PCL_SABER import _SaberEncoder as PclSaberEncoder
 from model.prpl import FeatureExtractor as MlpFeatureExtractor
@@ -128,11 +130,10 @@ class OPTA(nn.Module):
         self.feat_dim = 64
 
         if use_pcl:
-            self.feature_extractor = PclSaberEncoder(
-                in_planes=[in_features, num_electrodes],
-                layers=num_layers,
-                hidden_2=self.feat_dim,
-            )
+            logger.info("Number of classes: {}", num_classes)
+            self.feature_extractor = Encoder(in_planes=[in_features, num_electrodes], layers=num_layers,
+                        hidden_1=256, hidden_2=64,
+                        class_nums=num_classes)    
         elif use_gcn:
             self.feature_extractor = GcnFeatureExtractor(
                 num_electrodes=num_electrodes,
