@@ -29,7 +29,8 @@ class MultiViewGCN(nn.Module):
         self.num_electrodes = num_electrodes
         self.in_features = in_features
 
-        # View 0: physical electrode distance adjacency (same init as Saber)
+        # View 0: physical electrode distance adjacency (same init as Saber).
+        # adj_0 is fixed to the 62-electrode SEED layout; num_electrodes must be 62.
         adj0 = torch.tensor(get_adj_from_standard()).float()
         self.adj_0 = nn.Parameter(adj0, requires_grad=True)
 

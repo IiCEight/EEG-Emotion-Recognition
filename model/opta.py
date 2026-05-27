@@ -139,6 +139,7 @@ class OPTA(nn.Module):
                         hidden_1=256, hidden_2=64,
                         class_nums=num_classes)
         elif use_mvgcn:
+            logger.info("Using MultiViewGCN, fusion={}", mvgcn_fusion)
             self.feature_extractor = MultiViewGCN(
                 num_electrodes=num_electrodes,
                 in_features=in_features,
