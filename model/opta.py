@@ -6,6 +6,7 @@ import torch.nn.functional as F
 
 from model.Adversarial import DomainAdversarialLoss
 from model.classifier import Discriminator
+from model.PCL_SABER import _SaberEncoder as PclSaberEncoder
 from model.prpl import FeatureExtractor as MlpFeatureExtractor
 from model.saber import FeatureExtractor as GcnFeatureExtractor
 
@@ -105,6 +106,7 @@ class OPTA(nn.Module):
         in_features: int = 5,
         num_classes: int = 3,
         use_gcn: bool = False,
+        use_pcl: bool = False,
         num_layers: int = 2,
         max_iter: int = 1000,
         pool_capacity: int = 256,
@@ -116,6 +118,7 @@ class OPTA(nn.Module):
         super().__init__()
         self.num_classes = num_classes
         self.use_gcn = use_gcn
+        self.use_pcl = use_pcl
         self.max_iter = max_iter
         self.pool_capacity = pool_capacity
         self.sinkhorn_lambda = sinkhorn_lambda
@@ -124,7 +127,13 @@ class OPTA(nn.Module):
         self.sinkhorn_warmup_epochs = sinkhorn_warmup_epochs
         self.feat_dim = 64
 
-        if use_gcn:
+        if use_pcl:
+            self.feature_extractor = PclSaberEncoder(
+                in_planes=[in_features, num_electrodes],
+                layers=num_layers,
+                hidden_2=self.feat_dim,
+            )
+        elif use_gcn:
             self.feature_extractor = GcnFeatureExtractor(
                 num_electrodes=num_electrodes,
                 num_feature=in_features,
@@ -152,6 +161,10 @@ class OPTA(nn.Module):
     def _ensure_pool(self, device) -> None:
         if self.pool is None:
             self.pool = FIFOPool(self.pool_capacity, self.feat_dim, device)
+
+    def _extract(self, x: torch.Tensor) -> torch.Tensor:
+        out = self.feature_extractor(x)
+        return out[0] if isinstance(out, (tuple, list)) else out
 
     def _quantile_schedule(self, epoch: int, max_iter: int) -> float:
         p = epoch / max(1, max_iter)
@@ -182,8 +195,8 @@ class OPTA(nn.Module):
         max_iter: int,
     ):
         self._ensure_pool(source.device)
-        f_s = self.feature_extractor(source)
-        f_t = self.feature_extractor(target)
+        f_s = self._extract(source)
+        f_t = self._extract(target)
         B = f_s.size(0)
 
         # Source prototypes
@@ -259,7 +272,7 @@ class OPTA(nn.Module):
     @torch.no_grad()
     def predict(self, x: torch.Tensor) -> torch.Tensor:
         self.eval()
-        f = self.feature_extractor(x)
+        f = self._extract(x)
         M_s = self._last_M_s
         if self.pool is None or self.pool.size < 3:
             M = M_s
