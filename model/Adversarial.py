@@ -6,6 +6,7 @@ Created on Tue Aug 31 19:41:39 2021
 """
 
 from typing import Optional, Any, Tuple
+from loguru import logger
 import torch
 import torch.nn as nn
 import numpy as np
@@ -59,6 +60,8 @@ class WarmStartGradientReverseLayer(nn.Module):
         )
         if self.auto_step:
             self.step()
+        if self.iter_num % 1000 == 0:
+            logger.info("iter {}. Dann coeff {}",self.iter_num, coeff)
         return GradientReverseFunction.apply(input, coeff)
 
     def step(self):
