@@ -31,10 +31,10 @@ def main(
     ] = cli_enum.ModelName.OPTA,
     dataset: Annotated[
         cli_enum.DatasetName, typer.Option(help='dataset name')
-    ] = cli_enum.DatasetName.SEED,
+    ] = cli_enum.DatasetName.SEED_IV,
     dataset_path: Annotated[
         str, typer.Option(help='path to the dataset')
-    ] = '../data/SEED',
+    ] = '../data/SEED_IV',
     cache_dir: Annotated[str | None, typer.Option(
         help='cache directory for loaded dataset (disabled if not set)')] = './cache',
     device: Annotated[str, typer.Option(
@@ -76,7 +76,7 @@ def main(
     )] = 200,
     sinkhorn_warmup_epochs: Annotated[int, typer.Option(
         help='OPTA: epochs to keep Sinkhorn assignments detached before allowing gradients'
-    )] = 100,
+    )] = 1000,
     level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
     """Welcome! Use --help option to see usage information."""

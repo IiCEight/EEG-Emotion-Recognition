@@ -258,7 +258,7 @@ def train(
                 if dataset == CLI_arguments_enum.DatasetName.SEED_IV:
                     lam1 = 2.0 * (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)
                     lam2 = 0.5
-                    lam3 = 0.0  # xconf destabilises M_t on 4-class; disabled for SEED-IV
+                    lam3 = 0.2
                 else:
                     lam1 = 2.0 * (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)
                     lam2 = 0.5
