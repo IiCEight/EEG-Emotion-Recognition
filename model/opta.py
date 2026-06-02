@@ -135,9 +135,7 @@ class OPTA(nn.Module):
 
         if use_pcl:
             logger.info("Number of classes: {}", num_classes)
-            self.feature_extractor = Encoder(in_planes=[in_features, num_electrodes], layers=num_layers,
-                        hidden_1=256, hidden_2=64,
-                        class_nums=num_classes)
+            self.feature_extractor = Encoder(in_planes=[in_features, num_electrodes], layers=num_layers, hidden_1=64, hidden_2=64, class_nums=num_classes )
         elif use_mvgcn:
             logger.info("Using MultiViewGCN, fusion={}", mvgcn_fusion)
             self.feature_extractor = MultiViewGCN(

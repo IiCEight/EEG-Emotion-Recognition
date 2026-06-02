@@ -1,7 +1,7 @@
-22:21:29 | INFO     __main__ main     99  CUDA Available: True
-22:21:29 | INFO     __main__ main     100 Device Count: 1
-22:21:29 | INFO     __main__ main     102 GPU Name: NVIDIA GeForce RTX 4090
-22:21:29 | INFO     __main__ main     104 Launching....
+14:01:36 | INFO     __main__ main     99  CUDA Available: True
+14:01:36 | INFO     __main__ main     100 Device Count: 1
+14:01:36 | INFO     __main__ main     102 GPU Name: NVIDIA GeForce RTX 4090
+14:01:36 | INFO     __main__ main     104 Launching....
 model_name: ModelName.OPTA
 dataset: DatasetName.SEED_IV
 dataset_path: ../data/SEED_IV
@@ -24,75 +24,61 @@ time_steps: 2
 trim_trial_start_pct: 0.0
 opta_pool_capacity: 256
 sinkhorn_warmup_epochs: 100
-22:21:29 | INFO     data.dataloder load_data 65  Loading dataset DatasetName.SEED_IV from path ../data/SEED_IV
-22:21:29 | INFO     data.dataloder load_data 91  Dataset cache hit: cache/seed_iv_66f7eb7c0b603bf828c6b22f6185a282.pkl
-22:21:35 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
-22:21:35 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11914, 62, 5), label shape: (11914,)
-22:21:35 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
-22:21:35 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (851, 62, 5), label shape: (851,)
-22:21:35 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
-22:21:35 | INFO     train.training_opta train    167 len of train data: 11914, len of test data: 851
-22:21:36 | INFO     utils.metric update   25  --> A new better acc 0.3349 on subject 0 session 0
-22:21:36 | INFO     train.training_opta train    370 Epoch 1/1000 | src_ce: 1.0730, dann: 0.6696, tgt_ce: 0.0802, tri: 0.1750, xconf: 1.1260, source_acc: 50.7806, target_acc: 33.4900, best_acc: 33.4900
-22:21:36 | INFO     train.training_opta train    384 Epoch 1/1000 | pool_size: 156, agree_rate: 0.3750, M_t_offdiag_max: 0.9709
-22:21:37 | INFO     utils.metric update   25  --> A new better acc 0.5488 on subject 0 session 0
-22:21:38 | INFO     utils.metric update   25  --> A new better acc 0.6075 on subject 0 session 0
-22:21:39 | INFO     utils.metric update   25  --> A new better acc 0.6157 on subject 0 session 0
-22:21:40 | INFO     utils.metric update   25  --> A new better acc 0.6263 on subject 0 session 0
-22:21:42 | INFO     utils.metric update   25  --> A new better acc 0.6722 on subject 0 session 0
-22:22:07 | INFO     model.Adversarial forward  64  iter 1000. Dann coeff 0.019209175258330102
-22:22:16 | INFO     train.training_opta train    370 Epoch 50/1000 | src_ce: 0.0051, dann: 0.1464, tgt_ce: 0.0009, tri: 0.1114, xconf: 0.0093, source_acc: 99.7146, target_acc: 54.0541, best_acc: 67.2150
-22:22:16 | INFO     train.training_opta train    384 Epoch 50/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.2909
-22:22:37 | INFO     model.Adversarial forward  64  iter 2000. Dann coeff 0.03842338205764384
-22:22:56 | INFO     train.training_opta train    370 Epoch 100/1000 | src_ce: 0.0050, dann: 0.2568, tgt_ce: 0.0013, tri: 0.0802, xconf: 0.0076, source_acc: 100.0000, target_acc: 55.1116, best_acc: 67.2150
-22:22:56 | INFO     train.training_opta train    384 Epoch 100/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.1229
-22:23:14 | INFO     model.Adversarial forward  64  iter 3000. Dann coeff 0.057609218132741
-22:23:25 | INFO     utils.metric update   25  --> A new better acc 0.6745 on subject 0 session 0
-22:23:25 | INFO     utils.metric update   25  --> A new better acc 0.6804 on subject 0 session 0
-22:23:26 | INFO     utils.metric update   25  --> A new better acc 0.6839 on subject 0 session 0
-22:23:30 | INFO     utils.metric update   25  --> A new better acc 0.7015 on subject 0 session 0
-22:23:42 | INFO     train.training_opta train    370 Epoch 150/1000 | src_ce: 0.0371, dann: 0.3747, tgt_ce: 0.0014, tri: 0.0490, xconf: 0.0473, source_acc: 97.3644, target_acc: 53.3490, best_acc: 70.1528
-22:23:42 | INFO     train.training_opta train    384 Epoch 150/1000 | pool_size: 256, agree_rate: 0.9062, M_t_offdiag_max: 0.0673
-22:23:45 | INFO     model.Adversarial forward  64  iter 4000. Dann coeff 0.076752595671981
-22:23:50 | INFO     utils.metric update   25  --> A new better acc 0.7051 on subject 0 session 0
-22:23:51 | INFO     utils.metric update   25  --> A new better acc 0.7062 on subject 0 session 0
-22:23:51 | INFO     utils.metric update   25  --> A new better acc 0.7109 on subject 0 session 0
-22:23:56 | INFO     utils.metric update   25  --> A new better acc 0.7474 on subject 0 session 0
-22:24:13 | INFO     model.Adversarial forward  64  iter 5000. Dann coeff 0.09583955175599201
-22:24:20 | INFO     train.training_opta train    370 Epoch 200/1000 | src_ce: 0.0867, dann: 0.9308, tgt_ce: 0.0048, tri: 0.1449, xconf: 0.1020, source_acc: 98.6235, target_acc: 62.3972, best_acc: 74.7356
-22:24:20 | INFO     train.training_opta train    384 Epoch 200/1000 | pool_size: 256, agree_rate: 0.9688, M_t_offdiag_max: 0.1224
-22:24:47 | INFO     model.Adversarial forward  64  iter 6000. Dann coeff 0.11485628878697662
-22:25:02 | INFO     train.training_opta train    370 Epoch 250/1000 | src_ce: 0.0049, dann: 0.7183, tgt_ce: 0.0008, tri: 0.0210, xconf: 0.0062, source_acc: 100.0000, target_acc: 62.8672, best_acc: 74.7356
-22:25:02 | INFO     train.training_opta train    384 Epoch 250/1000 | pool_size: 256, agree_rate: 0.9688, M_t_offdiag_max: 0.0538
-22:25:18 | INFO     model.Adversarial forward  64  iter 7000. Dann coeff 0.133789213892749
-22:25:44 | INFO     train.training_opta train    370 Epoch 300/1000 | src_ce: 0.0049, dann: 0.7655, tgt_ce: 0.0017, tri: 0.0262, xconf: 0.0059, source_acc: 100.0000, target_acc: 54.4066, best_acc: 74.7356
-22:25:44 | INFO     train.training_opta train    384 Epoch 300/1000 | pool_size: 256, agree_rate: 0.9688, M_t_offdiag_max: 0.0668
-22:25:50 | INFO     model.Adversarial forward  64  iter 8000. Dann coeff 0.15262497706972145
-22:26:23 | INFO     model.Adversarial forward  64  iter 9000. Dann coeff 0.17135050784232453
-22:26:26 | INFO     train.training_opta train    370 Epoch 350/1000 | src_ce: 0.0050, dann: 1.0623, tgt_ce: 0.0003, tri: 0.0230, xconf: 0.0058, source_acc: 100.0000, target_acc: 59.2244, best_acc: 74.7356
-22:26:26 | INFO     train.training_opta train    384 Epoch 350/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.0702
-22:26:54 | INFO     model.Adversarial forward  64  iter 10000. Dann coeff 0.1899530502317457
-22:27:09 | INFO     train.training_opta train    370 Epoch 400/1000 | src_ce: 0.0075, dann: 1.4715, tgt_ce: 0.0002, tri: 0.0185, xconf: 0.0089, source_acc: 100.0000, target_acc: 55.8167, best_acc: 74.7356
-22:27:09 | INFO     train.training_opta train    384 Epoch 400/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.1560
-22:27:27 | INFO     model.Adversarial forward  64  iter 11000. Dann coeff 0.20842019584423532
-22:27:50 | INFO     train.training_opta train    370 Epoch 450/1000 | src_ce: 0.0063, dann: 6.1790, tgt_ce: 0.0248, tri: 0.0309, xconf: 0.0190, source_acc: 100.0000, target_acc: 57.8143, best_acc: 74.7356
-22:27:50 | INFO     train.training_opta train    384 Epoch 450/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.5743
-22:27:59 | INFO     model.Adversarial forward  64  iter 12000. Dann coeff 0.22673991490823098
-22:28:30 | INFO     model.Adversarial forward  64  iter 13000. Dann coeff 0.24490058510993684
-22:28:31 | INFO     train.training_opta train    370 Epoch 500/1000 | src_ce: 0.0186, dann: 40.5962, tgt_ce: 0.2499, tri: 0.1391, xconf: 0.7285, source_acc: 99.7482, target_acc: 52.9965, best_acc: 74.7356
-22:28:31 | INFO     train.training_opta train    384 Epoch 500/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9966
-22:29:02 | INFO     utils.metric update   25  --> A new better acc 0.7744 on subject 0 session 0
-22:29:03 | INFO     model.Adversarial forward  64  iter 14000. Dann coeff 0.2628910180984432
-22:29:13 | INFO     train.training_opta train    370 Epoch 550/1000 | src_ce: 0.1340, dann: 305.9262, tgt_ce: 0.2705, tri: 0.4131, xconf: 1.3034, source_acc: 96.6762, target_acc: 73.7955, best_acc: 77.4383
-22:29:13 | INFO     train.training_opta train    384 Epoch 550/1000 | pool_size: 256, agree_rate: 0.9375, M_t_offdiag_max: 1.0000
-22:29:38 | INFO     model.Adversarial forward  64  iter 15000. Dann coeff 0.28070048355368016
-22:29:54 | INFO     utils.metric update   25  --> A new better acc 0.7838 on subject 0 session 0
-22:29:56 | INFO     train.training_opta train    370 Epoch 600/1000 | src_ce: 0.3198, dann: 1020.3172, tgt_ce: 0.2181, tri: 0.4720, xconf: 1.3723, source_acc: 89.6676, target_acc: 72.2679, best_acc: 78.3784
-22:29:56 | INFO     train.training_opta train    384 Epoch 600/1000 | pool_size: 256, agree_rate: 0.6250, M_t_offdiag_max: 1.0000
-22:30:11 | INFO     model.Adversarial forward  64  iter 16000. Dann coeff 0.29831873073315185
-22:30:38 | INFO     train.training_opta train    370 Epoch 650/1000 | src_ce: 0.8230, dann: 1415.8325, tgt_ce: 0.1245, tri: 0.4923, xconf: 1.3863, source_acc: 53.2399, target_acc: 48.7662, best_acc: 78.3784
-22:30:38 | INFO     train.training_opta train    384 Epoch 650/1000 | pool_size: 256, agree_rate: 0.3125, M_t_offdiag_max: 1.0000
-22:30:41 | INFO     model.Adversarial forward  64  iter 17000. Dann coeff 0.31573600743618724
-22:31:16 | INFO     model.Adversarial forward  64  iter 18000. Dann coeff 0.3329430763470764
-22:31:22 | INFO     train.training_opta train    370 Epoch 700/1000 | src_ce: 0.8898, dann: 799.4289, tgt_ce: 0.1349, tri: 0.4909, xconf: 1.3863, source_acc: 65.4524, target_acc: 40.1880, best_acc: 78.3784
-22:31:22 | INFO     train.training_opta train    384 Epoch 700/1000 | pool_size: 256, agree_rate: 0.6875, M_t_offdiag_max: 1.0000
+14:01:36 | INFO     data.dataloder load_data 65  Loading dataset DatasetName.SEED_IV from path ../data/SEED_IV
+14:01:36 | INFO     data.dataloder load_data 91  Dataset cache hit: cache/seed_iv_66f7eb7c0b603bf828c6b22f6185a282.pkl
+14:01:45 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+14:01:45 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11914, 62, 5), label shape: (11914,)
+14:01:45 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+14:01:45 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (851, 62, 5), label shape: (851,)
+14:01:45 | INFO     model.saber __init__ 109 Use direct distance as adjeceny matrix for GCN.
+14:01:45 | INFO     train.training_opta train    167 len of train data: 11914, len of test data: 851
+14:01:46 | INFO     utils.metric update   25  --> A new better acc 0.3549 on subject 0 session 0
+14:01:47 | INFO     train.training_opta train    370 Epoch 1/1000 | src_ce: 1.1113, dann: 0.6692, tgt_ce: 0.0821, tri: 0.1673, xconf: 1.1633, source_acc: 53.6931, target_acc: 35.4877, best_acc: 35.4877
+14:01:47 | INFO     train.training_opta train    384 Epoch 1/1000 | pool_size: 156, agree_rate: 0.4688, M_t_offdiag_max: 0.9808
+14:01:47 | INFO     utils.metric update   25  --> A new better acc 0.5605 on subject 0 session 0
+14:01:49 | INFO     utils.metric update   25  --> A new better acc 0.5640 on subject 0 session 0
+14:01:50 | INFO     utils.metric update   25  --> A new better acc 0.6052 on subject 0 session 0
+14:02:18 | INFO     model.Adversarial forward  64  iter 1000. Dann coeff 0.019209175258330102
+14:02:27 | INFO     train.training_opta train    370 Epoch 50/1000 | src_ce: 0.0389, dann: 0.6282, tgt_ce: 0.0052, tri: 0.0603, xconf: 0.0456, source_acc: 98.7578, target_acc: 51.4689, best_acc: 60.5170
+14:02:27 | INFO     train.training_opta train    384 Epoch 50/1000 | pool_size: 256, agree_rate: 0.9375, M_t_offdiag_max: 0.1491
+14:02:48 | INFO     model.Adversarial forward  64  iter 2000. Dann coeff 0.03842338205764384
+14:02:54 | INFO     utils.metric update   25  --> A new better acc 0.6240 on subject 0 session 0
+14:03:08 | INFO     train.training_opta train    370 Epoch 100/1000 | src_ce: 0.0109, dann: 0.7052, tgt_ce: 0.0028, tri: 0.0607, xconf: 0.0221, source_acc: 99.4292, target_acc: 53.4665, best_acc: 62.3972
+14:03:08 | INFO     train.training_opta train    384 Epoch 100/1000 | pool_size: 256, agree_rate: 0.8438, M_t_offdiag_max: 0.1698
+14:03:20 | INFO     model.Adversarial forward  64  iter 3000. Dann coeff 0.057609218132741
+14:03:51 | INFO     train.training_opta train    370 Epoch 150/1000 | src_ce: 0.0232, dann: 0.6911, tgt_ce: 0.0032, tri: 0.0537, xconf: 0.0400, source_acc: 99.9664, target_acc: 57.6968, best_acc: 62.3972
+14:03:51 | INFO     train.training_opta train    384 Epoch 150/1000 | pool_size: 256, agree_rate: 0.9688, M_t_offdiag_max: 0.1367
+14:03:54 | INFO     model.Adversarial forward  64  iter 4000. Dann coeff 0.076752595671981
+14:04:27 | INFO     model.Adversarial forward  64  iter 5000. Dann coeff 0.09583955175599201
+14:04:36 | INFO     train.training_opta train    370 Epoch 200/1000 | src_ce: 0.0124, dann: 0.7712, tgt_ce: 0.0015, tri: 0.0425, xconf: 0.0182, source_acc: 100.0000, target_acc: 57.6968, best_acc: 62.3972
+14:04:36 | INFO     train.training_opta train    384 Epoch 200/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.2469
+14:05:04 | INFO     model.Adversarial forward  64  iter 6000. Dann coeff 0.11485628878697662
+14:05:22 | INFO     train.training_opta train    370 Epoch 250/1000 | src_ce: 0.0090, dann: 0.8452, tgt_ce: 0.0164, tri: 0.0488, xconf: 0.0124, source_acc: 100.0000, target_acc: 54.5241, best_acc: 62.3972
+14:05:22 | INFO     train.training_opta train    384 Epoch 250/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.5827
+14:05:38 | INFO     model.Adversarial forward  64  iter 7000. Dann coeff 0.133789213892749
+14:05:56 | INFO     utils.metric update   25  --> A new better acc 0.6263 on subject 0 session 0
+14:05:59 | INFO     utils.metric update   25  --> A new better acc 0.6439 on subject 0 session 0
+14:06:05 | INFO     train.training_opta train    370 Epoch 300/1000 | src_ce: 0.0599, dann: 2.3528, tgt_ce: 0.2190, tri: 0.1762, xconf: 0.8754, source_acc: 95.4927, target_acc: 57.5793, best_acc: 64.3948
+14:06:05 | INFO     train.training_opta train    384 Epoch 300/1000 | pool_size: 256, agree_rate: 0.9375, M_t_offdiag_max: 0.9958
+14:06:07 | INFO     utils.metric update   25  --> A new better acc 0.6545 on subject 0 session 0
+14:06:11 | INFO     model.Adversarial forward  64  iter 8000. Dann coeff 0.15262497706972145
+14:06:45 | INFO     model.Adversarial forward  64  iter 9000. Dann coeff 0.17135050784232453
+14:06:48 | INFO     train.training_opta train    370 Epoch 350/1000 | src_ce: 0.1323, dann: 4.5584, tgt_ce: 0.2518, tri: 0.4154, xconf: 1.3686, source_acc: 91.9758, target_acc: 38.4254, best_acc: 65.4524
+14:06:48 | INFO     train.training_opta train    384 Epoch 350/1000 | pool_size: 256, agree_rate: 0.6875, M_t_offdiag_max: 1.0000
+14:07:20 | INFO     model.Adversarial forward  64  iter 10000. Dann coeff 0.1899530502317457
+14:07:35 | INFO     train.training_opta train    370 Epoch 400/1000 | src_ce: 0.0751, dann: 2.3289, tgt_ce: 0.2688, tri: 0.4298, xconf: 1.3743, source_acc: 98.1283, target_acc: 62.2797, best_acc: 65.4524
+14:07:35 | INFO     train.training_opta train    384 Epoch 400/1000 | pool_size: 256, agree_rate: 0.6875, M_t_offdiag_max: 1.0000
+14:07:54 | INFO     model.Adversarial forward  64  iter 11000. Dann coeff 0.20842019584423532
+14:07:59 | INFO     utils.metric update   25  --> A new better acc 0.7015 on subject 0 session 0
+14:08:00 | INFO     utils.metric update   25  --> A new better acc 0.7098 on subject 0 session 0
+14:08:05 | INFO     utils.metric update   25  --> A new better acc 0.7168 on subject 0 session 0
+14:08:18 | INFO     train.training_opta train    370 Epoch 450/1000 | src_ce: 0.0336, dann: 1.1605, tgt_ce: 0.2532, tri: 0.4262, xconf: 1.3707, source_acc: 91.0609, target_acc: 60.6345, best_acc: 71.6804
+14:08:18 | INFO     train.training_opta train    384 Epoch 450/1000 | pool_size: 256, agree_rate: 0.6250, M_t_offdiag_max: 1.0000
+14:08:28 | INFO     model.Adversarial forward  64  iter 12000. Dann coeff 0.22673991490823098
+14:09:01 | INFO     model.Adversarial forward  64  iter 13000. Dann coeff 0.24490058510993684
+14:09:02 | INFO     train.training_opta train    370 Epoch 500/1000 | src_ce: 0.0152, dann: 0.6933, tgt_ce: 0.3925, tri: 0.3237, xconf: 1.1158, source_acc: 100.0000, target_acc: 64.2773, best_acc: 71.6804
+14:09:02 | INFO     train.training_opta train    384 Epoch 500/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9998
+14:09:35 | INFO     model.Adversarial forward  64  iter 14000. Dann coeff 0.2628910180984432
+14:09:45 | INFO     train.training_opta train    370 Epoch 550/1000 | src_ce: 0.0080, dann: 0.6941, tgt_ce: 0.3835, tri: 0.2791, xconf: 1.0180, source_acc: 100.0000, target_acc: 61.1046, best_acc: 71.6804
+14:09:45 | INFO     train.training_opta train    384 Epoch 550/1000 | pool_size: 256, agree_rate: 0.9375, M_t_offdiag_max: 0.9995
+14:09:53 | INFO     utils.metric update   25  --> A new better acc 0.7239 on subject 0 session 0

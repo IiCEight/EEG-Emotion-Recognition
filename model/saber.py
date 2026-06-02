@@ -98,6 +98,7 @@ class FeatureExtractor(nn.Module):
         self.chan_num = num_electrodes
         self.band_num = num_feature
         self.hidden_2 = hidden_2
+        self.dropout = nn.Dropout(p = 0.25)
         self.layers = layers
 
         _weights_path = Path("cache/electrode_weights.npy")
@@ -127,6 +128,7 @@ class FeatureExtractor(nn.Module):
 
         out = self.fc1(g_feat.reshape(g_feat.size(0), -1))
         out = F.relu(out)
+        out = self.dropout(out)
         out = self.fc2(out)
         out = F.relu(out)
         return out
