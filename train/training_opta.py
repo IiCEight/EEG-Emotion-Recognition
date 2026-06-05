@@ -264,12 +264,8 @@ def train(
                 losses, diag = model(src_data, tgt_data, src_label, epoch, epochs)
                 if dataset == CLI_arguments_enum.DatasetName.SEED_IV:
                     lam1 = 2.0 * (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)
-                    lam2 = 0.5 * min(1.0, epoch / 300.0)  # ramp tri to avoid 4-class prototype collapse
-                    lam3 = 0.0  # xconf destabilises M_t on 4-class; disabled for SEED-IV
-                    # Gate pseudo-label loss when M_t is collapsing to break the feedback loop
-                    if diag["M_t_offdiag_max"] > 0.7:
-                        lam1 = 0.0
-                        lam2 = 0.0
+                    lam2 = 0.5
+                    lam3 = 0.2 * min(1.0, epoch / max(1, xconf_ramp_epochs))
                 else:
                     lam1 = 2.0 * (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)
                     lam2 = 0.5
@@ -278,9 +274,9 @@ def train(
                 total_loss = (
                     losses["src_ce"]
                     + losses["dann"]
-                    # + lam1 * lam1_scale * losses["tgt_ce"]
-                    # + lam2 * lam2_scale * losses["tri"]
-                    # + lam3 * lam3_scale * losses["xconf"]
+                    + lam1 * lam1_scale * losses["tgt_ce"]
+                    + lam2 * lam2_scale * losses["tri"]
+                    + lam3 * lam3_scale * losses["xconf"]
                 )
 
                 # Skeleton: total_loss may be a 0-d zero tensor with no grad. Guard.

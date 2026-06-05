@@ -31,10 +31,10 @@ def main(
     ] = cli_enum.ModelName.OPTA,
     dataset: Annotated[
         cli_enum.DatasetName, typer.Option(help='dataset name')
-    ] = cli_enum.DatasetName.SEED,
+    ] = cli_enum.DatasetName.SEED_IV,
     dataset_path: Annotated[
         str, typer.Option(help='path to the dataset')
-    ] = '../data/SEED',
+    ] = '../data/SEED_IV',
     cache_dir: Annotated[str | None, typer.Option(
         help='cache directory for loaded dataset (disabled if not set)')] = './cache',
     device: Annotated[str, typer.Option(
@@ -63,7 +63,7 @@ def main(
     only_one_session: Annotated[bool, typer.Option(help='whether to run only one session for debugging')] = True,
     random_seed: Annotated[int | None, typer.Option(help='random seed for reproducibility, None for no seed (i.e., random)')] = 42,
     learning_rate: Annotated[float, typer.Option(help='learning rate for training')] = 0.001,
-    early_stop_patience: Annotated[int, typer.Option(help='early stop after N epochs without test acc improvement (0 = disabled)')] = 600,
+    early_stop_patience: Annotated[int, typer.Option(help='early stop after N epochs without test acc improvement (0 = disabled)')] = 0,
     failure_log: Annotated[str | None, typer.Option("-f", help='path to CSV file for logging misclassified samples (disabled if not set)')] = None,
     use_gcn: Annotated[bool, typer.Option(help='use GCN feature extractor for SABER (False = flat MLP, faster)')] = True,
     use_pcl: Annotated[bool, typer.Option(help='use PCL (Saber-wrapped) feature extractor for OPTA')] = False,
@@ -79,7 +79,7 @@ def main(
     )] = 200,
     sinkhorn_warmup_epochs: Annotated[int, typer.Option(
         help='OPTA: epochs to keep Sinkhorn assignments detached before allowing gradients'
-    )] = 100,
+    )] = 1000,
     opta_lam1_scale: Annotated[float, typer.Option(
         help='OPTA: scale factor for lam1 (tgt_ce weight); 0.0 disables pseudo-label loss'
     )] = 1.0,

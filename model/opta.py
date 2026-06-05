@@ -254,10 +254,8 @@ class OPTA(nn.Module):
         )
 
         # Pseudo-CE on cosine similarity to M_t, weighted by c_score.
-        # Detach f_t so tgt_ce only updates the classifier/prototypes, not the feature extractor.
-        # This prevents collapsed M_t from corrupting features via adversarial pseudo-label gradients.
         tau = self.classifier.log_tau.exp().clamp(min=1e-3)
-        proto_logits_t = (F.normalize(f_t.detach(), dim=1) @ M_t.t()) / tau
+        proto_logits_t = (F.normalize(f_t, dim=1) @ M_t.t()) / tau
         ce_per_sample = F.cross_entropy(proto_logits_t, pseudo_label, reduction="none")
         loss_tgt_ce = (c_score * ce_per_sample).mean()
 
