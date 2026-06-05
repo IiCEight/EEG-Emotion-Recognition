@@ -76,7 +76,7 @@ def main(
     )] = 200,
     sinkhorn_warmup_epochs: Annotated[int, typer.Option(
         help='OPTA: epochs to keep Sinkhorn assignments detached before allowing gradients'
-    )] = 100,
+    )] = 1000,
     level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
     """Welcome! Use --help option to see usage information."""
