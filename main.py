@@ -89,6 +89,9 @@ def main(
     opta_lam3_scale: Annotated[float, typer.Option(
         help='OPTA: scale factor for lam3 (xconf weight); 0.0 disables cross-confusion loss'
     )] = 1.0,
+    opta_lam4_scale: Annotated[float, typer.Option(
+        help='OPTA: scale factor for lam4 (orth weight); 0.0 disables orthogonality loss'
+    )] = 1.0,
     level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
     """Welcome! Use --help option to see usage information."""
@@ -189,6 +192,7 @@ def main(
                     session_id, learning_rate, early_stop_patience,
                     xconf_ramp_epochs=xconf_ramp_epochs,
                     lam1_scale=opta_lam1_scale, lam2_scale=opta_lam2_scale, lam3_scale=opta_lam3_scale,
+                    lam4_scale=opta_lam4_scale,
                     test_metadata=test_metadata, failure_log_path=failure_log, dataset=dataset
                 )
             else:

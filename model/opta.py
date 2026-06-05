@@ -264,16 +264,20 @@ class OPTA(nn.Module):
         loss_tri = align + (self._hinge(M_s) + self._hinge(M_t))
         xconf_logits = (F.normalize(f_s, dim=1) @ M_t.t()) / tau
         loss_xconf = self.smooth_ce(xconf_logits, src_label)
+        off = ~torch.eye(M_t.size(0), dtype=torch.bool, device=M_t.device)
+        loss_orth = (M_t @ M_t.t())[off].pow(2).mean()
         losses = {
             "src_ce": loss_src_ce,
             "dann": loss_dann,
             "tgt_ce": loss_tgt_ce,
             "tri": loss_tri,
             "xconf": loss_xconf,
+            "orth": loss_orth,
         }
         diag = {
             "pool_size": float(self.pool.size),
             "agree_rate": agree_rate,
+            "M_s_offdiag_max": self._offdiag_max(M_s),
             "M_t_offdiag_max": self._offdiag_max(M_t),
         }
         return losses, diag

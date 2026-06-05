@@ -157,7 +157,7 @@ def train(
     lam1_scale: float = 1.0,
     lam2_scale: float = 1.0,
     lam3_scale: float = 1.0,
-    transfer_loss_weight: float = 1.0,
+    lam4_scale: float = 1.0,
     cluster_weight: float = 2.0,
     weight_decay: float = 1e-5,
     test_metadata: list | None = None,
@@ -241,8 +241,9 @@ def train(
         loss_cluster = 0.0
         loss_p = 0.0
         loss_xconf_acc = 0.0
+        loss_orth_acc = 0.0
 
-        diag = {"pool_size": 0.0, "M_t_offdiag_max": 0.0, "agree_rate": 0.0}
+        diag = {"pool_size": 0.0, "M_s_offdiag_max": 0.0, "M_t_offdiag_max": 0.0, "agree_rate": 0.0}
 
         for batch_idx in range(n_batch):
             try:
@@ -277,6 +278,7 @@ def train(
                     + lam1 * lam1_scale * losses["tgt_ce"]
                     + lam2 * lam2_scale * losses["tri"]
                     + lam3 * lam3_scale * losses["xconf"]
+                    + lam4_scale * losses["orth"]
                 )
 
                 # Skeleton: total_loss may be a 0-d zero tensor with no grad. Guard.
@@ -291,6 +293,7 @@ def train(
                 loss_cluster += losses["tgt_ce"].detach().item()
                 loss_p += losses["tri"].detach().item()
                 loss_xconf_acc += losses["xconf"].detach().item()
+                loss_orth_acc += losses["orth"].detach().item()
             except RuntimeError as exc:
                 error_text = str(exc)
                 if "cuda" not in error_text.lower():
@@ -365,7 +368,7 @@ def train(
 
             logger.info(
                 "Epoch {}/{} | src_ce: {:.4f}, dann: {:.4f}, tgt_ce: {:.4f}, "
-                "tri: {:.4f}, xconf: {:.4f}, source_acc: {:.4f}, target_acc: {:.4f}, best_acc: {:.4f}",
+                "tri: {:.4f}, xconf: {:.4f}, orth: {:.4f}, source_acc: {:.4f}, target_acc: {:.4f}, best_acc: {:.4f}",
                 epoch + 1,
                 epochs,
                 loss_clf / n_batch,
@@ -373,15 +376,17 @@ def train(
                 loss_cluster / n_batch,
                 loss_p / n_batch,
                 loss_xconf_acc / n_batch,
+                loss_orth_acc / n_batch,
                 source_acc,
                 target_acc,
                 best_acc,
             )
             logger.info(
-                "Epoch {}/{} | pool_size: {}, agree_rate: {:.4f}, M_t_offdiag_max: {:.4f}",
+                "Epoch {}/{} | pool_size: {}, agree_rate: {:.4f}, M_s_offdiag_max: {:.4f}, M_t_offdiag_max: {:.4f}",
                 epoch + 1, epochs,
                 int(diag["pool_size"]),
                 diag["agree_rate"],
+                diag["M_s_offdiag_max"],
                 diag["M_t_offdiag_max"],
             )
 
