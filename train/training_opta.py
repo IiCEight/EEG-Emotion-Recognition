@@ -269,7 +269,7 @@ def train(
                     + losses["dann"]
                     + lam1 * losses["tgt_ce"]
                     + lam2 * losses["tri"]
-                    # + lam3 * losses["xconf"]
+                    + lam3 * losses["xconf"]
                 )
 
                 # Skeleton: total_loss may be a 0-d zero tensor with no grad. Guard.
