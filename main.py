@@ -108,6 +108,7 @@ def main(
         sample_length=sample_length,
         stride=stride,
         trim_trial_start_pct=trim_trial_start_pct,
+        label_type=label_type,
     )
 
     # This help a lot.

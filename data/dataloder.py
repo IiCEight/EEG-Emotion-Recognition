@@ -6,6 +6,7 @@ from pathlib import Path
 from loguru import logger
 
 from data.load.load_deap import load_deap
+from data.load.load_dreamer import load_dreamer
 from data.load.load_seed import load_seed
 from data.load.load_seed_raw import load_seed_raw
 from data.load.load_seed_iv import load_seed_iv
@@ -29,6 +30,7 @@ def _build_cache_path(
     sample_length: int = 1,
     stride: int | None = None,
     trim_trial_start_pct: float = 0.0,
+    label_type: str | None = None,
 ) -> Path:
     cache_key_payload = {
         "cache_version": _CACHE_VERSION,
@@ -38,6 +40,8 @@ def _build_cache_path(
         "stride": stride if stride is not None else sample_length,
         "trim_trial_start_pct": trim_trial_start_pct,
     }
+    if label_type is not None:
+        cache_key_payload["label_type"] = label_type
     cache_key = hashlib.md5(
         json.dumps(cache_key_payload, sort_keys=True).encode("utf-8")
     ).hexdigest()
@@ -52,6 +56,7 @@ def load_data(
     sample_length: int = 1,
     stride: int | None = None,
     trim_trial_start_pct: float = 0.0,
+    label_type: str = "valence",
 ) -> tuple[ak.Array, ak.Array, int, int, int, int]:
     """
     return:
@@ -68,6 +73,7 @@ def load_data(
         # "DEAP": load_deap, TODO.
         "SEED": load_seed,
         "SEED_IV": load_seed_iv,
+        "DREAMER": load_dreamer,
     }
 
     if _to_plain_str(dataset_name) not in function_map:
@@ -82,6 +88,7 @@ def load_data(
             sample_length=sample_length,
             stride=stride,
             trim_trial_start_pct=trim_trial_start_pct,
+            label_type=label_type if _to_plain_str(dataset_name) == "DREAMER" else None,
         )
         if cache_path.exists():
             try:
@@ -98,6 +105,8 @@ def load_data(
     name = _to_plain_str(dataset_name)
     if name == "SEED" and sample_length > 1:
         result = load_seed_raw(dataset_path, sample_length=sample_length, stride=stride)
+    elif name == "DREAMER":
+        result = load_dreamer(dataset_path, label_type=label_type, trim_trial_start_pct=trim_trial_start_pct)
     else:
         result = function_map[name](dataset_path, trim_trial_start_pct=trim_trial_start_pct)
 

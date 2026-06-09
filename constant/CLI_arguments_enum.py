@@ -21,6 +21,7 @@ class DatasetName(str, Enum):
     DEAP = "DEAP"
     SEED = "SEED"
     SEED_IV = "SEED_IV"
+    DREAMER = "DREAMER"
 
 # Log severity levels
 class LevelName(str, Enum):
