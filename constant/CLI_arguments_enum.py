@@ -38,3 +38,10 @@ class SplitTypeName(str, Enum):
     KFOLD = "kfold"
     LEAVE_ONE_SUBJECT_OUT = "loso"
     TRAIN_TEST_VALIDATION = "ttv"
+
+class OPTAAblation(str, Enum):
+    NONE = "none"
+    NO_CONF = "no_conf"
+    NO_SINKHORN = "no_sinkhorn"
+    NO_POOL = "no_pool"
+    KMEANS = "kmeans"
