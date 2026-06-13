@@ -9,6 +9,7 @@ from model.prpl import FeatureExtractor as MlpFeatureExtractor
 from model.prototype_adaptation import PrototypeAdaptation
 from model.residual_gcn import MulipleResidualGCN
 from utils.graphConstructionFromStandard import get_adj_from_standard
+from utils.graph_construction_dreamer import get_dreamer_adj_from_standard
 from utils.graph_construction import get_domain_general_adj, get_weighted_adj
 
 
@@ -106,7 +107,10 @@ class FeatureExtractor(nn.Module):
         # else:
         #     _adj_init = get_domain_general_adj()
         logger.info("Use direct distance as adjeceny matrix for GCN.")
-        _adj_init = get_adj_from_standard()
+        if num_electrodes == 14:
+            _adj_init = get_dreamer_adj_from_standard()
+        else:
+            _adj_init = get_adj_from_standard()
         self.adj = nn.Parameter(torch.tensor(_adj_init).float(), requires_grad=True)
 
         self.data_bn = nn.BatchNorm1d(num_feature)
