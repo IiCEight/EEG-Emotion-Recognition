@@ -1,0 +1,186 @@
+13:51:12 | INFO     __main__ main     87  CUDA Available: True
+13:51:13 | INFO     __main__ main     88  Device Count: 1
+13:51:13 | INFO     __main__ main     90  GPU Name: NVIDIA GeForce RTX 4090
+13:51:13 | INFO     __main__ main     92  Launching....
+model_name: ModelName.OPTA
+dataset: DatasetName.DREAMER
+dataset_path: ../data/DREAMER
+cache_dir: ./cache
+device: cuda
+logging level: LevelName.INFO
+task type: TaskTypeName.SUBJECT_INDEPENDENT
+split type: SplitTypeName.LEAVE_ONE_SUBJECT_OUT
+batch_size: 32
+epochs: 1000
+data random: False
+random seed: 42
+failure_log: None
+only one experiment: False
+only one session: True
+learning rate: 0.001
+early stop patience: 0
+use_gcn: True
+time_steps: 2
+trim_trial_start_pct: 0.0
+opta_pool_capacity: 256
+sinkhorn_warmup_epochs: 1000
+13:51:13 | INFO     data.dataloder load_data 70  Loading dataset DatasetName.DREAMER from path ../data/DREAMER
+13:51:13 | INFO     data.load.load_dreamer load_dreamer 86  Loading DREAMER dataset from ../data/DREAMER/DREAMER.mat
+13:53:54 | INFO     data.load.load_dreamer load_dreamer 140 DREAMER loaded: 23 subjects, 18 trials/subject, 3 classes (valence)
+13:53:54 | INFO     data.dataloder load_data 118 Dataset cache saved: cache/dreamer_f7141757e062f196b44a144d0fcc5b8c.pkl
+13:53:58 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+13:53:58 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (82016, 14, 5), label shape: (82016,)
+13:53:58 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+13:53:58 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (3728, 14, 5), label shape: (3728,)
+13:53:58 | INFO     model.saber __init__ 108 Use direct distance as adjeceny matrix for GCN.
+13:53:58 | INFO     train.training_opta train    164 len of train data: 82016, len of test data: 3728
+╭───────────────────────────────────────── Traceback (most recent call last) ──────────────────────────────────────────╮
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/main.py:172 in main                                                      │
+│                                                                                                                      │
+│   169 │   │   │   │   │   pool_capacity=opta_pool_capacity,                                                          │
+│   170 │   │   │   │   │   sinkhorn_warmup_epochs=sinkhorn_warmup_epochs,                                             │
+│   171 │   │   │   │   ).to(device)                                                                                   │
+│ ❱ 172 │   │   │   │   training_opta.train(                                                                           │
+│   173 │   │   │   │   │   model, metric, train_data, train_labels, test_data, test_labels,                           │
+│   174 │   │   │   │   │   batch_size, num_classes, device, epochs, task_type, subject_id,                            │
+│   175 │   │   │   │   │   session_id, learning_rate, early_stop_patience,                                            │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/train/training_opta.py:257 in train                                      │
+│                                                                                                                      │
+│   254 │   │   │   tgt_data = tgt_data.to(device)                                                                     │
+│   255 │   │   │                                                                                                      │
+│   256 │   │   │   try:                                                                                               │
+│ ❱ 257 │   │   │   │   losses, diag = model(src_data, tgt_data, src_label, epoch, epochs)                             │
+│   258 │   │   │   │   if dataset == CLI_arguments_enum.DatasetName.SEED_IV:                                          │
+│   259 │   │   │   │   │   lam1 = 2.0 * (2.0 / (1.0 + math.exp(-epoch / max(1, epochs))) - 1.0)                       │
+│   260 │   │   │   │   │   lam2 = 0.5                                                                                 │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1773 in    │
+│ _wrapped_call_impl                                                                                                   │
+│                                                                                                                      │
+│   1770 │   │   if self._compiled_call_impl is not None:                                                              │
+│   1771 │   │   │   return self._compiled_call_impl(*args, **kwargs)  # type: ignore[misc]                            │
+│   1772 │   │   else:                                                                                                 │
+│ ❱ 1773 │   │   │   return self._call_impl(*args, **kwargs)                                                           │
+│   1774 │                                                                                                             │
+│   1775 │   # torchrec tests the code consistency with the following code                                             │
+│   1776 │   # fmt: off                                                                                                │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1784 in    │
+│ _call_impl                                                                                                           │
+│                                                                                                                      │
+│   1781 │   │   if not (self._backward_hooks or self._backward_pre_hooks or self._forward_hooks                       │
+│   1782 │   │   │   │   or _global_backward_pre_hooks or _global_backward_hooks                                       │
+│   1783 │   │   │   │   or _global_forward_hooks or _global_forward_pre_hooks):                                       │
+│ ❱ 1784 │   │   │   return forward_call(*args, **kwargs)                                                              │
+│   1785 │   │                                                                                                         │
+│   1786 │   │   result = None                                                                                         │
+│   1787 │   │   called_always_called_hooks = set()                                                                    │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/model/opta.py:185 in forward                                             │
+│                                                                                                                      │
+│   182 │   │   max_iter: int,                                                                                         │
+│   183 │   ):                                                                                                         │
+│   184 │   │   self._ensure_pool(source.device)                                                                       │
+│ ❱ 185 │   │   f_s = self.feature_extractor(source)                                                                   │
+│   186 │   │   f_t = self.feature_extractor(target)                                                                   │
+│   187 │   │   B = f_s.size(0)                                                                                        │
+│   188                                                                                                                │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1773 in    │
+│ _wrapped_call_impl                                                                                                   │
+│                                                                                                                      │
+│   1770 │   │   if self._compiled_call_impl is not None:                                                              │
+│   1771 │   │   │   return self._compiled_call_impl(*args, **kwargs)  # type: ignore[misc]                            │
+│   1772 │   │   else:                                                                                                 │
+│ ❱ 1773 │   │   │   return self._call_impl(*args, **kwargs)                                                           │
+│   1774 │                                                                                                             │
+│   1775 │   # torchrec tests the code consistency with the following code                                             │
+│   1776 │   # fmt: off                                                                                                │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1784 in    │
+│ _call_impl                                                                                                           │
+│                                                                                                                      │
+│   1781 │   │   if not (self._backward_hooks or self._backward_pre_hooks or self._forward_hooks                       │
+│   1782 │   │   │   │   or _global_backward_pre_hooks or _global_backward_hooks                                       │
+│   1783 │   │   │   │   or _global_forward_hooks or _global_forward_pre_hooks):                                       │
+│ ❱ 1784 │   │   │   return forward_call(*args, **kwargs)                                                              │
+│   1785 │   │                                                                                                         │
+│   1786 │   │   result = None                                                                                         │
+│   1787 │   │   called_always_called_hooks = set()                                                                    │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/model/saber.py:126 in forward                                            │
+│                                                                                                                      │
+│   123 │   │   x = self.data_bn(x)                                                                                    │
+│   124 │   │   x = x.unsqueeze(2)                                                                                     │
+│   125 │   │                                                                                                          │
+│ ❱ 126 │   │   g_feat, _ = self.mrgcn(x, self.adj)                                                                    │
+│   127 │   │                                                                                                          │
+│   128 │   │   out = self.fc1(g_feat.reshape(g_feat.size(0), -1))                                                     │
+│   129 │   │   out = F.relu(out)                                                                                      │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1773 in    │
+│ _wrapped_call_impl                                                                                                   │
+│                                                                                                                      │
+│   1770 │   │   if self._compiled_call_impl is not None:                                                              │
+│   1771 │   │   │   return self._compiled_call_impl(*args, **kwargs)  # type: ignore[misc]                            │
+│   1772 │   │   else:                                                                                                 │
+│ ❱ 1773 │   │   │   return self._call_impl(*args, **kwargs)                                                           │
+│   1774 │                                                                                                             │
+│   1775 │   # torchrec tests the code consistency with the following code                                             │
+│   1776 │   # fmt: off                                                                                                │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1784 in    │
+│ _call_impl                                                                                                           │
+│                                                                                                                      │
+│   1781 │   │   if not (self._backward_hooks or self._backward_pre_hooks or self._forward_hooks                       │
+│   1782 │   │   │   │   or _global_backward_pre_hooks or _global_backward_hooks                                       │
+│   1783 │   │   │   │   or _global_forward_hooks or _global_forward_pre_hooks):                                       │
+│ ❱ 1784 │   │   │   return forward_call(*args, **kwargs)                                                              │
+│   1785 │   │                                                                                                         │
+│   1786 │   │   result = None                                                                                         │
+│   1787 │   │   called_always_called_hooks = set()                                                                    │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/model/residual_gcn.py:82 in forward                                      │
+│                                                                                                                      │
+│    79 │   def forward(self, x, adj=None):                                                                            │
+│    80 │   │   # adj: [N, N] global learned adjacency                                                                 │
+│    81 │   │   # Returns per-sample adjacency [B, N, N]                                                               │
+│ ❱  82 │   │   adj_batch = self.adaptive_adj(x, adj)  # [B, N, N]                                                     │
+│    83 │   │                                                                                                          │
+│    84 │   │   output = []                                                                                            │
+│    85 │   │   output.append(x)                                                                                       │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1773 in    │
+│ _wrapped_call_impl                                                                                                   │
+│                                                                                                                      │
+│   1770 │   │   if self._compiled_call_impl is not None:                                                              │
+│   1771 │   │   │   return self._compiled_call_impl(*args, **kwargs)  # type: ignore[misc]                            │
+│   1772 │   │   else:                                                                                                 │
+│ ❱ 1773 │   │   │   return self._call_impl(*args, **kwargs)                                                           │
+│   1774 │                                                                                                             │
+│   1775 │   # torchrec tests the code consistency with the following code                                             │
+│   1776 │   # fmt: off                                                                                                │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1784 in    │
+│ _call_impl                                                                                                           │
+│                                                                                                                      │
+│   1781 │   │   if not (self._backward_hooks or self._backward_pre_hooks or self._forward_hooks                       │
+│   1782 │   │   │   │   or _global_backward_pre_hooks or _global_backward_hooks                                       │
+│   1783 │   │   │   │   or _global_forward_hooks or _global_forward_pre_hooks):                                       │
+│ ❱ 1784 │   │   │   return forward_call(*args, **kwargs)                                                              │
+│   1785 │   │                                                                                                         │
+│   1786 │   │   result = None                                                                                         │
+│   1787 │   │   called_always_called_hooks = set()                                                                    │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/model/residual_gcn.py:44 in forward                                      │
+│                                                                                                                      │
+│    41 │   │   A_sample = torch.tanh(                                                                                 │
+│    42 │   │   │   Q.permute(0, 2, 1) @ K / scale     # [B, N, N]                                                     │
+│    43 │   │   )                                                                                                      │
+│ ❱  44 │   │   adj = adj_global.unsqueeze(0) + self.alpha * A_sample                                                  │
+│    45 │   │   return torch.relu(adj)                  # [B, N, N] non-negative                                       │
+│    46                                                                                                                │
+│    47                                                                                                                │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+RuntimeError: The size of tensor a (62) must match the size of tensor b (14) at non-singleton dimension 2

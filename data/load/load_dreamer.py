@@ -82,7 +82,7 @@ def load_dreamer(
         raise ValueError(f"label_type must be one of {list(label_idx)}, got '{label_type}'")
     l_idx = label_idx[label_type]
 
-    file_path = dir_path + "/../data/DREAMER.mat"
+    file_path = dir_path + "/DREAMER.mat"
     logger.info("Loading DREAMER dataset from {}", file_path)
     mat = loadmat(file_path)["DREAMER"]
 

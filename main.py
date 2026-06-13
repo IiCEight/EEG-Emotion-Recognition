@@ -31,10 +31,10 @@ def main(
     ] = cli_enum.ModelName.OPTA,
     dataset: Annotated[
         cli_enum.DatasetName, typer.Option(help='dataset name')
-    ] = cli_enum.DatasetName.SEED,
+    ] = cli_enum.DatasetName.DREAMER,
     dataset_path: Annotated[
         str, typer.Option(help='path to the dataset')
-    ] = '../data/SEED',
+    ] = '../data/DREAMER',
     cache_dir: Annotated[str | None, typer.Option(
         help='cache directory for loaded dataset (disabled if not set)')] = './cache',
     device: Annotated[str, typer.Option(
