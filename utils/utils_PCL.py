@@ -15,7 +15,7 @@ import time
 
 # dataset_path = {'seed4': '/home/ubuntu-user/Desktop/seed iv', 'seed3': '/home/ubuntu-user/Desktop/seed', 'deafseed3':'/home/ubuntu-user/Desktop/deaf'}
 # dataset_path = {'seed4': 'G:\Database\seed_iv\eeg_feature_smooth', 'seed3': 'G:\Database\seed', 'deafseed3':'G:\Database\deaf'}
-dataset_path = {'seed4': '/home/user_yy/Dataset/seed_iv', 'seed3': '../data/SEED/ExtractedFeatures','deafseed3':'/home/user_yy/Dataset/deafseed'}
+dataset_path = {'seed4': '../data/SEED_IV/eeg_feature_smooth', 'seed3': '../data/SEED/ExtractedFeatures','deafseed3':'/home/user_yy/Dataset/deafseed'}
 
 
 def norminx(data):
@@ -292,7 +292,10 @@ def get_allmats_name(dataset_name):
             if session != '3':
                 mats = os.listdir(path + '/' + session)
                 mats.sort()
-                mats = [mats[0]] + mats[7:] + mats[1:7]
+                # mats = [mats[14]] + mats[7:14] + mats[0:7]
+                mats = mats[6:] + mats[:6]
+                print("session: ", session)
+                print(mats)
                 mats_list = []
                 for mat in mats:
                     mats_list.append(mat)

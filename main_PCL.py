@@ -329,33 +329,6 @@ def train_epoch(model: nn.Module, domain_discriminator: nn.Module,
             tar_idx.to(args.device)
         )
 
-        # === DBG[C] per-batch (first 3 of each epoch) ===
-        if batch_idx < 3:
-            print(f"[DBG-C] ep={epoch} b={batch_idx} "
-                  f"src_idx[:8]={src_idx[:8].cpu().tolist()} "
-                  f"tar_idx[:8]={tar_idx[:8].cpu().tolist()} "
-                  f"src_label[:8]={src_label[:8].cpu().tolist()}")
-            print(f"[DBG-C] ep={epoch} b={batch_idx} "
-                  f"{_dbg_tstat('src_feat', src_data)}")
-            print(f"[DBG-C] ep={epoch} b={batch_idx} "
-                  f"{_dbg_tstat('tar_feat', tar_data)}")
-
-        # === DBG[E] gate the model only at ep=0 b=0 ===
-        if epoch == 0 and batch_idx == 0:
-            model._dbg = True
-            src_bytes = src_data.detach().cpu().contiguous().view(torch.uint8)
-            tar_bytes = tar_data.detach().cpu().contiguous().view(torch.uint8)
-            print(f"[DBG-E0] src_feat bytes_sum={src_bytes.sum().item()} "
-                  f"first16={src_bytes.flatten()[:16].tolist()}")
-            print(f"[DBG-E0] tar_feat bytes_sum={tar_bytes.sum().item()} "
-                  f"first16={tar_bytes.flatten()[:16].tolist()}")
-            print(f"[DBG-E0] src_feat[0,:8]={src_data[0,:8].detach().cpu().tolist()}")
-            print(f"[DBG-E0] tar_feat[0,:8]={tar_data[0,:8].detach().cpu().tolist()}")
-            print(f"[DBG-E0] src_label[:8]={src_label[:8].detach().cpu().tolist()}")
-            print(f"[DBG-E0] src_idx[:8]={src_idx[:8].detach().cpu().tolist()}")
-            print(f"[DBG-E0] tar_idx[:8]={tar_idx[:8].detach().cpu().tolist()}")
-        else:
-            model._dbg = False
 
         # Forward pass
         (src_output_cls, src_feature, tar_output_cls, tar_feature,
@@ -404,16 +377,6 @@ def train_epoch(model: nn.Module, domain_discriminator: nn.Module,
         loss = (cls_loss + global_transfer_loss + source_loss +
                 boost_factor * target_loss + 0.2 * (cross_domain_loss + in_domain_loss))
 
-        if epoch == 0 and batch_idx == 0:
-            print(f"[DBG-E0] cls_loss={cls_loss.item():.8f} "
-                  f"source_loss={source_loss.item():.8f} "
-                  f"target_loss={target_loss.item():.8f}")
-            print(f"[DBG-E0] global_transfer_loss={global_transfer_loss.item():.8f} "
-                  f"cross_domain_loss={cross_domain_loss.item():.8f} "
-                  f"in_domain_loss={in_domain_loss.item():.8f}")
-            print(f"[DBG-E0] boost_factor={boost_factor:.8f} total_loss={loss.item():.8f}")
-            print(f"[DBG-E0] src_prob_max_mean={src_prob.max(dim=1).values.mean().item():.6f} "
-                  f"mask_count={mask.sum().item()}")
 
         # Check for NaN values
         if torch.isnan(loss).any():
@@ -505,41 +468,10 @@ def main(test_id: int, args: argparse.Namespace) -> Tuple[float, List, List, np.
         max_iter=args.epochs
     )
 
-    # === DBG[A] post-init ===
-    print(f"[DBG-A] subj={test_id} sess={args.session} src_n={source_sample_num} tgt_n={target_sample_num}")
-    print(f"[DBG-A] {_dbg_params('model', model)}")
-    print(f"[DBG-A] {_dbg_params('disc', domain_discriminator)}")
-    print(f"[DBG-A] {_dbg_tstat('GGCN.A', model.encoder.GGCN.A)}")
-
-    # === DBG[A2] dataset[0] byte-fingerprint (BEFORE any DataLoader iteration) ===
-    _src_ds = data_loaders["source_loader"].dataset
-    _tar_ds = data_loaders["target_loader"].dataset
-    s0_feat, s0_idx, s0_lbl = _src_ds[0]
-    t0_feat, t0_idx, t0_lbl = _tar_ds[0]
-    s0_bytes = s0_feat.detach().cpu().contiguous().view(torch.uint8)
-    t0_bytes = t0_feat.detach().cpu().contiguous().view(torch.uint8)
-    print(f"[DBG-A2] src_dataset[0] idx={s0_idx.item()} lbl={s0_lbl.item()} "
-          f"bytes_sum={s0_bytes.sum().item()} first16={s0_bytes.flatten()[:16].tolist()} "
-          f"feat[:8]={s0_feat[:8].tolist()}")
-    print(f"[DBG-A2] tar_dataset[0] idx={t0_idx.item()} lbl={t0_lbl.item()} "
-          f"bytes_sum={t0_bytes.sum().item()} first16={t0_bytes.flatten()[:16].tolist()} "
-          f"feat[:8]={t0_feat[:8].tolist()}")
-    s_last = _src_ds[source_sample_num - 1]
-    t_last = _tar_ds[target_sample_num - 1]
-    print(f"[DBG-A2] src_dataset[-1] idx={s_last[1].item()} lbl={s_last[2].item()} "
-          f"feat[:8]={s_last[0][:8].tolist()}")
-    print(f"[DBG-A2] tar_dataset[-1] idx={t_last[1].item()} lbl={t_last[2].item()} "
-          f"feat[:8]={t_last[0][:8].tolist()}")                      
     # Initialize feature memory banks
     model.eval()
     initialize_source_banks(data_loaders["source_loader"], model, args)
     initialize_target_banks(data_loaders["target_loader"], model, args)
-
-    # === DBG[B] post-bank-init ===
-    print(f"[DBG-B] {_dbg_tstat('source_f_bank', model.source_f_bank)}")
-    print(f"[DBG-B] {_dbg_tstat('target_f_bank', model.target_f_bank)}")
-    print(f"[DBG-B] {_dbg_tstat('source_score_bank', model.source_score_bank)}")
-    print(f"[DBG-B] {_dbg_tstat('target_score_bank', model.target_score_bank)}")
 
     # Training parameters
     best_acc = 0.0
@@ -573,8 +505,8 @@ def main(test_id: int, args: argparse.Namespace) -> Tuple[float, List, List, np.
             # writer.add_scalar("test/loss", test_loss, epoch)
             # writer.add_scalar("test/accuracy", accuracy, epoch)
             # writer.add_scalar("test/best_accuracy", best_acc, epoch)
-
-            logger.info(f"Epoch {epoch}: Test Accuracy={accuracy:.4f}, Best Accuracy={best_acc:.4f}")
+            if epoch % (eval_interval * 20) == 0:
+                logger.info(f"Epoch {epoch}: Test Accuracy={accuracy:.4f}, Best Accuracy={best_acc:.4f}")
 
             # Early stopping conditions
             if accuracy >= 1.0:
@@ -598,30 +530,20 @@ def main(test_id: int, args: argparse.Namespace) -> Tuple[float, List, List, np.
         # for loss_name, loss_value in loss_dict.items():
             # writer.add_scalar(f"train/{loss_name}", loss_value, epoch)
 
-        # === DBG[D] end-of-epoch (only first 30 epochs to keep logs small) ===
-        if epoch < 30:
-            print(f"[DBG-D] ep={epoch} {_dbg_params('model', model)}")
-            print(f"[DBG-D] ep={epoch} {_dbg_params('disc', domain_discriminator)}")
-            print(f"[DBG-D] ep={epoch} {_dbg_tstat('source_f_bank', model.source_f_bank)}")
-            print(f"[DBG-D] ep={epoch} {_dbg_tstat('target_f_bank', model.target_f_bank)}")
-            print(f"[DBG-D] ep={epoch} {_dbg_tstat('source_score_bank', model.source_score_bank)}")
-            print(f"[DBG-D] ep={epoch} {_dbg_tstat('target_score_bank', model.target_score_bank)}")
-            print(f"[DBG-D] ep={epoch} lr={optimizer.param_groups[0]['lr']:.6e} "
-                  f"iter_num={lr_scheduler.iter_num}")
-
         # Learning rate adjustment
         lr_scheduler.step()
 
+        num_batches = len(data_loaders["target_loader"].dataset) // args.batch_size
 
         # Print training progress
-        if epoch % eval_interval == 0 and loss_dict:
-            logger.info(f"Training Loss: Total={loss_dict['total_loss']:.4f}, "
-                        f"cls_loss={loss_dict['cls_loss']:.4f}, "
-                        f"Source={loss_dict['source_loss']:.4f}, "
-                        f"Target={loss_dict['target_loss']:.4f}"
-                        f"Global Transfer={loss_dict['global_transfer_loss']:.4f}, "
-                        f"Cross-Domain={loss_dict['cross_domain_loss']:.4f}, "
-                        f"In-Domain={loss_dict['in_domain_loss']:.4f}"
+        if epoch % (eval_interval * 20) == 0 and loss_dict:
+            logger.info(f"Training Loss: Total={loss_dict['total_loss'] / num_batches:.4f}, "
+                        f"cls_loss={loss_dict['cls_loss'] / num_batches:.4f}, "
+                        f"Source={loss_dict['source_loss'] / num_batches:.4f}, "
+                        f"Target={loss_dict['target_loss'] / num_batches:.4f},"
+                        f"Global Transfer={loss_dict['global_transfer_loss'] / num_batches:.4f}, "
+                        f"Cross-Domain={loss_dict['cross_domain_loss'] / num_batches:.4f}, "
+                        f"In-Domain={loss_dict['in_domain_loss'] / num_batches:.4f}"
                         )
 
     # Final evaluation
@@ -636,11 +558,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Transfer Learning')
 
     # Data parameters
-    parser.add_argument('--dataset', type=str, nargs='?', default='seed3', help='select the dataset')
+    parser.add_argument('--dataset', type=str, nargs='?', default='seed4', help='select the dataset')
     parser.add_argument('--session', type=int, nargs='?', default='0', help='select the session')
-    parser.add_argument('--cls', type=int, nargs='?', default=3, help="emotion classification")
+    parser.add_argument('--cls', type=int, nargs='?', default=4, help="emotion classification")
     parser.add_argument('--in_planes', type=int, nargs='?', default=[5, 62], help="the size of input plane")
-    parser.add_argument('--layers', type=int, nargs='?', default=2, help="DIAM squeeze ratio")
+    parser.add_argument('--layers', type=int, nargs='?', default=3, help="DIAM squeeze ratio")
     parser.add_argument('--hidden_1', type=int, nargs='?', default=256, help="the size of hidden 1")
     parser.add_argument('--hidden_2', type=int, nargs='?', default=64, help="the size of hidden 2")
     parser.add_argument('--k', type=int, nargs='?', default=0.9, help="the size of k")

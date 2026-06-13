@@ -1,0 +1,252 @@
+13:28:12 | INFO     __main__ main     102 CUDA Available: True
+13:28:12 | INFO     __main__ main     103 Device Count: 1
+13:28:12 | INFO     __main__ main     105 GPU Name: NVIDIA GeForce RTX 4090
+13:28:12 | INFO     __main__ main     107 Launching....
+model_name: ModelName.OPTA
+dataset: DatasetName.SEED_IV
+dataset_path: ../data/SEED_IV
+cache_dir: ./cache
+device: cuda
+logging level: LevelName.INFO
+task type: TaskTypeName.SUBJECT_INDEPENDENT
+split type: SplitTypeName.LEAVE_ONE_SUBJECT_OUT
+batch_size: 32
+epochs: 1000
+data random: False
+random seed: 42
+failure_log: None
+only one experiment: False
+only one session: True
+learning rate: 0.001
+early stop patience: 0
+use_gcn: True
+time_steps: 2
+trim_trial_start_pct: 0.0
+opta_pool_capacity: 256
+sinkhorn_warmup_epochs: 1000
+13:28:12 | INFO     data.dataloder load_data 65  Loading dataset DatasetName.SEED_IV from path ../data/SEED_IV
+13:28:12 | INFO     data.dataloder load_data 91  Dataset cache hit: cache/seed_iv_66f7eb7c0b603bf828c6b22f6185a282.pkl
+13:28:18 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+13:28:18 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11914, 62, 5), label shape: (11914,)
+13:28:18 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+13:28:18 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (851, 62, 5), label shape: (851,)
+13:28:18 | INFO     model.saber __init__ 109 Use direct distance as adjeceny matrix for GCN.
+13:28:18 | INFO     train.training_opta train    167 len of train data: 11914, len of test data: 851
+13:28:20 | INFO     utils.metric update   25  --> A new better acc 0.4512 on subject 0 session 0
+13:28:20 | INFO     train.training_opta train    369 Epoch 1/1000 | src_ce: 1.0940, dann: 0.6630, tgt_ce: 0.0868, tri: 0.1401, xconf: 1.1977, orth: 0.6638, source_acc: 53.2986, target_acc: 45.1234, best_acc: 45.1234
+13:28:20 | INFO     train.training_opta train    384 Epoch 1/1000 | pool_size: 156, agree_rate: 0.5000, M_s_offdiag_max: 0.9386, M_t_offdiag_max: 0.9874
+13:28:21 | INFO     utils.metric update   25  --> A new better acc 0.5546 on subject 0 session 0
+13:28:23 | INFO     utils.metric update   25  --> A new better acc 0.6134 on subject 0 session 0
+13:28:32 | INFO     utils.metric update   25  --> A new better acc 0.6263 on subject 0 session 0
+13:28:43 | INFO     model.Adversarial forward  64  iter 1000. Dann coeff 0.019209175258330102
+13:28:50 | INFO     train.training_opta train    369 Epoch 50/1000 | src_ce: 0.0686, dann: 0.7007, tgt_ce: 0.0031, tri: 0.0165, xconf: 0.1066, orth: 0.0292, source_acc: 98.1115, target_acc: 55.4642, best_acc: 62.6322
+13:28:50 | INFO     train.training_opta train    384 Epoch 50/1000 | pool_size: 256, agree_rate: 0.9688, M_s_offdiag_max: 0.2923, M_t_offdiag_max: 0.2971
+13:28:53 | INFO     utils.metric update   25  --> A new better acc 0.6275 on subject 0 session 0
+13:28:55 | INFO     utils.metric update   25  --> A new better acc 0.6792 on subject 0 session 0
+13:29:07 | INFO     utils.metric update   25  --> A new better acc 0.6933 on subject 0 session 0
+13:29:07 | INFO     model.Adversarial forward  64  iter 2000. Dann coeff 0.03842338205764384
+13:29:23 | INFO     train.training_opta train    369 Epoch 100/1000 | src_ce: 0.0110, dann: 0.6949, tgt_ce: 0.0015, tri: 0.0085, xconf: 0.0173, orth: 0.0174, source_acc: 99.6223, target_acc: 67.9201, best_acc: 69.3302
+13:29:23 | INFO     train.training_opta train    384 Epoch 100/1000 | pool_size: 256, agree_rate: 1.0000, M_s_offdiag_max: 0.1693, M_t_offdiag_max: 0.1723
+13:29:35 | INFO     model.Adversarial forward  64  iter 3000. Dann coeff 0.057609218132741
+13:29:57 | INFO     train.training_opta train    369 Epoch 150/1000 | src_ce: 0.0247, dann: 0.7315, tgt_ce: 0.0025, tri: 0.0087, xconf: 0.0328, orth: 0.0115, source_acc: 100.0000, target_acc: 60.0470, best_acc: 69.3302
+13:29:57 | INFO     train.training_opta train    384 Epoch 150/1000 | pool_size: 256, agree_rate: 1.0000, M_s_offdiag_max: 0.1605, M_t_offdiag_max: 0.1775
+13:30:00 | INFO     model.Adversarial forward  64  iter 4000. Dann coeff 0.076752595671981
+13:30:25 | INFO     model.Adversarial forward  64  iter 5000. Dann coeff 0.09583955175599201
+13:30:30 | INFO     train.training_opta train    369 Epoch 200/1000 | src_ce: 0.0108, dann: 0.8566, tgt_ce: 0.0006, tri: 0.0166, xconf: 0.0104, orth: 0.0431, source_acc: 99.8993, target_acc: 58.0494, best_acc: 69.3302
+13:30:30 | INFO     train.training_opta train    384 Epoch 200/1000 | pool_size: 256, agree_rate: 1.0000, M_s_offdiag_max: 0.2948, M_t_offdiag_max: 0.3036
+13:30:50 | INFO     model.Adversarial forward  64  iter 6000. Dann coeff 0.11485628878697662
+13:31:03 | INFO     train.training_opta train    369 Epoch 250/1000 | src_ce: 0.0138, dann: 1.4322, tgt_ce: 0.0026, tri: 0.0283, xconf: 0.0185, orth: 0.2737, source_acc: 100.0000, target_acc: 56.7568, best_acc: 69.3302
+13:31:03 | INFO     train.training_opta train    384 Epoch 250/1000 | pool_size: 256, agree_rate: 1.0000, M_s_offdiag_max: 0.6129, M_t_offdiag_max: 0.6108
+13:31:17 | INFO     model.Adversarial forward  64  iter 7000. Dann coeff 0.133789213892749
+13:31:38 | INFO     train.training_opta train    369 Epoch 300/1000 | src_ce: 0.1258, dann: 5.2713, tgt_ce: 0.1231, tri: 0.1443, xconf: 0.5402, orth: 0.9332, source_acc: 97.4903, target_acc: 58.1669, best_acc: 69.3302
+13:31:38 | INFO     train.training_opta train    384 Epoch 300/1000 | pool_size: 256, agree_rate: 0.9688, M_s_offdiag_max: 0.9828, M_t_offdiag_max: 0.9873
+13:31:43 | INFO     model.Adversarial forward  64  iter 8000. Dann coeff 0.15262497706972145
+13:32:09 | INFO     model.Adversarial forward  64  iter 9000. Dann coeff 0.17135050784232453
+13:32:12 | INFO     train.training_opta train    369 Epoch 350/1000 | src_ce: 1.3190, dann: 57.2775, tgt_ce: 0.0847, tri: 0.4823, xconf: 1.3862, orth: 1.0000, source_acc: 30.8964, target_acc: 9.0482, best_acc: 69.3302
+13:32:12 | INFO     train.training_opta train    384 Epoch 350/1000 | pool_size: 256, agree_rate: 0.3438, M_s_offdiag_max: 0.9999, M_t_offdiag_max: 1.0000
+13:32:35 | INFO     model.Adversarial forward  64  iter 10000. Dann coeff 0.1899530502317457
+13:32:47 | INFO     train.training_opta train    369 Epoch 400/1000 | src_ce: 1.3818, dann: 16.3648, tgt_ce: 0.0493, tri: 0.4907, xconf: 1.3863, orth: 1.0000, source_acc: 26.7081, target_acc: 25.4994, best_acc: 69.3302
+13:32:47 | INFO     train.training_opta train    384 Epoch 400/1000 | pool_size: 256, agree_rate: 0.4062, M_s_offdiag_max: 1.0000, M_t_offdiag_max: 1.0000
+13:33:04 | INFO     model.Adversarial forward  64  iter 11000. Dann coeff 0.20842019584423532
+13:33:23 | INFO     train.training_opta train    369 Epoch 450/1000 | src_ce: 1.3746, dann: 18.4195, tgt_ce: 0.0435, tri: 0.4898, xconf: 1.3863, orth: 1.0000, source_acc: 26.4982, target_acc: 15.3937, best_acc: 69.3302
+13:33:23 | INFO     train.training_opta train    384 Epoch 450/1000 | pool_size: 256, agree_rate: 0.1562, M_s_offdiag_max: 1.0000, M_t_offdiag_max: 1.0000
+13:33:33 | INFO     model.Adversarial forward  64  iter 12000. Dann coeff 0.22673991490823098
+13:34:08 | INFO     model.Adversarial forward  64  iter 13000. Dann coeff 0.24490058510993684
+13:34:08 | INFO     train.training_opta train    369 Epoch 500/1000 | src_ce: 1.3778, dann: 15.2670, tgt_ce: 0.0453, tri: 0.4903, xconf: 1.3863, orth: 1.0000, source_acc: 32.2562, target_acc: 30.4348, best_acc: 69.3302
+13:34:08 | INFO     train.training_opta train    384 Epoch 500/1000 | pool_size: 256, agree_rate: 0.1875, M_s_offdiag_max: 1.0000, M_t_offdiag_max: 1.0000
+13:34:43 | INFO     model.Adversarial forward  64  iter 14000. Dann coeff 0.2628910180984432
+13:34:55 | INFO     train.training_opta train    369 Epoch 550/1000 | src_ce: 1.3875, dann: 10.4034, tgt_ce: 0.0367, tri: 0.4879, xconf: 1.3863, orth: 1.0000, source_acc: 30.4348, target_acc: 30.4348, best_acc: 69.3302
+13:34:55 | INFO     train.training_opta train    384 Epoch 550/1000 | pool_size: 256, agree_rate: 0.0938, M_s_offdiag_max: 1.0000, M_t_offdiag_max: 1.0000
+13:35:18 | INFO     model.Adversarial forward  64  iter 15000. Dann coeff 0.28070048355368016
+13:35:40 | INFO     train.training_opta train    369 Epoch 600/1000 | src_ce: 1.3804, dann: 5.7132, tgt_ce: 0.0609, tri: 0.4868, xconf: 1.3863, orth: 1.0000, source_acc: 30.4348, target_acc: 30.4348, best_acc: 69.3302
+13:35:40 | INFO     train.training_opta train    384 Epoch 600/1000 | pool_size: 256, agree_rate: 0.3750, M_s_offdiag_max: 1.0000, M_t_offdiag_max: 1.0000
+13:35:53 | INFO     model.Adversarial forward  64  iter 16000. Dann coeff 0.29831873073315185
+13:36:24 | INFO     train.training_opta train    369 Epoch 650/1000 | src_ce: 1.3862, dann: 2.6162, tgt_ce: 0.0384, tri: 0.4829, xconf: 1.3863, orth: 1.0000, source_acc: 22.6792, target_acc: 22.6792, best_acc: 69.3302
+13:36:24 | INFO     train.training_opta train    384 Epoch 650/1000 | pool_size: 256, agree_rate: 0.2188, M_s_offdiag_max: 1.0000, M_t_offdiag_max: 1.0000
+13:36:27 | INFO     model.Adversarial forward  64  iter 17000. Dann coeff 0.31573600743618724
+13:37:03 | INFO     model.Adversarial forward  64  iter 18000. Dann coeff 0.3329430763470764
+13:37:11 | INFO     train.training_opta train    369 Epoch 700/1000 | src_ce: 1.3777, dann: 0.8599, tgt_ce: 0.0650, tri: 0.4672, xconf: 1.3863, orth: 1.0000, source_acc: 30.4348, target_acc: 30.4348, best_acc: 69.3302
+13:37:11 | INFO     train.training_opta train    384 Epoch 700/1000 | pool_size: 256, agree_rate: 0.3438, M_s_offdiag_max: 0.9999, M_t_offdiag_max: 1.0000
+13:37:38 | INFO     model.Adversarial forward  64  iter 19000. Dann coeff 0.34993122874063753
+13:37:55 | INFO     train.training_opta train    369 Epoch 750/1000 | src_ce: 1.3779, dann: 0.6933, tgt_ce: 0.0391, tri: 0.1469, xconf: 1.3388, orth: 0.6168, source_acc: 25.4994, target_acc: 25.4994, best_acc: 69.3302
+13:37:55 | INFO     train.training_opta train    384 Epoch 750/1000 | pool_size: 256, agree_rate: 0.0625, M_s_offdiag_max: 0.9886, M_t_offdiag_max: 0.9574
+13:38:12 | INFO     model.Adversarial forward  64  iter 20000. Dann coeff 0.36669229555524385
+13:38:39 | INFO     train.training_opta train    369 Epoch 800/1000 | src_ce: 1.3769, dann: 0.6933, tgt_ce: 0.0383, tri: 0.1804, xconf: 1.3306, orth: 0.4709, source_acc: 25.4994, target_acc: 25.4994, best_acc: 69.3302
+13:38:39 | INFO     train.training_opta train    384 Epoch 800/1000 | pool_size: 256, agree_rate: 0.0938, M_s_offdiag_max: 0.9633, M_t_offdiag_max: 0.9778
+13:38:46 | INFO     model.Adversarial forward  64  iter 21000. Dann coeff 0.38321865585886394
+13:39:21 | INFO     model.Adversarial forward  64  iter 22000. Dann coeff 0.3995032427530367
+13:39:25 | INFO     train.training_opta train    369 Epoch 850/1000 | src_ce: 1.3762, dann: 0.6931, tgt_ce: 0.0432, tri: 0.1938, xconf: 1.3507, orth: 0.4446, source_acc: 30.4348, target_acc: 30.4348, best_acc: 69.3302
+13:39:25 | INFO     train.training_opta train    384 Epoch 850/1000 | pool_size: 256, agree_rate: 0.3750, M_s_offdiag_max: 0.9624, M_t_offdiag_max: 0.9290
+13:39:55 | INFO     model.Adversarial forward  64  iter 23000. Dann coeff 0.4155395467777261
+13:40:10 | INFO     train.training_opta train    369 Epoch 900/1000 | src_ce: 1.3698, dann: 0.6932, tgt_ce: 0.0463, tri: 0.1809, xconf: 1.3322, orth: 0.4473, source_acc: 30.4348, target_acc: 30.4348, best_acc: 69.3302
+13:40:10 | INFO     train.training_opta train    384 Epoch 900/1000 | pool_size: 256, agree_rate: 0.0938, M_s_offdiag_max: 0.9849, M_t_offdiag_max: 0.9136
+13:40:31 | INFO     model.Adversarial forward  64  iter 24000. Dann coeff 0.4313216168965226
+Exception ignored in: <function _releaseLock at 0x72a69d5f3f60>
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/logging/__init__.py", line 243, in _releaseLock
+    def _releaseLock():
+    
+KeyboardInterrupt: 
+╭───────────────────────────────────────── Traceback (most recent call last) ──────────────────────────────────────────╮
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/utils/data/dataloader.py:1285   │
+│ in _try_get_data                                                                                                     │
+│                                                                                                                      │
+│   1282 │   │   # Returns a 2-tuple:                                                                                  │
+│   1283 │   │   #   (bool: whether successfully get data, any: data if successful else None)                          │
+│   1284 │   │   try:                                                                                                  │
+│ ❱ 1285 │   │   │   data = self._data_queue.get(timeout=timeout)                                                      │
+│   1286 │   │   │   return (True, data)                                                                               │
+│   1287 │   │   except Exception as e:                                                                                │
+│   1288 │   │   │   # At timeout and error, we manually check whether any worker has                                  │
+│                                                                                                                      │
+│ /usr/lib/python3.12/multiprocessing/queues.py:122 in get                                                             │
+│                                                                                                                      │
+│   119 │   │   │   finally:                                                                                           │
+│   120 │   │   │   │   self._rlock.release()                                                                          │
+│   121 │   │   # unserialize the data after having released the lock                                                  │
+│ ❱ 122 │   │   return _ForkingPickler.loads(res)                                                                      │
+│   123 │                                                                                                              │
+│   124 │   def qsize(self):                                                                                           │
+│   125 │   │   # Raises NotImplementedError on Mac OSX because of broken sem_getvalue()                               │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/multiprocessing/reductions.py:5 │
+│ 41 in rebuild_storage_fd                                                                                             │
+│                                                                                                                      │
+│   538                                                                                                                │
+│   539                                                                                                                │
+│   540 def rebuild_storage_fd(cls, df, size):                                                                         │
+│ ❱ 541 │   fd = df.detach()                                                                                           │
+│   542 │   try:                                                                                                       │
+│   543 │   │   storage = storage_from_cache(cls, fd_id(fd))                                                           │
+│   544 │   │   if storage is not None:                                                                                │
+│                                                                                                                      │
+│ /usr/lib/python3.12/multiprocessing/resource_sharer.py:57 in detach                                                  │
+│                                                                                                                      │
+│    54 │   │                                                                                                          │
+│    55 │   │   def detach(self):                                                                                      │
+│    56 │   │   │   '''Get the fd.  This should only be called once.'''                                                │
+│ ❱  57 │   │   │   with _resource_sharer.get_connection(self._id) as conn:                                            │
+│    58 │   │   │   │   return reduction.recv_handle(conn)                                                             │
+│    59                                                                                                                │
+│    60                                                                                                                │
+│                                                                                                                      │
+│ /usr/lib/python3.12/multiprocessing/resource_sharer.py:86 in get_connection                                          │
+│                                                                                                                      │
+│    83 │   │   '''Return connection from which to receive identified resource.'''                                     │
+│    84 │   │   from .connection import Client                                                                         │
+│    85 │   │   address, key = ident                                                                                   │
+│ ❱  86 │   │   c = Client(address, authkey=process.current_process().authkey)                                         │
+│    87 │   │   c.send((key, os.getpid()))                                                                             │
+│    88 │   │   return c                                                                                               │
+│    89                                                                                                                │
+│                                                                                                                      │
+│ /usr/lib/python3.12/multiprocessing/connection.py:519 in Client                                                      │
+│                                                                                                                      │
+│    516 │   if family == 'AF_PIPE':                                                                                   │
+│    517 │   │   c = PipeClient(address)                                                                               │
+│    518 │   else:                                                                                                     │
+│ ❱  519 │   │   c = SocketClient(address)                                                                             │
+│    520 │                                                                                                             │
+│    521 │   if authkey is not None and not isinstance(authkey, bytes):                                                │
+│    522 │   │   raise TypeError('authkey should be a byte string')                                                    │
+│                                                                                                                      │
+│ /usr/lib/python3.12/multiprocessing/connection.py:647 in SocketClient                                                │
+│                                                                                                                      │
+│    644 │   family = address_type(address)                                                                            │
+│    645 │   with socket.socket( getattr(socket, family) ) as s:                                                       │
+│    646 │   │   s.setblocking(True)                                                                                   │
+│ ❱  647 │   │   s.connect(address)                                                                                    │
+│    648 │   │   return Connection(s.detach())                                                                         │
+│    649                                                                                                               │
+│    650 #                                                                                                             │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+FileNotFoundError: [Errno 2] No such file or directory
+
+The above exception was the direct cause of the following exception:
+
+╭───────────────────────────────────────── Traceback (most recent call last) ──────────────────────────────────────────╮
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/main.py:189 in main                                                      │
+│                                                                                                                      │
+│   186 │   │   │   │   │   pool_capacity=opta_pool_capacity,                                                          │
+│   187 │   │   │   │   │   sinkhorn_warmup_epochs=sinkhorn_warmup_epochs,                                             │
+│   188 │   │   │   │   ).to(device)                                                                                   │
+│ ❱ 189 │   │   │   │   training_opta.train(                                                                           │
+│   190 │   │   │   │   │   model, metric, train_data, train_labels, test_data, test_labels,                           │
+│   191 │   │   │   │   │   batch_size, num_classes, device, epochs, task_type, subject_id,                            │
+│   192 │   │   │   │   │   session_id, learning_rate, early_stop_patience,                                            │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/train/training_opta.py:250 in train                                      │
+│                                                                                                                      │
+│   247 │   │                                                                                                          │
+│   248 │   │   for batch_idx in range(n_batch):                                                                       │
+│   249 │   │   │   try:                                                                                               │
+│ ❱ 250 │   │   │   │   src_data, src_label = next(source_iter)                                                        │
+│   251 │   │   │   except StopIteration:                                                                              │
+│   252 │   │   │   │   source_iter = iter(source_loader)                                                              │
+│   253 │   │   │   │   src_data, src_label = next(source_iter)                                                        │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/utils/data/dataloader.py:734 in │
+│ __next__                                                                                                             │
+│                                                                                                                      │
+│    731 │   │   │   if self._sampler_iter is None:                                                                    │
+│    732 │   │   │   │   # TODO(https://github.com/pytorch/pytorch/issues/76750)                                       │
+│    733 │   │   │   │   self._reset()  # type: ignore[call-arg]                                                       │
+│ ❱  734 │   │   │   data = self._next_data()                                                                          │
+│    735 │   │   │   self._num_yielded += 1                                                                            │
+│    736 │   │   │   if (                                                                                              │
+│    737 │   │   │   │   self._dataset_kind == _DatasetKind.Iterable                                                   │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/utils/data/dataloader.py:1492   │
+│ in _next_data                                                                                                        │
+│                                                                                                                      │
+│   1489 │   │   │   │   return self._process_data(data, worker_id)                                                    │
+│   1490 │   │   │                                                                                                     │
+│   1491 │   │   │   assert not self._shutdown and self._tasks_outstanding > 0                                         │
+│ ❱ 1492 │   │   │   idx, data = self._get_data()                                                                      │
+│   1493 │   │   │   self._tasks_outstanding -= 1                                                                      │
+│   1494 │   │   │   if self._dataset_kind == _DatasetKind.Iterable:                                                   │
+│   1495 │   │   │   │   # Check for _IterableDatasetStopIteration                                                     │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/utils/data/dataloader.py:1454   │
+│ in _get_data                                                                                                         │
+│                                                                                                                      │
+│   1451 │   │   │   # need to call `.task_done()` because we don't use `.join()`.                                     │
+│   1452 │   │   else:                                                                                                 │
+│   1453 │   │   │   while True:                                                                                       │
+│ ❱ 1454 │   │   │   │   success, data = self._try_get_data()                                                          │
+│   1455 │   │   │   │   if success:                                                                                   │
+│   1456 │   │   │   │   │   return data                                                                               │
+│   1457                                                                                                               │
+│                                                                                                                      │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/utils/data/dataloader.py:1298   │
+│ in _try_get_data                                                                                                     │
+│                                                                                                                      │
+│   1295 │   │   │   │   │   self._mark_worker_as_unavailable(worker_id)                                               │
+│   1296 │   │   │   if len(failed_workers) > 0:                                                                       │
+│   1297 │   │   │   │   pids_str = ", ".join(str(w.pid) for w in failed_workers)                                      │
+│ ❱ 1298 │   │   │   │   raise RuntimeError(                                                                           │
+│   1299 │   │   │   │   │   f"DataLoader worker (pid(s) {pids_str}) exited unexpectedly"                              │
+│   1300 │   │   │   │   ) from e                                                                                      │
+│   1301 │   │   │   if isinstance(e, queue.Empty):                                                                    │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+RuntimeError: DataLoader worker (pid(s) 3068404, 3068405, 3068406, 3068407) exited unexpectedly
