@@ -225,6 +225,33 @@ def normalization_wrt_trial(data:list, type = 'min_max'):
 
     return data
 
+def zscore_wrt_subject(data: list) -> list:
+    """Z-score normalisation matching Tianyang/MSMDAERNet pipeline.
+
+    Each subject's samples are flattened to (N, 310), z-scored with per-feature
+    mean/std computed over that subject's samples, then reshaped back.
+    Sessions are normalised separately.
+
+    input:  list shape (session, subject, trial, sample, electrode, feature)
+    output: same shape, float32
+    """
+    for session_id in range(len(data)):
+        for subject_id in range(len(data[session_id])):
+            subj = data[session_id][subject_id]
+            arr = ak.Array(subj)
+            flat = ak.flatten(arr, axis=1)
+            X = ak.to_numpy(flat).astype(np.float32)   # (N, 62, 5)
+            N, E, F = X.shape
+            X2d = X.reshape(N, E * F)                  # (N, 310)
+            mean = X2d.mean(axis=0)
+            std = X2d.std(axis=0)
+            X2d = (X2d - mean) / (std + 1e-9)
+            X3d = X2d.reshape(N, E, F)
+            ret = ak.unflatten(X3d, ak.num(arr, axis=1), axis=0)
+            data[session_id][subject_id] = ret.to_list()
+    return data
+
+
 def normalization_wrt_subject(data: list, type: str = 'min_max', band_major: bool = False):
     '''
     param {type}: min_max, z_score

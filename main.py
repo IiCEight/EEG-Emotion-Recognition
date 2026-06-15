@@ -9,7 +9,7 @@ from loguru import logger
 
 from constant.model_map import MODEL
 from data.dataloder import load_data
-from data.utils import merge_and_split, normalization_wrt_subject
+from data.utils import merge_and_split, normalization_wrt_subject, zscore_wrt_subject
 from model.saber import Saber
 from model.saber_t import SaberT
 from train.training import train
@@ -77,6 +77,7 @@ def main(
     sinkhorn_warmup_epochs: Annotated[int, typer.Option(
         help='OPTA: epochs to keep Sinkhorn assignments detached before allowing gradients'
     )] = 1000,
+    norm: Annotated[str, typer.Option(help='normalization type: minmax or zscore')] = 'minmax',
     level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
     """Welcome! Use --help option to see usage information."""
@@ -112,7 +113,10 @@ def main(
     )
 
     # This help a lot.
-    normalization_wrt_subject(data)
+    if norm == 'zscore':
+        zscore_wrt_subject(data)
+    else:
+        normalization_wrt_subject(data)
 
     num_sessions = len(labels)
     subject_ids = list(range(num_subjects))
