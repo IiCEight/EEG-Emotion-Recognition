@@ -77,6 +77,10 @@ def main(
     sinkhorn_warmup_epochs: Annotated[int, typer.Option(
         help='OPTA: epochs to keep Sinkhorn assignments detached before allowing gradients'
     )] = 1000,
+    opta_ablation: Annotated[
+        cli_enum.OPTAAblation,
+        typer.Option(help='OPTA ablation variant (none = full model)')
+    ] = cli_enum.OPTAAblation.NONE,
     norm: Annotated[str, typer.Option(help='normalization type: minmax or zscore')] = 'minmax',
     level: Annotated[cli_enum.LevelName, typer.Option('-l', help='level of severity for logging')] = cli_enum.LevelName.INFO,
 ):
@@ -100,6 +104,7 @@ def main(
         + f'\nlearning rate: {learning_rate}\nearly stop patience: {early_stop_patience}'
         + f'\nuse_gcn: {use_gcn}\ntime_steps: {time_steps}\ntrim_trial_start_pct: {trim_trial_start_pct}'
         + f'\nopta_pool_capacity: {opta_pool_capacity}\nsinkhorn_warmup_epochs: {sinkhorn_warmup_epochs}'
+        + f'\nopta_ablation: {opta_ablation}'
     )
 
     data, labels, num_subjects, num_electrodes, num_features, num_classes = load_data(
@@ -172,6 +177,7 @@ def main(
                     max_iter=epochs,
                     pool_capacity=opta_pool_capacity,
                     sinkhorn_warmup_epochs=sinkhorn_warmup_epochs,
+                    ablation=opta_ablation.value,
                 ).to(device)
                 training_opta.train(
                     model, metric, train_data, train_labels, test_data, test_labels,

@@ -112,6 +112,7 @@ class OPTA(nn.Module):
         sinkhorn_iters: int = 3,
         triangulation_margin: float = 0.5,
         sinkhorn_warmup_epochs: int = 100,
+        ablation: str = "none",
     ):
         super().__init__()
         self.num_classes = num_classes
@@ -122,6 +123,7 @@ class OPTA(nn.Module):
         self.sinkhorn_iters = sinkhorn_iters
         self.triangulation_margin = triangulation_margin
         self.sinkhorn_warmup_epochs = sinkhorn_warmup_epochs
+        self.ablation = ablation
         self.feat_dim = 64
 
         if use_gcn:
@@ -207,15 +209,20 @@ class OPTA(nn.Module):
         with torch.no_grad():
             tau_no_grad = self.classifier.log_tau.exp().clamp(min=1e-3)
             p_cls = F.softmax(logits_t, dim=1)
-            p_proto = F.softmax((F.normalize(f_t, dim=1) @ M_s.t()) / tau_no_grad, dim=1)
-            agree = (p_cls.argmax(dim=1) == p_proto.argmax(dim=1)).float()  # [B]
-            geom = (p_cls * p_proto).clamp_min(1e-12).sqrt()                # [B, C]
-            # d_score: discriminator's "looks like source" probability for target
-            d_logits = self.domain_disc(f_t)                                # [B, num_class] (num_class=1 → [B,1])
-            d_score = torch.sigmoid(d_logits).squeeze(-1)                   # [B]
-            c_full = agree.unsqueeze(1) * geom * d_score.unsqueeze(1)       # [B, C]
-            c_score, pseudo_label = c_full.max(dim=1)                       # [B], [B]
-        agree_rate = agree.mean().item()
+            if self.ablation == "no_conf":
+                c_score = p_cls.max(dim=1).values
+                pseudo_label = p_cls.argmax(dim=1)
+                agree_rate = 0.0
+            else:
+                p_proto = F.softmax((F.normalize(f_t, dim=1) @ M_s.t()) / tau_no_grad, dim=1)
+                agree = (p_cls.argmax(dim=1) == p_proto.argmax(dim=1)).float()  # [B]
+                geom = (p_cls * p_proto).clamp_min(1e-12).sqrt()                # [B, C]
+                # d_score: discriminator's "looks like source" probability for target
+                d_logits = self.domain_disc(f_t)                                # [B, num_class] (num_class=1 → [B,1])
+                d_score = torch.sigmoid(d_logits).squeeze(-1)                   # [B]
+                c_full = agree.unsqueeze(1) * geom * d_score.unsqueeze(1)       # [B, C]
+                c_score, pseudo_label = c_full.max(dim=1)                       # [B], [B]
+                agree_rate = agree.mean().item()
 
         # Push top-q% confident target features into FIFO
         q_pct = self._quantile_schedule(epoch, max_iter)
@@ -223,11 +230,41 @@ class OPTA(nn.Module):
         topk_idx = c_score.topk(k).indices
         self.pool.push(F.normalize(f_t[topk_idx], dim=1).detach())
 
-        # Target prototypes via Sinkhorn
-        M_t = target_prototypes(
-            self.pool.view(), M_s, lam=self.sinkhorn_lambda, n_iter=self.sinkhorn_iters,
-            detach_assignments=(epoch < self.sinkhorn_warmup_epochs),
-        )
+        # Target prototypes — branched by ablation
+        if self.ablation == "no_pool":
+            f_t_norm = F.normalize(f_t, dim=1).detach()
+            M_t = target_prototypes(
+                f_t_norm, M_s, lam=self.sinkhorn_lambda, n_iter=self.sinkhorn_iters,
+            )
+        elif self.ablation == "no_sinkhorn":
+            Q = self.pool.view()
+            if Q.size(0) < 3:
+                M_t = M_s.clone()
+            else:
+                hard_assign = (Q @ M_s.t()).argmax(dim=1)
+                M_t = source_prototypes(Q, F.one_hot(hard_assign, self.num_classes).float())
+        elif self.ablation == "kmeans":
+            Q = self.pool.view()
+            if Q.size(0) < 3:
+                M_t = M_s.clone()
+            else:
+                from sklearn.cluster import KMeans
+                Q_np = Q.detach().cpu().numpy()
+                km = KMeans(n_clusters=self.num_classes, n_init=3, random_state=0)
+                cluster_ids = km.fit_predict(Q_np)
+                centers = torch.tensor(km.cluster_centers_, dtype=torch.float32, device=Q.device)
+                sim = F.normalize(centers, dim=1) @ M_s.t()
+                order = sim.argmax(dim=1)
+                aligned = torch.zeros_like(centers)
+                for c in range(self.num_classes):
+                    aligned[order[c]] = centers[c]
+                M_t = F.normalize(aligned, dim=1)
+        else:
+            # none and no_conf: full Sinkhorn on FIFO pool
+            M_t = target_prototypes(
+                self.pool.view(), M_s, lam=self.sinkhorn_lambda, n_iter=self.sinkhorn_iters,
+                detach_assignments=(epoch < self.sinkhorn_warmup_epochs),
+            )
 
         # Pseudo-CE on cosine similarity to M_t, weighted by c_score
         tau = self.classifier.log_tau.exp().clamp(min=1e-3)
