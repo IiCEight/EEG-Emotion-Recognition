@@ -31,12 +31,12 @@ def main(
     ] = cli_enum.ModelName.OPTA,
     dataset: Annotated[
         cli_enum.DatasetName, typer.Option(help='dataset name')
-    ] = cli_enum.DatasetName.DREAMER,
+    ] = cli_enum.DatasetName.SEED_IV,
     dataset_path: Annotated[
         str, typer.Option(help='path to the dataset')
-    ] = '../data/DREAMER',
+    ] = '../data/SEED_IV',
     cache_dir: Annotated[str | None, typer.Option(
-        help='cache directory for loaded dataset (disabled if not set)')] = './cache',
+        help='cache directory for loaded dataset (disabled if not set)')] = None,
     device: Annotated[str, typer.Option(
         help='device to run the model on')] = 'cuda',
     sample_length: Annotated[
@@ -56,7 +56,7 @@ def main(
         typer.Option(help='type of data split (kfold, leave-one-subject-out)'),
     ] = cli_enum.SplitTypeName.LEAVE_ONE_SUBJECT_OUT,
     split_ratio: Annotated[float, typer.Option(help='ratio for train data size')] = 0.6,
-    batch_size: Annotated[int, typer.Option(help='batch size for training')] = 32,
+    batch_size: Annotated[int, typer.Option(help='batch size for training')] = 48,
     epochs: Annotated[int, typer.Option(help='number of epochs for training')] = 1000,
     data_random: Annotated[bool, typer.Option(help='whether to shuffle the data')] = False,
     only_one_experiment: Annotated[bool, typer.Option(help='whether to run only one experiment for debugging')] = False,
@@ -73,7 +73,7 @@ def main(
     )] = 256,
     xconf_ramp_epochs: Annotated[int, typer.Option(
         help='OPTA: epochs over which xconf lam3 ramps from 0 to 0.2'
-    )] = 200,
+    )] = 150,
     sinkhorn_warmup_epochs: Annotated[int, typer.Option(
         help='OPTA: epochs to keep Sinkhorn assignments detached before allowing gradients'
     )] = 1000,
@@ -137,7 +137,11 @@ def main(
 
     skip = 0
 
+    run_session = 1
+
     for session_id in range(num_sessions):
+        if session_id != run_session:
+            continue
         for subject_id in subject_ids:
             if subject_id < skip:
                 continue

@@ -1,0 +1,1511 @@
+14:24:24 | INFO     __main__ main     88  CUDA Available: True
+14:24:24 | INFO     __main__ main     89  Device Count: 1
+14:24:24 | INFO     __main__ main     91  GPU Name: NVIDIA GeForce RTX 4090
+14:24:24 | INFO     __main__ main     93  Launching....
+model_name: ModelName.OPTA
+dataset: DatasetName.SEED_IV
+dataset_path: ../data/SEED_IV
+cache_dir: None
+device: cuda
+logging level: LevelName.INFO
+task type: TaskTypeName.SUBJECT_INDEPENDENT
+split type: SplitTypeName.LEAVE_ONE_SUBJECT_OUT
+batch_size: 32
+epochs: 1000
+data random: False
+random seed: 42
+failure_log: None
+only one experiment: False
+only one session: True
+learning rate: 0.001
+early stop patience: 0
+use_gcn: True
+time_steps: 2
+trim_trial_start_pct: 0.0
+opta_pool_capacity: 256
+sinkhorn_warmup_epochs: 1000
+14:24:24 | INFO     data.dataloder load_data 70  Loading dataset DatasetName.SEED_IV from path ../data/SEED_IV
+14:24:24 | INFO     data.load.load_seed_iv load_seed_iv 66  Loading SEED-IV dataset from path ../data/SEED_IV ...
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 23
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 49
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 32
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 22
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 40
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 38
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 52
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 36
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 42
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 12
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 27
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 54
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 42
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 64
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 23
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 35
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 17
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 23
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 44
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 49
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 49
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 35
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 12
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 32
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 28
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 22
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 32
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 28
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 40
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 43
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 38
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 34
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 52
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 22
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 23
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 36
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 42
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 49
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 12
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 32
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 27
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 40
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 22
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 54
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 40
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 42
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 38
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 38
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 23
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 52
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 64
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 52
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 36
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 35
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 17
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 36
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 42
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 49
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 12
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 44
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 27
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 42
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 35
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 32
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 12
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 12
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 54
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 27
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 28
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 42
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 22
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 28
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 54
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 64
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 43
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 40
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 42
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 34
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 35
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 17
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 64
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 44
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 38
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 35
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 35
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 17
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 12
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 44
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 28
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 52
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 28
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 35
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 36
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 12
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 43
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 28
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 42
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 34
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 12
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 28
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 27
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 43
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 54
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 34
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 42
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 64
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 35
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 17
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 44
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 35
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 12
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 28
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 28
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 43
+14:24:24 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 40
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 52
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 54
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 43
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 40
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 52
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 54
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 43
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 40
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 52
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 54
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 43
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 40
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 52
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 54
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 43
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 40
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 52
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 54
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 43
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 40
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 52
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 54
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 43
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 40
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 52
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 54
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 43
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 40
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 52
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 54
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 43
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 40
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 52
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 54
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 43
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 40
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 52
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 54
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 35
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 43
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 55
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 55
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 25
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 25
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 55
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 25
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 53
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 55
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 53
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 25
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 53
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 53
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 20
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 20
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 20
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 55
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 60
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 60
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 25
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 60
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 15
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 53
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 15
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 20
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 60
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 15
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 10
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 10
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 37
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 37
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 20
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 10
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 24
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 15
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 37
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 60
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 24
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 24
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 10
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 15
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 37
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 24
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 10
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 37
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 24
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 55
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 25
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 53
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 20
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 60
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 15
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 10
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 55
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 37
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 25
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 24
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 53
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 20
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 60
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 15
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 10
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 37
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 24
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 55
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 25
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 53
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 20
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 60
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 15
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 10
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 37
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 24
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 55
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 25
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 53
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 20
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 60
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 15
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 10
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 37
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 24
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 55
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 25
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 53
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 20
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 60
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 15
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 10
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 37
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 24
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 55
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 25
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 53
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 20
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 55
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 60
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 25
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 53
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 15
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 10
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 20
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 37
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 60
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 24
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 15
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 10
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 37
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 24
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 55
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 25
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 53
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 20
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 60
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 55
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 25
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 15
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 53
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 10
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 37
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 24
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 20
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 60
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 15
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 10
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 37
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 24
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 55
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 25
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 53
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 34
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 20
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 60
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 12
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 36
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 27
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 15
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 46
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 49
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 10
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 37
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 24
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 48
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 16
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 51
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 48
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 48
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 48
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 14
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 16
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 16
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 51
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 51
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 16
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 48
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 51
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 14
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 14
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 16
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 14
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 51
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 14
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 48
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 16
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 51
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 14
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 48
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 16
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 51
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 14
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 48
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 48
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 16
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 51
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 16
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 51
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 14
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 14
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 48
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 16
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 51
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 14
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 48
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 16
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 51
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 14
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 48
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 16
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 51
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 14
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 48
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 16
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 51
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 14
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 48
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 16
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 51
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 14
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial0: 42
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial1: 32
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial2: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial3: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial4: 48
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial5: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial6: 64
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial7: 23
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial8: 26
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial9: 16
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial10: 51
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial11: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial12: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial13: 19
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial14: 28
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial15: 44
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial16: 14
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial17: 17
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial18: 45
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial19: 22
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial20: 39
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial21: 38
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial22: 41
+14:24:25 | INFO     data.load.load_seed_iv _parallel_read_seed_iv_feature 44  len of trial23: 39
+14:24:31 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+14:24:31 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11914, 62, 5), label shape: (11914,)
+14:24:31 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+14:24:31 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (851, 62, 5), label shape: (851,)
+14:24:31 | INFO     model.saber __init__ 110 Use direct distance as adjeceny matrix for GCN.
+14:24:31 | INFO     train.training_opta train    164 len of train data: 11914, len of test data: 851
+14:24:33 | INFO     utils.metric update   25  --> A new better acc 0.3725 on subject 0 session 0
+14:24:33 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 1.0365, dann: 0.6940, tgt_ce: 0.0658, tri: 0.1358, xconf: 1.3927, source_acc: 58.8635, target_acc: 37.2503, best_acc: 37.2503
+14:24:33 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 156, agree_rate: 0.5625, M_t_offdiag_max: 0.9706
+14:24:34 | INFO     utils.metric update   25  --> A new better acc 0.5076 on subject 0 session 0
+14:24:35 | INFO     utils.metric update   25  --> A new better acc 0.6686 on subject 0 session 0
+14:24:40 | INFO     utils.metric update   25  --> A new better acc 0.6921 on subject 0 session 0
+14:25:07 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0160, dann: 0.7052, tgt_ce: 0.0004, tri: 0.0067, xconf: 0.0206, source_acc: 99.6055, target_acc: 67.3325, best_acc: 69.2127
+14:25:07 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.1186
+14:25:42 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0376, dann: 1.0065, tgt_ce: 0.0189, tri: 0.0688, xconf: 0.1492, source_acc: 93.6126, target_acc: 65.0999, best_acc: 69.2127
+14:25:42 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 256, agree_rate: 0.9688, M_t_offdiag_max: 0.7414
+14:26:16 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 1.1581, dann: 24.4056, tgt_ce: 0.0776, tri: 0.4960, xconf: 1.3805, source_acc: 37.8378, target_acc: 38.0729, best_acc: 69.2127
+14:26:16 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 256, agree_rate: 0.2812, M_t_offdiag_max: 1.0000
+14:26:51 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 1.3736, dann: 8.7815, tgt_ce: 0.0596, tri: 0.4841, xconf: 1.3862, source_acc: 29.5367, target_acc: 31.4924, best_acc: 69.2127
+14:26:51 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 256, agree_rate: 0.0312, M_t_offdiag_max: 1.0000
+14:27:25 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.2123, dann: 0.6921, tgt_ce: 0.1584, tri: 0.1232, xconf: 0.5605, source_acc: 87.4853, target_acc: 58.1669, best_acc: 69.2127
+14:27:25 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 256, agree_rate: 0.9062, M_t_offdiag_max: 0.9248
+14:27:42 | INFO     utils.metric update   25  --> A new better acc 0.6980 on subject 0 session 0
+14:28:00 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0424, dann: 0.6926, tgt_ce: 0.0008, tri: 0.0071, xconf: 0.0391, source_acc: 99.1355, target_acc: 61.5746, best_acc: 69.8002
+14:28:00 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.3209
+14:28:36 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0129, dann: 0.6950, tgt_ce: 0.0004, tri: 0.0144, xconf: 0.0265, source_acc: 98.9928, target_acc: 55.8167, best_acc: 69.8002
+14:28:36 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.3874
+14:29:11 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0085, dann: 0.6938, tgt_ce: 0.0063, tri: 0.0176, xconf: 0.0399, source_acc: 99.3957, target_acc: 48.7662, best_acc: 69.8002
+14:29:11 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9675
+14:29:53 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.0150, dann: 0.6948, tgt_ce: 0.0373, tri: 0.0573, xconf: 0.1863, source_acc: 99.7734, target_acc: 52.0564, best_acc: 69.8002
+14:29:53 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9776
+14:30:29 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.0413, dann: 0.6945, tgt_ce: 0.0043, tri: 0.0482, xconf: 0.0907, source_acc: 99.3873, target_acc: 52.0564, best_acc: 69.8002
+14:30:29 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9740
+14:31:03 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.0382, dann: 0.6927, tgt_ce: 0.0104, tri: 0.1004, xconf: 0.1618, source_acc: 99.6223, target_acc: 61.3396, best_acc: 69.8002
+14:31:03 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 256, agree_rate: 0.9688, M_t_offdiag_max: 0.9869
+14:31:39 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.0091, dann: 0.6912, tgt_ce: 0.1357, tri: 0.1938, xconf: 0.3464, source_acc: 97.2469, target_acc: 61.3396, best_acc: 69.8002
+14:31:39 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9966
+14:32:13 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.0086, dann: 0.6920, tgt_ce: 0.0281, tri: 0.0695, xconf: 0.4794, source_acc: 91.4219, target_acc: 55.6992, best_acc: 69.8002
+14:32:13 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 256, agree_rate: 0.9375, M_t_offdiag_max: 0.9914
+14:32:47 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.0126, dann: 0.6920, tgt_ce: 0.0138, tri: 0.1172, xconf: 0.2207, source_acc: 99.8909, target_acc: 61.3396, best_acc: 69.8002
+14:32:47 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9963
+14:33:21 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.0074, dann: 0.6932, tgt_ce: 0.0001, tri: 0.0564, xconf: 0.1169, source_acc: 98.7410, target_acc: 57.9318, best_acc: 69.8002
+14:33:21 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9853
+14:33:57 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.0053, dann: 0.6931, tgt_ce: 0.0000, tri: 0.0861, xconf: 0.0115, source_acc: 100.0000, target_acc: 53.2315, best_acc: 69.8002
+14:33:57 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9861
+14:34:40 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.0052, dann: 0.6931, tgt_ce: 0.0000, tri: 0.0966, xconf: 0.0134, source_acc: 99.6223, target_acc: 53.2315, best_acc: 69.8002
+14:34:40 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9902
+14:35:24 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0050, dann: 0.6931, tgt_ce: 0.0000, tri: 0.0768, xconf: 0.0100, source_acc: 100.0000, target_acc: 53.2315, best_acc: 69.8002
+14:35:24 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9867
+14:36:09 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0519, dann: 0.6931, tgt_ce: 0.0000, tri: 0.0532, xconf: 0.0393, source_acc: 100.0000, target_acc: 53.2315, best_acc: 69.8002
+14:36:09 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9733
+14:36:54 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.0062, dann: 0.6931, tgt_ce: 0.0000, tri: 0.0423, xconf: 0.0245, source_acc: 100.0000, target_acc: 53.2315, best_acc: 69.8002
+14:36:54 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9661
+14:36:54 | INFO     __main__ main     194 
+--------------> Finished training w.r.t. subject 0 session 0 acc 0.6980
+14:36:56 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+14:36:56 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11914, 62, 5), label shape: (11914,)
+14:36:56 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+14:36:56 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (851, 62, 5), label shape: (851,)
+14:36:56 | INFO     model.saber __init__ 110 Use direct distance as adjeceny matrix for GCN.
+14:36:56 | INFO     train.training_opta train    164 len of train data: 11914, len of test data: 851
+14:36:57 | INFO     utils.metric update   25  --> A new better acc 0.3690 on subject 1 session 0
+14:36:58 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 1.0769, dann: 0.6962, tgt_ce: 0.0958, tri: 0.1890, xconf: 1.3156, source_acc: 60.0386, target_acc: 36.8978, best_acc: 36.8978
+14:36:58 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 156, agree_rate: 0.6562, M_t_offdiag_max: 0.9811
+14:36:58 | INFO     utils.metric update   25  --> A new better acc 0.6522 on subject 1 session 0
+14:37:02 | INFO     utils.metric update   25  --> A new better acc 0.6698 on subject 1 session 0
+14:37:05 | INFO     utils.metric update   25  --> A new better acc 0.6769 on subject 1 session 0
+14:37:42 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0060, dann: 0.7133, tgt_ce: 0.0267, tri: 0.0287, xconf: 0.0570, source_acc: 99.9496, target_acc: 62.2797, best_acc: 67.6851
+14:37:42 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9939
+14:38:26 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0070, dann: 0.7151, tgt_ce: 0.0082, tri: 0.0132, xconf: 0.0283, source_acc: 100.0000, target_acc: 57.3443, best_acc: 67.6851
+14:38:26 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.7769
+14:38:35 | INFO     utils.metric update   25  --> A new better acc 0.6968 on subject 1 session 0
+14:38:56 | INFO     utils.metric update   25  --> A new better acc 0.7462 on subject 1 session 0
+14:39:11 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0085, dann: 0.7036, tgt_ce: 0.0358, tri: 0.0322, xconf: 0.0996, source_acc: 99.7314, target_acc: 74.6181, best_acc: 74.6181
+14:39:11 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.8955
+14:39:33 | INFO     utils.metric update   25  --> A new better acc 0.7955 on subject 1 session 0
+14:39:55 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.0073, dann: 0.6935, tgt_ce: 0.0131, tri: 0.0201, xconf: 0.0602, source_acc: 99.8153, target_acc: 79.5535, best_acc: 79.5535
+14:39:55 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 256, agree_rate: 0.9375, M_t_offdiag_max: 0.9397
+14:40:38 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.0093, dann: 0.6926, tgt_ce: 0.0525, tri: 0.0547, xconf: 0.2107, source_acc: 98.6990, target_acc: 74.6181, best_acc: 79.5535
+14:40:38 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9818
+14:41:25 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0071, dann: 0.6917, tgt_ce: 0.0144, tri: 0.0642, xconf: 0.2299, source_acc: 97.4568, target_acc: 68.5076, best_acc: 79.5535
+14:41:25 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9942
+14:42:09 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0075, dann: 0.6929, tgt_ce: 0.0066, tri: 0.0611, xconf: 0.2572, source_acc: 96.1390, target_acc: 72.9730, best_acc: 79.5535
+14:42:09 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9943
+14:42:52 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0065, dann: 0.6933, tgt_ce: 0.0001, tri: 0.0210, xconf: 0.1534, source_acc: 99.8489, target_acc: 78.1434, best_acc: 79.5535
+14:42:52 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9561
+14:43:37 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.0057, dann: 0.6926, tgt_ce: 0.0000, tri: 0.0108, xconf: 0.1448, source_acc: 99.0012, target_acc: 79.5535, best_acc: 79.5535
+14:43:37 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 256, agree_rate: 0.9062, M_t_offdiag_max: 0.9803
+14:44:20 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.0080, dann: 0.6926, tgt_ce: 0.0461, tri: 0.0542, xconf: 1.9387, source_acc: 91.6233, target_acc: 65.0999, best_acc: 79.5535
+14:44:20 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 256, agree_rate: 0.7812, M_t_offdiag_max: 0.9940
+14:45:04 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.0079, dann: 0.6934, tgt_ce: 0.0183, tri: 0.0975, xconf: 0.1871, source_acc: 94.5778, target_acc: 76.9683, best_acc: 79.5535
+14:45:04 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9951
+14:45:50 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.0073, dann: 0.6927, tgt_ce: 0.0085, tri: 0.0834, xconf: 0.8354, source_acc: 91.3631, target_acc: 76.9683, best_acc: 79.5535
+14:45:50 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9864
+14:46:35 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.0062, dann: 0.6931, tgt_ce: 0.0000, tri: 0.0440, xconf: 0.0328, source_acc: 99.5635, target_acc: 72.0329, best_acc: 79.5535
+14:46:35 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9843
+14:47:21 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.0052, dann: 0.6933, tgt_ce: 0.0000, tri: 0.0074, xconf: 0.0302, source_acc: 100.0000, target_acc: 72.0329, best_acc: 79.5535
+14:47:21 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9101
+14:48:08 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.0070, dann: 0.6909, tgt_ce: 0.0232, tri: 0.0699, xconf: 1.3655, source_acc: 94.2589, target_acc: 46.5335, best_acc: 79.5535
+14:48:08 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 256, agree_rate: 0.9375, M_t_offdiag_max: 0.9993
+14:48:52 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.0103, dann: 0.6932, tgt_ce: 0.0001, tri: 0.0452, xconf: 7.1519, source_acc: 92.0933, target_acc: 47.2385, best_acc: 79.5535
+14:48:52 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9872
+14:49:36 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.0073, dann: 0.6930, tgt_ce: 0.0003, tri: 0.0390, xconf: 1.8713, source_acc: 90.8007, target_acc: 41.2456, best_acc: 79.5535
+14:49:36 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 256, agree_rate: 0.8438, M_t_offdiag_max: 0.9779
+14:50:20 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0070, dann: 0.6932, tgt_ce: 0.0002, tri: 0.0769, xconf: 0.1880, source_acc: 96.5167, target_acc: 41.2456, best_acc: 79.5535
+14:50:20 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9736
+14:51:05 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0052, dann: 0.6931, tgt_ce: 0.0000, tri: 0.0674, xconf: 0.0216, source_acc: 99.5635, target_acc: 48.7662, best_acc: 79.5535
+14:51:05 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9745
+14:51:49 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.0058, dann: 0.6933, tgt_ce: 0.0002, tri: 0.0533, xconf: 0.0340, source_acc: 99.6391, target_acc: 61.8096, best_acc: 79.5535
+14:51:49 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9771
+14:51:49 | INFO     __main__ main     194 
+--------------> Finished training w.r.t. subject 1 session 0 acc 0.7955
+14:51:50 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+14:51:50 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11914, 62, 5), label shape: (11914,)
+14:51:50 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+14:51:50 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (851, 62, 5), label shape: (851,)
+14:51:50 | INFO     model.saber __init__ 110 Use direct distance as adjeceny matrix for GCN.
+14:51:50 | INFO     train.training_opta train    164 len of train data: 11914, len of test data: 851
+14:51:51 | INFO     utils.metric update   25  --> A new better acc 0.5159 on subject 2 session 0
+14:51:51 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 1.0745, dann: 0.7003, tgt_ce: 0.0858, tri: 0.1817, xconf: 1.5227, source_acc: 58.1249, target_acc: 51.5864, best_acc: 51.5864
+14:51:51 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 156, agree_rate: 0.6250, M_t_offdiag_max: 0.9715
+14:51:52 | INFO     utils.metric update   25  --> A new better acc 0.6698 on subject 2 session 0
+14:51:53 | INFO     utils.metric update   25  --> A new better acc 0.6957 on subject 2 session 0
+14:51:54 | INFO     utils.metric update   25  --> A new better acc 0.7203 on subject 2 session 0
+14:51:55 | INFO     utils.metric update   25  --> A new better acc 0.7286 on subject 2 session 0
+14:52:35 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0061, dann: 0.7012, tgt_ce: 0.0320, tri: 0.0143, xconf: 0.0773, source_acc: 100.0000, target_acc: 61.5746, best_acc: 72.8555
+14:52:35 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9138
+14:53:19 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0058, dann: 0.7000, tgt_ce: 0.0610, tri: 0.0290, xconf: 0.1732, source_acc: 99.5384, target_acc: 54.7591, best_acc: 72.8555
+14:53:19 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9839
+14:54:04 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0062, dann: 0.6958, tgt_ce: 0.0040, tri: 0.0116, xconf: 0.0478, source_acc: 98.7746, target_acc: 54.7591, best_acc: 72.8555
+14:54:04 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9081
+14:54:48 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.0074, dann: 0.6934, tgt_ce: 0.0117, tri: 0.0343, xconf: 0.2770, source_acc: 97.0371, target_acc: 60.6345, best_acc: 72.8555
+14:54:48 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 256, agree_rate: 0.9688, M_t_offdiag_max: 0.9612
+14:55:35 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.0154, dann: 0.6901, tgt_ce: 0.0555, tri: 0.2078, xconf: 0.3080, source_acc: 97.7925, target_acc: 52.7615, best_acc: 72.8555
+14:55:35 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9968
+14:56:18 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0060, dann: 0.6932, tgt_ce: 0.0003, tri: 0.0657, xconf: 0.0251, source_acc: 99.2698, target_acc: 52.7615, best_acc: 72.8555
+14:56:18 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9828
+14:57:01 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0151, dann: 0.6934, tgt_ce: 0.0064, tri: 0.1085, xconf: 0.1228, source_acc: 97.7002, target_acc: 52.7615, best_acc: 72.8555
+14:57:01 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9942
+14:57:45 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0206, dann: 0.6931, tgt_ce: 0.0107, tri: 0.1267, xconf: 0.4077, source_acc: 98.1870, target_acc: 52.7615, best_acc: 72.8555
+14:57:45 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9962
+14:58:28 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.0097, dann: 0.6892, tgt_ce: 0.0145, tri: 0.0749, xconf: 2.2007, source_acc: 93.8979, target_acc: 50.9988, best_acc: 72.8555
+14:58:28 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9984
+14:59:13 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.0081, dann: 0.6940, tgt_ce: 0.0209, tri: 0.0550, xconf: 1.6501, source_acc: 85.0344, target_acc: 43.4783, best_acc: 72.8555
+14:59:13 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9930
+14:59:58 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.0106, dann: 0.6928, tgt_ce: 0.0037, tri: 0.0621, xconf: 1.6436, source_acc: 92.9998, target_acc: 50.9988, best_acc: 72.8555
+14:59:58 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9899
+15:00:41 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.0085, dann: 0.6940, tgt_ce: 0.0165, tri: 0.1432, xconf: 0.2711, source_acc: 91.6149, target_acc: 47.2385, best_acc: 72.8555
+15:00:41 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 256, agree_rate: 0.9688, M_t_offdiag_max: 0.9967
+15:01:26 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.0111, dann: 0.6922, tgt_ce: 0.0244, tri: 0.1413, xconf: 0.4639, source_acc: 93.1089, target_acc: 47.2385, best_acc: 72.8555
+15:01:26 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9929
+15:02:10 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.0054, dann: 0.6931, tgt_ce: 0.0000, tri: 0.0058, xconf: 0.6587, source_acc: 96.4244, target_acc: 47.2385, best_acc: 72.8555
+15:02:10 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9309
+15:02:54 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.0055, dann: 0.6931, tgt_ce: 0.0000, tri: 0.0447, xconf: 0.0241, source_acc: 99.2782, target_acc: 47.2385, best_acc: 72.8555
+15:02:54 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9648
+15:03:40 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.0052, dann: 0.6931, tgt_ce: 0.0000, tri: 0.0464, xconf: 0.2382, source_acc: 97.9352, target_acc: 47.2385, best_acc: 72.8555
+15:03:40 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9762
+15:04:23 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.0068, dann: 0.6907, tgt_ce: 0.0013, tri: 0.0855, xconf: 0.4111, source_acc: 96.4076, target_acc: 48.0611, best_acc: 72.8555
+15:04:23 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9909
+15:05:06 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0089, dann: 0.6907, tgt_ce: 0.0148, tri: 0.0832, xconf: 1.8450, source_acc: 94.4519, target_acc: 57.1093, best_acc: 72.8555
+15:05:06 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9975
+15:05:52 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0072, dann: 0.6933, tgt_ce: 0.0038, tri: 0.0593, xconf: 1.5998, source_acc: 96.8105, target_acc: 45.9459, best_acc: 72.8555
+15:05:52 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9922
+15:06:35 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.0135, dann: 0.6936, tgt_ce: 0.0095, tri: 0.0547, xconf: 2.2839, source_acc: 94.8632, target_acc: 52.9965, best_acc: 72.8555
+15:06:35 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 256, agree_rate: 0.6875, M_t_offdiag_max: 0.9988
+15:06:35 | INFO     __main__ main     194 
+--------------> Finished training w.r.t. subject 2 session 0 acc 0.7286
+15:06:36 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+15:06:36 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11914, 62, 5), label shape: (11914,)
+15:06:36 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+15:06:36 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (851, 62, 5), label shape: (851,)
+15:06:36 | INFO     model.saber __init__ 110 Use direct distance as adjeceny matrix for GCN.
+15:06:36 | INFO     train.training_opta train    164 len of train data: 11914, len of test data: 851
+15:06:37 | INFO     utils.metric update   25  --> A new better acc 0.4148 on subject 3 session 0
+15:06:37 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 1.0520, dann: 0.7033, tgt_ce: 0.0934, tri: 0.1786, xconf: 1.3720, source_acc: 57.7304, target_acc: 41.4806, best_acc: 41.4806
+15:06:37 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 156, agree_rate: 0.7188, M_t_offdiag_max: 0.9853
+15:06:38 | INFO     utils.metric update   25  --> A new better acc 0.4841 on subject 3 session 0
+15:06:39 | INFO     utils.metric update   25  --> A new better acc 0.5817 on subject 3 session 0
+15:06:42 | INFO     utils.metric update   25  --> A new better acc 0.6251 on subject 3 session 0
+15:07:19 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0070, dann: 0.7077, tgt_ce: 0.0016, tri: 0.0106, xconf: 0.0081, source_acc: 100.0000, target_acc: 49.8237, best_acc: 62.5147
+15:07:19 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.5055
+15:08:04 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0064, dann: 0.7067, tgt_ce: 0.0008, tri: 0.0214, xconf: 0.0069, source_acc: 100.0000, target_acc: 49.8237, best_acc: 62.5147
+15:08:04 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.4466
+15:08:49 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0057, dann: 0.7010, tgt_ce: 0.0010, tri: 0.0088, xconf: 0.0184, source_acc: 99.2782, target_acc: 49.8237, best_acc: 62.5147
+15:08:49 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.6587
+15:09:34 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.0087, dann: 0.6957, tgt_ce: 0.0288, tri: 0.0288, xconf: 0.1415, source_acc: 100.0000, target_acc: 49.8237, best_acc: 62.5147
+15:09:34 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9794
+15:10:21 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.0121, dann: 0.6890, tgt_ce: 0.1193, tri: 0.0964, xconf: 0.3565, source_acc: 98.9928, target_acc: 54.7591, best_acc: 62.5147
+15:10:21 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9761
+15:11:04 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0090, dann: 0.6931, tgt_ce: 0.0365, tri: 0.0931, xconf: 0.3510, source_acc: 98.1534, target_acc: 49.8237, best_acc: 62.5147
+15:11:04 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9971
+15:11:50 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0066, dann: 0.6934, tgt_ce: 0.0166, tri: 0.1792, xconf: 0.2254, source_acc: 96.2229, target_acc: 49.8237, best_acc: 62.5147
+15:11:50 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9918
+15:12:33 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0070, dann: 0.6934, tgt_ce: 0.0017, tri: 0.1049, xconf: 0.2047, source_acc: 96.0970, target_acc: 49.0012, best_acc: 62.5147
+15:12:33 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9885
+15:13:18 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.0065, dann: 0.6933, tgt_ce: 0.0027, tri: 0.0577, xconf: 2.2133, source_acc: 92.2864, target_acc: 51.2338, best_acc: 62.5147
+15:13:18 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9859
+15:14:03 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.0060, dann: 0.6933, tgt_ce: 0.0003, tri: 0.0250, xconf: 1.1020, source_acc: 88.9122, target_acc: 49.8237, best_acc: 62.5147
+15:14:03 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9187
+15:14:46 | INFO     utils.metric update   25  --> A new better acc 0.6322 on subject 3 session 0
+15:14:46 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.0080, dann: 0.6904, tgt_ce: 0.0228, tri: 0.0919, xconf: 0.8135, source_acc: 95.0227, target_acc: 63.2197, best_acc: 63.2197
+15:14:46 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9933
+15:15:30 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.0069, dann: 0.6933, tgt_ce: 0.0009, tri: 0.0795, xconf: 0.1667, source_acc: 98.9676, target_acc: 49.8237, best_acc: 63.2197
+15:15:30 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9679
+15:16:17 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.0054, dann: 0.6922, tgt_ce: 0.0023, tri: 0.0183, xconf: 0.2391, source_acc: 97.9856, target_acc: 49.8237, best_acc: 63.2197
+15:16:17 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9861
+15:17:04 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.0067, dann: 0.6931, tgt_ce: 0.0000, tri: 0.0337, xconf: 0.1827, source_acc: 98.7158, target_acc: 49.8237, best_acc: 63.2197
+15:17:04 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 256, agree_rate: 0.9062, M_t_offdiag_max: 0.9699
+15:17:51 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.0146, dann: 0.6909, tgt_ce: 0.0135, tri: 0.1159, xconf: 0.1974, source_acc: 97.2385, target_acc: 49.8237, best_acc: 63.2197
+15:17:51 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9968
+15:18:35 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.0059, dann: 0.6932, tgt_ce: 0.0000, tri: 0.0074, xconf: 0.1885, source_acc: 97.6750, target_acc: 49.8237, best_acc: 63.2197
+15:18:35 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.8951
+15:19:20 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.0057, dann: 0.6926, tgt_ce: 0.0007, tri: 0.0260, xconf: 0.5534, source_acc: 95.7277, target_acc: 49.8237, best_acc: 63.2197
+15:19:20 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9546
+15:20:06 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0085, dann: 0.6929, tgt_ce: 0.0077, tri: 0.0585, xconf: 0.4791, source_acc: 94.6953, target_acc: 38.3079, best_acc: 63.2197
+15:20:06 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9830
+15:20:50 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0062, dann: 0.6931, tgt_ce: 0.0000, tri: 0.0035, xconf: 0.1110, source_acc: 99.5216, target_acc: 38.3079, best_acc: 63.2197
+15:20:50 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.8085
+15:21:37 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.0158, dann: 0.6933, tgt_ce: 0.0002, tri: 0.0142, xconf: 1.7030, source_acc: 93.9147, target_acc: 47.2385, best_acc: 63.2197
+15:21:37 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 256, agree_rate: 0.9062, M_t_offdiag_max: 0.8301
+15:21:38 | INFO     __main__ main     194 
+--------------> Finished training w.r.t. subject 3 session 0 acc 0.6322
+15:21:39 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+15:21:39 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11914, 62, 5), label shape: (11914,)
+15:21:39 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+15:21:39 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (851, 62, 5), label shape: (851,)
+15:21:39 | INFO     model.saber __init__ 110 Use direct distance as adjeceny matrix for GCN.
+15:21:39 | INFO     train.training_opta train    164 len of train data: 11914, len of test data: 851
+15:21:40 | INFO     utils.metric update   25  --> A new better acc 0.3713 on subject 4 session 0
+15:21:40 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 1.0359, dann: 0.6474, tgt_ce: 0.0617, tri: 0.2089, xconf: 1.5097, source_acc: 59.2580, target_acc: 37.1328, best_acc: 37.1328
+15:21:40 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 156, agree_rate: 0.4375, M_t_offdiag_max: 0.9875
+15:21:43 | INFO     utils.metric update   25  --> A new better acc 0.4877 on subject 4 session 0
+15:21:46 | INFO     utils.metric update   25  --> A new better acc 0.5570 on subject 4 session 0
+15:21:47 | INFO     utils.metric update   25  --> A new better acc 0.5981 on subject 4 session 0
+15:22:23 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0054, dann: 0.7006, tgt_ce: 0.0004, tri: 0.0118, xconf: 0.0068, source_acc: 99.7650, target_acc: 31.6099, best_acc: 59.8120
+15:22:23 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.0763
+15:23:07 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0074, dann: 0.7087, tgt_ce: 0.0004, tri: 0.0154, xconf: 0.0103, source_acc: 100.0000, target_acc: 40.0705, best_acc: 59.8120
+15:23:07 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.1632
+15:23:51 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0084, dann: 0.7151, tgt_ce: 0.0037, tri: 0.0129, xconf: 0.0106, source_acc: 99.7986, target_acc: 40.4230, best_acc: 59.8120
+15:23:51 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.3169
+15:24:35 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.0059, dann: 0.7022, tgt_ce: 0.0006, tri: 0.0079, xconf: 0.0070, source_acc: 100.0000, target_acc: 38.3079, best_acc: 59.8120
+15:24:35 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.4144
+15:25:22 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.0224, dann: 0.6905, tgt_ce: 0.1415, tri: 0.1324, xconf: 0.3615, source_acc: 99.5551, target_acc: 37.7203, best_acc: 59.8120
+15:25:22 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9807
+15:26:05 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0081, dann: 0.6941, tgt_ce: 0.0201, tri: 0.0236, xconf: 0.0760, source_acc: 100.0000, target_acc: 36.5452, best_acc: 59.8120
+15:26:05 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9031
+15:26:53 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0074, dann: 0.6923, tgt_ce: 0.0104, tri: 0.0308, xconf: 0.0689, source_acc: 99.6391, target_acc: 36.8978, best_acc: 59.8120
+15:26:53 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9750
+15:27:38 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0114, dann: 0.6930, tgt_ce: 0.0184, tri: 0.0974, xconf: 0.1508, source_acc: 98.0863, target_acc: 43.8308, best_acc: 59.8120
+15:27:38 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 256, agree_rate: 1.0000, M_t_offdiag_max: 0.9854
+15:28:22 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.0086, dann: 0.6928, tgt_ce: 0.0166, tri: 0.1461, xconf: 0.1073, source_acc: 99.2362, target_acc: 36.8978, best_acc: 59.8120
+15:28:22 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 256, agree_rate: 0.9688, M_t_offdiag_max: 0.9928
+15:29:08 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.0184, dann: 0.6927, tgt_ce: 0.0017, tri: 0.0690, xconf: 0.2966, source_acc: 99.4964, target_acc: 47.3561, best_acc: 59.8120
+15:29:08 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 256, agree_rate: 0.8125, M_t_offdiag_max: 0.9950
+Exception ignored in: <function _releaseLock at 0x7e650d457f60>
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/logging/__init__.py", line 243, in _releaseLock
+    def _releaseLock():
+    
+KeyboardInterrupt: 
+╭──────────────────────────────────── Traceback (most recent call last) ─────────────────────────────────────╮
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/utils/data/dataloader │
+│ .py:1285 in _try_get_data                                                                                  │
+│                                                                                                            │
+│   1282 │   │   # Returns a 2-tuple:                                                                        │
+│   1283 │   │   #   (bool: whether successfully get data, any: data if successful else None)                │
+│   1284 │   │   try:                                                                                        │
+│ ❱ 1285 │   │   │   data = self._data_queue.get(timeout=timeout)                                            │
+│   1286 │   │   │   return (True, data)                                                                     │
+│   1287 │   │   except Exception as e:                                                                      │
+│   1288 │   │   │   # At timeout and error, we manually check whether any worker has                        │
+│                                                                                                            │
+│ /usr/lib/python3.12/multiprocessing/queues.py:122 in get                                                   │
+│                                                                                                            │
+│   119 │   │   │   finally:                                                                                 │
+│   120 │   │   │   │   self._rlock.release()                                                                │
+│   121 │   │   # unserialize the data after having released the lock                                        │
+│ ❱ 122 │   │   return _ForkingPickler.loads(res)                                                            │
+│   123 │                                                                                                    │
+│   124 │   def qsize(self):                                                                                 │
+│   125 │   │   # Raises NotImplementedError on Mac OSX because of broken sem_getvalue()                     │
+│                                                                                                            │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/multiprocessing/reduc │
+│ tions.py:541 in rebuild_storage_fd                                                                         │
+│                                                                                                            │
+│   538                                                                                                      │
+│   539                                                                                                      │
+│   540 def rebuild_storage_fd(cls, df, size):                                                               │
+│ ❱ 541 │   fd = df.detach()                                                                                 │
+│   542 │   try:                                                                                             │
+│   543 │   │   storage = storage_from_cache(cls, fd_id(fd))                                                 │
+│   544 │   │   if storage is not None:                                                                      │
+│                                                                                                            │
+│ /usr/lib/python3.12/multiprocessing/resource_sharer.py:57 in detach                                        │
+│                                                                                                            │
+│    54 │   │                                                                                                │
+│    55 │   │   def detach(self):                                                                            │
+│    56 │   │   │   '''Get the fd.  This should only be called once.'''                                      │
+│ ❱  57 │   │   │   with _resource_sharer.get_connection(self._id) as conn:                                  │
+│    58 │   │   │   │   return reduction.recv_handle(conn)                                                   │
+│    59                                                                                                      │
+│    60                                                                                                      │
+│                                                                                                            │
+│ /usr/lib/python3.12/multiprocessing/resource_sharer.py:86 in get_connection                                │
+│                                                                                                            │
+│    83 │   │   '''Return connection from which to receive identified resource.'''                           │
+│    84 │   │   from .connection import Client                                                               │
+│    85 │   │   address, key = ident                                                                         │
+│ ❱  86 │   │   c = Client(address, authkey=process.current_process().authkey)                               │
+│    87 │   │   c.send((key, os.getpid()))                                                                   │
+│    88 │   │   return c                                                                                     │
+│    89                                                                                                      │
+│                                                                                                            │
+│ /usr/lib/python3.12/multiprocessing/connection.py:519 in Client                                            │
+│                                                                                                            │
+│    516 │   if family == 'AF_PIPE':                                                                         │
+│    517 │   │   c = PipeClient(address)                                                                     │
+│    518 │   else:                                                                                           │
+│ ❱  519 │   │   c = SocketClient(address)                                                                   │
+│    520 │                                                                                                   │
+│    521 │   if authkey is not None and not isinstance(authkey, bytes):                                      │
+│    522 │   │   raise TypeError('authkey should be a byte string')                                          │
+│                                                                                                            │
+│ /usr/lib/python3.12/multiprocessing/connection.py:647 in SocketClient                                      │
+│                                                                                                            │
+│    644 │   family = address_type(address)                                                                  │
+│    645 │   with socket.socket( getattr(socket, family) ) as s:                                             │
+│    646 │   │   s.setblocking(True)                                                                         │
+│ ❱  647 │   │   s.connect(address)                                                                          │
+│    648 │   │   return Connection(s.detach())                                                               │
+│    649                                                                                                     │
+│    650 #                                                                                                   │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+FileNotFoundError: [Errno 2] No such file or directory
+
+The above exception was the direct cause of the following exception:
+
+╭──────────────────────────────────── Traceback (most recent call last) ─────────────────────────────────────╮
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/main.py:176 in main                                            │
+│                                                                                                            │
+│   173 │   │   │   │   │   in_features=num_features,                                                        │
+│   174 │   │   │   │   │   num_classes=num_classes,                                                         │
+│   175 │   │   │   │   │   use_gcn=use_gcn,                                                                 │
+│ ❱ 176 │   │   │   │   │   max_iter=epochs,                                                                 │
+│   177 │   │   │   │   │   pool_capacity=opta_pool_capacity,                                                │
+│   178 │   │   │   │   │   sinkhorn_warmup_epochs=sinkhorn_warmup_epochs,                                   │
+│   179 │   │   │   │   ).to(device)                                                                         │
+│                                                                                                            │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/train/training_opta.py:242 in train                            │
+│                                                                                                            │
+│   239 │   │                                                                                                │
+│   240 │   │   for batch_idx in range(n_batch):                                                             │
+│   241 │   │   │   try:                                                                                     │
+│ ❱ 242 │   │   │   │   src_data, src_label = next(source_iter)                                              │
+│   243 │   │   │   except StopIteration:                                                                    │
+│   244 │   │   │   │   source_iter = iter(source_loader)                                                    │
+│   245 │   │   │   │   src_data, src_label = next(source_iter)                                              │
+│                                                                                                            │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/utils/data/dataloader │
+│ .py:734 in __next__                                                                                        │
+│                                                                                                            │
+│    731 │   │   │   if self._sampler_iter is None:                                                          │
+│    732 │   │   │   │   # TODO(https://github.com/pytorch/pytorch/issues/76750)                             │
+│    733 │   │   │   │   self._reset()  # type: ignore[call-arg]                                             │
+│ ❱  734 │   │   │   data = self._next_data()                                                                │
+│    735 │   │   │   self._num_yielded += 1                                                                  │
+│    736 │   │   │   if (                                                                                    │
+│    737 │   │   │   │   self._dataset_kind == _DatasetKind.Iterable                                         │
+│                                                                                                            │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/utils/data/dataloader │
+│ .py:1492 in _next_data                                                                                     │
+│                                                                                                            │
+│   1489 │   │   │   │   return self._process_data(data, worker_id)                                          │
+│   1490 │   │   │                                                                                           │
+│   1491 │   │   │   assert not self._shutdown and self._tasks_outstanding > 0                               │
+│ ❱ 1492 │   │   │   idx, data = self._get_data()                                                            │
+│   1493 │   │   │   self._tasks_outstanding -= 1                                                            │
+│   1494 │   │   │   if self._dataset_kind == _DatasetKind.Iterable:                                         │
+│   1495 │   │   │   │   # Check for _IterableDatasetStopIteration                                           │
+│                                                                                                            │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/utils/data/dataloader │
+│ .py:1454 in _get_data                                                                                      │
+│                                                                                                            │
+│   1451 │   │   │   # need to call `.task_done()` because we don't use `.join()`.                           │
+│   1452 │   │   else:                                                                                       │
+│   1453 │   │   │   while True:                                                                             │
+│ ❱ 1454 │   │   │   │   success, data = self._try_get_data()                                                │
+│   1455 │   │   │   │   if success:                                                                         │
+│   1456 │   │   │   │   │   return data                                                                     │
+│   1457                                                                                                     │
+│                                                                                                            │
+│ /home/isaber/iSaber/EEG-Emotion-Recognition/.venv/lib/python3.12/site-packages/torch/utils/data/dataloader │
+│ .py:1298 in _try_get_data                                                                                  │
+│                                                                                                            │
+│   1295 │   │   │   │   │   self._mark_worker_as_unavailable(worker_id)                                     │
+│   1296 │   │   │   if len(failed_workers) > 0:                                                             │
+│   1297 │   │   │   │   pids_str = ", ".join(str(w.pid) for w in failed_workers)                            │
+│ ❱ 1298 │   │   │   │   raise RuntimeError(                                                                 │
+│   1299 │   │   │   │   │   f"DataLoader worker (pid(s) {pids_str}) exited unexpectedly"                    │
+│   1300 │   │   │   │   ) from e                                                                            │
+│   1301 │   │   │   if isinstance(e, queue.Empty):                                                          │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+RuntimeError: DataLoader worker (pid(s) 1527040, 1527041, 1527042, 1527046) exited unexpectedly

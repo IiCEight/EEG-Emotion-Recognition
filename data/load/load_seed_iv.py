@@ -35,11 +35,17 @@ _FEATURE_INDEX = {
 
 
 def _parallel_read_seed_iv_feature(feature_id, dir_path, file):
+    n_samples = 100
     subject_data = loadmat(f"{dir_path}/{file}")
     keys = list(subject_data.keys())[3:]  # skip __header__, __version__, __globals__
     trail_datas = []
     for i in range(24):
         trail_data = list(np.array(subject_data[keys[i * 4 + feature_id]]).transpose((1, 0, 2)))
+        if (len(trail_data) - n_samples) > 0:
+            logger.info("len of trial{}: {}", i, len(trail_data))
+            pos = len(trail_data) - n_samples
+            trail_data = trail_data[pos:]
+
         trail_datas.append(trail_data)
     return trail_datas
 
