@@ -98,6 +98,7 @@ class FeatureExtractor(nn.Module):
         super().__init__()
         self.chan_num = num_electrodes
         self.band_num = num_feature
+        self.hidden_1 = hidden_2 * 2
         self.hidden_2 = hidden_2
         self.layers = layers
 
@@ -119,8 +120,8 @@ class FeatureExtractor(nn.Module):
         mrgcn_out_channels = (layers + 1) * self.band_num
         flatten_dim = self.chan_num * mrgcn_out_channels
 
-        self.fc1 = nn.Linear(flatten_dim, hidden_2)
-        self.fc2 = nn.Linear(hidden_2, hidden_2)
+        self.fc1 = nn.Linear(flatten_dim, self.hidden_2)
+        self.fc2 = nn.Linear(self.hidden_2, self.hidden_2)
 
     def forward(self, x):
         x = x.reshape(x.size(0), self.band_num, self.chan_num)

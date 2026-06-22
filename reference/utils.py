@@ -1,3 +1,4 @@
+from loguru import logger
 import numpy as np
 import scipy.io as scio
 import torch
@@ -107,6 +108,7 @@ def load_seed4(path, session="all", feature="de_LDS", n_samples=100):
 
             # select last samples
             if (features.shape[0] - n_samples) > 0:
+                logger.info("trim data!!!")
                 pos = features.shape[0] - n_samples
                 features = features[pos:]
 
