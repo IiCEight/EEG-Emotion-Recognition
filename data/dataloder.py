@@ -11,7 +11,6 @@ from data.load.load_seed import load_seed
 from data.load.load_seed_raw import load_seed_raw
 from data.load.load_seed_iv import load_seed_iv
 from data.merge_and_split import merge_and_split_deap, merge_and_split_seed
-from data.preprocess.preprocess_deap import preprocess_deap
 from data.preprocess.preprocess_seed import preprocess_seed
 import awkward as ak
 
