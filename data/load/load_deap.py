@@ -38,3 +38,24 @@ def _compute_de(segments: np.ndarray) -> np.ndarray:
         variance = np.var(filtered, ddof=1, axis=-1)       # (N, C)
         features[:, :, b_i] = 0.5 * np.log(2 * np.pi * np.e * variance)
     return features
+
+
+def _segment(signal: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Segment (T, C, S) into non-overlapping 1-second windows.
+
+    Returns:
+        groups:   (T * n_slices,)  int — 1-indexed trial IDs
+        segments: (T * n_slices, C, 128)
+    """
+    window = SAMPLE_RATE  # 128 samples
+    T, C, S = signal.shape
+    n_slices = (S - window) // window + 1
+    # stack → (T, n_slices, C, window) then flatten trials
+    slices = np.stack(
+        [signal[:, :, i * window: i * window + window] for i in range(n_slices)],
+        axis=1,
+    )  # (T, n_slices, C, window)
+    segments = slices.reshape(T * n_slices, C, window)
+    groups = np.repeat(np.arange(1, T + 1), n_slices)
+    return groups, segments
