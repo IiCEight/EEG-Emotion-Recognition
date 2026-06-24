@@ -116,7 +116,7 @@ def main(
         trim_trial_start_pct=trim_trial_start_pct,
         label_type=label_type,
     )
-
+    print(" number of electrodes: ", num_electrodes, " number of features: ", num_features, " number of classes: ", num_classes)
     # This help a lot.
     if norm == 'zscore':
         zscore_wrt_subject(data)
