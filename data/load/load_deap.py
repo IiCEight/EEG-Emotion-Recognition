@@ -111,3 +111,80 @@ def _lds(data: np.ndarray) -> np.ndarray:
 
     return U.T.reshape(num_t, num_channel, num_feature)
 
+
+def load_deap(
+    dataset_path: str,
+    label_type: str = "valence",
+    trim_trial_start_pct: float = 0.0,
+) -> tuple[list, list, int, int, int, int]:
+    """
+    Load and preprocess the DEAP dataset.
+
+    Returns same contract as load_seed / load_dreamer:
+        data:   list (session=1, subject, trial=40, sample=60, electrode=32, band=5)
+        labels: list (session=1, subject, trial=40, sample=60)  — 0 or 1
+        num_subjects, num_electrodes=32, num_features=5, num_classes=2
+    """
+    if label_type not in _LABEL_IDX:
+        raise ValueError(f"label_type must be one of {list(_LABEL_IDX)}, got '{label_type}'")
+    l_idx = _LABEL_IDX[label_type]
+
+    base_path = Path(dataset_path)
+    subject_files = sorted(base_path.glob("s??.dat"))
+    if not subject_files:
+        raise FileNotFoundError(f"No DEAP subject files (s01.dat…) found in: {base_path}")
+
+    num_subjects = len(subject_files)
+    data = [[]]
+    labels_out = [[]]
+
+    for sub_idx, file_path in enumerate(subject_files):
+        logger.info("DEAP: loading subject {}", file_path.name)
+
+        with open(file_path, "rb") as f:
+            pkl = pickle.load(f, encoding="latin1")
+
+        samples = pkl["data"][:, :NUM_ELECTRODES, :].astype(np.float64)  # (40, 32, 8064)
+        raw_labels = pkl["labels"]                                         # (40, 4)
+
+        baseline_raw = samples[:, :, : BASELINE_DURATION * SAMPLE_RATE]   # (40, 32, 384)
+        stimulus_raw = samples[:, :, BASELINE_DURATION * SAMPLE_RATE :]   # (40, 32, 7680)
+
+        base_groups, baseline_segs = _segment(baseline_raw)   # (120, 32, 128)
+        stim_groups, stim_segs = _segment(stimulus_raw)       # (2400, 32, 128)
+
+        baseline_de = _compute_de(baseline_segs)   # (120, 32, 5)
+        stimulus_de = _compute_de(stim_segs)       # (2400, 32, 5)
+
+        stimulus_de = _subtract_baseline(stimulus_de, stim_groups, baseline_de, base_groups)
+
+        for trial in np.unique(stim_groups):
+            mask = stim_groups == trial
+            stimulus_de[mask] = _lds(stimulus_de[mask])
+
+        binary_labels = (raw_labels[:, l_idx] >= 5.0).astype(int)  # (40,)
+
+        sub_trials_data = []
+        sub_trials_labels = []
+        for trial_idx in range(NUM_TRIALS):
+            mask = stim_groups == (trial_idx + 1)
+            trial_de = stimulus_de[mask]  # (n_windows, 32, 5)
+
+            if trim_trial_start_pct > 0.0:
+                skip = int(len(trial_de) * trim_trial_start_pct / 100.0)
+                trial_de = trial_de[skip:]
+
+            n_windows = len(trial_de)
+            sub_trials_data.append(trial_de.tolist())
+            sub_trials_labels.append([int(binary_labels[trial_idx])] * n_windows)
+
+        data[0].append(sub_trials_data)
+        labels_out[0].append(sub_trials_labels)
+
+    num_classes = 2
+    logger.info(
+        "DEAP loaded: {} subjects, {} trials/subject, {} classes ({})",
+        num_subjects, NUM_TRIALS, num_classes, label_type,
+    )
+    return data, labels_out, num_subjects, NUM_ELECTRODES, NUM_BANDS, num_classes
+

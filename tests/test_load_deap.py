@@ -108,3 +108,76 @@ def test_lds_smoothing_effect():
     # After convergence the smoother should reproduce ~constant output
     np.testing.assert_allclose(result[5:], 3.0, atol=0.05)
 
+
+import os, tempfile, pickle
+from data.load.load_deap import load_deap
+
+
+def _make_fake_subject(path: str, subject_id: int):
+    """Write a minimal synthetic .dat file matching DEAP pickle format."""
+    rng = np.random.default_rng(subject_id)
+    # (40 trials, 40 channels, 8064 samples)
+    data = rng.standard_normal((40, 40, 8064)).astype(np.float64)
+    labels = rng.uniform(1, 9, (40, 4)).astype(np.float64)
+    os.makedirs(path, exist_ok=True)
+    file_path = os.path.join(path, f"s{subject_id:02d}.dat")
+    with open(file_path, "wb") as f:
+        pickle.dump({"data": data, "labels": labels}, f)
+    return file_path
+
+
+def test_load_deap_shape_two_subjects():
+    with tempfile.TemporaryDirectory() as tmp:
+        _make_fake_subject(tmp, 1)
+        _make_fake_subject(tmp, 2)
+        data, labels, n_subj, n_elec, n_feat, n_cls = load_deap(
+            tmp, label_type="valence"
+        )
+    # session dim = 1
+    assert len(data) == 1
+    assert len(labels) == 1
+    # 2 subjects loaded
+    assert len(data[0]) == 2
+    assert len(labels[0]) == 2
+    # 40 trials per subject
+    assert len(data[0][0]) == 40
+    # each trial has 60 samples (60 s × 1 window/s)
+    assert len(data[0][0][0]) == 60
+    # each sample: 32 electrodes × 5 bands
+    assert np.array(data[0][0][0][0]).shape == (32, 5)
+    # metadata
+    assert n_subj == 2
+    assert n_elec == 32
+    assert n_feat == 5
+    assert n_cls == 2
+
+
+def test_load_deap_labels_binary():
+    with tempfile.TemporaryDirectory() as tmp:
+        _make_fake_subject(tmp, 1)
+        _, labels, *_ = load_deap(tmp, label_type="valence")
+    for trial_labels in labels[0][0]:
+        for lbl in trial_labels:
+            assert lbl in (0, 1)
+
+
+def test_load_deap_arousal_label():
+    with tempfile.TemporaryDirectory() as tmp:
+        _make_fake_subject(tmp, 1)
+        _, labels_v, *_ = load_deap(tmp, label_type="valence")
+        _, labels_a, *_ = load_deap(tmp, label_type="arousal")
+    # valence and arousal can differ (not guaranteed equal)
+    v = labels_v[0][0][0][0]
+    a = labels_a[0][0][0][0]
+    assert v in (0, 1) and a in (0, 1)
+
+
+def test_load_deap_trim():
+    with tempfile.TemporaryDirectory() as tmp:
+        _make_fake_subject(tmp, 1)
+        data_full, _, *_ = load_deap(tmp, label_type="valence", trim_trial_start_pct=0.0)
+        data_trim, _, *_ = load_deap(tmp, label_type="valence", trim_trial_start_pct=50.0)
+    full_len = len(data_full[0][0][0])   # 60
+    trim_len = len(data_trim[0][0][0])   # 30
+    assert trim_len == full_len // 2
+

@@ -70,7 +70,7 @@ def load_data(
     logger.info(f"Loading dataset {dataset_name} from path {dataset_path}")
 
     function_map = {
-        # "DEAP": load_deap, TODO.
+        "DEAP": load_deap,
         "SEED": load_seed,
         "SEED_IV": load_seed_iv,
         "DREAMER": load_dreamer,
@@ -88,7 +88,7 @@ def load_data(
             sample_length=sample_length,
             stride=stride,
             trim_trial_start_pct=trim_trial_start_pct,
-            label_type=label_type if _to_plain_str(dataset_name) == "DREAMER" else None,
+            label_type=label_type if _to_plain_str(dataset_name) in ("DREAMER", "DEAP") else None,
         )
         if cache_path.exists():
             try:
@@ -105,8 +105,8 @@ def load_data(
     name = _to_plain_str(dataset_name)
     if name == "SEED" and sample_length > 1:
         result = load_seed_raw(dataset_path, sample_length=sample_length, stride=stride)
-    elif name == "DREAMER":
-        result = load_dreamer(dataset_path, label_type=label_type, trim_trial_start_pct=trim_trial_start_pct)
+    elif name in ("DREAMER", "DEAP"):
+        result = function_map[name](dataset_path, label_type=label_type, trim_trial_start_pct=trim_trial_start_pct)
     else:
         result = function_map[name](dataset_path, trim_trial_start_pct=trim_trial_start_pct)
 
