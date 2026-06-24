@@ -74,3 +74,40 @@ def _subtract_baseline(
         mask = stim_groups == trial
         corrected[mask] = stimulus_de[mask] - base_mean
     return corrected
+
+
+def _lds(data: np.ndarray) -> np.ndarray:
+    """
+    Kalman-filter (LDS) smoothing per trial.
+
+    data: (T, C, F)  — time windows × channels × features
+    returns same shape.
+    Ported from TransEER / LibEER.
+    """
+    num_t, num_channel, num_feature = data.shape
+    x = data.reshape(num_t, -1).T   # (C*F, T)
+
+    prior_correlation = 0.01
+    noise_correlation = 0.0001
+    observation_correlation = 1
+
+    mean = x.mean(axis=1)           # (C*F,)
+    num_features, num_samples = x.shape
+
+    P = np.zeros_like(x)
+    U = np.zeros_like(x)
+    K = np.zeros_like(x)
+    V = np.zeros_like(x)
+
+    K[:, 0] = prior_correlation / (prior_correlation + observation_correlation)
+    U[:, 0] = mean + K[:, 0] * (x[:, 0] - prior_correlation)
+    V[:, 0] = (1 - K[:, 0]) * prior_correlation
+
+    for i in range(1, num_samples):
+        P[:, i - 1] = V[:, i - 1] + noise_correlation
+        K[:, i] = P[:, i - 1] / (P[:, i - 1] + observation_correlation)
+        U[:, i] = U[:, i - 1] + K[:, i] * (x[:, i] - U[:, i - 1])
+        V[:, i] = (1 - K[:, i]) * P[:, i - 1]
+
+    return U.T.reshape(num_t, num_channel, num_feature)
+

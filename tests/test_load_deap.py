@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from data.load.load_deap import _compute_de, _segment, _subtract_baseline
+from data.load.load_deap import _compute_de, _segment, _subtract_baseline, _lds
 
 
 def test_compute_de_output_shape():
@@ -85,3 +85,26 @@ def test_subtract_baseline_per_trial_independence():
     result = _subtract_baseline(stim_de, stim_groups, base_de, base_groups)
     np.testing.assert_allclose(result[:4], 4.0)   # 5 - 1
     np.testing.assert_allclose(result[4:], 2.0)   # 5 - 3
+
+
+def test_lds_shape_preserved():
+    rng = np.random.default_rng(3)
+    x = rng.standard_normal((60, 32, 5))
+    result = _lds(x)
+    assert result.shape == (60, 32, 5)
+
+
+def test_lds_output_finite():
+    rng = np.random.default_rng(4)
+    x = rng.standard_normal((60, 32, 5))
+    result = _lds(x)
+    assert np.all(np.isfinite(result))
+
+
+def test_lds_smoothing_effect():
+    # Constant signal should be unchanged by the Kalman smoother
+    x = np.ones((20, 4, 5)) * 3.0
+    result = _lds(x)
+    # After convergence the smoother should reproduce ~constant output
+    np.testing.assert_allclose(result[5:], 3.0, atol=0.05)
+
