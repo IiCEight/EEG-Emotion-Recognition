@@ -1,5 +1,5 @@
 from random import shuffle
-from typing import Annotated
+from typing import Annotated, Any
 import torch
 from config.logging import setUpLogger
 
@@ -36,7 +36,7 @@ def main(
         str, typer.Option(help='path to the dataset')
     ] = '../data/SEED_IV',
     cache_dir: Annotated[str | None, typer.Option(
-        help='cache directory for loaded dataset (disabled if not set)')] = None,
+        help='cache directory for loaded dataset (disabled if not set)')] = "./cache",
     device: Annotated[str, typer.Option(
         help='device to run the model on')] = 'cuda',
     sample_length: Annotated[
@@ -60,7 +60,7 @@ def main(
     epochs: Annotated[int, typer.Option(help='number of epochs for training')] = 1000,
     data_random: Annotated[bool, typer.Option(help='whether to shuffle the data')] = False,
     only_one_experiment: Annotated[bool, typer.Option(help='whether to run only one experiment for debugging')] = False,
-    only_one_session: Annotated[bool, typer.Option(help='whether to run only one session for debugging')] = True,
+    run_session: Annotated[str, typer.Option(help='which session to run (e.g., "0", "all"')] = "1",
     random_seed: Annotated[int | None, typer.Option(help='random seed for reproducibility, None for no seed (i.e., random)')] = 42,
     learning_rate: Annotated[float, typer.Option(help='learning rate for training')] = 0.001,
     early_stop_patience: Annotated[int, typer.Option(help='early stop after N epochs without test acc improvement (0 = disabled)')] = 0,
@@ -73,7 +73,7 @@ def main(
     )] = 256,
     xconf_ramp_epochs: Annotated[int, typer.Option(
         help='OPTA: epochs over which xconf lam3 ramps from 0 to 0.2'
-    )] = 150,
+    )] = 200,
     sinkhorn_warmup_epochs: Annotated[int, typer.Option(
         help='OPTA: epochs to keep Sinkhorn assignments detached before allowing gradients'
     )] = 1000,
@@ -100,11 +100,11 @@ def main(
         + f'\ndevice: {device}\nlogging level: {level}\ntask type: {task_type}'
         + f'\nsplit type: {split_type}\nbatch_size: {batch_size}\nepochs: {epochs}'
         + f'\ndata random: {data_random}\nrandom seed: {random_seed}\nfailure_log: {failure_log}'
-        + f'\nonly one experiment: {only_one_experiment}\nonly one session: {only_one_session}'
+        + f'\nonly one experiment: {only_one_experiment}\nrun_session: {run_session}'
         + f'\nlearning rate: {learning_rate}\nearly stop patience: {early_stop_patience}'
         + f'\nuse_gcn: {use_gcn}\ntime_steps: {time_steps}\ntrim_trial_start_pct: {trim_trial_start_pct}'
         + f'\nopta_pool_capacity: {opta_pool_capacity}\nsinkhorn_warmup_epochs: {sinkhorn_warmup_epochs}'
-        + f'\nopta_ablation: {opta_ablation}'
+        + f'\nopta_ablation: {opta_ablation}\nlabel_type: {label_type}'
     )
 
     data, labels, num_subjects, num_electrodes, num_features, num_classes = load_data(
@@ -137,14 +137,11 @@ def main(
 
     skip = 0
 
-    run_session = 1
 
     for session_id in range(num_sessions):
-        if session_id != run_session:
+        if run_session != "all" and session_id != int(run_session):
             continue
         for subject_id in subject_ids:
-            if subject_id < skip:
-                continue
             setup_seed(random_seed)
 
             # Build per-sample metadata before merging discards trial indices.
@@ -207,7 +204,7 @@ def main(
 
             if only_one_experiment:
                 break
-        if only_one_session or only_one_experiment:
+        if only_one_experiment:
             break
 
     logger.info('\n-----------> Finished training for all subjects!!!!')
