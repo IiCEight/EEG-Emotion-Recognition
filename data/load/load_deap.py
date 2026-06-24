@@ -138,7 +138,7 @@ def load_deap(
     data = [[]]
     labels_out = [[]]
 
-    for sub_idx, file_path in enumerate(subject_files):
+    for file_path in subject_files:
         logger.info("DEAP: loading subject {}", file_path.name)
 
         with open(file_path, "rb") as f:

@@ -1,6 +1,11 @@
+import os
+import pickle
+import tempfile
+
 import numpy as np
 import pytest
-from data.load.load_deap import _compute_de, _segment, _subtract_baseline, _lds
+
+from data.load.load_deap import _compute_de, _segment, _subtract_baseline, _lds, load_deap
 
 
 def test_compute_de_output_shape():
@@ -107,10 +112,6 @@ def test_lds_smoothing_effect():
     result = _lds(x)
     # After convergence the smoother should reproduce ~constant output
     np.testing.assert_allclose(result[5:], 3.0, atol=0.05)
-
-
-import os, tempfile, pickle
-from data.load.load_deap import load_deap
 
 
 def _make_fake_subject(path: str, subject_id: int):
