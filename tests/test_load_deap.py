@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from data.load.load_deap import _compute_de, _segment
+from data.load.load_deap import _compute_de, _segment, _subtract_baseline
 
 
 def test_compute_de_output_shape():
@@ -57,3 +57,31 @@ def test_segment_window_content():
     assert segs[0, 0, 0] == 0.0
     assert segs[1, 0, 0] == 0.0
     assert segs[2, 0, 0] == 1.0
+
+
+def test_subtract_baseline_zeros_out_constant():
+    # baseline mean = 2.0, stimulus = 2.0 → corrected should be 0.0
+    base_de = np.full((6, 4, 5), 2.0)   # 2 trials × 3 windows each
+    base_groups = np.array([1, 1, 1, 2, 2, 2])
+    stim_de = np.full((8, 4, 5), 2.0)   # 2 trials × 4 windows each
+    stim_groups = np.array([1, 1, 1, 1, 2, 2, 2, 2])
+    result = _subtract_baseline(stim_de, stim_groups, base_de, base_groups)
+    assert result.shape == stim_de.shape
+    np.testing.assert_allclose(result, 0.0)
+
+
+def test_subtract_baseline_per_trial_independence():
+    # trial 1 baseline mean = 1.0, trial 2 baseline mean = 3.0
+    base_de = np.concatenate([
+        np.full((3, 2, 5), 1.0),
+        np.full((3, 2, 5), 3.0),
+    ], axis=0)
+    base_groups = np.array([1, 1, 1, 2, 2, 2])
+    stim_de = np.concatenate([
+        np.full((4, 2, 5), 5.0),
+        np.full((4, 2, 5), 5.0),
+    ], axis=0)
+    stim_groups = np.array([1, 1, 1, 1, 2, 2, 2, 2])
+    result = _subtract_baseline(stim_de, stim_groups, base_de, base_groups)
+    np.testing.assert_allclose(result[:4], 4.0)   # 5 - 1
+    np.testing.assert_allclose(result[4:], 2.0)   # 5 - 3

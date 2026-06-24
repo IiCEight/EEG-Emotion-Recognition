@@ -59,3 +59,18 @@ def _segment(signal: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     segments = slices.reshape(T * n_slices, C, window)
     groups = np.repeat(np.arange(1, T + 1), n_slices)
     return groups, segments
+
+
+def _subtract_baseline(
+    stimulus_de: np.ndarray,
+    stim_groups: np.ndarray,
+    baseline_de: np.ndarray,
+    base_groups: np.ndarray,
+) -> np.ndarray:
+    """Per-trial baseline correction. All arrays: (N, C, F) / (N,)."""
+    corrected = np.zeros_like(stimulus_de)
+    for trial in np.unique(base_groups):
+        base_mean = baseline_de[base_groups == trial].mean(axis=0)  # (C, F)
+        mask = stim_groups == trial
+        corrected[mask] = stimulus_de[mask] - base_mean
+    return corrected
