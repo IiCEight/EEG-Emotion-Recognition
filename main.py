@@ -31,10 +31,10 @@ def main(
     ] = cli_enum.ModelName.OPTA,
     dataset: Annotated[
         cli_enum.DatasetName, typer.Option(help='dataset name')
-    ] = cli_enum.DatasetName.SEED_IV,
+    ] = cli_enum.DatasetName.DEAP,
     dataset_path: Annotated[
         str, typer.Option(help='path to the dataset')
-    ] = '../data/SEED_IV',
+    ] = '../data/DEAP',
     cache_dir: Annotated[str | None, typer.Option(
         help='cache directory for loaded dataset (disabled if not set)')] = "./cache",
     device: Annotated[str, typer.Option(
@@ -56,24 +56,24 @@ def main(
         typer.Option(help='type of data split (kfold, leave-one-subject-out)'),
     ] = cli_enum.SplitTypeName.LEAVE_ONE_SUBJECT_OUT,
     split_ratio: Annotated[float, typer.Option(help='ratio for train data size')] = 0.6,
-    batch_size: Annotated[int, typer.Option(help='batch size for training')] = 48,
+    batch_size: Annotated[int, typer.Option(help='batch size for training')] = 64,
     epochs: Annotated[int, typer.Option(help='number of epochs for training')] = 1000,
     data_random: Annotated[bool, typer.Option(help='whether to shuffle the data')] = False,
     only_one_experiment: Annotated[bool, typer.Option(help='whether to run only one experiment for debugging')] = False,
-    run_session: Annotated[str, typer.Option(help='which session to run (e.g., "0", "all"')] = "1",
+    run_session: Annotated[str, typer.Option(help='which session to run (e.g., "0", "all"')] = "0",
     random_seed: Annotated[int | None, typer.Option(help='random seed for reproducibility, None for no seed (i.e., random)')] = 42,
     learning_rate: Annotated[float, typer.Option(help='learning rate for training')] = 0.001,
-    early_stop_patience: Annotated[int, typer.Option(help='early stop after N epochs without test acc improvement (0 = disabled)')] = 0,
+    early_stop_patience: Annotated[int, typer.Option(help='early stop after N epochs without test acc improvement (0 = disabled)')] = 550,
     failure_log: Annotated[str | None, typer.Option("-f", help='path to CSV file for logging misclassified samples (disabled if not set)')] = None,
     use_gcn: Annotated[bool, typer.Option(help='use GCN feature extractor for SABER (False = flat MLP, faster)')] = True,
     time_steps: Annotated[int, typer.Option(help='number of consecutive DE windows per sample for SABER_T (requires --sample-length N)')] = 2,
     trim_trial_start_pct: Annotated[float, typer.Option(help='discard the first X%% of each trial at load time (0 = disabled)')] = 0.0,
     opta_pool_capacity: Annotated[int, typer.Option(
         help='OPTA: target prototype pool capacity'
-    )] = 256,
+    )] = 128,
     xconf_ramp_epochs: Annotated[int, typer.Option(
         help='OPTA: epochs over which xconf lam3 ramps from 0 to 0.2'
-    )] = 200,
+    )] = 500,
     sinkhorn_warmup_epochs: Annotated[int, typer.Option(
         help='OPTA: epochs to keep Sinkhorn assignments detached before allowing gradients'
     )] = 1000,

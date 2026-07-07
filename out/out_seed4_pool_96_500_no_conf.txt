@@ -1,0 +1,896 @@
+23:07:07 | INFO     __main__ main     92  CUDA Available: True
+23:07:07 | INFO     __main__ main     93  Device Count: 1
+23:07:07 | INFO     __main__ main     95  GPU Name: NVIDIA GeForce RTX 4090
+23:07:07 | INFO     __main__ main     97  Launching....
+model_name: ModelName.OPTA
+dataset: DatasetName.SEED_IV
+dataset_path: ../data/SEED_IV
+cache_dir: ./cache
+device: cuda
+logging level: LevelName.INFO
+task type: TaskTypeName.SUBJECT_INDEPENDENT
+split type: SplitTypeName.LEAVE_ONE_SUBJECT_OUT
+batch_size: 32
+epochs: 1000
+data random: False
+random seed: 42
+failure_log: None
+only one experiment: False
+run_session: 1
+learning rate: 0.001
+early stop patience: 0
+use_gcn: True
+time_steps: 2
+trim_trial_start_pct: 0.0
+opta_pool_capacity: 96
+sinkhorn_warmup_epochs: 1000
+opta_ablation: OPTAAblation.NO_CONF
+label_type: valence
+23:07:07 | INFO     data.dataloder load_data 69  Loading dataset DatasetName.SEED_IV from path ../data/SEED_IV
+23:07:07 | INFO     data.dataloder load_data 97  Dataset cache hit: cache/seed_iv_66f7eb7c0b603bf828c6b22f6185a282.pkl
+ number of electrodes:  62  number of features:  5  number of classes:  4
+23:07:14 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+23:07:14 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11648, 62, 5), label shape: (11648,)
+23:07:14 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+23:07:14 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (832, 62, 5), label shape: (832,)
+23:07:14 | INFO     model.saber __init__ 111 Use direct distance as adjeceny matrix for GCN.
+23:07:15 | INFO     train.training_opta train    164 len of train data: 11648, len of test data: 832
+23:07:16 | INFO     utils.metric update   25  --> A new better acc 0.4567 on subject 0 session 1
+23:07:16 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 0.9393, dann: 0.6479, tgt_ce: 0.7771, tri: 0.2317, xconf: 1.1985, source_acc: 66.2517, target_acc: 45.6731, best_acc: 45.6731
+23:07:16 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9681
+23:07:17 | INFO     utils.metric update   25  --> A new better acc 0.5577 on subject 0 session 1
+23:07:18 | INFO     utils.metric update   25  --> A new better acc 0.7332 on subject 0 session 1
+23:07:21 | INFO     utils.metric update   25  --> A new better acc 0.7752 on subject 0 session 1
+23:08:01 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0104, dann: 0.7058, tgt_ce: 0.2604, tri: 0.1429, xconf: 0.2883, source_acc: 98.7122, target_acc: 61.1779, best_acc: 77.5240
+23:08:01 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9570
+23:08:45 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0127, dann: 0.6888, tgt_ce: 0.5400, tri: 0.2221, xconf: 0.5791, source_acc: 99.6137, target_acc: 51.5625, best_acc: 77.5240
+23:08:45 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+23:09:29 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0118, dann: 0.6974, tgt_ce: 0.0428, tri: 0.0502, xconf: 0.0839, source_acc: 99.9141, target_acc: 65.6250, best_acc: 77.5240
+23:09:29 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9760
+23:10:14 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.0577, dann: 0.6375, tgt_ce: 0.2754, tri: 0.4271, xconf: 0.1594, source_acc: 100.0000, target_acc: 40.7452, best_acc: 77.5240
+23:10:14 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9881
+23:11:00 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.0270, dann: 0.7003, tgt_ce: 0.4912, tri: 0.2749, xconf: 0.4810, source_acc: 99.3132, target_acc: 36.8990, best_acc: 77.5240
+23:11:00 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9785
+23:11:44 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0205, dann: 0.6176, tgt_ce: 0.3969, tri: 0.4242, xconf: 0.2254, source_acc: 100.0000, target_acc: 23.0769, best_acc: 77.5240
+23:11:44 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9971
+23:12:30 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0191, dann: 0.6828, tgt_ce: 0.1440, tri: 0.1635, xconf: 0.1551, source_acc: 99.0385, target_acc: 48.9183, best_acc: 77.5240
+23:12:30 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3931
+23:13:14 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0630, dann: 1.2029, tgt_ce: 0.5810, tri: 0.1828, xconf: 0.5995, source_acc: 93.2177, target_acc: 34.4952, best_acc: 77.5240
+23:13:14 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9926
+23:13:59 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 1.0967, dann: 18.1920, tgt_ce: 0.6012, tri: 0.4952, xconf: 1.3858, source_acc: 57.6837, target_acc: 33.5337, best_acc: 77.5240
+23:13:59 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+23:14:43 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.8628, dann: 0.7402, tgt_ce: 0.8449, tri: 0.4601, xconf: 1.3803, source_acc: 48.3860, target_acc: 39.3029, best_acc: 77.5240
+23:14:43 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+23:15:03 | INFO     utils.metric update   25  --> A new better acc 0.7873 on subject 0 session 1
+23:15:05 | INFO     utils.metric update   25  --> A new better acc 0.8149 on subject 0 session 1
+23:15:07 | INFO     utils.metric update   25  --> A new better acc 0.8305 on subject 0 session 1
+23:15:30 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.1240, dann: 0.6698, tgt_ce: 0.2755, tri: 0.1233, xconf: 0.2649, source_acc: 94.5312, target_acc: 58.4135, best_acc: 83.0529
+23:15:30 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9834
+23:15:57 | INFO     utils.metric update   25  --> A new better acc 0.8810 on subject 0 session 1
+23:16:14 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.0847, dann: 0.6666, tgt_ce: 0.4780, tri: 0.1175, xconf: 0.5251, source_acc: 94.4025, target_acc: 51.8029, best_acc: 88.1010
+23:16:14 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9997
+23:16:59 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.3633, dann: 0.4979, tgt_ce: 0.9893, tri: 0.5219, xconf: 0.5778, source_acc: 89.9725, target_acc: 31.0096, best_acc: 88.1010
+23:16:59 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9990
+23:17:44 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.5838, dann: 0.5369, tgt_ce: 1.4426, tri: 0.4650, xconf: 0.9200, source_acc: 97.3987, target_acc: 33.8942, best_acc: 88.1010
+23:17:44 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9993
+23:18:27 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.0212, dann: 0.7135, tgt_ce: 0.4979, tri: 0.1505, xconf: 0.5081, source_acc: 96.3084, target_acc: 55.8894, best_acc: 88.1010
+23:18:27 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9999
+23:19:13 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.0538, dann: 0.5816, tgt_ce: 0.4015, tri: 0.2533, xconf: 0.2413, source_acc: 97.0038, target_acc: 39.4231, best_acc: 88.1010
+23:19:13 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9992
+23:19:59 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.0735, dann: 0.6899, tgt_ce: 0.7554, tri: 0.3032, xconf: 0.4809, source_acc: 98.6264, target_acc: 25.9615, best_acc: 88.1010
+23:19:59 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9964
+23:20:42 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0674, dann: 0.5021, tgt_ce: 0.6590, tri: 0.2919, xconf: 0.4864, source_acc: 98.4633, target_acc: 36.5385, best_acc: 88.1010
+23:20:42 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9920
+23:21:27 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.1239, dann: 0.6059, tgt_ce: 0.7222, tri: 0.3223, xconf: 0.6351, source_acc: 96.4801, target_acc: 37.8606, best_acc: 88.1010
+23:21:27 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9992
+23:22:10 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 1.1543, dann: 0.6841, tgt_ce: 0.5463, tri: 0.4504, xconf: 1.4838, source_acc: 88.3242, target_acc: 33.8942, best_acc: 88.1010
+23:22:10 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9987
+23:22:10 | INFO     __main__ main     201 
+--------------> Finished training w.r.t. subject 0 session 1 acc 0.8810
+23:22:11 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+23:22:11 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11648, 62, 5), label shape: (11648,)
+23:22:11 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+23:22:11 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (832, 62, 5), label shape: (832,)
+23:22:11 | INFO     model.saber __init__ 111 Use direct distance as adjeceny matrix for GCN.
+23:22:11 | INFO     train.training_opta train    164 len of train data: 11648, len of test data: 832
+23:22:12 | INFO     utils.metric update   25  --> A new better acc 0.6971 on subject 1 session 1
+23:22:12 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 0.9836, dann: 0.6243, tgt_ce: 0.6554, tri: 0.2589, xconf: 1.3012, source_acc: 68.4495, target_acc: 69.7115, best_acc: 69.7115
+23:22:12 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9976
+23:22:14 | INFO     utils.metric update   25  --> A new better acc 0.7620 on subject 1 session 1
+23:22:15 | INFO     utils.metric update   25  --> A new better acc 0.8065 on subject 1 session 1
+23:22:15 | INFO     utils.metric update   25  --> A new better acc 0.9327 on subject 1 session 1
+23:22:55 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0223, dann: 0.7070, tgt_ce: 0.4523, tri: 0.2836, xconf: 0.5631, source_acc: 98.8324, target_acc: 81.4904, best_acc: 93.2692
+23:22:55 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9999
+23:23:39 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0195, dann: 0.6955, tgt_ce: 0.5473, tri: 0.3854, xconf: 0.5282, source_acc: 100.0000, target_acc: 49.0385, best_acc: 93.2692
+23:23:39 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9970
+23:24:21 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0104, dann: 0.7093, tgt_ce: 0.2574, tri: 0.1174, xconf: 0.3250, source_acc: 99.7510, target_acc: 54.5673, best_acc: 93.2692
+23:24:21 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9995
+23:25:06 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.0112, dann: 0.7068, tgt_ce: 0.2708, tri: 0.1005, xconf: 0.3096, source_acc: 99.8283, target_acc: 59.2548, best_acc: 93.2692
+23:25:06 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9899
+23:25:48 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.0252, dann: 0.6270, tgt_ce: 0.3707, tri: 0.1595, xconf: 0.1511, source_acc: 100.0000, target_acc: 45.4327, best_acc: 93.2692
+23:25:48 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9982
+23:26:33 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0175, dann: 0.7095, tgt_ce: 0.0223, tri: 0.0502, xconf: 0.0328, source_acc: 99.6738, target_acc: 53.9663, best_acc: 93.2692
+23:26:33 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.4545
+23:27:16 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0085, dann: 0.7034, tgt_ce: 0.0006, tri: 0.0234, xconf: 0.0134, source_acc: 100.0000, target_acc: 45.6731, best_acc: 93.2692
+23:27:16 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3598
+23:28:03 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0052, dann: 0.6954, tgt_ce: 0.0000, tri: 0.0049, xconf: 0.0084, source_acc: 100.0000, target_acc: 43.8702, best_acc: 93.2692
+23:28:03 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1188
+23:28:46 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.0065, dann: 0.6940, tgt_ce: 0.0904, tri: 0.1183, xconf: 0.0958, source_acc: 100.0000, target_acc: 39.7837, best_acc: 93.2692
+23:28:46 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3426
+23:29:29 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.0065, dann: 0.6953, tgt_ce: 0.0000, tri: 0.0093, xconf: 0.0134, source_acc: 100.0000, target_acc: 44.8317, best_acc: 93.2692
+23:29:29 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2384
+23:30:14 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.0065, dann: 0.6943, tgt_ce: 0.0008, tri: 0.0072, xconf: 0.0223, source_acc: 100.0000, target_acc: 50.9615, best_acc: 93.2692
+23:30:14 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3952
+23:30:58 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.0071, dann: 0.6934, tgt_ce: 0.0000, tri: 0.0035, xconf: 0.0171, source_acc: 100.0000, target_acc: 56.9712, best_acc: 93.2692
+23:30:58 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2859
+23:31:41 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.0060, dann: 0.6911, tgt_ce: 0.0382, tri: 0.1154, xconf: 0.0532, source_acc: 100.0000, target_acc: 56.3702, best_acc: 93.2692
+23:31:41 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9985
+23:32:26 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.0050, dann: 0.6936, tgt_ce: 0.0000, tri: 0.0029, xconf: 0.0098, source_acc: 100.0000, target_acc: 56.3702, best_acc: 93.2692
+23:32:26 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3119
+23:33:12 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.0049, dann: 0.6934, tgt_ce: 0.0000, tri: 0.0017, xconf: 0.0090, source_acc: 100.0000, target_acc: 65.6250, best_acc: 93.2692
+23:33:12 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1759
+23:33:58 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.0121, dann: 0.6888, tgt_ce: 0.3494, tri: 0.1947, xconf: 0.3726, source_acc: 100.0000, target_acc: 65.6250, best_acc: 93.2692
+23:33:58 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9855
+23:34:43 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.0051, dann: 0.6933, tgt_ce: 0.0000, tri: 0.0023, xconf: 0.0120, source_acc: 99.9313, target_acc: 78.2452, best_acc: 93.2692
+23:34:43 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2110
+23:35:27 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0204, dann: 0.6913, tgt_ce: 0.2970, tri: 0.2143, xconf: 0.3128, source_acc: 99.8970, target_acc: 73.7981, best_acc: 93.2692
+23:35:27 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+23:36:13 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0050, dann: 0.6932, tgt_ce: 0.0000, tri: 0.0025, xconf: 0.0122, source_acc: 100.0000, target_acc: 55.6490, best_acc: 93.2692
+23:36:13 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2858
+23:36:58 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.0069, dann: 0.6939, tgt_ce: 0.0415, tri: 0.0763, xconf: 0.0250, source_acc: 98.0598, target_acc: 75.6010, best_acc: 93.2692
+23:36:58 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.7907
+23:36:58 | INFO     __main__ main     201 
+--------------> Finished training w.r.t. subject 1 session 1 acc 0.9327
+23:36:59 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+23:36:59 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11648, 62, 5), label shape: (11648,)
+23:36:59 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+23:36:59 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (832, 62, 5), label shape: (832,)
+23:36:59 | INFO     model.saber __init__ 111 Use direct distance as adjeceny matrix for GCN.
+23:36:59 | INFO     train.training_opta train    164 len of train data: 11648, len of test data: 832
+23:37:00 | INFO     utils.metric update   25  --> A new better acc 0.6635 on subject 2 session 1
+23:37:00 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 0.9522, dann: 0.6623, tgt_ce: 0.6419, tri: 0.1768, xconf: 1.1209, source_acc: 64.0711, target_acc: 66.3462, best_acc: 66.3462
+23:37:00 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9218
+23:37:03 | INFO     utils.metric update   25  --> A new better acc 0.7440 on subject 2 session 1
+23:37:04 | INFO     utils.metric update   25  --> A new better acc 0.7452 on subject 2 session 1
+23:37:05 | INFO     utils.metric update   25  --> A new better acc 0.8077 on subject 2 session 1
+23:37:42 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0240, dann: 0.6986, tgt_ce: 0.5415, tri: 0.2328, xconf: 0.6012, source_acc: 99.7081, target_acc: 75.3606, best_acc: 80.7692
+23:37:42 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9992
+23:38:01 | INFO     utils.metric update   25  --> A new better acc 0.8389 on subject 2 session 1
+23:38:07 | INFO     utils.metric update   25  --> A new better acc 0.8630 on subject 2 session 1
+23:38:27 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0129, dann: 0.6983, tgt_ce: 0.2539, tri: 0.1488, xconf: 0.3021, source_acc: 99.4677, target_acc: 65.2644, best_acc: 86.2981
+23:38:27 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9966
+23:39:11 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0118, dann: 0.7253, tgt_ce: 0.1350, tri: 0.1232, xconf: 0.1346, source_acc: 99.4076, target_acc: 56.3702, best_acc: 86.2981
+23:39:11 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9992
+23:39:56 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.8557, dann: 18.1254, tgt_ce: 0.6724, tri: 0.6094, xconf: 1.3600, source_acc: 73.3516, target_acc: 54.8077, best_acc: 86.2981
+23:39:56 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+23:40:41 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 1.3596, dann: 73.1244, tgt_ce: 0.4423, tri: 0.4993, xconf: 1.3863, source_acc: 32.3832, target_acc: 31.2500, best_acc: 86.2981
+23:40:41 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+23:41:25 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 1.3529, dann: 9.1288, tgt_ce: 0.4524, tri: 0.4993, xconf: 1.3863, source_acc: 31.5934, target_acc: 30.6490, best_acc: 86.2981
+23:41:25 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+23:42:13 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 1.3663, dann: 1.3443, tgt_ce: 0.4373, tri: 0.4997, xconf: 1.3863, source_acc: 27.4038, target_acc: 30.8894, best_acc: 86.2981
+23:42:13 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+23:42:57 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.5975, dann: 0.6855, tgt_ce: 0.4181, tri: 0.1551, xconf: 0.7868, source_acc: 57.6065, target_acc: 52.1635, best_acc: 86.2981
+23:42:57 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9989
+23:43:44 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.1552, dann: 0.6887, tgt_ce: 0.0162, tri: 0.0466, xconf: 0.2176, source_acc: 56.0096, target_acc: 47.5962, best_acc: 86.2981
+23:43:44 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0908
+23:44:30 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.1174, dann: 0.6838, tgt_ce: 0.0305, tri: 0.0325, xconf: 0.1502, source_acc: 52.6614, target_acc: 31.9712, best_acc: 86.2981
+23:44:30 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0752
+23:45:15 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.0491, dann: 0.6942, tgt_ce: 0.0036, tri: 0.0123, xconf: 0.0637, source_acc: 89.7321, target_acc: 56.6106, best_acc: 86.2981
+23:45:15 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0000
+23:46:01 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.0863, dann: 0.6902, tgt_ce: 0.0377, tri: 0.0292, xconf: 0.1411, source_acc: 63.9337, target_acc: 46.3942, best_acc: 86.2981
+23:46:01 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0114
+23:46:45 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.0242, dann: 0.6929, tgt_ce: 0.0009, tri: 0.0039, xconf: 0.0312, source_acc: 99.1672, target_acc: 60.9375, best_acc: 86.2981
+23:46:45 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0120
+23:47:28 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.0363, dann: 0.7017, tgt_ce: 0.0072, tri: 0.0101, xconf: 0.0528, source_acc: 99.5622, target_acc: 59.8558, best_acc: 86.2981
+23:47:28 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0175
+23:48:12 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.0110, dann: 0.6934, tgt_ce: 0.1190, tri: 0.1185, xconf: 0.1253, source_acc: 98.3431, target_acc: 61.2981, best_acc: 86.2981
+23:48:12 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0035
+23:48:56 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.0121, dann: 0.6958, tgt_ce: 0.0013, tri: 0.0036, xconf: 0.0219, source_acc: 98.5405, target_acc: 72.3558, best_acc: 86.2981
+23:48:56 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0083
+23:49:41 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.0407, dann: 0.6967, tgt_ce: 0.0865, tri: 0.0755, xconf: 0.1266, source_acc: 99.7081, target_acc: 76.6827, best_acc: 86.2981
+23:49:41 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0001
+23:50:26 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0119, dann: 0.6942, tgt_ce: 0.2877, tri: 0.2091, xconf: 0.1563, source_acc: 99.8970, target_acc: 63.1010, best_acc: 86.2981
+23:50:26 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0353
+23:51:09 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0722, dann: 0.6925, tgt_ce: 0.3123, tri: 0.2924, xconf: 0.3633, source_acc: 98.0426, target_acc: 68.2692, best_acc: 86.2981
+23:51:09 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1827
+23:51:53 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.0101, dann: 0.6931, tgt_ce: 0.0695, tri: 0.1266, xconf: 0.0619, source_acc: 99.3990, target_acc: 78.0048, best_acc: 86.2981
+23:51:53 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9917
+23:51:53 | INFO     __main__ main     201 
+--------------> Finished training w.r.t. subject 2 session 1 acc 0.8630
+23:51:55 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+23:51:55 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11648, 62, 5), label shape: (11648,)
+23:51:55 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+23:51:55 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (832, 62, 5), label shape: (832,)
+23:51:55 | INFO     model.saber __init__ 111 Use direct distance as adjeceny matrix for GCN.
+23:51:55 | INFO     train.training_opta train    164 len of train data: 11648, len of test data: 832
+23:51:56 | INFO     utils.metric update   25  --> A new better acc 0.2212 on subject 3 session 1
+23:51:56 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 0.9784, dann: 0.6028, tgt_ce: 0.6005, tri: 0.1458, xconf: 1.0330, source_acc: 66.1830, target_acc: 22.1154, best_acc: 22.1154
+23:51:56 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.8926
+23:51:57 | INFO     utils.metric update   25  --> A new better acc 0.3486 on subject 3 session 1
+23:51:58 | INFO     utils.metric update   25  --> A new better acc 0.5613 on subject 3 session 1
+23:52:00 | INFO     utils.metric update   25  --> A new better acc 0.6022 on subject 3 session 1
+23:52:04 | INFO     utils.metric update   25  --> A new better acc 0.6046 on subject 3 session 1
+23:52:08 | INFO     utils.metric update   25  --> A new better acc 0.6550 on subject 3 session 1
+23:52:30 | INFO     utils.metric update   25  --> A new better acc 0.6731 on subject 3 session 1
+23:52:39 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0096, dann: 0.7070, tgt_ce: 0.1557, tri: 0.0947, xconf: 0.1721, source_acc: 98.3431, target_acc: 64.0625, best_acc: 67.3077
+23:52:39 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9871
+23:53:22 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0280, dann: 1.0437, tgt_ce: 0.6681, tri: 0.1632, xconf: 0.6809, source_acc: 87.7747, target_acc: 45.9135, best_acc: 67.3077
+23:53:22 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9938
+23:54:04 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 1.3121, dann: 122.9584, tgt_ce: 0.4662, tri: 0.5032, xconf: 1.3864, source_acc: 24.9571, target_acc: 20.5529, best_acc: 67.3077
+23:54:04 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+23:54:50 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 1.3590, dann: 124.3882, tgt_ce: 0.4365, tri: 0.4974, xconf: 1.3863, source_acc: 27.3781, target_acc: 23.5577, best_acc: 67.3077
+23:54:50 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+23:55:34 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 1.3497, dann: 5.9491, tgt_ce: 0.4256, tri: 0.4893, xconf: 1.3863, source_acc: 35.8087, target_acc: 24.2788, best_acc: 67.3077
+23:55:34 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+23:56:20 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.3174, dann: 0.6885, tgt_ce: 0.1425, tri: 0.0664, xconf: 0.3868, source_acc: 86.6157, target_acc: 55.2885, best_acc: 67.3077
+23:56:20 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.6159
+23:57:04 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0465, dann: 0.6811, tgt_ce: 0.0106, tri: 0.0405, xconf: 0.0659, source_acc: 98.0598, target_acc: 59.8558, best_acc: 67.3077
+23:57:04 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2930
+23:57:05 | INFO     utils.metric update   25  --> A new better acc 0.6827 on subject 3 session 1
+23:57:07 | INFO     utils.metric update   25  --> A new better acc 0.6839 on subject 3 session 1
+23:57:49 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0079, dann: 0.7003, tgt_ce: 0.0032, tri: 0.0156, xconf: 0.0097, source_acc: 94.8575, target_acc: 52.5240, best_acc: 68.3894
+23:57:49 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2677
+23:58:36 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.0176, dann: 0.6954, tgt_ce: 0.0730, tri: 0.1032, xconf: 0.1075, source_acc: 99.0986, target_acc: 55.5288, best_acc: 68.3894
+23:58:36 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1806
+23:59:20 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.0056, dann: 0.6963, tgt_ce: 0.0003, tri: 0.0076, xconf: 0.0082, source_acc: 99.9657, target_acc: 55.4087, best_acc: 68.3894
+23:59:20 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3327
+00:00:04 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.0449, dann: 0.6925, tgt_ce: 0.0527, tri: 0.0754, xconf: 0.0793, source_acc: 93.6641, target_acc: 53.1250, best_acc: 68.3894
+00:00:04 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1301
+00:00:48 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.0051, dann: 0.6942, tgt_ce: 0.0000, tri: 0.0044, xconf: 0.0095, source_acc: 100.0000, target_acc: 50.7212, best_acc: 68.3894
+00:00:48 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1100
+00:01:32 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.0290, dann: 0.6941, tgt_ce: 0.0490, tri: 0.0772, xconf: 0.1131, source_acc: 100.0000, target_acc: 51.6827, best_acc: 68.3894
+00:01:32 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0758
+00:02:16 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.0068, dann: 0.6944, tgt_ce: 0.0479, tri: 0.1350, xconf: 0.0376, source_acc: 98.9183, target_acc: 52.7644, best_acc: 68.3894
+00:02:16 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.8378
+00:03:01 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.0051, dann: 0.6978, tgt_ce: 0.0012, tri: 0.0075, xconf: 0.0162, source_acc: 99.9399, target_acc: 49.6394, best_acc: 68.3894
+00:03:01 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0997
+00:03:24 | INFO     utils.metric update   25  --> A new better acc 0.6947 on subject 3 session 1
+00:03:46 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.0277, dann: 0.6904, tgt_ce: 0.2511, tri: 0.3044, xconf: 0.2181, source_acc: 100.0000, target_acc: 54.3269, best_acc: 69.4712
+00:03:46 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1792
+00:04:31 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.0067, dann: 0.6950, tgt_ce: 0.0353, tri: 0.0933, xconf: 0.0602, source_acc: 100.0000, target_acc: 47.4760, best_acc: 69.4712
+00:04:31 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9921
+00:05:17 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0124, dann: 0.6944, tgt_ce: 0.0106, tri: 0.0897, xconf: 0.0969, source_acc: 100.0000, target_acc: 52.6442, best_acc: 69.4712
+00:05:17 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0673
+00:06:00 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0051, dann: 0.6931, tgt_ce: 0.0189, tri: 0.0431, xconf: 0.0573, source_acc: 100.0000, target_acc: 50.1202, best_acc: 69.4712
+00:06:00 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0855
+00:06:47 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.0157, dann: 0.6930, tgt_ce: 0.2696, tri: 0.5024, xconf: 0.3648, source_acc: 76.4423, target_acc: 41.3462, best_acc: 69.4712
+00:06:47 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.8086
+00:06:47 | INFO     __main__ main     201 
+--------------> Finished training w.r.t. subject 3 session 1 acc 0.6947
+00:06:47 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+00:06:48 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11648, 62, 5), label shape: (11648,)
+00:06:48 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+00:06:48 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (832, 62, 5), label shape: (832,)
+00:06:48 | INFO     model.saber __init__ 111 Use direct distance as adjeceny matrix for GCN.
+00:06:48 | INFO     train.training_opta train    164 len of train data: 11648, len of test data: 832
+00:06:48 | INFO     utils.metric update   25  --> A new better acc 0.6899 on subject 4 session 1
+00:06:49 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 0.9799, dann: 0.6631, tgt_ce: 0.5597, tri: 0.1875, xconf: 1.1074, source_acc: 64.2428, target_acc: 68.9904, best_acc: 68.9904
+00:06:49 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.8461
+00:06:50 | INFO     utils.metric update   25  --> A new better acc 0.8161 on subject 4 session 1
+00:07:30 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0109, dann: 0.7027, tgt_ce: 0.3135, tri: 0.1451, xconf: 0.3590, source_acc: 99.9742, target_acc: 71.0337, best_acc: 81.6106
+00:07:30 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9989
+00:08:15 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0116, dann: 0.7036, tgt_ce: 0.4250, tri: 0.1425, xconf: 0.5658, source_acc: 99.5793, target_acc: 68.8702, best_acc: 81.6106
+00:08:15 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9960
+00:08:59 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0150, dann: 0.6990, tgt_ce: 0.3725, tri: 0.2008, xconf: 0.2315, source_acc: 99.9828, target_acc: 56.9712, best_acc: 81.6106
+00:08:59 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9891
+00:09:44 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.0174, dann: 0.6961, tgt_ce: 0.3254, tri: 0.1191, xconf: 0.3828, source_acc: 100.0000, target_acc: 58.5337, best_acc: 81.6106
+00:09:44 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9996
+00:10:26 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.0107, dann: 0.6935, tgt_ce: 0.1268, tri: 0.2659, xconf: 0.2080, source_acc: 99.9227, target_acc: 64.3029, best_acc: 81.6106
+00:10:26 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1447
+00:11:10 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0060, dann: 0.6940, tgt_ce: 0.0006, tri: 0.0086, xconf: 0.0142, source_acc: 100.0000, target_acc: 49.0385, best_acc: 81.6106
+00:11:10 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3010
+00:11:54 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0050, dann: 0.6943, tgt_ce: 0.0000, tri: 0.0037, xconf: 0.0119, source_acc: 100.0000, target_acc: 44.9519, best_acc: 81.6106
+00:11:54 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2879
+00:12:38 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0052, dann: 0.6937, tgt_ce: 0.0000, tri: 0.0065, xconf: 0.0121, source_acc: 100.0000, target_acc: 44.9519, best_acc: 81.6106
+00:12:38 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2987
+00:13:23 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.0052, dann: 0.6951, tgt_ce: 0.0092, tri: 0.0320, xconf: 0.0215, source_acc: 100.0000, target_acc: 44.9519, best_acc: 81.6106
+00:13:23 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1743
+00:14:04 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.0094, dann: 0.6969, tgt_ce: 0.2516, tri: 0.0874, xconf: 0.2305, source_acc: 100.0000, target_acc: 61.6587, best_acc: 81.6106
+00:14:04 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.6231
+00:14:49 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.0055, dann: 0.6943, tgt_ce: 0.0188, tri: 0.0437, xconf: 0.0354, source_acc: 99.8884, target_acc: 47.3558, best_acc: 81.6106
+00:14:49 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3032
+00:15:31 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.0050, dann: 0.6937, tgt_ce: 0.0000, tri: 0.0027, xconf: 0.0093, source_acc: 100.0000, target_acc: 43.2692, best_acc: 81.6106
+00:15:31 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3295
+00:16:16 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.0090, dann: 0.6926, tgt_ce: 0.1433, tri: 0.2383, xconf: 0.1646, source_acc: 100.0000, target_acc: 40.8654, best_acc: 81.6106
+00:16:16 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9532
+00:17:00 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.0049, dann: 0.6935, tgt_ce: 0.0000, tri: 0.0019, xconf: 0.0089, source_acc: 100.0000, target_acc: 35.4567, best_acc: 81.6106
+00:17:00 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3096
+00:17:43 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.0111, dann: 0.6930, tgt_ce: 0.2168, tri: 0.1666, xconf: 0.2359, source_acc: 99.8970, target_acc: 35.4567, best_acc: 81.6106
+00:17:43 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.4178
+00:18:27 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.0051, dann: 0.6943, tgt_ce: 0.0001, tri: 0.0062, xconf: 0.0093, source_acc: 100.0000, target_acc: 35.4567, best_acc: 81.6106
+00:18:27 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.5253
+00:19:12 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.0050, dann: 0.6923, tgt_ce: 0.0001, tri: 0.0035, xconf: 0.0105, source_acc: 100.0000, target_acc: 41.3462, best_acc: 81.6106
+00:19:12 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1841
+00:19:57 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0053, dann: 0.6971, tgt_ce: 0.0005, tri: 0.0019, xconf: 0.0121, source_acc: 99.6223, target_acc: 45.4327, best_acc: 81.6106
+00:19:57 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1347
+00:20:41 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0057, dann: 0.6938, tgt_ce: 0.0707, tri: 0.1416, xconf: 0.0780, source_acc: 100.0000, target_acc: 25.6010, best_acc: 81.6106
+00:20:41 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.8767
+00:21:25 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.0064, dann: 0.6929, tgt_ce: 0.1170, tri: 0.2368, xconf: 0.1515, source_acc: 99.4935, target_acc: 35.4567, best_acc: 81.6106
+00:21:25 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.7458
+00:21:26 | INFO     __main__ main     201 
+--------------> Finished training w.r.t. subject 4 session 1 acc 0.8161
+00:21:27 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+00:21:27 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11648, 62, 5), label shape: (11648,)
+00:21:27 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+00:21:27 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (832, 62, 5), label shape: (832,)
+00:21:27 | INFO     model.saber __init__ 111 Use direct distance as adjeceny matrix for GCN.
+00:21:27 | INFO     train.training_opta train    164 len of train data: 11648, len of test data: 832
+00:21:28 | INFO     utils.metric update   25  --> A new better acc 0.4940 on subject 5 session 1
+00:21:28 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 0.9040, dann: 0.6342, tgt_ce: 0.5714, tri: 0.1289, xconf: 1.0532, source_acc: 73.6435, target_acc: 49.3990, best_acc: 49.3990
+00:21:28 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.8864
+00:21:29 | INFO     utils.metric update   25  --> A new better acc 0.5673 on subject 5 session 1
+00:21:30 | INFO     utils.metric update   25  --> A new better acc 0.6166 on subject 5 session 1
+00:21:32 | INFO     utils.metric update   25  --> A new better acc 0.6683 on subject 5 session 1
+00:21:34 | INFO     utils.metric update   25  --> A new better acc 0.7043 on subject 5 session 1
+00:21:35 | INFO     utils.metric update   25  --> A new better acc 0.7260 on subject 5 session 1
+00:21:36 | INFO     utils.metric update   25  --> A new better acc 0.7728 on subject 5 session 1
+00:21:38 | INFO     utils.metric update   25  --> A new better acc 0.7812 on subject 5 session 1
+00:21:39 | INFO     utils.metric update   25  --> A new better acc 0.8173 on subject 5 session 1
+00:21:39 | INFO     utils.metric update   25  --> A new better acc 0.8401 on subject 5 session 1
+00:22:13 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0166, dann: 0.7172, tgt_ce: 0.3684, tri: 0.1783, xconf: 0.5976, source_acc: 99.7854, target_acc: 82.8125, best_acc: 84.0144
+00:22:13 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9743
+00:22:57 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0131, dann: 0.7050, tgt_ce: 0.4398, tri: 0.2559, xconf: 0.4531, source_acc: 99.9056, target_acc: 66.4663, best_acc: 84.0144
+00:22:57 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9726
+00:23:41 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0161, dann: 0.7050, tgt_ce: 0.4867, tri: 0.1572, xconf: 0.6036, source_acc: 98.2658, target_acc: 64.6635, best_acc: 84.0144
+00:23:41 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9996
+00:24:25 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.0077, dann: 0.6977, tgt_ce: 0.0235, tri: 0.0693, xconf: 0.0324, source_acc: 100.0000, target_acc: 73.3173, best_acc: 84.0144
+00:24:25 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.4753
+00:25:09 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.0118, dann: 0.6925, tgt_ce: 0.2769, tri: 0.1227, xconf: 0.2237, source_acc: 100.0000, target_acc: 67.9087, best_acc: 84.0144
+00:25:09 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9916
+00:25:54 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0309, dann: 0.6646, tgt_ce: 0.1940, tri: 0.1423, xconf: 0.1866, source_acc: 99.0728, target_acc: 53.2452, best_acc: 84.0144
+00:25:54 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9744
+00:26:38 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0104, dann: 0.6807, tgt_ce: 0.0609, tri: 0.0338, xconf: 0.0214, source_acc: 99.9313, target_acc: 46.5144, best_acc: 84.0144
+00:26:38 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.4892
+00:27:21 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0225, dann: 0.5625, tgt_ce: 0.2220, tri: 0.0861, xconf: 0.0766, source_acc: 100.0000, target_acc: 20.1923, best_acc: 84.0144
+00:27:21 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9974
+00:28:08 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.1567, dann: 0.6762, tgt_ce: 1.4941, tri: 0.2852, xconf: 0.6155, source_acc: 99.7167, target_acc: 25.8413, best_acc: 84.0144
+00:28:08 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9971
+00:28:53 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.0354, dann: 0.5354, tgt_ce: 0.8670, tri: 0.3348, xconf: 0.3822, source_acc: 100.0000, target_acc: 27.6442, best_acc: 84.0144
+00:28:53 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9998
+00:29:37 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.0720, dann: 0.5078, tgt_ce: 0.8210, tri: 0.3210, xconf: 0.3155, source_acc: 100.0000, target_acc: 24.2788, best_acc: 84.0144
+00:29:37 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9997
+00:30:23 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.1147, dann: 0.4835, tgt_ce: 0.7415, tri: 0.3011, xconf: 0.2760, source_acc: 100.0000, target_acc: 27.6442, best_acc: 84.0144
+00:30:23 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9999
+00:31:07 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.0682, dann: 0.4778, tgt_ce: 0.8230, tri: 0.3013, xconf: 0.2720, source_acc: 99.3304, target_acc: 27.6442, best_acc: 84.0144
+00:31:07 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9998
+00:31:52 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.2626, dann: 0.2665, tgt_ce: 1.4079, tri: 1.4917, xconf: 1.2966, source_acc: 99.4076, target_acc: 16.1058, best_acc: 84.0144
+00:31:52 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+00:32:36 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.1433, dann: 0.4694, tgt_ce: 1.3311, tri: 0.6035, xconf: 1.1487, source_acc: 84.7184, target_acc: 16.1058, best_acc: 84.0144
+00:32:36 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+00:33:22 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.1138, dann: 0.4796, tgt_ce: 1.2063, tri: 0.5509, xconf: 0.8588, source_acc: 99.2617, target_acc: 31.9712, best_acc: 84.0144
+00:33:22 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9999
+00:34:06 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.2652, dann: 0.5751, tgt_ce: 1.3898, tri: 1.3492, xconf: 0.6571, source_acc: 99.0299, target_acc: 16.1058, best_acc: 84.0144
+00:34:06 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9999
+00:34:50 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0590, dann: 0.4078, tgt_ce: 1.3370, tri: 0.4998, xconf: 0.9958, source_acc: 93.6641, target_acc: 13.4615, best_acc: 84.0144
+00:34:50 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+00:35:35 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0927, dann: 0.4738, tgt_ce: 1.0679, tri: 0.5332, xconf: 0.5218, source_acc: 99.0299, target_acc: 32.4519, best_acc: 84.0144
+00:35:35 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9999
+00:36:21 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.2746, dann: 11.3492, tgt_ce: 1.4486, tri: 0.4887, xconf: 1.2225, source_acc: 85.1562, target_acc: 50.2404, best_acc: 84.0144
+00:36:21 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9997
+00:36:21 | INFO     __main__ main     201 
+--------------> Finished training w.r.t. subject 5 session 1 acc 0.8401
+00:36:22 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+00:36:22 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11648, 62, 5), label shape: (11648,)
+00:36:22 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+00:36:22 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (832, 62, 5), label shape: (832,)
+00:36:22 | INFO     model.saber __init__ 111 Use direct distance as adjeceny matrix for GCN.
+00:36:22 | INFO     train.training_opta train    164 len of train data: 11648, len of test data: 832
+00:36:23 | INFO     utils.metric update   25  --> A new better acc 0.6514 on subject 6 session 1
+00:36:23 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 0.9322, dann: 0.6755, tgt_ce: 0.6488, tri: 0.1567, xconf: 1.1060, source_acc: 71.6089, target_acc: 65.1442, best_acc: 65.1442
+00:36:23 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9754
+00:36:24 | INFO     utils.metric update   25  --> A new better acc 0.6911 on subject 6 session 1
+00:36:26 | INFO     utils.metric update   25  --> A new better acc 0.7500 on subject 6 session 1
+00:36:30 | INFO     utils.metric update   25  --> A new better acc 0.8606 on subject 6 session 1
+00:37:06 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0087, dann: 0.7161, tgt_ce: 0.3078, tri: 0.1398, xconf: 0.3276, source_acc: 99.5793, target_acc: 64.9038, best_acc: 86.0577
+00:37:06 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9992
+00:37:51 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0108, dann: 0.7058, tgt_ce: 0.3601, tri: 0.1324, xconf: 0.3757, source_acc: 99.8369, target_acc: 44.3510, best_acc: 86.0577
+00:37:51 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9987
+00:38:36 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0101, dann: 0.7068, tgt_ce: 0.3692, tri: 0.0984, xconf: 0.4606, source_acc: 99.9141, target_acc: 42.4279, best_acc: 86.0577
+00:38:36 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+00:39:21 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.0143, dann: 0.6945, tgt_ce: 0.0779, tri: 0.1736, xconf: 0.1365, source_acc: 98.5319, target_acc: 53.7260, best_acc: 86.0577
+00:39:21 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9154
+00:40:05 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.0146, dann: 0.6928, tgt_ce: 0.1186, tri: 0.2162, xconf: 0.1137, source_acc: 99.7596, target_acc: 53.6058, best_acc: 86.0577
+00:40:05 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9862
+00:40:49 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0062, dann: 0.6961, tgt_ce: 0.0000, tri: 0.0127, xconf: 0.0148, source_acc: 100.0000, target_acc: 46.5144, best_acc: 86.0577
+00:40:49 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3443
+00:41:31 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0052, dann: 0.6937, tgt_ce: 0.0001, tri: 0.0091, xconf: 0.0139, source_acc: 100.0000, target_acc: 54.8077, best_acc: 86.0577
+00:41:31 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2120
+00:42:14 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0051, dann: 0.6935, tgt_ce: 0.0021, tri: 0.0039, xconf: 0.0126, source_acc: 99.9571, target_acc: 49.5192, best_acc: 86.0577
+00:42:14 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1740
+00:42:59 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.0054, dann: 0.6971, tgt_ce: 0.0000, tri: 0.0058, xconf: 0.0126, source_acc: 100.0000, target_acc: 46.5144, best_acc: 86.0577
+00:42:59 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3490
+00:43:43 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.0050, dann: 0.6934, tgt_ce: 0.0023, tri: 0.0334, xconf: 0.0188, source_acc: 100.0000, target_acc: 46.5144, best_acc: 86.0577
+00:43:43 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1603
+00:44:27 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.0049, dann: 0.6935, tgt_ce: 0.0000, tri: 0.0014, xconf: 0.0100, source_acc: 100.0000, target_acc: 41.2260, best_acc: 86.0577
+00:44:27 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0997
+00:45:12 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.0049, dann: 0.6933, tgt_ce: 0.0132, tri: 0.0196, xconf: 0.0174, source_acc: 100.0000, target_acc: 51.4423, best_acc: 86.0577
+00:45:12 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1660
+00:45:58 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.0206, dann: 0.6935, tgt_ce: 0.0510, tri: 0.1406, xconf: 0.0824, source_acc: 100.0000, target_acc: 57.3317, best_acc: 86.0577
+00:45:58 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1244
+00:46:44 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.0051, dann: 0.6959, tgt_ce: 0.0000, tri: 0.0024, xconf: 0.0076, source_acc: 99.9399, target_acc: 48.1971, best_acc: 86.0577
+00:46:44 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1047
+00:47:29 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.0067, dann: 0.6906, tgt_ce: 0.0616, tri: 0.0431, xconf: 0.0631, source_acc: 99.9056, target_acc: 48.1971, best_acc: 86.0577
+00:47:29 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.4359
+00:48:15 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.0049, dann: 0.6937, tgt_ce: 0.0000, tri: 0.0013, xconf: 0.0079, source_acc: 100.0000, target_acc: 58.1731, best_acc: 86.0577
+00:48:15 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1437
+00:49:00 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.0049, dann: 0.6938, tgt_ce: 0.0000, tri: 0.0014, xconf: 0.0088, source_acc: 99.6308, target_acc: 60.4567, best_acc: 86.0577
+00:49:00 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1221
+00:49:44 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0071, dann: 0.6973, tgt_ce: 0.0944, tri: 0.1188, xconf: 0.0907, source_acc: 99.5536, target_acc: 58.5337, best_acc: 86.0577
+00:49:44 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9964
+00:50:29 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0070, dann: 0.6990, tgt_ce: 0.0000, tri: 0.0062, xconf: 0.0138, source_acc: 100.0000, target_acc: 55.7692, best_acc: 86.0577
+00:50:29 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3141
+00:51:15 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.0055, dann: 0.6943, tgt_ce: 0.0001, tri: 0.0139, xconf: 0.0108, source_acc: 100.0000, target_acc: 57.5721, best_acc: 86.0577
+00:51:15 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.4712
+00:51:15 | INFO     __main__ main     201 
+--------------> Finished training w.r.t. subject 6 session 1 acc 0.8606
+00:51:16 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+00:51:17 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11648, 62, 5), label shape: (11648,)
+00:51:17 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+00:51:17 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (832, 62, 5), label shape: (832,)
+00:51:17 | INFO     model.saber __init__ 111 Use direct distance as adjeceny matrix for GCN.
+00:51:17 | INFO     train.training_opta train    164 len of train data: 11648, len of test data: 832
+00:51:18 | INFO     utils.metric update   25  --> A new better acc 0.6202 on subject 7 session 1
+00:51:18 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 0.9254, dann: 0.6094, tgt_ce: 0.5977, tri: 0.2030, xconf: 1.0612, source_acc: 71.6604, target_acc: 62.0192, best_acc: 62.0192
+00:51:18 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.8759
+00:51:19 | INFO     utils.metric update   25  --> A new better acc 0.7079 on subject 7 session 1
+00:51:20 | INFO     utils.metric update   25  --> A new better acc 0.7344 on subject 7 session 1
+00:51:22 | INFO     utils.metric update   25  --> A new better acc 0.7680 on subject 7 session 1
+00:51:23 | INFO     utils.metric update   25  --> A new better acc 0.8005 on subject 7 session 1
+00:51:24 | INFO     utils.metric update   25  --> A new better acc 0.8666 on subject 7 session 1
+00:51:40 | INFO     utils.metric update   25  --> A new better acc 0.9026 on subject 7 session 1
+00:52:03 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0092, dann: 0.6992, tgt_ce: 0.3722, tri: 0.1087, xconf: 0.3505, source_acc: 99.6995, target_acc: 84.7356, best_acc: 90.2644
+00:52:03 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+00:52:47 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0341, dann: 0.6959, tgt_ce: 0.1805, tri: 0.1199, xconf: 0.3077, source_acc: 99.5536, target_acc: 39.3029, best_acc: 90.2644
+00:52:47 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.5101
+00:53:33 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0088, dann: 0.6941, tgt_ce: 0.3081, tri: 0.1041, xconf: 0.3839, source_acc: 99.4162, target_acc: 36.6587, best_acc: 90.2644
+00:53:33 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+00:54:20 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.0224, dann: 0.6851, tgt_ce: 0.3109, tri: 0.2059, xconf: 0.1740, source_acc: 99.9571, target_acc: 35.3365, best_acc: 90.2644
+00:54:20 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9945
+00:55:07 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.0243, dann: 0.6859, tgt_ce: 0.3666, tri: 0.2968, xconf: 0.3098, source_acc: 100.0000, target_acc: 61.2981, best_acc: 90.2644
+00:55:07 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9982
+00:55:52 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0070, dann: 0.7050, tgt_ce: 0.0001, tri: 0.0124, xconf: 0.0131, source_acc: 100.0000, target_acc: 48.4375, best_acc: 90.2644
+00:55:52 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.4100
+00:56:36 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0056, dann: 0.6949, tgt_ce: 0.0071, tri: 0.0122, xconf: 0.0114, source_acc: 100.0000, target_acc: 45.0721, best_acc: 90.2644
+00:56:36 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2115
+00:57:20 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0051, dann: 0.6920, tgt_ce: 0.0003, tri: 0.0035, xconf: 0.0095, source_acc: 99.8369, target_acc: 51.5625, best_acc: 90.2644
+00:57:20 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1594
+00:58:04 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.0062, dann: 0.6936, tgt_ce: 0.0002, tri: 0.0087, xconf: 0.0106, source_acc: 100.0000, target_acc: 57.0913, best_acc: 90.2644
+00:58:04 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3187
+00:58:48 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.0050, dann: 0.6933, tgt_ce: 0.0000, tri: 0.0036, xconf: 0.0102, source_acc: 100.0000, target_acc: 53.8462, best_acc: 90.2644
+00:58:48 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3672
+00:59:36 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.0050, dann: 0.6937, tgt_ce: 0.0000, tri: 0.0018, xconf: 0.0110, source_acc: 100.0000, target_acc: 52.6442, best_acc: 90.2644
+00:59:36 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1522
+01:00:20 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.0148, dann: 0.6920, tgt_ce: 0.4272, tri: 0.1526, xconf: 0.3773, source_acc: 99.8970, target_acc: 59.2548, best_acc: 90.2644
+01:00:20 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+01:01:03 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.0055, dann: 0.6913, tgt_ce: 0.0045, tri: 0.0056, xconf: 0.0100, source_acc: 100.0000, target_acc: 64.5433, best_acc: 90.2644
+01:01:03 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.4558
+01:01:48 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.0323, dann: 0.6913, tgt_ce: 0.1858, tri: 0.1557, xconf: 0.1675, source_acc: 99.7253, target_acc: 49.5192, best_acc: 90.2644
+01:01:48 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9854
+01:02:31 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.0050, dann: 0.6944, tgt_ce: 0.0000, tri: 0.0019, xconf: 0.0096, source_acc: 100.0000, target_acc: 59.9760, best_acc: 90.2644
+01:02:31 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1284
+01:03:16 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.0049, dann: 0.6945, tgt_ce: 0.0000, tri: 0.0025, xconf: 0.0081, source_acc: 100.0000, target_acc: 47.8365, best_acc: 90.2644
+01:03:16 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0697
+01:04:02 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.0049, dann: 0.6935, tgt_ce: 0.0000, tri: 0.0012, xconf: 0.0086, source_acc: 100.0000, target_acc: 57.2115, best_acc: 90.2644
+01:04:02 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0587
+01:04:47 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0057, dann: 0.6932, tgt_ce: 0.1890, tri: 0.2507, xconf: 0.2028, source_acc: 100.0000, target_acc: 56.1298, best_acc: 90.2644
+01:04:47 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9991
+01:05:30 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0049, dann: 0.6933, tgt_ce: 0.0000, tri: 0.0025, xconf: 0.0120, source_acc: 100.0000, target_acc: 50.4808, best_acc: 90.2644
+01:05:30 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1130
+01:06:13 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.0049, dann: 0.6930, tgt_ce: 0.0238, tri: 0.0301, xconf: 0.0271, source_acc: 100.0000, target_acc: 50.4808, best_acc: 90.2644
+01:06:13 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0846
+01:06:13 | INFO     __main__ main     201 
+--------------> Finished training w.r.t. subject 7 session 1 acc 0.9026
+01:06:15 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+01:06:15 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11648, 62, 5), label shape: (11648,)
+01:06:15 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+01:06:15 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (832, 62, 5), label shape: (832,)
+01:06:15 | INFO     model.saber __init__ 111 Use direct distance as adjeceny matrix for GCN.
+01:06:15 | INFO     train.training_opta train    164 len of train data: 11648, len of test data: 832
+01:06:16 | INFO     utils.metric update   25  --> A new better acc 0.7055 on subject 8 session 1
+01:06:16 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 0.9332, dann: 0.6440, tgt_ce: 0.5620, tri: 0.1549, xconf: 1.0833, source_acc: 70.8877, target_acc: 70.5529, best_acc: 70.5529
+01:06:16 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.7557
+01:06:17 | INFO     utils.metric update   25  --> A new better acc 0.7608 on subject 8 session 1
+01:06:19 | INFO     utils.metric update   25  --> A new better acc 0.8113 on subject 8 session 1
+01:07:01 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0096, dann: 0.7074, tgt_ce: 0.3699, tri: 0.1231, xconf: 0.3999, source_acc: 99.6738, target_acc: 61.8990, best_acc: 81.1298
+01:07:01 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9993
+01:07:46 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0125, dann: 0.7094, tgt_ce: 0.3873, tri: 0.3057, xconf: 0.3937, source_acc: 99.9141, target_acc: 45.0721, best_acc: 81.1298
+01:07:46 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9970
+01:08:31 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0127, dann: 0.7264, tgt_ce: 0.2800, tri: 0.1325, xconf: 0.2542, source_acc: 99.5192, target_acc: 55.7692, best_acc: 81.1298
+01:08:31 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9999
+01:09:17 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.0458, dann: 0.6927, tgt_ce: 0.4826, tri: 0.2076, xconf: 0.5797, source_acc: 98.9698, target_acc: 46.1538, best_acc: 81.1298
+01:09:17 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9926
+01:10:01 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.0107, dann: 0.7154, tgt_ce: 0.0030, tri: 0.0369, xconf: 0.0145, source_acc: 100.0000, target_acc: 55.6490, best_acc: 81.1298
+01:10:01 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.4735
+01:10:47 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0058, dann: 0.6911, tgt_ce: 0.0286, tri: 0.0718, xconf: 0.0325, source_acc: 100.0000, target_acc: 63.7019, best_acc: 81.1298
+01:10:47 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3507
+01:11:30 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0051, dann: 0.6920, tgt_ce: 0.0007, tri: 0.0045, xconf: 0.0104, source_acc: 100.0000, target_acc: 40.8654, best_acc: 81.1298
+01:11:30 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0733
+01:12:14 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0088, dann: 0.6927, tgt_ce: 0.2293, tri: 0.2843, xconf: 0.2575, source_acc: 100.0000, target_acc: 49.7596, best_acc: 81.1298
+01:12:14 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9999
+01:12:59 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.0050, dann: 0.6957, tgt_ce: 0.0060, tri: 0.0029, xconf: 0.0108, source_acc: 100.0000, target_acc: 55.0481, best_acc: 81.1298
+01:12:59 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1674
+01:13:43 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.0049, dann: 0.6931, tgt_ce: 0.0001, tri: 0.0016, xconf: 0.0093, source_acc: 100.0000, target_acc: 68.6298, best_acc: 81.1298
+01:13:43 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1796
+01:14:27 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.0060, dann: 0.6926, tgt_ce: 0.0002, tri: 0.0150, xconf: 0.0097, source_acc: 100.0000, target_acc: 56.6106, best_acc: 81.1298
+01:14:27 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.4211
+01:15:11 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.0116, dann: 0.6988, tgt_ce: 0.0004, tri: 0.0053, xconf: 0.0236, source_acc: 100.0000, target_acc: 47.2356, best_acc: 81.1298
+01:15:11 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2366
+01:15:55 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.0157, dann: 0.6905, tgt_ce: 0.0769, tri: 0.1076, xconf: 0.0982, source_acc: 100.0000, target_acc: 51.5625, best_acc: 81.1298
+01:15:55 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1971
+01:16:40 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.0056, dann: 0.6882, tgt_ce: 0.0111, tri: 0.0025, xconf: 0.0094, source_acc: 99.5278, target_acc: 36.5385, best_acc: 81.1298
+01:16:40 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2327
+01:17:25 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.0051, dann: 0.6954, tgt_ce: 0.0012, tri: 0.0027, xconf: 0.0092, source_acc: 100.0000, target_acc: 44.8317, best_acc: 81.1298
+01:17:25 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2427
+01:18:10 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.0050, dann: 0.6952, tgt_ce: 0.0001, tri: 0.0032, xconf: 0.0097, source_acc: 100.0000, target_acc: 59.0144, best_acc: 81.1298
+01:18:10 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2371
+01:18:54 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.0131, dann: 0.6934, tgt_ce: 0.1909, tri: 0.1915, xconf: 0.2132, source_acc: 99.8970, target_acc: 59.0144, best_acc: 81.1298
+01:18:54 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2363
+01:19:39 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0123, dann: 0.7031, tgt_ce: 0.0001, tri: 0.0041, xconf: 0.0292, source_acc: 100.0000, target_acc: 73.7981, best_acc: 81.1298
+01:19:39 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1378
+01:20:23 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0054, dann: 0.6925, tgt_ce: 0.0307, tri: 0.0909, xconf: 0.0624, source_acc: 100.0000, target_acc: 60.0962, best_acc: 81.1298
+01:20:23 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1695
+01:21:07 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.0057, dann: 0.6944, tgt_ce: 0.0011, tri: 0.0136, xconf: 0.0099, source_acc: 100.0000, target_acc: 63.3413, best_acc: 81.1298
+01:21:07 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2635
+01:21:07 | INFO     __main__ main     201 
+--------------> Finished training w.r.t. subject 8 session 1 acc 0.8113
+01:21:08 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+01:21:08 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11648, 62, 5), label shape: (11648,)
+01:21:08 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+01:21:08 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (832, 62, 5), label shape: (832,)
+01:21:08 | INFO     model.saber __init__ 111 Use direct distance as adjeceny matrix for GCN.
+01:21:08 | INFO     train.training_opta train    164 len of train data: 11648, len of test data: 832
+01:21:09 | INFO     utils.metric update   25  --> A new better acc 0.4387 on subject 9 session 1
+01:21:09 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 0.9165, dann: 0.6134, tgt_ce: 0.5767, tri: 0.1810, xconf: 1.0485, source_acc: 66.1401, target_acc: 43.8702, best_acc: 43.8702
+01:21:09 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9128
+01:21:10 | INFO     utils.metric update   25  --> A new better acc 0.5060 on subject 9 session 1
+01:21:11 | INFO     utils.metric update   25  --> A new better acc 0.5493 on subject 9 session 1
+01:21:12 | INFO     utils.metric update   25  --> A new better acc 0.5613 on subject 9 session 1
+01:21:12 | INFO     utils.metric update   25  --> A new better acc 0.5865 on subject 9 session 1
+01:21:16 | INFO     utils.metric update   25  --> A new better acc 0.6118 on subject 9 session 1
+01:21:52 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0288, dann: 0.6956, tgt_ce: 0.7748, tri: 0.4219, xconf: 0.8889, source_acc: 98.7895, target_acc: 54.0865, best_acc: 61.1779
+01:21:52 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9999
+01:21:54 | INFO     utils.metric update   25  --> A new better acc 0.6587 on subject 9 session 1
+01:22:36 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0134, dann: 0.7063, tgt_ce: 0.7540, tri: 0.2289, xconf: 0.7122, source_acc: 99.4591, target_acc: 54.0865, best_acc: 65.8654
+01:22:36 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9992
+01:23:21 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0219, dann: 0.6996, tgt_ce: 0.2645, tri: 0.1367, xconf: 0.3092, source_acc: 99.7596, target_acc: 40.5048, best_acc: 65.8654
+01:23:21 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9977
+01:24:06 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.0320, dann: 0.6463, tgt_ce: 0.4979, tri: 0.2309, xconf: 0.2413, source_acc: 99.8970, target_acc: 40.3846, best_acc: 65.8654
+01:24:06 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9998
+01:24:49 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.0238, dann: 0.6420, tgt_ce: 0.3247, tri: 0.2415, xconf: 0.1994, source_acc: 99.8970, target_acc: 43.7500, best_acc: 65.8654
+01:24:49 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9921
+01:25:33 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0198, dann: 0.6357, tgt_ce: 0.4036, tri: 0.1551, xconf: 0.1456, source_acc: 100.0000, target_acc: 44.2308, best_acc: 65.8654
+01:25:33 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9954
+01:26:17 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0283, dann: 0.6870, tgt_ce: 0.3188, tri: 0.2377, xconf: 0.2571, source_acc: 99.9141, target_acc: 42.9087, best_acc: 65.8654
+01:26:17 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9996
+01:27:02 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0105, dann: 0.7997, tgt_ce: 0.0009, tri: 0.0496, xconf: 0.0264, source_acc: 99.6308, target_acc: 38.9423, best_acc: 65.8654
+01:27:02 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.4103
+01:27:49 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.1686, dann: 2.5813, tgt_ce: 1.0528, tri: 0.6044, xconf: 1.4396, source_acc: 88.0580, target_acc: 56.4904, best_acc: 65.8654
+01:27:49 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9981
+01:28:34 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 1.2577, dann: 27.2105, tgt_ce: 0.5413, tri: 0.4941, xconf: 1.3863, source_acc: 40.1442, target_acc: 26.6827, best_acc: 65.8654
+01:28:34 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+01:29:18 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.4257, dann: 0.6762, tgt_ce: 0.9554, tri: 0.3161, xconf: 1.2264, source_acc: 72.2785, target_acc: 55.1683, best_acc: 65.8654
+01:29:18 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9998
+01:29:29 | INFO     utils.metric update   25  --> A new better acc 0.6611 on subject 9 session 1
+01:30:04 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.1755, dann: 0.6642, tgt_ce: 1.0215, tri: 0.5456, xconf: 0.9721, source_acc: 92.7713, target_acc: 31.1298, best_acc: 66.1058
+01:30:04 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+01:30:46 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.1169, dann: 0.6818, tgt_ce: 0.0645, tri: 0.0466, xconf: 0.1283, source_acc: 98.3431, target_acc: 57.2115, best_acc: 66.1058
+01:30:46 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.5447
+01:31:29 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.0176, dann: 0.6870, tgt_ce: 0.0086, tri: 0.0212, xconf: 0.0295, source_acc: 99.4505, target_acc: 60.2163, best_acc: 66.1058
+01:31:29 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1732
+01:31:51 | INFO     utils.metric update   25  --> A new better acc 0.7139 on subject 9 session 1
+01:31:57 | INFO     utils.metric update   25  --> A new better acc 0.7224 on subject 9 session 1
+01:32:14 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.0224, dann: 0.6948, tgt_ce: 0.0111, tri: 0.0223, xconf: 0.0263, source_acc: 99.6823, target_acc: 51.3221, best_acc: 72.2356
+01:32:14 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1718
+01:32:52 | INFO     utils.metric update   25  --> A new better acc 0.7356 on subject 9 session 1
+01:32:53 | INFO     utils.metric update   25  --> A new better acc 0.7680 on subject 9 session 1
+01:32:59 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.0065, dann: 0.6923, tgt_ce: 0.0008, tri: 0.0072, xconf: 0.0087, source_acc: 100.0000, target_acc: 68.2692, best_acc: 76.8029
+01:32:59 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1465
+01:33:44 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.0064, dann: 0.6899, tgt_ce: 0.0040, tri: 0.0064, xconf: 0.0089, source_acc: 99.7081, target_acc: 44.9519, best_acc: 76.8029
+01:33:44 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1189
+01:34:29 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0063, dann: 0.6997, tgt_ce: 0.0004, tri: 0.0051, xconf: 0.0084, source_acc: 99.9141, target_acc: 50.3606, best_acc: 76.8029
+01:34:29 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0769
+01:35:13 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0055, dann: 0.6977, tgt_ce: 0.0009, tri: 0.0040, xconf: 0.0076, source_acc: 100.0000, target_acc: 50.3606, best_acc: 76.8029
+01:35:13 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0567
+01:35:58 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.0096, dann: 0.6993, tgt_ce: 0.0015, tri: 0.0143, xconf: 0.0120, source_acc: 99.9742, target_acc: 58.7740, best_acc: 76.8029
+01:35:58 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0243
+01:35:58 | INFO     __main__ main     201 
+--------------> Finished training w.r.t. subject 9 session 1 acc 0.7680
+01:35:59 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+01:35:59 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11648, 62, 5), label shape: (11648,)
+01:36:00 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+01:36:00 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (832, 62, 5), label shape: (832,)
+01:36:00 | INFO     model.saber __init__ 111 Use direct distance as adjeceny matrix for GCN.
+01:36:00 | INFO     train.training_opta train    164 len of train data: 11648, len of test data: 832
+01:36:00 | INFO     utils.metric update   25  --> A new better acc 0.3041 on subject 10 session 1
+01:36:00 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 0.9055, dann: 0.5853, tgt_ce: 0.7220, tri: 0.2331, xconf: 1.0755, source_acc: 71.8664, target_acc: 30.4087, best_acc: 30.4087
+01:36:00 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9877
+01:36:02 | INFO     utils.metric update   25  --> A new better acc 0.3930 on subject 10 session 1
+01:36:03 | INFO     utils.metric update   25  --> A new better acc 0.4099 on subject 10 session 1
+01:36:05 | INFO     utils.metric update   25  --> A new better acc 0.4531 on subject 10 session 1
+01:36:09 | INFO     utils.metric update   25  --> A new better acc 0.4808 on subject 10 session 1
+01:36:10 | INFO     utils.metric update   25  --> A new better acc 0.5733 on subject 10 session 1
+01:36:16 | INFO     utils.metric update   25  --> A new better acc 0.5950 on subject 10 session 1
+01:36:17 | INFO     utils.metric update   25  --> A new better acc 0.6130 on subject 10 session 1
+01:36:45 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0152, dann: 0.6942, tgt_ce: 0.4319, tri: 0.2325, xconf: 0.4892, source_acc: 99.8541, target_acc: 58.0529, best_acc: 61.2981
+01:36:45 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9978
+01:37:30 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0153, dann: 0.7021, tgt_ce: 0.1036, tri: 0.0564, xconf: 0.0972, source_acc: 99.5192, target_acc: 38.2212, best_acc: 61.2981
+01:37:30 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9640
+01:38:16 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0149, dann: 0.6981, tgt_ce: 0.1402, tri: 0.2018, xconf: 0.1662, source_acc: 99.9657, target_acc: 54.5673, best_acc: 61.2981
+01:38:16 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9995
+01:39:00 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.0144, dann: 0.6945, tgt_ce: 0.2089, tri: 0.1706, xconf: 0.2577, source_acc: 99.7940, target_acc: 48.5577, best_acc: 61.2981
+01:39:00 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9999
+01:39:11 | INFO     utils.metric update   25  --> A new better acc 0.6250 on subject 10 session 1
+01:39:43 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.0209, dann: 0.6948, tgt_ce: 0.1147, tri: 0.1027, xconf: 0.1252, source_acc: 99.7596, target_acc: 43.9904, best_acc: 62.5000
+01:39:43 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.7109
+01:40:29 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0079, dann: 0.7056, tgt_ce: 0.0840, tri: 0.0607, xconf: 0.0636, source_acc: 100.0000, target_acc: 37.7404, best_acc: 62.5000
+01:40:29 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9612
+01:41:16 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0061, dann: 0.6954, tgt_ce: 0.0015, tri: 0.0137, xconf: 0.0100, source_acc: 100.0000, target_acc: 48.6779, best_acc: 62.5000
+01:41:16 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2346
+01:42:01 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0102, dann: 0.6950, tgt_ce: 0.2696, tri: 0.3068, xconf: 0.2699, source_acc: 100.0000, target_acc: 50.9615, best_acc: 62.5000
+01:42:01 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9986
+01:42:46 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.0056, dann: 0.6930, tgt_ce: 0.0000, tri: 0.0080, xconf: 0.0119, source_acc: 99.8970, target_acc: 53.8462, best_acc: 62.5000
+01:42:46 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3230
+01:43:29 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.0051, dann: 0.6947, tgt_ce: 0.0250, tri: 0.0386, xconf: 0.0307, source_acc: 100.0000, target_acc: 53.8462, best_acc: 62.5000
+01:43:29 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1907
+01:44:12 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.0053, dann: 0.6939, tgt_ce: 0.0000, tri: 0.0031, xconf: 0.0120, source_acc: 100.0000, target_acc: 53.8462, best_acc: 62.5000
+01:44:12 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3029
+01:44:58 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.0051, dann: 0.6936, tgt_ce: 0.0000, tri: 0.0030, xconf: 0.0122, source_acc: 100.0000, target_acc: 57.9327, best_acc: 62.5000
+01:44:58 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3182
+01:45:41 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.0049, dann: 0.6935, tgt_ce: 0.0000, tri: 0.0023, xconf: 0.0089, source_acc: 100.0000, target_acc: 53.8462, best_acc: 62.5000
+01:45:41 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2693
+01:46:11 | INFO     utils.metric update   25  --> A new better acc 0.6274 on subject 10 session 1
+01:46:25 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.0066, dann: 0.6948, tgt_ce: 0.0000, tri: 0.0075, xconf: 0.0121, source_acc: 100.0000, target_acc: 53.8462, best_acc: 62.7404
+01:46:25 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2356
+01:47:09 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.0051, dann: 0.6910, tgt_ce: 0.0000, tri: 0.0036, xconf: 0.0113, source_acc: 100.0000, target_acc: 43.0288, best_acc: 62.7404
+01:47:09 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3045
+01:47:54 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.0052, dann: 0.6915, tgt_ce: 0.0156, tri: 0.0193, xconf: 0.0230, source_acc: 99.8025, target_acc: 37.7404, best_acc: 62.7404
+01:47:54 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2314
+01:48:38 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.0050, dann: 0.6912, tgt_ce: 0.0000, tri: 0.0028, xconf: 0.0103, source_acc: 100.0000, target_acc: 29.9279, best_acc: 62.7404
+01:48:38 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2079
+01:49:23 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0051, dann: 0.6905, tgt_ce: 0.0000, tri: 0.0037, xconf: 0.0130, source_acc: 99.9399, target_acc: 27.0433, best_acc: 62.7404
+01:49:23 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1874
+01:50:07 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0050, dann: 0.6951, tgt_ce: 0.0000, tri: 0.0025, xconf: 0.0110, source_acc: 100.0000, target_acc: 27.0433, best_acc: 62.7404
+01:50:07 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2052
+01:50:53 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.0049, dann: 0.6940, tgt_ce: 0.0000, tri: 0.0129, xconf: 0.0123, source_acc: 100.0000, target_acc: 27.0433, best_acc: 62.7404
+01:50:53 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2264
+01:50:53 | INFO     __main__ main     201 
+--------------> Finished training w.r.t. subject 10 session 1 acc 0.6274
+01:50:54 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+01:50:54 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11648, 62, 5), label shape: (11648,)
+01:50:54 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+01:50:54 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (832, 62, 5), label shape: (832,)
+01:50:54 | INFO     model.saber __init__ 111 Use direct distance as adjeceny matrix for GCN.
+01:50:54 | INFO     train.training_opta train    164 len of train data: 11648, len of test data: 832
+01:50:55 | INFO     utils.metric update   25  --> A new better acc 0.4663 on subject 11 session 1
+01:50:55 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 0.9073, dann: 0.6474, tgt_ce: 0.8365, tri: 0.1602, xconf: 1.0809, source_acc: 72.2184, target_acc: 46.6346, best_acc: 46.6346
+01:50:55 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.8540
+01:50:56 | INFO     utils.metric update   25  --> A new better acc 0.5421 on subject 11 session 1
+01:50:56 | INFO     utils.metric update   25  --> A new better acc 0.6034 on subject 11 session 1
+01:50:57 | INFO     utils.metric update   25  --> A new better acc 0.6214 on subject 11 session 1
+01:50:59 | INFO     utils.metric update   25  --> A new better acc 0.6743 on subject 11 session 1
+01:51:00 | INFO     utils.metric update   25  --> A new better acc 0.7007 on subject 11 session 1
+01:51:01 | INFO     utils.metric update   25  --> A new better acc 0.7019 on subject 11 session 1
+01:51:02 | INFO     utils.metric update   25  --> A new better acc 0.7031 on subject 11 session 1
+01:51:05 | INFO     utils.metric update   25  --> A new better acc 0.7079 on subject 11 session 1
+01:51:06 | INFO     utils.metric update   25  --> A new better acc 0.7175 on subject 11 session 1
+01:51:07 | INFO     utils.metric update   25  --> A new better acc 0.7512 on subject 11 session 1
+01:51:08 | INFO     utils.metric update   25  --> A new better acc 0.7536 on subject 11 session 1
+01:51:10 | INFO     utils.metric update   25  --> A new better acc 0.7837 on subject 11 session 1
+01:51:37 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0175, dann: 0.7034, tgt_ce: 0.1045, tri: 0.1649, xconf: 0.1363, source_acc: 97.0381, target_acc: 67.6683, best_acc: 78.3654
+01:51:37 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.8963
+01:52:21 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0147, dann: 0.6984, tgt_ce: 0.2586, tri: 0.1257, xconf: 0.2594, source_acc: 99.8455, target_acc: 53.9663, best_acc: 78.3654
+01:52:21 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9967
+01:53:06 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0109, dann: 0.7001, tgt_ce: 0.9482, tri: 0.2226, xconf: 0.7192, source_acc: 100.0000, target_acc: 50.2404, best_acc: 78.3654
+01:53:06 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9999
+01:53:49 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.0334, dann: 0.6477, tgt_ce: 0.4739, tri: 0.2360, xconf: 0.2867, source_acc: 99.8541, target_acc: 31.3702, best_acc: 78.3654
+01:53:49 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9758
+01:54:33 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.0237, dann: 0.6710, tgt_ce: 0.2371, tri: 0.1221, xconf: 0.1446, source_acc: 100.0000, target_acc: 34.6154, best_acc: 78.3654
+01:54:33 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9971
+01:55:18 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0234, dann: 0.6174, tgt_ce: 0.5493, tri: 0.1305, xconf: 0.2560, source_acc: 97.1154, target_acc: 35.3365, best_acc: 78.3654
+01:55:18 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9845
+01:56:03 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0153, dann: 0.6910, tgt_ce: 0.0745, tri: 0.1477, xconf: 0.1751, source_acc: 99.8197, target_acc: 38.5817, best_acc: 78.3654
+01:56:03 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1636
+01:56:49 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0137, dann: 0.7945, tgt_ce: 0.0089, tri: 0.0470, xconf: 0.0241, source_acc: 99.9141, target_acc: 46.3942, best_acc: 78.3654
+01:56:49 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.4014
+01:57:33 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.7267, dann: 8.1871, tgt_ce: 0.6820, tri: 0.4327, xconf: 1.2542, source_acc: 77.8417, target_acc: 55.0481, best_acc: 78.3654
+01:57:33 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9999
+01:58:19 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 1.1324, dann: 2.7766, tgt_ce: 0.5065, tri: 0.4754, xconf: 1.3841, source_acc: 42.9516, target_acc: 11.7788, best_acc: 78.3654
+01:58:19 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+01:59:03 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.1459, dann: 0.6065, tgt_ce: 0.7958, tri: 0.2386, xconf: 0.7751, source_acc: 94.5227, target_acc: 32.5721, best_acc: 78.3654
+01:59:03 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9989
+01:59:49 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.0337, dann: 0.6964, tgt_ce: 0.0321, tri: 0.0343, xconf: 0.0560, source_acc: 99.8369, target_acc: 42.5481, best_acc: 78.3654
+01:59:49 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.4366
+02:00:33 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.0057, dann: 0.6930, tgt_ce: 0.0000, tri: 0.0093, xconf: 0.0092, source_acc: 99.9828, target_acc: 43.9904, best_acc: 78.3654
+02:00:33 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2358
+02:01:17 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.0103, dann: 0.6953, tgt_ce: 0.0021, tri: 0.0119, xconf: 0.0161, source_acc: 99.9657, target_acc: 46.2740, best_acc: 78.3654
+02:01:17 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2004
+02:02:01 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.0055, dann: 0.6934, tgt_ce: 0.0000, tri: 0.0026, xconf: 0.0074, source_acc: 100.0000, target_acc: 41.8269, best_acc: 78.3654
+02:02:01 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1526
+02:02:46 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.0243, dann: 0.6953, tgt_ce: 0.0001, tri: 0.0050, xconf: 0.0352, source_acc: 100.0000, target_acc: 37.7404, best_acc: 78.3654
+02:02:46 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1940
+02:03:32 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.0105, dann: 0.6946, tgt_ce: 0.0005, tri: 0.0025, xconf: 0.0148, source_acc: 99.9742, target_acc: 37.5000, best_acc: 78.3654
+02:03:32 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0903
+02:04:20 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0050, dann: 0.6919, tgt_ce: 0.0000, tri: 0.0021, xconf: 0.0064, source_acc: 100.0000, target_acc: 50.2404, best_acc: 78.3654
+02:04:20 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0452
+02:05:07 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0061, dann: 0.6939, tgt_ce: 0.0001, tri: 0.0037, xconf: 0.0069, source_acc: 100.0000, target_acc: 50.2404, best_acc: 78.3654
+02:05:07 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0712
+02:05:52 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.0064, dann: 0.6955, tgt_ce: 0.0467, tri: 0.0774, xconf: 0.0585, source_acc: 99.5364, target_acc: 53.1250, best_acc: 78.3654
+02:05:52 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0647
+02:05:52 | INFO     __main__ main     201 
+--------------> Finished training w.r.t. subject 11 session 1 acc 0.7837
+02:05:54 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+02:05:54 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11648, 62, 5), label shape: (11648,)
+02:05:54 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+02:05:54 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (832, 62, 5), label shape: (832,)
+02:05:54 | INFO     model.saber __init__ 111 Use direct distance as adjeceny matrix for GCN.
+02:05:54 | INFO     train.training_opta train    164 len of train data: 11648, len of test data: 832
+02:05:55 | INFO     utils.metric update   25  --> A new better acc 0.3702 on subject 12 session 1
+02:05:55 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 0.9546, dann: 0.6479, tgt_ce: 0.6602, tri: 0.1686, xconf: 1.0577, source_acc: 68.9389, target_acc: 37.0192, best_acc: 37.0192
+02:05:55 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9663
+02:05:56 | INFO     utils.metric update   25  --> A new better acc 0.6911 on subject 12 session 1
+02:05:59 | INFO     utils.metric update   25  --> A new better acc 0.7236 on subject 12 session 1
+02:06:11 | INFO     utils.metric update   25  --> A new better acc 0.7332 on subject 12 session 1
+02:06:12 | INFO     utils.metric update   25  --> A new better acc 0.7440 on subject 12 session 1
+02:06:18 | INFO     utils.metric update   25  --> A new better acc 0.7560 on subject 12 session 1
+02:06:40 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0149, dann: 0.7023, tgt_ce: 0.2639, tri: 0.1327, xconf: 0.3413, source_acc: 99.7940, target_acc: 65.3846, best_acc: 75.6010
+02:06:40 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9986
+02:06:42 | INFO     utils.metric update   25  --> A new better acc 0.7608 on subject 12 session 1
+02:06:55 | INFO     utils.metric update   25  --> A new better acc 0.7849 on subject 12 session 1
+02:07:25 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0106, dann: 0.7085, tgt_ce: 0.1569, tri: 0.0663, xconf: 0.1854, source_acc: 99.8111, target_acc: 51.6827, best_acc: 78.4856
+02:07:25 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9856
+02:08:07 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0166, dann: 0.7048, tgt_ce: 0.1572, tri: 0.1312, xconf: 0.1658, source_acc: 99.4420, target_acc: 73.9183, best_acc: 78.4856
+02:08:07 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9988
+02:08:11 | INFO     utils.metric update   25  --> A new better acc 0.7981 on subject 12 session 1
+02:08:50 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.0156, dann: 0.6934, tgt_ce: 0.4843, tri: 0.2868, xconf: 0.4382, source_acc: 100.0000, target_acc: 68.2692, best_acc: 79.8077
+02:08:50 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9996
+02:09:34 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.0115, dann: 0.6963, tgt_ce: 0.1065, tri: 0.0749, xconf: 0.1127, source_acc: 99.8798, target_acc: 71.3942, best_acc: 79.8077
+02:09:34 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9994
+02:10:19 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0088, dann: 0.6935, tgt_ce: 0.1469, tri: 0.1026, xconf: 0.1134, source_acc: 100.0000, target_acc: 62.8606, best_acc: 79.8077
+02:10:19 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.5721
+02:11:02 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0071, dann: 0.7029, tgt_ce: 0.1398, tri: 0.0806, xconf: 0.1024, source_acc: 96.0852, target_acc: 65.5048, best_acc: 79.8077
+02:11:02 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.7801
+02:11:37 | INFO     utils.metric update   25  --> A new better acc 0.8005 on subject 12 session 1
+02:11:47 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.0055, dann: 0.6964, tgt_ce: 0.0000, tri: 0.0089, xconf: 0.0150, source_acc: 100.0000, target_acc: 80.0481, best_acc: 80.0481
+02:11:47 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.4430
+02:12:33 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.0050, dann: 0.6934, tgt_ce: 0.0000, tri: 0.0030, xconf: 0.0104, source_acc: 100.0000, target_acc: 80.0481, best_acc: 80.0481
+02:12:33 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2879
+02:13:19 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.0114, dann: 0.6932, tgt_ce: 0.3973, tri: 0.1588, xconf: 0.4207, source_acc: 100.0000, target_acc: 80.0481, best_acc: 80.0481
+02:13:19 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9999
+02:14:04 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.0063, dann: 0.6921, tgt_ce: 0.0004, tri: 0.0105, xconf: 0.0134, source_acc: 100.0000, target_acc: 71.2740, best_acc: 80.0481
+02:14:04 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3535
+02:14:38 | INFO     utils.metric update   25  --> A new better acc 0.8149 on subject 12 session 1
+02:14:41 | INFO     utils.metric update   25  --> A new better acc 0.8702 on subject 12 session 1
+02:14:48 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.0050, dann: 0.6951, tgt_ce: 0.0000, tri: 0.0030, xconf: 0.0124, source_acc: 100.0000, target_acc: 87.0192, best_acc: 87.0192
+02:14:48 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2774
+02:15:33 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.0053, dann: 0.6929, tgt_ce: 0.0013, tri: 0.0166, xconf: 0.0120, source_acc: 100.0000, target_acc: 74.0385, best_acc: 87.0192
+02:15:33 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.6512
+02:16:19 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.0051, dann: 0.6934, tgt_ce: 0.0166, tri: 0.0216, xconf: 0.0219, source_acc: 100.0000, target_acc: 78.1250, best_acc: 87.0192
+02:16:19 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9977
+02:17:03 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.0052, dann: 0.6887, tgt_ce: 0.0017, tri: 0.0051, xconf: 0.0099, source_acc: 99.6223, target_acc: 75.2404, best_acc: 87.0192
+02:17:03 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.3317
+02:17:49 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.0056, dann: 0.6916, tgt_ce: 0.1052, tri: 0.0994, xconf: 0.1019, source_acc: 100.0000, target_acc: 86.7788, best_acc: 87.0192
+02:17:49 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.2444
+02:17:54 | INFO     utils.metric update   25  --> A new better acc 0.8966 on subject 12 session 1
+02:18:33 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.0051, dann: 0.6996, tgt_ce: 0.0003, tri: 0.0058, xconf: 0.0108, source_acc: 100.0000, target_acc: 76.9231, best_acc: 89.6635
+02:18:33 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1532
+02:19:19 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0068, dann: 0.6932, tgt_ce: 0.0298, tri: 0.0413, xconf: 0.0385, source_acc: 100.0000, target_acc: 67.4279, best_acc: 89.6635
+02:19:19 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1444
+02:20:05 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0050, dann: 0.6944, tgt_ce: 0.0000, tri: 0.0027, xconf: 0.0114, source_acc: 100.0000, target_acc: 74.6394, best_acc: 89.6635
+02:20:05 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1960
+02:20:49 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.0049, dann: 0.6941, tgt_ce: 0.0000, tri: 0.0128, xconf: 0.0101, source_acc: 100.0000, target_acc: 80.5288, best_acc: 89.6635
+02:20:49 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1280
+02:20:49 | INFO     __main__ main     201 
+--------------> Finished training w.r.t. subject 12 session 1 acc 0.8966
+02:20:50 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+02:20:50 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11648, 62, 5), label shape: (11648,)
+02:20:50 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+02:20:50 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (832, 62, 5), label shape: (832,)
+02:20:50 | INFO     model.saber __init__ 111 Use direct distance as adjeceny matrix for GCN.
+02:20:50 | INFO     train.training_opta train    164 len of train data: 11648, len of test data: 832
+02:20:51 | INFO     utils.metric update   25  --> A new better acc 0.5132 on subject 13 session 1
+02:20:51 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 0.9409, dann: 0.6559, tgt_ce: 0.6744, tri: 0.1545, xconf: 1.1563, source_acc: 69.9004, target_acc: 51.3221, best_acc: 51.3221
+02:20:51 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9732
+02:20:53 | INFO     utils.metric update   25  --> A new better acc 0.6466 on subject 13 session 1
+02:21:35 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0118, dann: 0.7057, tgt_ce: 0.4988, tri: 0.1392, xconf: 0.5442, source_acc: 99.3132, target_acc: 64.6635, best_acc: 64.6635
+02:21:35 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9998
+02:21:51 | INFO     utils.metric update   25  --> A new better acc 0.7500 on subject 13 session 1
+02:22:20 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0113, dann: 0.7065, tgt_ce: 0.4582, tri: 0.1702, xconf: 0.4675, source_acc: 99.3733, target_acc: 68.7500, best_acc: 75.0000
+02:22:20 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9992
+02:22:27 | INFO     utils.metric update   25  --> A new better acc 0.7704 on subject 13 session 1
+02:22:30 | INFO     utils.metric update   25  --> A new better acc 0.7728 on subject 13 session 1
+02:23:05 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0376, dann: 0.6829, tgt_ce: 0.6879, tri: 0.3172, xconf: 0.9290, source_acc: 98.4976, target_acc: 61.0577, best_acc: 77.2837
+02:23:05 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+02:23:51 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 0.0281, dann: 0.6553, tgt_ce: 0.3184, tri: 0.1677, xconf: 0.1502, source_acc: 100.0000, target_acc: 49.0385, best_acc: 77.2837
+02:23:51 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9920
+02:24:35 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 0.0934, dann: 0.5808, tgt_ce: 0.9913, tri: 0.3265, xconf: 0.8802, source_acc: 98.6350, target_acc: 39.6635, best_acc: 77.2837
+02:24:35 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9938
+02:25:21 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 0.0252, dann: 0.6007, tgt_ce: 0.6720, tri: 0.2667, xconf: 0.2958, source_acc: 100.0000, target_acc: 41.8269, best_acc: 77.2837
+02:25:21 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9991
+02:26:05 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 0.0232, dann: 0.9330, tgt_ce: 0.4763, tri: 0.2180, xconf: 0.3557, source_acc: 98.6178, target_acc: 45.3125, best_acc: 77.2837
+02:26:05 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9962
+02:26:50 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 0.2112, dann: 6.3058, tgt_ce: 1.1025, tri: 0.4958, xconf: 1.2921, source_acc: 87.9035, target_acc: 62.7404, best_acc: 77.2837
+02:26:50 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9999
+02:27:34 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 0.6540, dann: 7.5973, tgt_ce: 0.8272, tri: 0.4810, xconf: 1.3486, source_acc: 58.4650, target_acc: 36.7788, best_acc: 77.2837
+02:27:34 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+02:28:16 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 0.1976, dann: 0.6957, tgt_ce: 1.0263, tri: 0.4423, xconf: 1.3759, source_acc: 83.9715, target_acc: 54.0865, best_acc: 77.2837
+02:28:16 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+02:29:00 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 0.1824, dann: 0.5389, tgt_ce: 0.6207, tri: 0.2493, xconf: 0.7491, source_acc: 88.4014, target_acc: 31.1298, best_acc: 77.2837
+02:29:00 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9993
+02:29:45 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.1025, dann: 0.5713, tgt_ce: 1.2267, tri: 0.5206, xconf: 0.7803, source_acc: 94.2823, target_acc: 36.0577, best_acc: 77.2837
+02:29:45 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9995
+02:30:30 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.0992, dann: 0.6110, tgt_ce: 0.9678, tri: 0.3105, xconf: 0.4966, source_acc: 98.0254, target_acc: 27.6442, best_acc: 77.2837
+02:30:30 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9993
+02:31:14 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.0829, dann: 0.6553, tgt_ce: 0.6253, tri: 0.2249, xconf: 0.3230, source_acc: 98.8238, target_acc: 28.4856, best_acc: 77.2837
+02:31:14 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9983
+02:31:58 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.4873, dann: 0.4472, tgt_ce: 1.0910, tri: 0.7116, xconf: 0.4293, source_acc: 99.7682, target_acc: 16.1058, best_acc: 77.2837
+02:31:58 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+02:32:43 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.1597, dann: 0.3747, tgt_ce: 0.8384, tri: 0.3269, xconf: 0.7258, source_acc: 91.1144, target_acc: 18.1490, best_acc: 77.2837
+02:32:43 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9996
+02:33:28 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.3257, dann: 0.4765, tgt_ce: 1.3932, tri: 0.7253, xconf: 1.0440, source_acc: 97.7163, target_acc: 27.8846, best_acc: 77.2837
+02:33:28 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+02:34:13 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.0763, dann: 0.6779, tgt_ce: 0.5706, tri: 0.2062, xconf: 0.2961, source_acc: 99.1501, target_acc: 23.5577, best_acc: 77.2837
+02:34:13 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9977
+02:34:57 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.0574, dann: 0.5499, tgt_ce: 1.1985, tri: 0.3672, xconf: 0.9558, source_acc: 99.4763, target_acc: 31.0096, best_acc: 77.2837
+02:34:57 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9999
+02:35:41 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.3246, dann: 0.4012, tgt_ce: 1.4057, tri: 0.9000, xconf: 1.5701, source_acc: 96.4457, target_acc: 23.5577, best_acc: 77.2837
+02:35:41 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+02:35:41 | INFO     __main__ main     201 
+--------------> Finished training w.r.t. subject 13 session 1 acc 0.7728
+02:35:43 | INFO     data.utils merge_for_all_subjects 74  Merging data and labels....
+02:35:43 | INFO     data.utils merge_for_all_subjects 99  Finish merging! data shape: (11648, 62, 5), label shape: (11648,)
+02:35:43 | INFO     data.utils merge_for_one_subject 117 Merging data and labels....
+02:35:43 | INFO     data.utils merge_for_one_subject 130 Finish merging! data shape: (832, 62, 5), label shape: (832,)
+02:35:43 | INFO     model.saber __init__ 111 Use direct distance as adjeceny matrix for GCN.
+02:35:43 | INFO     train.training_opta train    164 len of train data: 11648, len of test data: 832
+02:35:44 | INFO     utils.metric update   25  --> A new better acc 0.7608 on subject 14 session 1
+02:35:44 | INFO     train.training_opta train    359 Epoch 1/1000 | src_ce: 0.9622, dann: 0.6263, tgt_ce: 0.6525, tri: 0.1949, xconf: 1.0924, source_acc: 72.1326, target_acc: 76.0817, best_acc: 76.0817
+02:35:44 | INFO     train.training_opta train    373 Epoch 1/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9929
+02:35:46 | INFO     utils.metric update   25  --> A new better acc 0.8209 on subject 14 session 1
+02:35:50 | INFO     utils.metric update   25  --> A new better acc 0.8425 on subject 14 session 1
+02:35:58 | INFO     utils.metric update   25  --> A new better acc 0.8594 on subject 14 session 1
+02:36:28 | INFO     train.training_opta train    359 Epoch 50/1000 | src_ce: 0.0337, dann: 0.6981, tgt_ce: 0.2420, tri: 0.1849, xconf: 0.2720, source_acc: 99.9141, target_acc: 39.9038, best_acc: 85.9375
+02:36:28 | INFO     train.training_opta train    373 Epoch 50/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.5314
+02:37:11 | INFO     train.training_opta train    359 Epoch 100/1000 | src_ce: 0.0244, dann: 0.7030, tgt_ce: 0.3809, tri: 0.1590, xconf: 0.5956, source_acc: 99.4162, target_acc: 58.1731, best_acc: 85.9375
+02:37:11 | INFO     train.training_opta train    373 Epoch 100/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9684
+02:37:54 | INFO     train.training_opta train    359 Epoch 150/1000 | src_ce: 0.0544, dann: 1.3369, tgt_ce: 0.7628, tri: 0.2138, xconf: 1.4551, source_acc: 87.5086, target_acc: 52.0433, best_acc: 85.9375
+02:37:54 | INFO     train.training_opta train    373 Epoch 150/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9866
+02:38:39 | INFO     train.training_opta train    359 Epoch 200/1000 | src_ce: 1.3060, dann: 46.9914, tgt_ce: 0.4402, tri: 0.4959, xconf: 1.3863, source_acc: 29.5845, target_acc: 28.3654, best_acc: 85.9375
+02:38:39 | INFO     train.training_opta train    373 Epoch 200/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+02:39:25 | INFO     train.training_opta train    359 Epoch 250/1000 | src_ce: 1.3573, dann: 30.3337, tgt_ce: 0.4380, tri: 0.4987, xconf: 1.3863, source_acc: 30.0052, target_acc: 27.8846, best_acc: 85.9375
+02:39:25 | INFO     train.training_opta train    373 Epoch 250/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+02:40:12 | INFO     train.training_opta train    359 Epoch 300/1000 | src_ce: 1.3528, dann: 19.2986, tgt_ce: 0.4269, tri: 0.4975, xconf: 1.3863, source_acc: 26.5024, target_acc: 34.6154, best_acc: 85.9375
+02:40:12 | INFO     train.training_opta train    373 Epoch 300/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+02:40:57 | INFO     train.training_opta train    359 Epoch 350/1000 | src_ce: 1.3620, dann: 14.1543, tgt_ce: 0.4251, tri: 0.4983, xconf: 1.3863, source_acc: 23.0941, target_acc: 23.5577, best_acc: 85.9375
+02:40:57 | INFO     train.training_opta train    373 Epoch 350/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+02:41:41 | INFO     train.training_opta train    359 Epoch 400/1000 | src_ce: 1.3631, dann: 10.9802, tgt_ce: 0.4279, tri: 0.4971, xconf: 1.3863, source_acc: 26.8716, target_acc: 27.4038, best_acc: 85.9375
+02:41:41 | INFO     train.training_opta train    373 Epoch 400/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+02:42:24 | INFO     train.training_opta train    359 Epoch 450/1000 | src_ce: 1.3672, dann: 5.8011, tgt_ce: 0.4414, tri: 0.4997, xconf: 1.3863, source_acc: 29.6617, target_acc: 28.2452, best_acc: 85.9375
+02:42:24 | INFO     train.training_opta train    373 Epoch 450/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+02:43:00 | INFO     train.training_opta train    359 Epoch 500/1000 | src_ce: 1.3563, dann: 2.7469, tgt_ce: 0.4389, tri: 0.4985, xconf: 1.3863, source_acc: 19.5570, target_acc: 21.7548, best_acc: 85.9375
+02:43:00 | INFO     train.training_opta train    373 Epoch 500/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+02:43:33 | INFO     train.training_opta train    359 Epoch 550/1000 | src_ce: 1.3722, dann: 1.2242, tgt_ce: 0.4459, tri: 0.4988, xconf: 1.3863, source_acc: 17.1188, target_acc: 16.1058, best_acc: 85.9375
+02:43:33 | INFO     train.training_opta train    373 Epoch 550/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 1.0000
+02:44:08 | INFO     train.training_opta train    359 Epoch 600/1000 | src_ce: 0.9013, dann: 0.6868, tgt_ce: 0.5275, tri: 0.1465, xconf: 1.0539, source_acc: 56.1470, target_acc: 67.1875, best_acc: 85.9375
+02:44:08 | INFO     train.training_opta train    373 Epoch 600/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9997
+02:44:41 | INFO     train.training_opta train    359 Epoch 650/1000 | src_ce: 0.6906, dann: 0.6741, tgt_ce: 0.3909, tri: 0.2202, xconf: 0.8626, source_acc: 62.3455, target_acc: 45.5529, best_acc: 85.9375
+02:44:41 | INFO     train.training_opta train    373 Epoch 650/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9982
+02:45:14 | INFO     train.training_opta train    359 Epoch 700/1000 | src_ce: 0.5618, dann: 0.6643, tgt_ce: 0.1866, tri: 0.1573, xconf: 0.7399, source_acc: 87.2510, target_acc: 52.8846, best_acc: 85.9375
+02:45:14 | INFO     train.training_opta train    373 Epoch 700/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0587
+02:45:48 | INFO     train.training_opta train    359 Epoch 750/1000 | src_ce: 0.2990, dann: 0.6562, tgt_ce: 0.3774, tri: 0.2837, xconf: 0.5658, source_acc: 92.9001, target_acc: 47.7163, best_acc: 85.9375
+02:45:48 | INFO     train.training_opta train    373 Epoch 750/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9988
+02:46:21 | INFO     train.training_opta train    359 Epoch 800/1000 | src_ce: 0.2673, dann: 0.6750, tgt_ce: 0.0220, tri: 0.0606, xconf: 0.3577, source_acc: 89.9296, target_acc: 60.4567, best_acc: 85.9375
+02:46:21 | INFO     train.training_opta train    373 Epoch 800/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.1194
+02:46:53 | INFO     train.training_opta train    359 Epoch 850/1000 | src_ce: 0.2113, dann: 0.6672, tgt_ce: 0.4565, tri: 0.4139, xconf: 0.6053, source_acc: 94.8489, target_acc: 54.8077, best_acc: 85.9375
+02:46:53 | INFO     train.training_opta train    373 Epoch 850/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9740
+02:47:28 | INFO     train.training_opta train    359 Epoch 900/1000 | src_ce: 0.1295, dann: 0.6902, tgt_ce: 0.2662, tri: 0.2427, xconf: 0.4138, source_acc: 95.2867, target_acc: 78.0048, best_acc: 85.9375
+02:47:28 | INFO     train.training_opta train    373 Epoch 900/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.9999
+02:48:01 | INFO     train.training_opta train    359 Epoch 950/1000 | src_ce: 0.1589, dann: 0.6695, tgt_ce: 0.1364, tri: 0.0840, xconf: 0.1810, source_acc: 97.4931, target_acc: 56.0096, best_acc: 85.9375
+02:48:01 | INFO     train.training_opta train    373 Epoch 950/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0599
+02:48:33 | INFO     train.training_opta train    359 Epoch 1000/1000 | src_ce: 0.0752, dann: 0.6711, tgt_ce: 0.0458, tri: 0.0424, xconf: 0.0918, source_acc: 96.8063, target_acc: 53.9663, best_acc: 85.9375
+02:48:33 | INFO     train.training_opta train    373 Epoch 1000/1000 | pool_size: 96, agree_rate: 0.0000, M_t_offdiag_max: 0.0371
+02:48:33 | INFO     __main__ main     201 
+--------------> Finished training w.r.t. subject 14 session 1 acc 0.8594
+02:48:33 | INFO     __main__ main     210 
+-----------> Finished training for all subjects!!!!
+02:48:33 | INFO     __main__ main     213 One best session acc: mean 0.8207 std 0.0790
+
